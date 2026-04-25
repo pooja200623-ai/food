@@ -60,9 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Simulate API call
         setTimeout(() => {
-            alert(`Welcome, ${email}! Redirection to dashboard...`);
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalContent;
+            // In a real app, you'd store the session/token here
+            window.location.href = 'dashboard.html';
         }, 1500);
     });
 
