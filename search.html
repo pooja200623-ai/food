@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results | CraveDash</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <!-- Header -->
+    <header class="dash-header glass">
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='dashboard.html'" style="cursor: pointer;">
+                <i class="fas fa-utensils"></i>
+                <span>CraveDash</span>
+            </div>
+            
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="headerSearch" placeholder="Search for 'Pizza', 'Sushi'..." value="Pizza">
+            </div>
+
+            <div class="user-actions">
+                <button class="cart-btn" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-shopping-basket"></i>
+                    <span class="badge">2</span>
+                </button>
+                <div class="user-profile" onclick="window.location.href='profile.html'" style="cursor: pointer;">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="search-content">
+        <div class="search-layout">
+            <!-- Sidebar Filters -->
+            <aside class="filter-sidebar glass">
+                <div class="filter-header">
+                    <h3>Filters</h3>
+                    <button class="btn-text">Clear All</button>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Sort By</h4>
+                    <label class="custom-radio">
+                        <input type="radio" name="sort" checked>
+                        <span>Relevance</span>
+                    </label>
+                    <label class="custom-radio">
+                        <input type="radio" name="sort">
+                        <span>Rating: High to Low</span>
+                    </label>
+                    <label class="custom-radio">
+                        <input type="radio" name="sort">
+                        <span>Delivery Time</span>
+                    </label>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Cuisines</h4>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" checked>
+                        <span>Italian</span>
+                    </label>
+                    <label class="custom-checkbox">
+                        <input type="checkbox">
+                        <span>Chinese</span>
+                    </label>
+                    <label class="custom-checkbox">
+                        <input type="checkbox">
+                        <span>Mexican</span>
+                    </label>
+                    <label class="custom-checkbox">
+                        <input type="checkbox">
+                        <span>Indian</span>
+                    </label>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Price Range</h4>
+                    <div class="price-pills">
+                        <button class="price-pill">$</button>
+                        <button class="price-pill active">$$</button>
+                        <button class="price-pill">$$$</button>
+                        <button class="price-pill">$$$$</button>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Ratings</h4>
+                    <label class="custom-checkbox">
+                        <input type="checkbox">
+                        <span>4.5+ <i class="fas fa-star gold"></i></span>
+                    </label>
+                    <label class="custom-checkbox">
+                        <input type="checkbox">
+                        <span>4.0+ <i class="fas fa-star gold"></i></span>
+                    </label>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Offers</h4>
+                    <label class="custom-checkbox">
+                        <input type="checkbox">
+                        <span>Free Delivery</span>
+                    </label>
+                    <label class="custom-checkbox">
+                        <input type="checkbox">
+                        <span>Buy 1 Get 1</span>
+                    </label>
+                </div>
+            </aside>
+
+            <!-- Results Grid -->
+            <div class="results-area">
+                <div class="results-header">
+                    <h2>Found 12 restaurants for "Pizza"</h2>
+                </div>
+
+                <div class="restaurant-grid">
+                    <!-- Result 1 (Pizza Palace) -->
+                    <div class="res-card" onclick="window.location.href='restaurant.html'">
+                        <div class="res-image" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80');">
+                            <span class="rating"><i class="fas fa-star"></i> 4.8</span>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                        <div class="res-info">
+                            <h4>Pizza Palace</h4>
+                            <p>Italian • Pizzas • Fast Food</p>
+                            <div class="res-meta">
+                                <span><i class="far fa-clock"></i> 20-30 min</span>
+                                <span>•</span>
+                                <span>$200 for two</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result 2 -->
+                    <div class="res-card">
+                        <div class="res-image" style="background-image: url('https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&w=400&q=80');">
+                            <span class="rating"><i class="fas fa-star"></i> 4.6</span>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                            <span class="offer-tag">50% OFF</span>
+                        </div>
+                        <div class="res-info">
+                            <h4>The Oven Story</h4>
+                            <p>Italian • Pizzas • Desserts</p>
+                            <div class="res-meta">
+                                <span><i class="far fa-clock"></i> 30-40 min</span>
+                                <span>•</span>
+                                <span>$250 for two</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result 3 -->
+                    <div class="res-card">
+                        <div class="res-image" style="background-image: url('https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?auto=format&fit=crop&w=400&q=80');">
+                            <span class="rating"><i class="fas fa-star"></i> 4.3</span>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                        <div class="res-info">
+                            <h4>Mama Mia Pizzeria</h4>
+                            <p>Italian • Wood-fired • Pasta</p>
+                            <div class="res-meta">
+                                <span><i class="far fa-clock"></i> 40-50 min</span>
+                                <span>•</span>
+                                <span>$400 for two</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result 4 -->
+                    <div class="res-card">
+                        <div class="res-image" style="background-image: url('https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=400&q=80');">
+                            <span class="rating"><i class="fas fa-star"></i> 4.1</span>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                            <span class="offer-tag">Free Delivery</span>
+                        </div>
+                        <div class="res-info">
+                            <h4>Quick Slice</h4>
+                            <p>Fast Food • Pizzas • Shakes</p>
+                            <div class="res-meta">
+                                <span><i class="far fa-clock"></i> 15-25 min</span>
+                                <span>•</span>
+                                <span>$150 for two</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

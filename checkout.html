@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | CraveDash</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <!-- Header -->
+    <header class="dash-header glass">
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='dashboard.html'" style="cursor: pointer;">
+                <i class="fas fa-utensils"></i>
+                <span>CraveDash</span>
+            </div>
+            
+            <div class="checkout-steps">
+                <div class="step completed"><i class="fas fa-check"></i><span>Cart</span></div>
+                <div class="step active"><span>2</span><span>Checkout</span></div>
+                <div class="step"><span>3</span><span>Payment</span></div>
+            </div>
+
+            <div class="user-actions">
+                <div class="user-profile" onclick="window.location.href='profile.html'" style="cursor: pointer;">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="checkout-content">
+        <div class="checkout-grid">
+            <!-- Left Column: Address & Payment -->
+            <div class="checkout-main">
+                <!-- Address Section -->
+                <section class="checkout-section glass">
+                    <div class="section-title">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Delivery Address</h3>
+                    </div>
+                    <div class="address-cards">
+                        <div class="address-card active">
+                            <div class="addr-header">
+                                <span class="tag">Home</span>
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <p class="name">John Doe</p>
+                            <p class="addr">123 Skyline Avenue, Apt 4B, Manhattan, New York - 10001</p>
+                            <p class="phone">+1 234 567 890</p>
+                            <button class="btn-text">DELIVER HERE</button>
+                        </div>
+                        <div class="address-card add-new">
+                            <i class="fas fa-plus"></i>
+                            <span>Add New Address</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Payment Section -->
+                <section class="checkout-section glass">
+                    <div class="section-title">
+                        <i class="fas fa-credit-card"></i>
+                        <h3>Payment Method</h3>
+                    </div>
+                    <div class="payment-options">
+                        <div class="pay-option">
+                            <input type="radio" name="payment" id="card" checked>
+                            <label for="card">
+                                <i class="far fa-credit-card"></i>
+                                <span>Credit / Debit Card</span>
+                                <div class="card-icons">
+                                    <i class="fab fa-cc-visa"></i>
+                                    <i class="fab fa-cc-mastercard"></i>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="pay-option">
+                            <input type="radio" name="payment" id="upi">
+                            <label for="upi">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>UPI (Google Pay / PhonePe)</span>
+                            </label>
+                        </div>
+                        <div class="pay-option">
+                            <input type="radio" name="payment" id="cod">
+                            <label for="cod">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <span>Cash on Delivery</span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: Order Summary -->
+            <aside class="checkout-sidebar">
+                <div class="summary-card glass">
+                    <h3>Order Summary</h3>
+                    <div class="res-mini-info">
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=60&q=80" alt="Pizza Palace">
+                        <div>
+                            <h4>Pizza Palace</h4>
+                            <p>Manhattan, NY</p>
+                        </div>
+                    </div>
+
+                    <div class="order-items">
+                        <div class="order-item">
+                            <div class="item-qty">1 x</div>
+                            <div class="item-name">Classic Margherita Pizza</div>
+                            <div class="item-price">$12.99</div>
+                        </div>
+                    </div>
+
+                    <div class="coupon-box">
+                        <input type="text" placeholder="Enter promo code">
+                        <button>APPLY</button>
+                    </div>
+
+                    <div class="bill-details">
+                        <div class="bill-row">
+                            <span>Item Total</span>
+                            <span>$12.99</span>
+                        </div>
+                        <div class="bill-row">
+                            <span>Delivery Fee</span>
+                            <span class="free">FREE</span>
+                        </div>
+                        <div class="bill-row">
+                            <span>Taxes & Charges</span>
+                            <span>$1.50</span>
+                        </div>
+                        <div class="bill-total">
+                            <span>Total Payable</span>
+                            <span>$14.49</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary btn-block" id="placeOrder">
+                        PLACE ORDER
+                    </button>
+                    <p class="policy-text">By placing the order, you agree to CraveDash's Terms & Conditions.</p>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Success Overlay (Hidden by default) -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="order-success-card">
+            <div class="success-icon-animated">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2>Order Placed!</h2>
+            <p>Your gourmet meal from <strong>Pizza Palace</strong> is being prepared with love. Hang tight!</p>
+            <div class="order-id" style="margin: 1.5rem 0; font-weight: 700; color: var(--accent);">Order ID: #CD-88291</div>
+            <button class="btn-primary btn-block" onclick="window.location.href='tracking.html'">
+                TRACK YOUR ORDER
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

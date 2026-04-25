@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Palace | CraveDash</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <!-- Header (Same as Dashboard) -->
+    <header class="dash-header glass">
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='dashboard.html'" style="cursor: pointer;">
+                <i class="fas fa-utensils"></i>
+                <span>CraveDash</span>
+            </div>
+            
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search in Pizza Palace menu...">
+            </div>
+
+            <div class="user-actions">
+                <button class="cart-btn">
+                    <i class="fas fa-shopping-basket"></i>
+                    <span class="badge" id="cartCount">0</span>
+                </button>
+                <div class="user-profile" onclick="window.location.href='profile.html'" style="cursor: pointer;">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="res-details-content">
+        <!-- Restaurant Hero -->
+        <section class="res-hero">
+            <div class="res-banner" style="background-image: url('assets/restaurant_bg.png');">
+                <div class="banner-overlay"></div>
+                <div class="res-header-info">
+                    <div class="res-badge">Pure Veg</div>
+                    <h1>Pizza Palace</h1>
+                    <p>Italian • Pizzas • Fast Food</p>
+                    <div class="res-stats">
+                        <div class="stat"><i class="fas fa-star"></i> 4.8 (500+ ratings)</div>
+                        <div class="stat"><i class="far fa-clock"></i> 20-30 min</div>
+                        <div class="stat"><i class="fas fa-wallet"></i> $200 for two</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabs Switcher -->
+        <div class="res-tabs-container">
+            <div class="res-tabs">
+                <button class="tab-btn active" data-tab="menu">Menu</button>
+                <button class="tab-btn" data-tab="reviews">Reviews</button>
+                <button class="tab-btn" data-tab="info">About</button>
+            </div>
+        </div>
+
+        <!-- Menu Section (Existing) -->
+        <div class="tab-content active" id="menu-tab">
+            <div class="menu-layout">
+            <!-- Sidebar Navigation -->
+            <aside class="menu-sidebar">
+                <nav class="sticky-nav">
+                    <ul>
+                        <li><a href="#best-sellers" class="active">Best Sellers</a></li>
+                        <li><a href="#classic-pizzas">Classic Pizzas</a></li>
+                        <li><a href="#gourmet-pizzas">Gourmet Pizzas</a></li>
+                        <li><a href="#sides">Sides & Extras</a></li>
+                        <li><a href="#beverages">Beverages</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Menu Items -->
+            <section class="menu-items">
+                <div id="best-sellers" class="menu-category">
+                    <h3>Best Sellers</h3>
+                    <div class="menu-list">
+                        <!-- Item 1 -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Classic Margherita Pizza</h4>
+                                <span class="price">$12.99</span>
+                                <p>Authentic Italian thin crust pizza with house-made tomato sauce, fresh mozzarella, and aromatic basil.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1574071318508-1cdbad80ad38?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle non-veg-icon"></i>
+                                <h4>Double Pepperoni Pizza</h4>
+                                <span class="price">$15.99</span>
+                                <p>Loaded with extra pepperoni slices and melting mozzarella on a classic sourdough base.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="classic-pizzas" class="menu-category">
+                    <h3>Classic Pizzas</h3>
+                    <div class="menu-list">
+                        <!-- Item 3 -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Farm Fresh Pizza</h4>
+                                <span class="price">$13.99</span>
+                                <p>Topped with crunchy bell peppers, onions, mushrooms, and sweet corn on a cheese-burst crust.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Reviews Section (New) -->
+        <div class="tab-content" id="reviews-tab">
+            <div class="reviews-layout">
+                <!-- Rating Summary -->
+                <aside class="rating-summary-sidebar glass">
+                    <div class="overall-rating">
+                        <span class="big-score">4.8</span>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>Based on 542 reviews</p>
+                    </div>
+                    <div class="rating-breakdown">
+                        <div class="breakdown-row">
+                            <span>5 <i class="fas fa-star"></i></span>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 85%;"></div></div>
+                            <span>85%</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>4 <i class="fas fa-star"></i></span>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 10%;"></div></div>
+                            <span>10%</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>3 <i class="fas fa-star"></i></span>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 3%;"></div></div>
+                            <span>3%</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>2 <i class="fas fa-star"></i></span>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 1%;"></div></div>
+                            <span>1%</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>1 <i class="fas fa-star"></i></span>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 1%;"></div></div>
+                            <span>1%</span>
+                        </div>
+                    </div>
+                    <button class="btn-primary btn-block">Write a Review</button>
+                </aside>
+
+                <!-- Reviews Feed -->
+                <div class="reviews-feed">
+                    <!-- Review 1 -->
+                    <div class="review-card glass">
+                        <div class="review-header">
+                            <img src="https://ui-avatars.com/api/?name=Sarah+M&background=FFB800&color=fff" alt="Sarah M">
+                            <div class="reviewer-info">
+                                <h4>Sarah Miller</h4>
+                                <p>58 reviews • 12 followers</p>
+                            </div>
+                            <div class="review-rating">
+                                <span class="badge-rating">5.0 <i class="fas fa-star"></i></span>
+                                <span class="review-date">2 days ago</span>
+                            </div>
+                        </div>
+                        <div class="review-body">
+                            <p>The best Margherita I've had in years! The crust was perfectly crispy and the ingredients felt incredibly fresh. Definitely my new go-to spot for Italian cravings. Highly recommended!</p>
+                        </div>
+                        <div class="review-footer">
+                            <button class="btn-text-small"><i class="far fa-thumbs-up"></i> Helpful</button>
+                            <button class="btn-text-small"><i class="far fa-comment"></i> Comment</button>
+                            <button class="btn-text-small"><i class="far fa-share-square"></i> Share</button>
+                        </div>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div class="review-card glass">
+                        <div class="review-header">
+                            <img src="https://ui-avatars.com/api/?name=Mark+D&background=10B981&color=fff" alt="Mark D">
+                            <div class="reviewer-info">
+                                <h4>Mark Davis</h4>
+                                <p>12 reviews • 3 followers</p>
+                            </div>
+                            <div class="review-rating">
+                                <span class="badge-rating">4.0 <i class="fas fa-star"></i></span>
+                                <span class="review-date">1 week ago</span>
+                            </div>
+                        </div>
+                        <div class="review-body">
+                            <p>Great flavor but the delivery took a bit longer than expected. However, the food was still warm when it arrived. The Pepperoni pizza is a must-try!</p>
+                        </div>
+                        <div class="review-footer">
+                            <button class="btn-text-small"><i class="far fa-thumbs-up"></i> Helpful</button>
+                            <button class="btn-text-small"><i class="far fa-comment"></i> Comment</button>
+                            <button class="btn-text-small"><i class="far fa-share-square"></i> Share</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Cart Bar (Visible when items added) -->
+    <div class="floating-cart glass" id="floatingCart">
+        <div class="cart-summary">
+            <span id="itemsAdded">1 Item added</span>
+            <span class="total">Total: $12.99</span>
+        </div>
+        <button class="view-cart-btn" onclick="window.location.href='checkout.html'">
+            View Cart <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

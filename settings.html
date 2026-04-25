@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings | CraveDash</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <!-- Header -->
+    <header class="dash-header glass">
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='dashboard.html'" style="cursor: pointer;">
+                <i class="fas fa-utensils"></i>
+                <span>CraveDash</span>
+            </div>
+            
+            <div class="user-actions">
+                <button class="cart-btn" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-home"></i>
+                </button>
+                <div class="user-profile" onclick="window.location.href='profile.html'" style="cursor: pointer;">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="settings-content">
+        <div class="settings-container">
+            <aside class="settings-sidebar glass">
+                <h2>Settings</h2>
+                <nav class="settings-nav">
+                    <ul>
+                        <li class="active" data-section="profile"><i class="fas fa-user"></i> Profile</li>
+                        <li data-section="notifications"><i class="fas fa-bell"></i> Notifications</li>
+                        <li data-section="security"><i class="fas fa-shield-alt"></i> Security</li>
+                        <li data-section="preferences"><i class="fas fa-sliders-h"></i> Preferences</li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <div class="settings-main glass">
+                <!-- Profile Section -->
+                <section id="profile-section" class="settings-section active">
+                    <h3>Personal Information</h3>
+                    <form class="settings-form" id="profileForm">
+                        <div class="profile-upload">
+                            <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="Avatar">
+                            <button type="button" class="btn-text-small">Change Photo</button>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" value="John Doe" placeholder="Your name">
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" value="john.doe@example.com" placeholder="Your email">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" value="+1 234 567 890" placeholder="Your phone">
+                            </div>
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" value="New York, USA" placeholder="Your city">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary">Save Changes</button>
+                    </form>
+                </section>
+
+                <!-- Notifications Section -->
+                <section id="notifications-section" class="settings-section">
+                    <h3>Notification Preferences</h3>
+                    <p class="section-desc">Manage how you receive updates and promotions.</p>
+                    <div class="toggle-list">
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <h4>Order Updates</h4>
+                                <p>Receive real-time status updates on your orders.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <h4>Promotional Emails</h4>
+                                <p>Get notified about exclusive discounts and offers.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <h4>Membership Alerts</h4>
+                                <p>Stay updated on your CraveGold benefits.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Security Section -->
+                <section id="security-section" class="settings-section">
+                    <h3>Account Security</h3>
+                    <div class="security-card glass">
+                        <div class="security-info">
+                            <i class="fas fa-lock"></i>
+                            <div>
+                                <h4>Change Password</h4>
+                                <p>Last changed 3 months ago</p>
+                            </div>
+                        </div>
+                        <button class="btn-outline-small">Update</button>
+                    </div>
+                    <div class="security-card glass">
+                        <div class="security-info">
+                            <i class="fas fa-mobile-alt"></i>
+                            <div>
+                                <h4>Two-Factor Authentication</h4>
+                                <p>Currently disabled</p>
+                            </div>
+                        </div>
+                        <button class="btn-outline-small">Enable</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -37,7 +37,7 @@
                     <i class="fas fa-shopping-basket"></i>
                     <span class="badge">2</span>
                 </button>
-                <div class="user-profile">
+                <div class="user-profile" onclick="window.location.href='profile.html'" style="cursor: pointer;">
                     <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="Profile">
                 </div>
             </div>
@@ -61,33 +61,29 @@
         <section class="categories-section">
             <h3>Cuisines to explore</h3>
             <div class="categories-grid">
-                <div class="category-card active">
+                <div class="category-card active" data-category="all">
                     <div class="cat-icon"><i class="fas fa-th-large"></i></div>
                     <span>All</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" data-category="pizza">
                     <div class="cat-icon"><i class="fas fa-pizza-slice"></i></div>
                     <span>Pizza</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" data-category="burgers">
                     <div class="cat-icon"><i class="fas fa-hamburger"></i></div>
                     <span>Burgers</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" data-category="sushi">
                     <div class="cat-icon"><i class="fas fa-fish"></i></div>
                     <span>Sushi</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" data-category="desserts">
                     <div class="cat-icon"><i class="fas fa-ice-cream"></i></div>
                     <span>Desserts</span>
                 </div>
-                <div class="category-card">
+                <div class="category-card" data-category="healthy">
                     <div class="cat-icon"><i class="fas fa-leaf"></i></div>
                     <span>Healthy</span>
-                </div>
-                <div class="category-card">
-                    <div class="cat-icon"><i class="fas fa-coffee"></i></div>
-                    <span>Coffee</span>
                 </div>
             </div>
         </section>
@@ -99,9 +95,16 @@
                 <a href="#" class="view-all">View All <i class="fas fa-chevron-right"></i></a>
             </div>
             
-            <div class="restaurant-grid">
+            <!-- Skeleton Grid (Initial Loading) -->
+            <div id="skeletonGrid" class="skeleton-grid">
+                <div class="skeleton-card"><div class="skeleton-shimmer"></div><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                <div class="skeleton-card"><div class="skeleton-shimmer"></div><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+                <div class="skeleton-card"><div class="skeleton-shimmer"></div><div class="skeleton-image"></div><div class="skeleton-info"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+            </div>
+
+            <div id="restaurantGrid" class="restaurant-grid hidden">
                 <!-- Restaurant 1 -->
-                <div class="res-card">
+                <div class="res-card" onclick="window.location.href='restaurant.html'">
                     <div class="res-image" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80');">
                         <span class="rating"><i class="fas fa-star"></i> 4.8</span>
                         <button class="wishlist"><i class="far fa-heart"></i></button>

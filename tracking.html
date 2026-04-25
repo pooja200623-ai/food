@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order | CraveDash</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <!-- Header -->
+    <header class="dash-header glass">
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='dashboard.html'" style="cursor: pointer;">
+                <i class="fas fa-utensils"></i>
+                <span>CraveDash</span>
+            </div>
+            
+            <div class="tracking-title">
+                <h2>Order #CD-88291</h2>
+                <span>Arriving in 18 mins</span>
+            </div>
+
+            <div class="user-actions">
+                <button class="help-btn" onclick="window.location.href='help.html'">Help</button>
+                <div class="user-profile" onclick="window.location.href='profile.html'" style="cursor: pointer;">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="tracking-content">
+        <div class="tracking-grid">
+            <!-- Left: Map View -->
+            <div class="map-section glass">
+                <div class="map-placeholder" style="background-image: url('assets/map.png');">
+                    <div class="bike-marker">
+                        <i class="fas fa-motorcycle"></i>
+                    </div>
+                    <div class="user-marker">
+                        <i class="fas fa-home"></i>
+                    </div>
+                </div>
+                <div class="delivery-card glass">
+                    <div class="partner-info">
+                        <img src="https://ui-avatars.com/api/?name=Alex+R&background=FFB800&color=fff" alt="Delivery Partner">
+                        <div>
+                            <h4>Alex Rodriguez</h4>
+                            <p><i class="fas fa-star"></i> 4.9 • Delivery Partner</p>
+                        </div>
+                    </div>
+                    <div class="partner-actions">
+                        <button class="btn-icon"><i class="fas fa-phone-alt"></i></button>
+                        <button class="btn-icon"><i class="fas fa-comment-dots"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Status Timeline -->
+            <aside class="status-sidebar glass">
+                <h3>Order Status</h3>
+                <div class="timeline">
+                    <div class="timeline-item completed">
+                        <div class="time-marker"><i class="fas fa-check"></i></div>
+                        <div class="time-content">
+                            <h4>Order Confirmed</h4>
+                            <p>Today, 9:45 PM</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item active">
+                        <div class="time-marker"><div class="pulse"></div></div>
+                        <div class="time-content">
+                            <h4>Preparing your meal</h4>
+                            <p>Pizza Palace is preparing your order</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item pending">
+                        <div class="time-marker"></div>
+                        <div class="time-content">
+                            <h4>Out for delivery</h4>
+                            <p>Your delivery partner is on the way</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item pending">
+                        <div class="time-marker"></div>
+                        <div class="time-content">
+                            <h4>Delivered</h4>
+                            <p>Enjoy your gourmet meal!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-mini-summary">
+                    <h4>Order From</h4>
+                    <p>Pizza Palace • 1 Item</p>
+                    <a href="#" class="view-details">View Details</a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center | CraveDash</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <!-- Header -->
+    <header class="dash-header glass">
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='dashboard.html'" style="cursor: pointer;">
+                <i class="fas fa-utensils"></i>
+                <span>CraveDash</span>
+            </div>
+            
+            <div class="user-actions">
+                <button class="cart-btn" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-home"></i>
+                </button>
+                <div class="user-profile" onclick="window.location.href='profile.html'" style="cursor: pointer;">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="help-content">
+        <!-- Hero Section -->
+        <section class="help-hero">
+            <h1>How can we help you today?</h1>
+            <div class="help-search-large">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search for articles, topics, or issues...">
+            </div>
+        </section>
+
+        <!-- Category Grid -->
+        <section class="help-categories">
+            <div class="help-cat-card glass">
+                <i class="fas fa-box-open"></i>
+                <h3>Orders</h3>
+                <p>Tracking, cancellations, and order issues.</p>
+            </div>
+            <div class="help-cat-card glass">
+                <i class="fas fa-credit-card"></i>
+                <h3>Payments</h3>
+                <p>Refunds, payment methods, and billing.</p>
+            </div>
+            <div class="help-cat-card glass">
+                <i class="fas fa-user-circle"></i>
+                <h3>Account</h3>
+                <p>Security, profile settings, and login.</p>
+            </div>
+            <div class="help-cat-card glass">
+                <i class="fas fa-crown"></i>
+                <h3>CraveGold</h3>
+                <p>Membership benefits and subscriptions.</p>
+            </div>
+        </section>
+
+        <div class="help-main-grid">
+            <!-- FAQ Section -->
+            <section class="faq-section glass">
+                <h2>Frequently Asked Questions</h2>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>How do I track my order?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>You can track your order in real-time by clicking the "Track Order" button in your order history or the success confirmation page. We provide live updates on the preparation and delivery partner's progress.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>Can I cancel my order?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Orders can be cancelled within 60 seconds of placement. After this period, the restaurant begins preparing your meal, and cancellation may not be possible.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>What are the benefits of CraveGold?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="accordion-body">
+                            <p>CraveGold members enjoy unlimited free delivery on orders over $15, exclusive discounts at top-rated restaurants, and priority customer support.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="contact-section glass">
+                <h2>Still need help?</h2>
+                <p>Send us a message and our team will get back to you within 24 hours.</p>
+                <form id="supportForm" class="support-form">
+                    <div class="form-group">
+                        <label>Issue Category</label>
+                        <select required>
+                            <option value="">Select a category</option>
+                            <option value="order">Order Issue</option>
+                            <option value="payment">Payment/Refund</option>
+                            <option value="tech">Technical Problem</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea placeholder="Describe your issue in detail..." rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary btn-block">SEND MESSAGE</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

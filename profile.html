@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | CraveDash</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <!-- Header -->
+    <header class="dash-header glass">
+        <div class="nav-container">
+            <div class="logo" onclick="window.location.href='dashboard.html'" style="cursor: pointer;">
+                <i class="fas fa-utensils"></i>
+                <span>CraveDash</span>
+            </div>
+            
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search orders, addresses...">
+            </div>
+
+            <div class="user-actions">
+                <button class="cart-btn" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-home"></i>
+                </button>
+                <div class="user-profile active">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="profile-content">
+        <div class="profile-grid">
+            <!-- Left Sidebar: Navigation Tabs -->
+            <aside class="profile-sidebar glass">
+                <div class="user-info-brief">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="John Doe">
+                    <h3>John Doe</h3>
+                    <p>john.doe@example.com</p>
+                </div>
+                <nav class="profile-nav">
+                    <ul>
+                        <li class="active"><i class="fas fa-history"></i> Order History</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Saved Addresses</li>
+                        <li><i class="fas fa-credit-card"></i> Payments</li>
+                        <li onclick="window.location.href='referral.html'" style="cursor: pointer;"><i class="fas fa-gift"></i> Refer & Earn</li>
+                        <li onclick="window.location.href='settings.html'" style="cursor: pointer;"><i class="fas fa-cog"></i> Account Settings</li>
+                        <li class="logout"><i class="fas fa-sign-out-alt"></i> Logout</li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content Area -->
+            <div class="profile-main">
+                <!-- Membership Card -->
+                <section class="membership-card">
+                    <div class="gold-gradient-bg"></div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <span class="gold-badge">CRAVE GOLD</span>
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h2>Unlock Free Delivery & Premium Offers</h2>
+                        <p>Join 2M+ members and save an average of $50 per month on your gourmet orders.</p>
+                        <button class="btn-gold">Upgrade Now</button>
+                    </div>
+                </section>
+
+                <!-- Recent Orders -->
+                <section class="orders-section glass">
+                    <div class="section-header">
+                        <h3>Recent Orders</h3>
+                        <a href="#" class="view-all">View all orders</a>
+                    </div>
+                    <div class="orders-list">
+                        <!-- Order 1 -->
+                        <div class="order-history-card">
+                            <div class="order-header">
+                                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=50&q=80" alt="Pizza Palace">
+                                <div class="order-id-info">
+                                    <h4>Pizza Palace</h4>
+                                    <p>Order #CD-88291 • Today, 9:45 PM</p>
+                                </div>
+                                <div class="order-status preparing">Preparing</div>
+                            </div>
+                            <div class="order-body">
+                                <p>1 x Classic Margherita Pizza</p>
+                                <div class="order-footer">
+                                    <span class="total">Total: $14.49</span>
+                                    <button class="btn-outline-small">Reorder</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Order 2 -->
+                        <div class="order-history-card">
+                            <div class="order-header">
+                                <img src="https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=50&q=80" alt="Sushi Zen">
+                                <div class="order-id-info">
+                                    <h4>Sushi Zen</h4>
+                                    <p>Order #CD-77120 • 23 Apr, 1:30 PM</p>
+                                </div>
+                                <div class="order-status delivered">Delivered</div>
+                            </div>
+                            <div class="order-body">
+                                <p>2 x Salmon Nigiri, 1 x Miso Soup</p>
+                                <div class="order-footer">
+                                    <span class="total">Total: $32.50</span>
+                                    <button class="btn-outline-small">Reorder</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
