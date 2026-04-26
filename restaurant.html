@@ -131,9 +131,12 @@
                 <nav class="sticky-nav">
                     <ul>
                         <li><a href="#best-sellers" class="active">Best Sellers</a></li>
-                        <li><a href="#classic-pizzas">Classic Pizzas</a></li>
-                        <li><a href="#gourmet-pizzas">Gourmet Pizzas</a></li>
+                        <li><a href="#pizzas">Pizzas</a></li>
+                        <li><a href="#burgers">Burgers & Sandwiches</a></li>
+                        <li><a href="#pasta">Pasta & Mains</a></li>
+                        <li><a href="#indian">Indian Specialties</a></li>
                         <li><a href="#sides">Sides & Extras</a></li>
+                        <li><a href="#desserts">Desserts</a></li>
                         <li><a href="#beverages">Beverages</a></li>
                     </ul>
                 </nav>
@@ -174,10 +177,10 @@
                     </div>
                 </div>
 
-                <div id="gourmet-pizzas" class="menu-category">
-                    <h3>Gourmet Pizzas</h3>
+                <div id="pizzas" class="menu-category">
+                    <h3>Gourmet & Classic Pizzas</h3>
                     <div class="menu-list">
-                        <!-- Item 4 -->
+                        <!-- Gourmet Pizza Items -->
                         <div class="menu-item-card">
                             <div class="item-info">
                                 <i class="far fa-dot-circle veg-icon"></i>
@@ -191,7 +194,6 @@
                             </div>
                         </div>
 
-                        <!-- Item 5 -->
                         <div class="menu-item-card">
                             <div class="item-info">
                                 <i class="far fa-dot-circle non-veg-icon"></i>
@@ -204,13 +206,7 @@
                                 <button class="btn-add" onclick="updateCart(1)">ADD</button>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div id="classic-pizzas" class="menu-category">
-                    <h3>Classic Pizzas</h3>
-                    <div class="menu-list">
-                        <!-- Item 3 -->
                         <div class="menu-item-card">
                             <div class="item-info">
                                 <i class="far fa-dot-circle veg-icon"></i>
@@ -220,6 +216,147 @@
                             </div>
                             <div class="item-action">
                                 <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="burgers" class="menu-category">
+                    <h3>Burgers & Sandwiches</h3>
+                    <div class="menu-list">
+                        <!-- Item: The Classic Beast -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle non-veg-icon"></i>
+                                <h4>The Classic Beast Burger</h4>
+                                <span class="price">₹399</span>
+                                <p>Double succulent lamb patty, caramelized onions, aged cheddar, and our secret smoked sauce.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+
+                        <!-- Item: Truffle Mushroom Swiss -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Truffle Mushroom Swiss</h4>
+                                <span class="price">₹349</span>
+                                <p>Gourmet mushroom patty, swiss cheese, and a hint of white truffle oil on a brioche bun.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1520072959219-c595dc870360?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+
+                        <!-- Item: Grilled Pesto Chicken Sandwich -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle non-veg-icon"></i>
+                                <h4>Grilled Pesto Chicken Sandwich</h4>
+                                <span class="price">₹299</span>
+                                <p>Herb-marinated chicken breast, fresh basil pesto, and sun-dried tomatoes in sourdough bread.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pasta" class="menu-category">
+                    <h3>Pasta & Mains</h3>
+                    <div class="menu-list">
+                        <!-- Item: Creamy Alfredo -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Creamy Alfredo Pasta</h4>
+                                <span class="price">₹389</span>
+                                <p>Fettuccine tossed in a rich parmesan cream sauce with sautéed mushrooms and herbs.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1645112481338-3562479f67a2?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+
+                        <!-- Item: Spicy Arrabbiata -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Spicy Penne Arrabbiata</h4>
+                                <span class="price">₹359</span>
+                                <p>Penne pasta in a fiery tomato sauce with garlic, chili flakes, and fresh parsley.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+
+                        <!-- Item: Grilled Salmon -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle non-veg-icon"></i>
+                                <h4>Lemon Butter Grilled Salmon</h4>
+                                <span class="price">₹899</span>
+                                <p>Fresh Atlantic salmon fillet grilled to perfection, served with lemon butter sauce and grilled asparagus.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="indian" class="menu-category">
+                    <h3>Indian Specialties</h3>
+                    <div class="menu-list">
+                        <!-- Item: Butter Chicken -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle non-veg-icon"></i>
+                                <h4>Butter Chicken Deluxe</h4>
+                                <span class="price">₹549</span>
+                                <p>Tender tandoori chicken cooked in a rich, creamy tomato and butter gravy.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1603894584115-f73f2ec04576?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+
+                        <!-- Item: Dal Makhani -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Slow-Cooked Dal Makhani</h4>
+                                <span class="price">₹399</span>
+                                <p>Black lentils simmered overnight with spices, cream, and butter for a velvety texture.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+
+                        <!-- Item: Garlic Naan -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Garlic & Herbs Naan</h4>
+                                <span class="price">₹99</span>
+                                <p>Soft, leavened flatbread topped with minced garlic and fresh coriander.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=200&q=80');"></div>
                                 <button class="btn-add" onclick="updateCart(1)">ADD</button>
                             </div>
                         </div>
@@ -259,10 +396,43 @@
                     </div>
                 </div>
 
+                <div id="desserts" class="menu-category">
+                    <h3>Desserts</h3>
+                    <div class="menu-list">
+                        <!-- Item: Brownie -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Sizzling Brownie with Ice Cream</h4>
+                                <span class="price">₹249</span>
+                                <p>Warm chocolate brownie served on a sizzler plate with vanilla ice cream and hot fudge.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1564355808539-22fda35bed7e?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+
+                        <!-- Item: Gulab Jamun -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Premium Gulab Jamun (2 Pcs)</h4>
+                                <span class="price">₹149</span>
+                                <p>Soft khoya balls fried and soaked in cardamom-flavored sugar syrup.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1589119908995-c6837fa14848?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="beverages" class="menu-category">
                     <h3>Beverages</h3>
                     <div class="menu-list">
-                        <!-- Item 8 -->
+                        <!-- Item: Mango Lassi -->
                         <div class="menu-item-card">
                             <div class="item-info">
                                 <i class="far fa-dot-circle veg-icon"></i>
@@ -272,6 +442,20 @@
                             </div>
                             <div class="item-action">
                                 <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+
+                        <!-- Item: Cold Coffee -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Iced Caramel Macchiato</h4>
+                                <span class="price">₹199</span>
+                                <p>Smooth espresso blended with milk and caramel syrup, served over ice.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=200&q=80');"></div>
                                 <button class="btn-add" onclick="updateCart(1)">ADD</button>
                             </div>
                         </div>
