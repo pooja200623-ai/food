@@ -13,12 +13,67 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dashboard-body">
-    <!-- Header (Same as Dashboard) -->
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar-nav">
+        <div class="logo">
+            <i class="fas fa-utensils"></i>
+            <span>CraveDash</span>
+        </div>
+
+        <nav class="nav-group">
+            <span class="nav-label">Menu</span>
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fas fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="search.html" class="sidebar-link">
+                <i class="fas fa-search"></i>
+                <span>Explore</span>
+            </a>
+            <a href="tracking.html" class="sidebar-link">
+                <i class="fas fa-clock-rotate-left"></i>
+                <span>Orders</span>
+            </a>
+            <a href="referral.html" class="sidebar-link">
+                <i class="fas fa-gift"></i>
+                <span>Refer & Earn</span>
+            </a>
+        </nav>
+
+        <nav class="nav-group">
+            <span class="nav-label">Account</span>
+            <a href="profile.html" class="sidebar-link">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+            <a href="settings.html" class="sidebar-link">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <a href="help.html" class="sidebar-link">
+                <i class="fas fa-headset"></i>
+                <span>Support</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="promo-card">
+                <h4>CraveDash Pro</h4>
+                <p>Get free delivery on every order!</p>
+                <button class="btn-primary btn-sidebar">Upgrade Now</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Header -->
     <header class="dash-header glass">
         <div class="nav-container">
-            <div class="logo" onclick="window.location.href='dashboard.html'" style="cursor: pointer;">
-                <i class="fas fa-utensils"></i>
-                <span>CraveDash</span>
+            <div class="header-left">
+                <div class="location-picker">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>New York, USA</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
             </div>
             
             <div class="search-bar">
@@ -50,7 +105,7 @@
                     <div class="res-stats">
                         <div class="stat"><i class="fas fa-star"></i> 4.8 (500+ ratings)</div>
                         <div class="stat"><i class="far fa-clock"></i> 20-30 min</div>
-                        <div class="stat"><i class="fas fa-wallet"></i> $200 for two</div>
+                        <div class="stat"><i class="fas fa-wallet"></i> ₹400 for two</div>
                     </div>
                 </div>
             </div>
@@ -91,7 +146,7 @@
                             <div class="item-info">
                                 <i class="far fa-dot-circle veg-icon"></i>
                                 <h4>Classic Margherita Pizza</h4>
-                                <span class="price">$12.99</span>
+                                <span class="price">₹349</span>
                                 <p>Authentic Italian thin crust pizza with house-made tomato sauce, fresh mozzarella, and aromatic basil.</p>
                             </div>
                             <div class="item-action">
@@ -105,11 +160,44 @@
                             <div class="item-info">
                                 <i class="far fa-dot-circle non-veg-icon"></i>
                                 <h4>Double Pepperoni Pizza</h4>
-                                <span class="price">$15.99</span>
+                                <span class="price">₹599</span>
                                 <p>Loaded with extra pepperoni slices and melting mozzarella on a classic sourdough base.</p>
                             </div>
                             <div class="item-action">
                                 <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="gourmet-pizzas" class="menu-category">
+                    <h3>Gourmet Pizzas</h3>
+                    <div class="menu-list">
+                        <!-- Item 4 -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Paneer Tikka Pizza</h4>
+                                <span class="price">₹499</span>
+                                <p>Marinated paneer cubes, capsicum, onion, and spicy tikka sauce for an Indian twist.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 5 -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle non-veg-icon"></i>
+                                <h4>Peri Peri Chicken Pizza</h4>
+                                <span class="price">₹649</span>
+                                <p>Fiery peri-peri chicken, red paprika, and onions on a bed of cheesy mozzarella.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=200&q=80');"></div>
                                 <button class="btn-add" onclick="updateCart(1)">ADD</button>
                             </div>
                         </div>
@@ -124,11 +212,77 @@
                             <div class="item-info">
                                 <i class="far fa-dot-circle veg-icon"></i>
                                 <h4>Farm Fresh Pizza</h4>
-                                <span class="price">$13.99</span>
+                                <span class="price">₹429</span>
                                 <p>Topped with crunchy bell peppers, onions, mushrooms, and sweet corn on a cheese-burst crust.</p>
                             </div>
                             <div class="item-action">
                                 <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sides" class="menu-category">
+                    <h3>Sides & Extras</h3>
+                    <div class="menu-list">
+                        <!-- Item 6 -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Stuffed Garlic Bread</h4>
+                                <span class="price">₹199</span>
+                                <p>Freshly baked garlic bread stuffed with melted cheese and sweet corn.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1619860860774-1e2e17343432?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 7 -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle non-veg-icon"></i>
+                                <h4>Spicy Chicken Wings</h4>
+                                <span class="price">₹249</span>
+                                <p>Tender chicken wings tossed in our signature hot sauce.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="beverages" class="menu-category">
+                    <h3>Beverages</h3>
+                    <div class="menu-list">
+                        <!-- Item 8 -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Mango Lassi</h4>
+                                <span class="price">₹129</span>
+                                <p>Traditional Indian yogurt-based drink blended with sweet Alphonso mangoes.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=200&q=80');"></div>
+                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 9 -->
+                        <div class="menu-item-card">
+                            <div class="item-info">
+                                <i class="far fa-dot-circle veg-icon"></i>
+                                <h4>Fresh Lime Soda</h4>
+                                <span class="price">₹89</span>
+                                <p>Refreshing soda with fresh lime juice, mint, and a hint of salt.</p>
+                            </div>
+                            <div class="item-action">
+                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=200&q=80');"></div>
                                 <button class="btn-add" onclick="updateCart(1)">ADD</button>
                             </div>
                         </div>
@@ -239,12 +393,20 @@
     <div class="floating-cart glass" id="floatingCart">
         <div class="cart-summary">
             <span id="itemsAdded">1 Item added</span>
-            <span class="total">Total: $12.99</span>
+            <span class="total">Total: ₹349</span>
         </div>
         <button class="view-cart-btn" onclick="window.location.href='checkout.html'">
             View Cart <i class="fas fa-chevron-right"></i>
         </button>
     </div>
+
+    <!-- Bottom Navigation for Mobile -->
+    <nav class="mobile-nav">
+        <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="search.html" class="nav-item"><i class="fas fa-search"></i><span>Explore</span></a>
+        <a href="tracking.html" class="nav-item"><i class="fas fa-shopping-basket"></i><span>Orders</span></a>
+        <a href="profile.html" class="nav-item"><i class="fas fa-user"></i><span>Profile</span></a>
+    </nav>
 
     <script src="script.js"></script>
 </body>

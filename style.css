@@ -748,6 +748,135 @@ body {
     }
 }
 
+/* Premium Sidebar Navigation */
+.sidebar-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background: rgba(15, 15, 26, 0.8);
+    backdrop-filter: blur(30px);
+    border-right: 1px solid var(--glass-border);
+    padding: 2rem 1.5rem;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    transition: var(--transition);
+}
+
+.sidebar-nav .logo {
+    justify-content: flex-start;
+    padding-left: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.nav-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nav-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 1.25rem;
+    transition: var(--transition);
+}
+
+.sidebar-link i {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+}
+
+.sidebar-link:hover {
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-link.active {
+    color: white;
+    background: var(--primary);
+    box-shadow: 0 10px 20px -5px rgba(255, 95, 82, 0.4);
+}
+
+.sidebar-link.active i {
+    color: white;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding: 1.5rem;
+    background: var(--glass-bg);
+    border-radius: 1.5rem;
+    border: 1px solid var(--glass-border);
+}
+
+.promo-card h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.promo-card p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.btn-sidebar {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 0.85rem;
+}
+
+/* Layout Adjustments for Sidebar */
+@media (min-width: 769px) {
+    .dashboard-body {
+        padding-left: 280px;
+    }
+    
+    .dash-header {
+        left: 280px;
+        width: calc(100% - 280px);
+    }
+    
+    .mobile-nav {
+        display: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar-nav {
+        transform: translateX(-100%);
+    }
+    
+    .dashboard-body {
+        padding-left: 0;
+    }
+    
+    .dash-header {
+        left: 0;
+        width: 100%;
+    }
+}
+
 /* Restaurant Details Styles */
 .res-hero {
     margin-bottom: 2rem;

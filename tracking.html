@@ -13,19 +13,68 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dashboard-body">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar-nav">
+        <div class="logo">
+            <i class="fas fa-utensils"></i>
+            <span>CraveDash</span>
+        </div>
+
+        <nav class="nav-group">
+            <span class="nav-label">Menu</span>
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fas fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="search.html" class="sidebar-link">
+                <i class="fas fa-search"></i>
+                <span>Explore</span>
+            </a>
+            <a href="tracking.html" class="sidebar-link active">
+                <i class="fas fa-clock-rotate-left"></i>
+                <span>Orders</span>
+            </a>
+            <a href="referral.html" class="sidebar-link">
+                <i class="fas fa-gift"></i>
+                <span>Refer & Earn</span>
+            </a>
+        </nav>
+
+        <nav class="nav-group">
+            <span class="nav-label">Account</span>
+            <a href="profile.html" class="sidebar-link">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+            <a href="settings.html" class="sidebar-link">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <a href="help.html" class="sidebar-link">
+                <i class="fas fa-headset"></i>
+                <span>Support</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="promo-card">
+                <h4>CraveDash Pro</h4>
+                <p>Get free delivery on every order!</p>
+                <button class="btn-primary btn-sidebar">Upgrade Now</button>
+            </div>
+        </div>
+    </aside>
+
     <!-- Header -->
     <header class="dash-header glass">
         <div class="nav-container">
-            <div class="logo" onclick="window.location.href='dashboard.html'" style="cursor: pointer;">
-                <i class="fas fa-utensils"></i>
-                <span>CraveDash</span>
+            <div class="header-left">
+                <div class="tracking-title">
+                    <h2>Order #CD-88291</h2>
+                    <span>Arriving in 18 mins</span>
+                </div>
             </div>
             
-            <div class="tracking-title">
-                <h2>Order #CD-88291</h2>
-                <span>Arriving in 18 mins</span>
-            </div>
-
             <div class="user-actions">
                 <button class="help-btn" onclick="window.location.href='help.html'">Help</button>
                 <div class="user-profile" onclick="window.location.href='profile.html'" style="cursor: pointer;">
@@ -104,6 +153,14 @@
             </aside>
         </div>
     </main>
+
+    <!-- Bottom Navigation for Mobile -->
+    <nav class="mobile-nav">
+        <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="search.html" class="nav-item"><i class="fas fa-search"></i><span>Explore</span></a>
+        <a href="tracking.html" class="nav-item active"><i class="fas fa-shopping-basket"></i><span>Orders</span></a>
+        <a href="profile.html" class="nav-item"><i class="fas fa-user"></i><span>Profile</span></a>
+    </nav>
 
     <script src="script.js"></script>
 </body>
