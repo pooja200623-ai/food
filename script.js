@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     loginSubtext.textContent = 'Taste the world, one dash at a time.';
                     submitBtnSpan.textContent = 'Sign In';
                     toggleViewBtn.textContent = 'Create an account';
-                    document.querySelector('.login-footer p').firstChild.textContent = 'New to CraveDash? ';
+                    document.querySelector('.login-footer p').firstChild.textContent = 'New to FoodieHub? ';
                 } else {
-                    loginHeader.textContent = 'Join CraveDash';
+                    loginHeader.textContent = 'Join FoodieHub';
                     loginSubtext.textContent = 'Start your gourmet journey today.';
                     submitBtnSpan.textContent = 'Sign Up';
                     toggleViewBtn.textContent = 'Sign in here';

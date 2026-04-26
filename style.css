@@ -434,6 +434,39 @@ body {
     gap: 1.5rem;
 }
 
+.btn-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: var(--transition);
+    margin-right: 0.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.btn-back:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: translateX(-3px);
+    box-shadow: 0 5px 15px rgba(255, 95, 82, 0.3);
+}
+
+.btn-back i {
+    font-size: 1.1rem;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .cart-btn {
     position: relative;
     background: none;

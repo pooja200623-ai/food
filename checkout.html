@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout | CraveDash</title>
+    <title>Checkout | FoodieHub</title>
     <!-- Google Fonts: Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
     <aside class="sidebar-nav">
         <div class="logo">
             <i class="fas fa-utensils"></i>
-            <span>CraveDash</span>
+            <span>FoodieHub</span>
         </div>
 
         <nav class="nav-group">
@@ -58,7 +58,7 @@
 
         <div class="sidebar-footer">
             <div class="promo-card">
-                <h4>CraveDash Pro</h4>
+                <h4>FoodieHub Pro</h4>
                 <p>Get free delivery on every order!</p>
                 <button class="btn-primary btn-sidebar">Upgrade Now</button>
             </div>
@@ -69,6 +69,9 @@
     <header class="dash-header glass">
         <div class="nav-container">
             <div class="header-left">
+                <button class="btn-back" onclick="window.history.back()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
                 <div class="checkout-steps">
                     <div class="step completed"><i class="fas fa-check"></i><span>Cart</span></div>
                     <div class="step active"><span>2</span><span>Checkout</span></div>
@@ -153,9 +156,9 @@
                 <div class="summary-card glass">
                     <h3>Order Summary</h3>
                     <div class="res-mini-info">
-                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=60&q=80" alt="Pizza Palace">
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=60&q=80" alt="The Spice Haven">
                         <div>
-                            <h4>Pizza Palace</h4>
+                            <h4>The Spice Haven</h4>
                             <p>Bandra, Mumbai</p>
                         </div>
                     </div>
@@ -195,7 +198,7 @@
                     <button class="btn-primary btn-block" id="placeOrder">
                         PLACE ORDER
                     </button>
-                    <p class="policy-text">By placing the order, you agree to CraveDash's Terms & Conditions.</p>
+                    <p class="policy-text">By placing the order, you agree to FoodieHub's Terms & Conditions.</p>
                 </div>
             </aside>
         </div>
@@ -208,7 +211,7 @@
                 <i class="fas fa-check"></i>
             </div>
             <h2>Order Placed!</h2>
-            <p>Your gourmet meal from <strong>Pizza Palace</strong> is being prepared with love. Hang tight!</p>
+            <p>Your gourmet meal from <strong>The Spice Haven</strong> is being prepared with love. Hang tight!</p>
             <div class="order-id" style="margin: 1.5rem 0; font-weight: 700; color: var(--accent);">Order ID: #CD-88291</div>
             <button class="btn-primary btn-block" onclick="window.location.href='tracking.html'">
                 TRACK YOUR ORDER
