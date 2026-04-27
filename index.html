@@ -14,93 +14,72 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="login-split-container">
-        <!-- Left Side: Brand Visual -->
-        <div class="login-visual">
-            <div class="visual-overlay"></div>
-            <div class="visual-content">
+    <div class="login-container">
+        <!-- Background Overlay -->
+        <div class="bg-overlay"></div>
+        
+        <main class="login-card glass">
+            <header class="login-header">
                 <div class="logo">
                     <i class="fas fa-utensils"></i>
                     <span>FoodieHub</span>
                 </div>
-                <h1 class="text-gradient">Experience <br>Gourmet Dining <br>At Home.</h1>
-                <p>Join 2M+ food lovers and discover the best tastes in your city.</p>
-                <div class="visual-stats">
-                    <div class="v-stat">
-                        <strong>500+</strong>
-                        <span>Restaurants</span>
-                    </div>
-                    <div class="v-stat">
-                        <strong>20m</strong>
-                        <span>Avg Delivery</span>
+                <h1 class="text-gradient">Welcome Back!</h1>
+                <p>Taste the world, one dash at a time.</p>
+            </header>
+
+            <form id="loginForm" class="auth-form">
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="far fa-envelope"></i>
+                        <input type="email" id="email" placeholder="name@example.com" required>
                     </div>
                 </div>
+
+                <div class="input-group">
+                    <div class="label-row">
+                        <label for="password">Password</label>
+                        <a href="#" class="forgot-link">Forgot?</a>
+                    </div>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                        <button type="button" class="toggle-password">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Keep me logged in</label>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <span>Sign In</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>or continue with</span>
             </div>
-        </div>
 
-        <!-- Right Side: Auth Form -->
-        <main class="login-content-side">
-            <div class="auth-container">
-                <header class="auth-header">
-                    <h2>Welcome Back</h2>
-                    <p>Please enter your details to continue</p>
-                </header>
-
-                <form id="loginForm" class="auth-form">
-                    <div class="input-group">
-                        <label for="email">Email Address</label>
-                        <div class="input-wrapper">
-                            <i class="far fa-envelope"></i>
-                            <input type="email" id="email" placeholder="name@company.com" required>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <div class="label-row">
-                            <label for="password">Password</label>
-                            <a href="#" class="forgot-link">Forgot Password?</a>
-                        </div>
-                        <div class="input-wrapper">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="password" placeholder="••••••••" required>
-                            <button type="button" class="toggle-password">
-                                <i class="far fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <div class="remember-me">
-                            <input type="checkbox" id="remember">
-                            <label for="remember">Keep me logged in</label>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-primary btn-full">
-                        <span>Sign In</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </form>
-
-                <div class="divider">
-                    <span>or continue with</span>
-                </div>
-
-                <div class="social-auth">
-                    <button class="btn-social google">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
-                        <span>Google</span>
-                    </button>
-                    <button class="btn-social apple">
-                        <i class="fab fa-apple"></i>
-                        <span>Apple ID</span>
-                    </button>
-                </div>
-
-                <footer class="auth-footer">
-                    <p>New to FoodieHub? <a href="#" id="toggleView">Create an account</a></p>
-                </footer>
+            <div class="social-auth">
+                <button class="btn-social google">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+                    <span>Google</span>
+                </button>
+                <button class="btn-social facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </button>
             </div>
+
+            <footer class="login-footer">
+                <p>New to FoodieHub? <a href="#" id="toggleView">Create an account</a></p>
+            </footer>
         </main>
     </div>
 
