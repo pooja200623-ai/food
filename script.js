@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const togglePasswordBtn = document.querySelector('.toggle-password');
     const passwordInput = document.getElementById('password');
     const toggleViewBtn = document.getElementById('toggleView');
-    const loginHeader = document.querySelector('.login-header h1');
-    const loginSubtext = document.querySelector('.login-header p');
+    const loginHeader = document.querySelector('.auth-header h2');
+    const loginSubtext = document.querySelector('.auth-header p');
     const submitBtnSpan = document.querySelector('.btn-primary span');
     
     // 3. Login Logic
@@ -61,14 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Parallax Effect
-    if (document.querySelector('.login-card')) {
-        document.addEventListener('mousemove', (e) => {
-            const amount = 15;
+    // 4. Parallax / Hover Effect for Visual
+    const loginVisual = document.querySelector('.login-visual');
+    if (loginVisual) {
+        loginVisual.addEventListener('mousemove', (e) => {
+            const amount = 5;
             const x = (e.clientX / window.innerWidth - 0.5) * amount;
             const y = (e.clientY / window.innerHeight - 0.5) * amount;
-            const card = document.querySelector('.login-card');
-            card.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg) translateY(${-y}px)`;
+            const content = loginVisual.querySelector('.visual-content');
+            content.style.transform = `translateX(${x}px) translateY(${y}px)`;
         });
     }
 
