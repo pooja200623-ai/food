@@ -7,57 +7,102 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Global Element Selectors
     const loginForm = document.getElementById('loginForm');
-    const togglePasswordBtn = document.querySelector('.toggle-password');
-    const passwordInput = document.getElementById('password');
-    const toggleViewBtn = document.getElementById('toggleView');
-    const loginHeader = document.querySelector('.login-header h1');
-    const loginSubtext = document.querySelector('.login-header p');
-    const submitBtnSpan = document.querySelector('.btn-primary span');
+    const verifyBtn = document.getElementById('verifyBtn');
+    const initialStep = document.getElementById('initialStep');
+    const otpStep = document.getElementById('otpStep');
+    const backToEmail = document.getElementById('backToEmail');
+    const emailInput = document.getElementById('email');
+    const nameInput = document.getElementById('userName');
+    const otpInput = document.getElementById('otp');
+    const userProfileImg = document.querySelector('.user-profile img');
     
-    // 3. Login Logic
-    if (loginForm) {
-        let isLoginView = true;
-        if (togglePasswordBtn) {
-            togglePasswordBtn.addEventListener('click', () => {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                const icon = togglePasswordBtn.querySelector('i');
-                icon.classList.toggle('fa-eye');
-                icon.classList.toggle('fa-eye-slash');
-            });
-        }
-        if (toggleViewBtn) {
-            toggleViewBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                isLoginView = !isLoginView;
-                if (isLoginView) {
-                    loginHeader.textContent = 'Welcome Back!';
-                    loginSubtext.textContent = 'Taste the world, one dash at a time.';
-                    submitBtnSpan.textContent = 'Sign In';
-                    toggleViewBtn.textContent = 'Create an account';
-                    document.querySelector('.login-footer p').firstChild.textContent = 'New to FoodieHub? ';
-                } else {
-                    loginHeader.textContent = 'Join FoodieHub';
-                    loginSubtext.textContent = 'Start your gourmet journey today.';
-                    submitBtnSpan.textContent = 'Sign Up';
-                    toggleViewBtn.textContent = 'Sign in here';
-                    document.querySelector('.login-footer p').firstChild.textContent = 'Already have an account? ';
+    // 3. Authentication & OTP Logic
+    const checkAuth = () => {
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+        const isLoginPage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('zomato/') || window.location.pathname === '';
+        
+        if (user) {
+            if (isLoginPage) {
+                window.location.href = 'dashboard.html';
+            } else {
+                // Update UI with user data
+                if (userProfileImg) {
+                    userProfileImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=FF5F52&color=fff`;
                 }
-                const card = document.querySelector('.login-card');
-                card.style.animation = 'none';
-                card.offsetHeight;
-                card.style.animation = 'fadeInScale 0.4s ease-out';
+            }
+        } else {
+            if (!isLoginPage) {
+                window.location.href = 'index.html';
+            }
+        }
+    };
+
+    checkAuth();
+
+    if (loginForm) {
+        let generatedOTP = null;
+
+        // Step 1: Verify Email & Send OTP
+        if (verifyBtn) {
+            verifyBtn.addEventListener('click', () => {
+                const email = emailInput.value.trim();
+                const name = nameInput.value.trim();
+
+                if (!email || !name) {
+                    showToast('Please fill in both Name and Email', 'error');
+                    return;
+                }
+
+                verifyBtn.disabled = true;
+                verifyBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending OTP...';
+
+                setTimeout(() => {
+                    generatedOTP = "1234"; // Simulated OTP
+                    initialStep.style.display = 'none';
+                    otpStep.style.display = 'block';
+                    otpStep.classList.add('fade-in');
+                    
+                    showToast(`OTP sent to ${email} (Use: 1234)`, 'success');
+                    
+                    // Reset button
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerHTML = '<span>Verify Email</span><i class="fas fa-paper-plane"></i>';
+                }, 1500);
             });
         }
+
+        // Step 2: Back to Email
+        if (backToEmail) {
+            backToEmail.addEventListener('click', () => {
+                otpStep.style.display = 'none';
+                initialStep.style.display = 'block';
+                initialStep.classList.add('fade-in');
+            });
+        }
+
+        // Step 3: Final Login (OTP Verification)
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const submitBtn = loginForm.querySelector('.btn-primary');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
-            setTimeout(() => {
-                showToast('Login successful! Welcome back.', 'success');
-                setTimeout(() => window.location.href = 'dashboard.html', 1000);
-            }, 1500);
+            const enteredOTP = otpInput.value.trim();
+
+            if (enteredOTP === generatedOTP) {
+                const submitBtn = loginForm.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Authenticating...';
+
+                setTimeout(() => {
+                    const userData = {
+                        name: nameInput.value.trim(),
+                        email: emailInput.value.trim(),
+                        loginTime: new Date().getTime()
+                    };
+                    localStorage.setItem('currentUser', JSON.stringify(userData));
+                    showToast(`Welcome back, ${userData.name}!`, 'success');
+                    setTimeout(() => window.location.href = 'dashboard.html', 1000);
+                }, 1500);
+            } else {
+                showToast('Invalid OTP. Please try again (Use 1234).', 'error');
+            }
         });
     }
 

@@ -29,37 +29,52 @@
             </header>
 
             <form id="loginForm" class="auth-form">
-                <div class="input-group">
-                    <label for="email">Email Address</label>
-                    <div class="input-wrapper">
-                        <i class="far fa-envelope"></i>
-                        <input type="email" id="email" placeholder="name@example.com" required>
+                <!-- Initial Login Step -->
+                <div id="initialStep">
+                    <div class="input-group">
+                        <label for="userName">Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="far fa-user"></i>
+                            <input type="text" id="userName" placeholder="John Doe" required>
+                        </div>
                     </div>
+
+                    <div class="input-group" style="margin-top: 1rem;">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="far fa-envelope"></i>
+                            <input type="email" id="email" placeholder="name@example.com" required>
+                        </div>
+                    </div>
+
+                    <button type="button" id="verifyBtn" class="btn-primary" style="margin-top: 2rem; width: 100%;">
+                        <span>Verify Email</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
                 </div>
 
-                <div class="input-group">
-                    <div class="label-row">
-                        <label for="password">Password</label>
-                        <a href="#" class="forgot-link">Forgot?</a>
+                <!-- OTP Step (Hidden by default) -->
+                <div id="otpStep" style="display: none;">
+                    <div class="input-group">
+                        <div class="label-row">
+                            <label for="otp">Enter OTP</label>
+                            <span id="resendTimer" class="forgot-link">Resend in 30s</span>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fas fa-shield-alt"></i>
+                            <input type="text" id="otp" placeholder="Enter 4-digit code" maxlength="4">
+                        </div>
                     </div>
-                    <div class="input-wrapper">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="password" placeholder="••••••••" required>
-                        <button type="button" class="toggle-password">
-                            <i class="far fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
 
-                <div class="remember-me">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Keep me logged in</label>
+                    <button type="submit" class="btn-primary" style="margin-top: 2rem; width: 100%;">
+                        <span>Login to Dashboard</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    
+                    <button type="button" id="backToEmail" class="btn-link" style="background:none; border:none; color:var(--text-muted); font-size:0.85rem; margin-top:1rem; cursor:pointer; width:100%;">
+                        <i class="fas fa-arrow-left"></i> Change Email
+                    </button>
                 </div>
-
-                <button type="submit" class="btn-primary">
-                    <span>Sign In</span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
             </form>
 
             <div class="divider">
