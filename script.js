@@ -93,18 +93,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 verifyBtn.disabled = true;
                 verifyBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending OTP...';
 
-                setTimeout(() => {
-                    generatedOTP = "1234"; // Simulated OTP
-                    initialStep.style.display = 'none';
-                    otpStep.style.display = 'block';
-                    otpStep.classList.add('fade-in');
-                    
-                    showToast(`OTP sent to ${email} (Use: 1234)`, 'success');
-                    
-                    // Reset button
+                // Generate a random 4-digit OTP
+                generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
+
+                // Call the PHP backend to send the email
+                fetch('send_otp.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        name: name,
+                        otp: generatedOTP
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
                     verifyBtn.disabled = false;
                     verifyBtn.innerHTML = '<span>Verify Email</span><i class="fas fa-paper-plane"></i>';
-                }, 1500);
+
+                    if (data.success) {
+                        initialStep.style.display = 'none';
+                        otpStep.style.display = 'block';
+                        otpStep.classList.add('fade-in');
+                        
+                        showToast(`OTP sent successfully to ${email}`, 'success');
+                    } else {
+                        showToast(data.message || 'Failed to send OTP email.', 'error');
+                        // In case the user's XAMPP is not configured, we can optionally 
+                        // fallback to showing the OTP in a toast for testing purposes:
+                        // showToast(`[DEV] Check XAMPP SMTP. OTP is: ${generatedOTP}`, 'warning');
+                    }
+                })
+                .catch(err => {
+                    console.error('Error sending OTP:', err);
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerHTML = '<span>Verify Email</span><i class="fas fa-paper-plane"></i>';
+                    showToast('Server error. Could not send OTP.', 'error');
+                });
             });
         }
 
@@ -146,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(() => window.location.href = 'dashboard.html', 1000);
                 }, 1500);
             } else {
-                showToast('Invalid OTP. Please try again (Use 1234).', 'error');
+                showToast('Invalid OTP. Please try again.', 'error');
             }
         });
     }
