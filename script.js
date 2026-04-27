@@ -281,6 +281,27 @@ document.addEventListener('DOMContentLoaded', () => {
             showToast(`${label} ${toggle.checked ? 'enabled' : 'disabled'}`, 'info');
         });
     });
+
+    // 14. Scroll Reveal Animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    const revealElements = document.querySelectorAll('.res-card, .category-card, .menu-item-card, .section-header, .membership-card');
+    revealElements.forEach(el => {
+        el.classList.add('reveal-item');
+        revealObserver.observe(el);
+    });
 });
 
 // --- Helper Functions ---
