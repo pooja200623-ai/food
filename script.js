@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const nameInput = document.getElementById('userName');
     const otpInput = document.getElementById('otp');
     const userProfileImg = document.querySelector('.user-profile img');
+    const toggleViewBtn = document.getElementById('toggleView');
+    const loginHeader = document.querySelector('.login-header h1');
+    const loginSubtext = document.querySelector('.login-header p');
     
     // 3. Authentication & OTP Logic
     const checkAuth = () => {
@@ -27,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // Update UI with user data
                 if (userProfileImg) {
-                    userProfileImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=FF5F52&color=fff`;
+                    userProfileImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || 'User')}&background=FF5F52&color=fff`;
                 }
             }
         } else {
@@ -39,19 +42,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     checkAuth();
 
+    // Toggle between Sign In and Sign Up text
+    if (toggleViewBtn) {
+        let isLoginView = true;
+        toggleViewBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLoginView = !isLoginView;
+            if (isLoginView) {
+                loginHeader.textContent = 'Welcome Back!';
+                loginSubtext.textContent = 'Taste the world, one dash at a time.';
+                if (verifyBtn && verifyBtn.querySelector('span')) verifyBtn.querySelector('span').textContent = 'Verify Email';
+                toggleViewBtn.textContent = 'Create an account';
+                document.querySelector('.login-footer p').firstChild.textContent = 'New to FoodieHub? ';
+                const submitBtn = loginForm.querySelector('button[type="submit"]');
+                if (submitBtn && submitBtn.querySelector('span')) submitBtn.querySelector('span').textContent = 'Login to Dashboard';
+            } else {
+                loginHeader.textContent = 'Join FoodieHub';
+                loginSubtext.textContent = 'Start your gourmet journey today.';
+                if (verifyBtn && verifyBtn.querySelector('span')) verifyBtn.querySelector('span').textContent = 'Join & Verify';
+                toggleViewBtn.textContent = 'Sign in here';
+                document.querySelector('.login-footer p').firstChild.textContent = 'Already have an account? ';
+                const submitBtn = loginForm.querySelector('button[type="submit"]');
+                if (submitBtn && submitBtn.querySelector('span')) submitBtn.querySelector('span').textContent = 'Create Account';
+            }
+            const card = document.querySelector('.login-card');
+            if (card) {
+                card.style.animation = 'none';
+                card.offsetHeight;
+                card.style.animation = 'fadeInScale 0.4s ease-out';
+            }
+        });
+    }
+
     if (loginForm) {
+
         let generatedOTP = null;
 
         // Step 1: Verify Email & Send OTP
         if (verifyBtn) {
             verifyBtn.addEventListener('click', () => {
-                const email = emailInput.value.trim();
-                const name = nameInput.value.trim();
-
-                if (!email || !name) {
-                    showToast('Please fill in both Name and Email', 'error');
+                // Use HTML5 validation first
+                if (!nameInput.checkValidity() || !emailInput.checkValidity()) {
+                    loginForm.reportValidity();
                     return;
                 }
+
+                const email = emailInput.value.trim();
+                const name = nameInput.value.trim();
 
                 verifyBtn.disabled = true;
                 verifyBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending OTP...';
@@ -83,6 +120,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Step 3: Final Login (OTP Verification)
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            
+            // If the user presses Enter while on the initial step, trigger the Verify button instead
+            if (initialStep.style.display !== 'none') {
+                verifyBtn.click();
+                return;
+            }
+
             const enteredOTP = otpInput.value.trim();
 
             if (enteredOTP === generatedOTP) {
@@ -97,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         loginTime: new Date().getTime()
                     };
                     localStorage.setItem('currentUser', JSON.stringify(userData));
+
                     showToast(`Welcome back, ${userData.name}!`, 'success');
                     setTimeout(() => window.location.href = 'dashboard.html', 1000);
                 }, 1500);
@@ -106,7 +151,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Handle Social Auth Buttons
+    const socialBtns = document.querySelectorAll('.btn-social');
+    socialBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const platform = btn.classList.contains('google') ? 'Google' : 'Facebook';
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Connecting...`;
+            
+            setTimeout(() => {
+                const userData = {
+                    name: `${platform} User`,
+                    email: `user@${platform.toLowerCase()}.com`,
+                    loginTime: new Date().getTime()
+                };
+                localStorage.setItem('currentUser', JSON.stringify(userData));
+                showToast(`Successfully logged in with ${platform}!`, 'success');
+                setTimeout(() => window.location.href = 'dashboard.html', 1000);
+            }, 1000);
+        });
+    });
+
     // 4. Parallax Effect
+
     if (document.querySelector('.login-card')) {
         document.addEventListener('mousemove', (e) => {
             const amount = 15;
