@@ -93,19 +93,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 verifyBtn.disabled = true;
                 verifyBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending OTP...';
 
-                // Generate a random 4-digit OTP
-                generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
-
                 // Call the PHP backend to send the email
-                fetch('send_otp.php', {
+                fetch('api/auth.php?action=send_otp', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         email: email,
-                        name: name,
-                        otp: generatedOTP
+                        name: name
                     })
                 })
                 .then(response => response.json())
@@ -119,11 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         otpStep.classList.add('fade-in');
                         
                         showToast(`OTP sent successfully to ${email}`, 'success');
+                        
+                        if (data.dev_otp) {
+                            showToast(`[DEV MODE] Your OTP is: ${data.dev_otp}`, 'info');
+                        }
                     } else {
                         showToast(data.message || 'Failed to send OTP email.', 'error');
-                        // In case the user's XAMPP is not configured, we can optionally 
-                        // fallback to showing the OTP in a toast for testing purposes:
-                        // showToast(`[DEV] Check XAMPP SMTP. OTP is: ${generatedOTP}`, 'warning');
                     }
                 })
                 .catch(err => {
@@ -155,26 +152,48 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const enteredOTP = otpInput.value.trim();
+            const email = emailInput.value.trim();
 
-            if (enteredOTP === generatedOTP) {
-                const submitBtn = loginForm.querySelector('button[type="submit"]');
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Authenticating...';
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Authenticating...';
 
-                setTimeout(() => {
+            fetch('api/auth.php?action=verify_otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    otp: enteredOTP
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Login to Dashboard</span><i class="fas fa-arrow-right"></i>';
+
+                if (data.success) {
                     const userData = {
-                        name: nameInput.value.trim(),
-                        email: emailInput.value.trim(),
+                        id: data.user.id,
+                        name: data.user.name,
+                        email: data.user.email,
                         loginTime: new Date().getTime()
                     };
                     localStorage.setItem('currentUser', JSON.stringify(userData));
 
                     showToast(`Welcome back, ${userData.name}!`, 'success');
                     setTimeout(() => window.location.href = 'dashboard.html', 1000);
-                }, 1500);
-            } else {
-                showToast('Invalid OTP. Please try again.', 'error');
-            }
+                } else {
+                    showToast(data.message || 'Invalid OTP. Please try again.', 'error');
+                }
+            })
+            .catch(err => {
+                console.error('Error verifying OTP:', err);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Login to Dashboard</span><i class="fas fa-arrow-right"></i>';
+                showToast('Server error. Could not verify OTP.', 'error');
+            });
         });
     }
 
@@ -237,16 +256,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const successOverlay = document.getElementById('successOverlay');
     if (placeOrderBtn) {
         placeOrderBtn.addEventListener('click', () => {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (!user || !user.id) {
+                showToast('Please log in to place an order', 'error');
+                setTimeout(() => window.location.href = 'index.html', 1500);
+                return;
+            }
+
+            if (cartCount === 0) {
+                showToast('Your cart is empty', 'error');
+                return;
+            }
+
             placeOrderBtn.disabled = true;
             placeOrderBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
-            setTimeout(() => {
-                showToast('Order placed successfully!', 'success');
-                successOverlay.classList.add('visible');
-                triggerConfetti();
-                cartCount = 0;
-                localStorage.setItem('cartCount', 0);
-                updateCartBadge(0);
-            }, 2000);
+
+            // Create a dummy item payload based on current hardcoded cart logic
+            const orderPayload = {
+                user_id: user.id,
+                items: [
+                    { id: 1, quantity: cartCount, price: 12.99 } // Assuming item ID 1 for now
+                ]
+            };
+
+            fetch('api/orders.php?action=place_order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderPayload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast('Order placed successfully!', 'success');
+                    successOverlay.classList.add('visible');
+                    triggerConfetti();
+                    cartCount = 0;
+                    localStorage.setItem('cartCount', 0);
+                    updateCartBadge(0);
+                } else {
+                    placeOrderBtn.disabled = false;
+                    placeOrderBtn.innerHTML = 'Place Order <i class="fas fa-arrow-right"></i>';
+                    showToast(data.message || 'Failed to place order', 'error');
+                }
+            })
+            .catch(err => {
+                console.error('Error placing order:', err);
+                placeOrderBtn.disabled = false;
+                placeOrderBtn.innerHTML = 'Place Order <i class="fas fa-arrow-right"></i>';
+                showToast('Server error while placing order', 'error');
+            });
         });
     }
 
@@ -265,30 +325,73 @@ document.addEventListener('DOMContentLoaded', () => {
     const skeletonGrid = document.getElementById('skeletonGrid');
     const restaurantGrid = document.getElementById('restaurantGrid');
     const categoryCards = document.querySelectorAll('.category-card');
+    
+    function loadRestaurants(category = 'all') {
+        if (!restaurantGrid || !skeletonGrid) return;
+        
+        restaurantGrid.classList.add('hidden');
+        skeletonGrid.classList.remove('hidden');
+        
+        const url = category === 'all' 
+            ? 'api/restaurants.php?action=all' 
+            : `api/restaurants.php?action=category&category=${encodeURIComponent(category)}`;
+            
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                skeletonGrid.classList.add('hidden');
+                restaurantGrid.classList.remove('hidden');
+                
+                if (data.success && data.data.length > 0) {
+                    restaurantGrid.innerHTML = data.data.map(res => `
+                        <div class="res-card" onclick="window.location.href='restaurant.html?id=${res.id}'">
+                            <div class="res-image" style="background-image: url('${res.image_url}');">
+                                <span class="rating"><i class="fas fa-star"></i> ${res.rating}</span>
+                                <button class="wishlist"><i class="far fa-heart"></i></button>
+                            </div>
+                            <div class="res-info">
+                                <h4>${res.name}</h4>
+                                <p>${res.category} • ${res.description}</p>
+                                <div class="res-meta">
+                                    <span><i class="far fa-clock"></i> ${res.delivery_time}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                    // Re-apply reveal animation classes to new items
+                    const newCards = restaurantGrid.querySelectorAll('.res-card');
+                    newCards.forEach(el => {
+                        el.classList.add('reveal-item');
+                        revealObserver.observe(el);
+                    });
+                } else {
+                    restaurantGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem;">No restaurants found for this category.</div>';
+                }
+            })
+            .catch(err => {
+                console.error('Error fetching restaurants:', err);
+                skeletonGrid.classList.add('hidden');
+                restaurantGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #ef4444;">Failed to load restaurants. Please ensure the backend is running.</div>';
+                restaurantGrid.classList.remove('hidden');
+            });
+    }
+
     if (skeletonGrid) {
-        setTimeout(() => {
-            skeletonGrid.classList.add('hidden');
-            restaurantGrid.classList.remove('hidden');
-            restaurantGrid.classList.add('fade-in');
-        }, 1500);
+        // Initial Load
+        loadRestaurants('all');
+
         categoryCards.forEach(card => {
             card.addEventListener('click', () => {
                 const cat = card.getAttribute('data-category');
                 categoryCards.forEach(c => c.classList.remove('active'));
                 card.classList.add('active');
-                restaurantGrid.classList.add('hidden');
-                skeletonGrid.classList.remove('hidden');
-                setTimeout(() => {
-                    skeletonGrid.classList.add('hidden');
-                    restaurantGrid.classList.remove('hidden');
-                    restaurantGrid.classList.add('fade-in');
-                    const resCards = restaurantGrid.querySelectorAll('.res-card');
-                    resCards.forEach(rc => {
-                        const info = rc.querySelector('.res-info p').textContent.toLowerCase();
-                        rc.style.display = (cat === 'all' || info.includes(cat)) ? 'block' : 'none';
-                    });
-                    showToast(`Showing ${cat} restaurants`, 'info');
-                }, 800);
+                
+                // Convert UI category name to DB category match (e.g., 'indian' to 'Indian')
+                const dbCategory = cat === 'all' ? 'all' : cat.charAt(0).toUpperCase() + cat.slice(1);
+                
+                loadRestaurants(dbCategory);
+                showToast(`Showing ${dbCategory} restaurants`, 'info');
             });
         });
     }
