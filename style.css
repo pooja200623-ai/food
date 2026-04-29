@@ -728,7 +728,7 @@ footer {
 /* =========================================
    Inner Page Shared Layout
 ========================================= */
-body { background: #f2f2f2; }
+body.inner-page-body { background: #f2f2f2; }
 
 .inner-header {
     position: sticky;
