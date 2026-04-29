@@ -3,99 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodieHub | Your Gourmet Journey Begins Here</title>
-    <meta name="description" content="Login to FoodieHub to order your favorite food from the best restaurants. Premium food delivery at your doorstep.">
-    <!-- Google Fonts: Outfit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
+    <title>Zomato | Discover the best food & drinks</title>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="login-container">
-        <!-- Background Overlay -->
-        <div class="bg-overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-wrapper">
+        <header class="hero-nav">
+            <div class="hero-nav-left">
+                <a href="#">Get the App</a>
+            </div>
+            <div class="hero-nav-right">
+                <a href="#">Add restaurant</a>
+                <span id="loginBtn">Log in</span>
+                <span id="signupBtn">Sign up</span>
+            </div>
+        </header>
+
+        <div class="hero-content">
+            <h1 class="hero-logo">zomato</h1>
+            <h2 class="hero-subtitle">Discover the best food & drinks in your city</h2>
+            
+            <div class="hero-search-bar">
+                <div class="location-input">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" placeholder="Your City, Country" value="New York, USA">
+                </div>
+                <div class="search-input">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="mainSearch" placeholder="Search for restaurant, cuisine or a dish">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Options Cards -->
+    <section class="options-section container">
+        <div class="options-grid">
+            <div class="option-card" onclick="window.location.href='dashboard.html'">
+                <img src="https://b.zmtcdn.com/webFrontend/e5b8785c257af2a7f354f1addaf37e4e1647364814.jpeg?output-format=webp&fit=around|402:360&crop=402:360;*,*" alt="Order Online">
+                <div class="option-card-body">
+                    <h3>Order Online</h3>
+                    <p>Stay home and order to your door</p>
+                </div>
+            </div>
+            <div class="option-card" onclick="window.location.href='dashboard.html'">
+                <img src="https://b.zmtcdn.com/webFrontend/d026b26bf4cb9c054945de528438d0c21648501018.jpeg?output-format=webp&fit=around|402:360&crop=402:360;*,*" alt="Dining">
+                <div class="option-card-body">
+                    <h3>Dining</h3>
+                    <p>View the city's favourite dining venues</p>
+                </div>
+            </div>
+            <div class="option-card" onclick="window.location.href='dashboard.html'">
+                <img src="https://b.zmtcdn.com/webFrontend/d9d80ef91cb552e3fdfadb984fa450aa114579d8.png?output-format=webp&fit=around|402:360&crop=402:360;*,*" alt="Live Events">
+                <div class="option-card-body">
+                    <h3>Live Events</h3>
+                    <p>Discover India's best events & concerts</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collections -->
+    <section class="collections-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Collections</h2>
+                <p>Explore curated lists of top restaurants, cafes, pubs, and bars in your city, based on trends. <span><a href="#">All collections in your city <i class="fas fa-caret-right"></i></a></span></p>
+            </div>
+            
+            <div class="collections-grid">
+                <div class="collection-card">
+                    <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=400&q=80" alt="Trending">
+                    <div class="collection-overlay">
+                        <h4>Top Trending Spots</h4>
+                        <span>24 Places <i class="fas fa-caret-right"></i></span>
+                    </div>
+                </div>
+                <div class="collection-card">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80" alt="New">
+                    <div class="collection-overlay">
+                        <h4>Newly Opened</h4>
+                        <span>15 Places <i class="fas fa-caret-right"></i></span>
+                    </div>
+                </div>
+                <div class="collection-card">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80" alt="Romantic">
+                    <div class="collection-overlay">
+                        <h4>Romantic Dining</h4>
+                        <span>30 Places <i class="fas fa-caret-right"></i></span>
+                    </div>
+                </div>
+                <div class="collection-card">
+                    <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=400&q=80" alt="Pubs">
+                    <div class="collection-overlay">
+                        <h4>Best Pubs & Bars</h4>
+                        <span>22 Places <i class="fas fa-caret-right"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Localities -->
+    <section class="localities-section container">
+        <div class="section-header">
+            <h2>Popular localities in and around your city</h2>
+        </div>
         
-        <main class="login-card glass">
-            <header class="login-header">
-                <div class="logo">
-                    <i class="fas fa-utensils"></i>
-                    <span>FoodieHub</span>
+        <div class="localities-grid">
+            <div class="locality-card" onclick="window.location.href='dashboard.html'">
+                <div class="locality-info">
+                    <h4>Downtown</h4>
+                    <p>342 places</p>
                 </div>
-                <h1 class="text-gradient">Welcome Back!</h1>
-                <p>Taste the world, one dash at a time.</p>
-            </header>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="locality-card" onclick="window.location.href='dashboard.html'">
+                <div class="locality-info">
+                    <h4>Westside</h4>
+                    <p>120 places</p>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="locality-card" onclick="window.location.href='dashboard.html'">
+                <div class="locality-info">
+                    <h4>East End</h4>
+                    <p>210 places</p>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="locality-card" onclick="window.location.href='dashboard.html'">
+                <div class="locality-info">
+                    <h4>Uptown</h4>
+                    <p>430 places</p>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="locality-card" onclick="window.location.href='dashboard.html'">
+                <div class="locality-info">
+                    <h4>North Hills</h4>
+                    <p>150 places</p>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="locality-card" onclick="window.location.href='dashboard.html'">
+                <div class="locality-info" style="display:flex; align-items:center; justify-content:center; width:100%;">
+                    <h4>See more <i class="fas fa-chevron-down" style="margin-left: 10px;"></i></h4>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <form id="loginForm" class="auth-form">
-                <!-- Initial Login Step -->
+    <!-- Footer -->
+    <footer>
+        <div class="container" style="text-align: center; color: var(--text-muted);">
+            <h2 style="color: var(--text-main); font-style: italic; font-weight: 800; font-size: 2.5rem; margin-bottom: 20px;">zomato</h2>
+            <p>By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies. All trademarks are properties of their respective owners.</p>
+            <p style="margin-top: 10px;">&copy; 2026 Zomato Clone. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-content">
+            <i class="fas fa-times close-modal" id="closeAuthModal"></i>
+            <div class="modal-header">
+                <h2 id="authModalTitle">Login</h2>
+            </div>
+            
+            <form id="authForm">
                 <div id="initialStep">
-                    <div class="input-group">
-                        <label for="userName">Full Name</label>
-                        <div class="input-wrapper">
-                            <i class="far fa-user"></i>
-                            <input type="text" id="userName" placeholder="John Doe" required>
-                        </div>
+                    <div class="form-group" id="nameGroup" style="display: none;">
+                        <input type="text" id="userName" class="form-control" placeholder="Full Name">
                     </div>
-
-                    <div class="input-group" style="margin-top: 1rem;">
-                        <label for="email">Email Address</label>
-                        <div class="input-wrapper">
-                            <i class="far fa-envelope"></i>
-                            <input type="email" id="email" placeholder="name@example.com" required>
-                        </div>
+                    <div class="form-group">
+                        <input type="email" id="email" class="form-control" placeholder="Email" required>
                     </div>
-
-                    <button type="button" id="verifyBtn" class="btn-primary" style="margin-top: 2rem; width: 100%;">
-                        <span>Verify Email</span>
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
+                    <button type="button" id="verifyBtn" class="btn btn-primary btn-block">Send OTP</button>
+                    
+                    <div style="margin-top: 20px; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
+                        <span id="authToggleText">New to Zomato?</span> 
+                        <a href="#" id="toggleAuthMode" style="color: var(--primary-red); cursor: pointer;">Create account</a>
+                    </div>
                 </div>
 
-                <!-- OTP Step (Hidden by default) -->
                 <div id="otpStep" style="display: none;">
-                    <div class="input-group">
-                        <div class="label-row">
-                            <label for="otp">Enter OTP</label>
-                            <span id="resendTimer" class="forgot-link">Resend in 30s</span>
-                        </div>
-                        <div class="input-wrapper">
-                            <i class="fas fa-shield-alt"></i>
-                            <input type="text" id="otp" placeholder="Enter 4-digit code" maxlength="4">
-                        </div>
+                    <div class="form-group">
+                        <input type="text" id="otp" class="form-control" placeholder="Enter OTP" required>
                     </div>
-
-                    <button type="submit" class="btn-primary" style="margin-top: 2rem; width: 100%;">
-                        <span>Login to Dashboard</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                    
-                    <button type="button" id="backToEmail" class="btn-link" style="background:none; border:none; color:var(--text-muted); font-size:0.85rem; margin-top:1rem; cursor:pointer; width:100%;">
-                        <i class="fas fa-arrow-left"></i> Change Email
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-block">Verify & Continue</button>
+                    <div style="margin-top: 15px; text-align: center;">
+                        <a href="#" id="backToEmail" style="color: var(--primary-red); font-size: 0.9rem;">Back</a>
+                    </div>
                 </div>
             </form>
-
-            <div class="divider">
-                <span>or continue with</span>
-            </div>
-
-            <div class="social-auth">
-                <button class="btn-social google">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
-                    <span>Google</span>
-                </button>
-                <button class="btn-social facebook">
-                    <i class="fab fa-facebook-f"></i>
-                    <span>Facebook</span>
-                </button>
-            </div>
-
-            <footer class="login-footer">
-                <p>New to FoodieHub? <a href="#" id="toggleView">Create an account</a></p>
-            </footer>
-        </main>
+        </div>
     </div>
 
     <script src="script.js"></script>

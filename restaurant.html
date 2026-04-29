@@ -3,1455 +3,299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Spice Haven | FoodieHub</title>
-    <!-- Google Fonts: Outfit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <title>Restaurant | Zomato</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .res-hero {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: 200px 200px;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .res-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        .res-hero img:first-child {
+            grid-row: 1 / -1;
+        }
+        .res-hero img:hover {
+            opacity: 0.9;
+        }
+        
+        .res-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .res-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+        .res-rating-box {
+            display: flex;
+            gap: 20px;
+        }
+        .rating-block {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .rating-score {
+            background: #24963F;
+            color: white;
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .res-tabs {
+            display: flex;
+            gap: 30px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            position: sticky;
+            top: 70px;
+            background: white;
+            z-index: 90;
+        }
+        .res-tab {
+            padding: 15px 0;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            position: relative;
+        }
+        .res-tab.active {
+            color: var(--primary-red);
+            font-weight: 500;
+        }
+        .res-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-red);
+        }
+
+        .menu-list {
+            max-width: 800px;
+        }
+        .menu-item {
+            display: flex;
+            gap: 20px;
+            padding: 25px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .menu-item-info {
+            flex: 1;
+        }
+        .menu-item-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .menu-item-info .price {
+            font-weight: 500;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .menu-item-info p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .menu-item-img {
+            width: 130px;
+            height: 130px;
+            position: relative;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+        .menu-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .add-btn {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            color: var(--primary-red);
+            border: 1px solid var(--primary-red);
+            padding: 5px 25px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .add-btn:hover {
+            background: var(--bg-light);
+        }
+    </style>
 </head>
-<body class="dashboard-body">
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar-nav">
-        <div class="logo">
-            <i class="fas fa-utensils"></i>
-            <span>FoodieHub</span>
-        </div>
-
-        <nav class="nav-group">
-            <span class="nav-label">Menu</span>
-            <a href="dashboard.html" class="sidebar-link">
-                <i class="fas fa-house"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="search.html" class="sidebar-link">
-                <i class="fas fa-search"></i>
-                <span>Explore</span>
-            </a>
-            <a href="tracking.html" class="sidebar-link">
-                <i class="fas fa-clock-rotate-left"></i>
-                <span>Orders</span>
-            </a>
-            <a href="referral.html" class="sidebar-link">
-                <i class="fas fa-gift"></i>
-                <span>Refer & Earn</span>
-            </a>
-        </nav>
-
-        <nav class="nav-group">
-            <span class="nav-label">Account</span>
-            <a href="profile.html" class="sidebar-link">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-            </a>
-            <a href="settings.html" class="sidebar-link">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </a>
-            <a href="help.html" class="sidebar-link">
-                <i class="fas fa-headset"></i>
-                <span>Support</span>
-            </a>
-        </nav>
-
-        <div class="sidebar-footer">
-            <div class="promo-card">
-                <h4>FoodieHub Pro</h4>
-                <p>Get free delivery on every order!</p>
-                <button class="btn-primary btn-sidebar">Upgrade Now</button>
-            </div>
-        </div>
-    </aside>
+<body>
 
     <!-- Header -->
-    <header class="dash-header glass">
-        <div class="nav-container">
-            <div class="header-left">
-                <button class="btn-back" onclick="window.history.back()">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="location-picker">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Mumbai, India</span>
-                    <i class="fas fa-chevron-down"></i>
+    <header class="dash-header">
+        <div class="container dash-nav">
+            <div class="dash-logo" style="cursor: pointer;" onclick="window.location.href='index.html'">zomato</div>
+            
+            <div class="dash-search-container">
+                <div class="dash-search-bar">
+                    <div class="location-input" style="width: 250px;">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" value="New York, USA">
+                        <i class="fas fa-caret-down" style="color:var(--text-muted); font-size: 0.8rem; margin-left: 5px;"></i>
+                    </div>
+                    <div class="search-input" style="flex: 1;">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search for restaurant, cuisine or a dish">
+                    </div>
                 </div>
             </div>
-            
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search in The Spice Haven menu...">
-            </div>
 
-            <div class="user-actions">
-                <button class="cart-btn">
-                    <i class="fas fa-shopping-basket"></i>
-                    <span class="badge" id="cartCount">0</span>
-                </button>
-                <div class="user-profile" onclick="window.location.href='profile.html'" style="cursor: pointer;">
-                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="Profile">
+            <div class="dash-user-actions">
+                <span id="navLoginBtn">Log in</span>
+                <span id="navSignupBtn">Sign up</span>
+                <div id="userProfile" style="display: none; align-items: center; gap: 10px;">
+                    <img id="userAvatar" src="" alt="User">
+                    <span id="userNameDisplay" class="font-medium">User</span>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="res-details-content">
-        <!-- Restaurant Hero -->
-        <section class="res-hero">
-            <div class="res-banner" style="background-image: url('assets/restaurant_bg.png');">
-                <div class="banner-overlay"></div>
-                <div class="res-header-info">
-                    <div class="res-badge">Pure Veg</div>
-                    <h1>The Spice Haven</h1>
-                    <p>Artisan Pizzas • Italian • Gourmet</p>
-                    <div class="res-stats">
-                        <div class="stat"><i class="fas fa-star"></i> 4.8 (500+ ratings)</div>
-                        <div class="stat"><i class="far fa-clock"></i> 20-30 min</div>
-                        <div class="stat"><i class="fas fa-wallet"></i> ₹400 for two</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="container" style="padding: 20px;">
+        <div class="breadcrumbs" style="margin-bottom: 20px;">
+            <a href="index.html">Home</a> / <a href="index.html">USA</a> / <a href="dashboard.html">New York</a> / <span class="text-muted" id="breadcrumbName">Restaurant</span>
+        </div>
 
-        <!-- Tabs Switcher -->
-        <div class="res-tabs-container">
-            <div class="res-tabs">
-                <button class="tab-btn active" data-tab="menu">Menu</button>
-                <button class="tab-btn" data-tab="reviews">Reviews</button>
-                <button class="tab-btn" data-tab="info">About</button>
+        <!-- Photos Grid -->
+        <div class="res-hero">
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Main">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=400&q=80" alt="Food">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80" alt="Interior">
+            <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=400&q=80" alt="Food 2">
+            <div style="position: relative; cursor: pointer;">
+                <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=400&q=80" alt="More" style="filter: brightness(0.5);">
+                <span style="position: absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; font-size:1.2rem; font-weight:500;">View Gallery</span>
             </div>
         </div>
 
-        <!-- Menu Section (Existing) -->
-        <div class="tab-content active" id="menu-tab">
-            <div class="menu-layout">
-            <!-- Sidebar Navigation -->
-            <aside class="menu-sidebar">
-                <nav class="sticky-nav">
-                    <ul>
-                        <li><a href="#best-sellers" class="active">Best Sellers</a></li>
-                        <li><a href="#pizzas">Pizzas</a></li>
-                        <li><a href="#burgers">Burgers & Sandwiches</a></li>
-                        <li><a href="#pasta">Pasta & Mains</a></li>
-                        <li><a href="#indian">Indian Specialties</a></li>
-                        <li><a href="#sushi">Sushi Station</a></li>
-                        <li><a href="#pan-asian">Pan-Asian Delight</a></li>
-                        <li><a href="#healthy">Healthy & Fresh</a></li>
-                        <li><a href="#platters">Global Platters</a></li>
-                        <li><a href="#sides">Sides & Extras</a></li>
-                        <li><a href="#desserts">Desserts</a></li>
-                        <li><a href="#beverages">Beverages</a></li>
-                    </ul>
-                </nav>
-            </aside>
-
-            <!-- Menu Items -->
-            <section class="menu-items">
-                <div id="best-sellers" class="menu-category">
-                    <h3>Best Sellers</h3>
-                    <div class="menu-list">
-                        <!-- Item 1 -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Classic Margherita Pizza</h4>
-                                <span class="price">₹349</span>
-                                <p>Authentic Italian thin crust pizza with house-made tomato sauce, fresh mozzarella, and aromatic basil.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1574071318508-1cdbad80ad38?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item 2 -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Double Pepperoni Pizza</h4>
-                                <span class="price">₹599</span>
-                                <p>Loaded with extra pepperoni slices and melting mozzarella on a classic sourdough base.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="pizzas" class="menu-category">
-                    <h3>Gourmet & Classic Pizzas</h3>
-                    <div class="menu-list">
-                        <!-- Gourmet Pizza Items -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Paneer Tikka Pizza</h4>
-                                <span class="price">₹499</span>
-                                <p>Marinated paneer cubes, capsicum, onion, and spicy tikka sauce for an Indian twist.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Peri Peri Chicken Pizza</h4>
-                                <span class="price">₹649</span>
-                                <p>Fiery peri-peri chicken, red paprika, and onions on a bed of cheesy mozzarella.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Farm Fresh Pizza</h4>
-                                <span class="price">₹429</span>
-                                <p>Topped with crunchy bell peppers, onions, mushrooms, and sweet corn on a cheese-burst crust.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>BBQ Smokehouse Chicken</h4>
-                                <span class="price">₹629</span>
-                                <p>Hickory smoked chicken, red onions, and sweet corn drizzled with BBQ sauce.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Quattro Formaggi</h4>
-                                <span class="price">₹549</span>
-                                <p>A blend of mozzarella, cheddar, parmesan, and gorgonzola for the ultimate cheese lover.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1573821663912-5699054927d3?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Spicy Mexican Wave</h4>
-                                <span class="price">₹579</span>
-                                <p>Jalapenos, onions, tomatoes, and spicy minced chicken with a hint of taco seasoning.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Garden Pesto Delight</h4>
-                                <span class="price">₹489</span>
-                                <p>Fresh basil pesto base with broccoli, asparagus, and pine nuts.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>The Meat Overload</h4>
-                                <span class="price">₹749</span>
-                                <p>Loaded with pepperoni, ham, chicken sausage, and smoked bacon strips.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="burgers" class="menu-category">
-                    <h3>Burgers & Sandwiches</h3>
-                    <div class="menu-list">
-                        <!-- Item: The Classic Beast -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>The Classic Beast Burger</h4>
-                                <span class="price">₹399</span>
-                                <p>Double succulent lamb patty, caramelized onions, aged cheddar, and our secret smoked sauce.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item: Truffle Mushroom Swiss -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Truffle Mushroom Swiss</h4>
-                                <span class="price">₹349</span>
-                                <p>Gourmet mushroom patty, swiss cheese, and a hint of white truffle oil on a brioche bun.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1520072959219-c595dc870360?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item: Grilled Pesto Chicken Sandwich -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Grilled Pesto Chicken Sandwich</h4>
-                                <span class="price">₹299</span>
-                                <p>Herb-marinated chicken breast, fresh basil pesto, and sun-dried tomatoes in sourdough bread.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Crispy Fish Fillet Burger</h4>
-                                <span class="price">₹429</span>
-                                <p>Golden fried sea bass fillet with tartare sauce and crunchy lettuce.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1550950158-d0d960dff51b?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Grilled Halloumi Burger</h4>
-                                <span class="price">₹379</span>
-                                <p>Pan-seared halloumi cheese, roasted peppers, and hummus in a multigrain bun.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Texas Steakhouse Burger</h4>
-                                <span class="price">₹549</span>
-                                <p>Prime beef patty, crispy bacon strips, onion rings, and smoky BBQ sauce.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Ultimate Falafel Wrap</h4>
-                                <span class="price">₹249</span>
-                                <p>Crispy falafel balls, tahini sauce, and pickled turnips wrapped in a soft tortilla.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Korean Gochujang Chicken Burger</h4>
-                                <span class="price">₹459</span>
-                                <p>Crispy fried chicken tossed in sweet & spicy gochujang glaze with kimchi slaw.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="pasta" class="menu-category">
-                    <h3>Pasta & Mains</h3>
-                    <div class="menu-list">
-                        <!-- Item: Creamy Alfredo -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Creamy Alfredo Pasta</h4>
-                                <span class="price">₹389</span>
-                                <p>Fettuccine tossed in a rich parmesan cream sauce with sautéed mushrooms and herbs.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1645112481338-3562479f67a2?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item: Spicy Arrabbiata -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Spicy Penne Arrabbiata</h4>
-                                <span class="price">₹359</span>
-                                <p>Penne pasta in a fiery tomato sauce with garlic, chili flakes, and fresh parsley.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item: Grilled Salmon -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Lemon Butter Grilled Salmon</h4>
-                                <span class="price">₹899</span>
-                                <p>Fresh Atlantic salmon fillet grilled to perfection, served with lemon butter sauce and grilled asparagus.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Classic Spaghetti Carbonara</h4>
-                                <span class="price">₹449</span>
-                                <p>Traditional Roman pasta with crispy guanciale, egg yolk, pecorino romano, and black pepper.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Pesto Genovese Trofie</h4>
-                                <span class="price">₹419</span>
-                                <p>Short twisted pasta with house-made basil pesto, green beans, and potato cubes.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Baked Lasagna Bolognese</h4>
-                                <span class="price">₹529</span>
-                                <p>Layered pasta sheets with slow-cooked meat ragu, bechamel sauce, and bubbling mozzarella.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1574894709920-11b28e7367e3?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Truffle Gnocchi di Patate</h4>
-                                <span class="price">₹499</span>
-                                <p>Soft potato dumplings in a creamy truffle and wild mushroom sauce.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Seafood Linguine Marinara</h4>
-                                <span class="price">₹689</span>
-                                <p>Linguine with prawns, squid, and mussels in a rich spicy tomato marinara sauce.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1551811515-0505d0ba2b19?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="indian" class="menu-category">
-                    <h3>Indian Specialties</h3>
-                    <div class="menu-list">
-                        <!-- Item: Butter Chicken -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Butter Chicken Deluxe</h4>
-                                <span class="price">₹549</span>
-                                <p>Tender tandoori chicken cooked in a rich, creamy tomato and butter gravy.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1603894584115-f73f2ec04576?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item: Dal Makhani -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Slow-Cooked Dal Makhani</h4>
-                                <span class="price">₹399</span>
-                                <p>Black lentils simmered overnight with spices, cream, and butter for a velvety texture.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item: Garlic Naan -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Garlic & Herbs Naan</h4>
-                                <span class="price">₹99</span>
-                                <p>Soft, leavened flatbread topped with minced garlic and fresh coriander.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Paneer Butter Masala</h4>
-                                <span class="price">₹429</span>
-                                <p>Fresh cottage cheese cubes in a rich and aromatic tomato-based butter gravy.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Lucknowi Mutton Biryani</h4>
-                                <span class="price">₹649</span>
-                                <p>Slow-cooked fragrant basmati rice with tender mutton pieces and secret Awadhi spices.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1563379091339-03b11adbc040?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Shahi Malai Kofta</h4>
-                                <span class="price">₹389</span>
-                                <p>Paneer and potato dumplings in a rich, white cashew-based sweet and savory gravy.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1585932231552-29877e5f5da6?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Kashmiri Lamb Rogan Josh</h4>
-                                <span class="price">₹599</span>
-                                <p>Traditional Kashmiri lamb curry cooked with alkanet root and Kashmiri red chilies.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Old Delhi Tandoori Chicken</h4>
-                                <span class="price">₹479</span>
-                                <p>Half chicken marinated in yogurt and spices, roasted to perfection in a clay oven.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="sushi" class="menu-category">
-                    <h3>Sushi Station</h3>
-                    <div class="menu-list">
-                        <!-- Sushi Item 1 -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Salmon Nigiri (4 Pcs)</h4>
-                                <span class="price">₹549</span>
-                                <p>Fresh Atlantic salmon slices over hand-pressed vinegared rice.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1583623025817-d180a2221d0a?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Sushi Item 2 -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Dragon Roll</h4>
-                                <span class="price">₹799</span>
-                                <p>Tempura prawn, cucumber, and avocado topped with eel and unagi sauce.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1559466273-d95e72debaf8?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Sushi Item 3 -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>California Gold Roll</h4>
-                                <span class="price">₹489</span>
-                                <p>Crab stick, avocado, and cucumber rolled with flying fish roe.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Sushi Item 4 -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Spicy Tuna Crunchy Roll</h4>
-                                <span class="price">₹629</span>
-                                <p>Chopped tuna with spicy mayo and tempura flakes for that extra crunch.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1617196034183-421b4917c92d?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Sushi Item 5 -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Yasai Tempura Roll</h4>
-                                <span class="price">₹399</span>
-                                <p>Crispy vegetable tempura rolled with pickled radish and sweet soy glaze.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Sushi Item 6 -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Rainbow Signature Roll</h4>
-                                <span class="price">₹849</span>
-                                <p>California roll topped with assorted fresh fish and avocado "rainbow".</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Sushi Item 7 -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Ebi Tempura Nigiri</h4>
-                                <span class="price">₹579</span>
-                                <p>Crispy fried prawns served over hand-pressed sushi rice with wasabi.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1563612116625-3012372fccce?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Sushi Item 8 -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Caterpillar Avocado Roll</h4>
-                                <span class="price">₹459</span>
-                                <p>Cream cheese and cucumber rolled and topped with thin slices of ripe avocado.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1582450871972-ab5ca641643d?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="pan-asian" class="menu-category">
-                    <h3>Pan-Asian Delight</h3>
-                    <div class="menu-list">
-                        <!-- Item: Hakka Noodles -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Chili Garlic Hakka Noodles</h4>
-                                <span class="price">₹289</span>
-                                <p>Wok-tossed noodles with fresh vegetables, burnt garlic, and spicy chili oil.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item: Manchurian -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Veg Manchurian Gravy</h4>
-                                <span class="price">₹319</span>
-                                <p>Deep-fried vegetable balls in a tangy, spicy ginger-garlic soy sauce.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1512058560550-42749359ade7?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Kung Pao Chicken</h4>
-                                <span class="price">₹459</span>
-                                <p>Classic Szechuan stir-fry with chicken, peanuts, vegetables, and chili peppers.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Thai Green Curry Veg</h4>
-                                <span class="price">₹429</span>
-                                <p>Aromatic coconut milk curry with Thai basil, bamboo shoots, and exotic vegetables.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Crystal Veg Dim Sums</h4>
-                                <span class="price">₹349</span>
-                                <p>Translucent steamed dumplings filled with finely chopped mushrooms and water chestnuts.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Prawn Tempura (6 Pcs)</h4>
-                                <span class="price">₹589</span>
-                                <p>Light and crispy Japanese-style batter-fried prawns served with tentsuyu sauce.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Crispy Chili Paneer</h4>
-                                <span class="price">₹369</span>
-                                <p>Cottage cheese cubes tossed in a spicy Indo-Chinese sauce with peppers and onions.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1512058560550-42749359ade7?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Burnt Garlic Fried Rice</h4>
-                                <span class="price">₹299</span>
-                                <p>Fragrant jasmine rice tossed with golden fried garlic and seasonal vegetables.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="healthy" class="menu-category">
-                    <h3>Healthy & Fresh</h3>
-                    <div class="menu-list">
-                        <!-- Item: Quinoa Bowl -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Mediterranean Quinoa Bowl</h4>
-                                <span class="price">₹449</span>
-                                <p>Protein-packed quinoa with roasted chickpeas, cucumber, cherry tomatoes, and tahini dressing.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item: Greek Salad -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Classic Greek Salad</h4>
-                                <span class="price">₹329</span>
-                                <p>Fresh cucumbers, tomatoes, red onions, olives, and feta cheese drizzled with extra virgin olive oil.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Avocado & Sourdough Toast</h4>
-                                <span class="price">₹389</span>
-                                <p>Smashed avocado, chili flakes, radish, and poached eggs on toasted sourdough bread.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Tropical Acai Smoothie Bowl</h4>
-                                <span class="price">₹499</span>
-                                <p>Frozen acai puree topped with granola, fresh berries, bananas, and coconut flakes.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Roasted Beetroot & Walnut Salad</h4>
-                                <span class="price">₹349</span>
-                                <p>Caramelized walnuts, roasted beets, and goat cheese on a bed of baby spinach.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Grilled Lemon Herb Chicken Salad</h4>
-                                <span class="price">₹429</span>
-                                <p>Succulent grilled chicken breast strips with mixed greens and a zesty lemon vinaigrette.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Zucchini Noodles with Pesto</h4>
-                                <span class="price">₹379</span>
-                                <p>Spiralized zucchini tossed in home-made basil pesto and cherry tomatoes.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Fresh Fruit & Nut Platter</h4>
-                                <span class="price">₹299</span>
-                                <p>A seasonal assortment of sliced fruits served with a side of honey and mixed nuts.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="platters" class="menu-category">
-                    <h3>Global Platters</h3>
-                    <div class="menu-list">
-                        <!-- Item: Mezze Platter -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Lebanese Mezze Platter</h4>
-                                <span class="price">₹699</span>
-                                <p>A vibrant assortment of hummus, baba ganoush, falafel, pita bread, and pickled veggies.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item: Mix Grill -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Tandoori Mix Grill Platter</h4>
-                                <span class="price">₹849</span>
-                                <p>Assorted tandoori kebabs, chicken tikka, fish tikka, and malai tikka served with mint chutney.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Continental Breakfast Platter</h4>
-                                <span class="price">₹549</span>
-                                <p>Two eggs your way, grilled sausages, bacon, baked beans, grilled tomatoes, and hash browns.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Italian Antipasti Platter</h4>
-                                <span class="price">₹629</span>
-                                <p>A selection of Italian cheeses, olives, sun-dried tomatoes, artichokes, and crostini.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1534939561122-3c5208479e37?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Seafood Grand Platter</h4>
-                                <span class="price">₹1299</span>
-                                <p>Lobster tail, grilled prawns, fried calamari, and mussels served with garlic butter sauce.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1551811515-0505d0ba2b19?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Mexican Fiesta Platter</h4>
-                                <span class="price">₹589</span>
-                                <p>Assorted mini tacos, quesadillas, nachos with guacamole, and spicy salsa.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1513185158878-8d8c1827503f?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>South Indian Mini-Meal Platter</h4>
-                                <span class="price">₹399</span>
-                                <p>Mini idli, vada, dosa, upma, and pongal served with sambar and three types of chutneys.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Chef's Signature Meat Platter</h4>
-                                <span class="price">₹949</span>
-                                <p>Smoked brisket, BBQ ribs, grilled chicken, and lamb chops with mashed potatoes.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="sides" class="menu-category">
-                    <h3>Sides & Extras</h3>
-                    <div class="menu-list">
-                        <!-- Item 6 -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Stuffed Garlic Bread</h4>
-                                <span class="price">₹199</span>
-                                <p>Freshly baked garlic bread stuffed with melted cheese and sweet corn.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1619860860774-1e2e17343432?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item 7 -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle non-veg-icon"></i>
-                                <h4>Spicy Chicken Wings</h4>
-                                <span class="price">₹249</span>
-                                <p>Tender chicken wings tossed in our signature hot sauce.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="desserts" class="menu-category">
-                    <h3>Desserts</h3>
-                    <div class="menu-list">
-                        <!-- Item: Brownie -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Sizzling Brownie with Ice Cream</h4>
-                                <span class="price">₹249</span>
-                                <p>Warm chocolate brownie served on a sizzler plate with vanilla ice cream and hot fudge.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1564355808539-22fda35bed7e?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item: Gulab Jamun -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Premium Gulab Jamun (2 Pcs)</h4>
-                                <span class="price">₹149</span>
-                                <p>Soft khoya balls fried and soaked in cardamom-flavored sugar syrup.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1589119908995-c6837fa14848?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Classic New York Cheesecake</h4>
-                                <span class="price">₹399</span>
-                                <p>Rich and creamy cheesecake on a graham cracker crust with strawberry compote.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Authentic Tiramisu</h4>
-                                <span class="price">₹429</span>
-                                <p>Italian coffee-flavored dessert with ladyfingers dipped in espresso and mascarpone cream.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Red Velvet Layer Cake</h4>
-                                <span class="price">₹349</span>
-                                <p>Moist red velvet sponge with layers of smooth cream cheese frosting.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1586788680434-30d324671b1f?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>French Macaron Selection (6 Pcs)</h4>
-                                <span class="price">₹499</span>
-                                <p>Assorted flavors including pistachio, raspberry, chocolate, and lemon.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1558326567-98ae2405596b?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Warm Apple Pie with Custard</h4>
-                                <span class="price">₹289</span>
-                                <p>Homemade shortcrust pastry filled with spiced apples, served with warm vanilla custard.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Belgium Chocolate Mousse</h4>
-                                <span class="price">₹319</span>
-                                <p>Silky smooth dark chocolate mousse topped with whipped cream and chocolate shavings.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="beverages" class="menu-category">
-                    <h3>Beverages</h3>
-                    <div class="menu-list">
-                        <!-- Item: Mango Lassi -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Mango Lassi</h4>
-                                <span class="price">₹129</span>
-                                <p>Traditional Indian yogurt-based drink blended with sweet Alphonso mangoes.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item: Cold Coffee -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Iced Caramel Macchiato</h4>
-                                <span class="price">₹199</span>
-                                <p>Smooth espresso blended with milk and caramel syrup, served over ice.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <!-- Item 9 -->
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Fresh Lime Soda</h4>
-                                <span class="price">₹89</span>
-                                <p>Refreshing soda with fresh lime juice, mint, and a hint of salt.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Classic Mojito</h4>
-                                <span class="price">₹179</span>
-                                <p>Refreshing blend of fresh mint, lime juice, sugar, and soda water.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Strawberry Milkshake</h4>
-                                <span class="price">₹219</span>
-                                <p>Thick and creamy shake made with fresh strawberries and vanilla ice cream.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1579739143581-0ad70eeef6d6?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Sparkling Blue Lagoon</h4>
-                                <span class="price">₹159</span>
-                                <p>A vibrant blue citrus-flavored mocktail with soda and a hint of lime.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1536935338213-d2c123348f0e?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Iced Peach Tea</h4>
-                                <span class="price">₹139</span>
-                                <p>Brewed black tea infused with sweet peach flavor, served chilled.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-
-                        <div class="menu-item-card">
-                            <div class="item-info">
-                                <i class="far fa-dot-circle veg-icon"></i>
-                                <h4>Hot Masala Chai</h4>
-                                <span class="price">₹79</span>
-                                <p>Classic Indian tea brewed with ginger, cardamom, and aromatic spices.</p>
-                            </div>
-                            <div class="item-action">
-                                <div class="item-img" style="background-image: url('https://images.unsplash.com/photo-1544787210-22bb1c79f10e?auto=format&fit=crop&w=200&q=80');"></div>
-                                <button class="btn-add" onclick="updateCart(1)">ADD</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- Reviews Section (New) -->
-        <div class="tab-content" id="reviews-tab">
-            <div class="reviews-layout">
-                <!-- Rating Summary -->
-                <aside class="rating-summary-sidebar glass">
-                    <div class="overall-rating">
-                        <span class="big-score">4.8</span>
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p>Based on 542 reviews</p>
-                    </div>
-                    <div class="rating-breakdown">
-                        <div class="breakdown-row">
-                            <span>5 <i class="fas fa-star"></i></span>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 85%;"></div></div>
-                            <span>85%</span>
-                        </div>
-                        <div class="breakdown-row">
-                            <span>4 <i class="fas fa-star"></i></span>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 10%;"></div></div>
-                            <span>10%</span>
-                        </div>
-                        <div class="breakdown-row">
-                            <span>3 <i class="fas fa-star"></i></span>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 3%;"></div></div>
-                            <span>3%</span>
-                        </div>
-                        <div class="breakdown-row">
-                            <span>2 <i class="fas fa-star"></i></span>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 1%;"></div></div>
-                            <span>1%</span>
-                        </div>
-                        <div class="breakdown-row">
-                            <span>1 <i class="fas fa-star"></i></span>
-                            <div class="bar-bg"><div class="bar-fill" style="width: 1%;"></div></div>
-                            <span>1%</span>
-                        </div>
-                    </div>
-                    <button class="btn-primary btn-block">Write a Review</button>
-                </aside>
-
-                <!-- Reviews Feed -->
-                <div class="reviews-feed">
-                    <!-- Review 1 -->
-                    <div class="review-card glass">
-                        <div class="review-header">
-                            <img src="https://ui-avatars.com/api/?name=Sarah+M&background=FFB800&color=fff" alt="Sarah M">
-                            <div class="reviewer-info">
-                                <h4>Sarah Miller</h4>
-                                <p>58 reviews • 12 followers</p>
-                            </div>
-                            <div class="review-rating">
-                                <span class="badge-rating">5.0 <i class="fas fa-star"></i></span>
-                                <span class="review-date">2 days ago</span>
-                            </div>
-                        </div>
-                        <div class="review-body">
-                            <p>The best Margherita I've had in years! The crust was perfectly crispy and the ingredients felt incredibly fresh. Definitely my new go-to spot for Italian cravings. Highly recommended!</p>
-                        </div>
-                        <div class="review-footer">
-                            <button class="btn-text-small"><i class="far fa-thumbs-up"></i> Helpful</button>
-                            <button class="btn-text-small"><i class="far fa-comment"></i> Comment</button>
-                            <button class="btn-text-small"><i class="far fa-share-square"></i> Share</button>
-                        </div>
-                    </div>
-
-                    <!-- Review 2 -->
-                    <div class="review-card glass">
-                        <div class="review-header">
-                            <img src="https://ui-avatars.com/api/?name=Mark+D&background=10B981&color=fff" alt="Mark D">
-                            <div class="reviewer-info">
-                                <h4>Mark Davis</h4>
-                                <p>12 reviews • 3 followers</p>
-                            </div>
-                            <div class="review-rating">
-                                <span class="badge-rating">4.0 <i class="fas fa-star"></i></span>
-                                <span class="review-date">1 week ago</span>
-                            </div>
-                        </div>
-                        <div class="review-body">
-                            <p>Great flavor but the delivery took a bit longer than expected. However, the food was still warm when it arrived. The Pepperoni pizza is a must-try!</p>
-                        </div>
-                        <div class="review-footer">
-                            <button class="btn-text-small"><i class="far fa-thumbs-up"></i> Helpful</button>
-                            <button class="btn-text-small"><i class="far fa-comment"></i> Comment</button>
-                            <button class="btn-text-small"><i class="far fa-share-square"></i> Share</button>
-                        </div>
+        <!-- Info -->
+        <div class="res-header">
+            <div>
+                <h1 id="resTitle">Loading...</h1>
+                <p class="text-muted" style="font-size: 1.1rem;" id="resCuisines">Loading cuisines...</p>
+                <p class="text-muted" id="resLocation">Downtown, New York</p>
+                <p style="margin-top: 10px; color: #f57082;"><i class="far fa-clock"></i> <span id="resTime">--</span></p>
+            </div>
+            <div class="res-rating-box">
+                <div class="rating-block">
+                    <div class="rating-score" id="resRating">-- <i class="fas fa-star" style="font-size:0.8rem"></i></div>
+                    <div style="display:flex; flex-direction:column;">
+                        <span style="font-weight:600; font-size:0.9rem;">1,204</span>
+                        <span class="text-muted" style="font-size:0.8rem; border-bottom:1px dashed #ccc">Dining Reviews</span>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
 
-    <!-- Floating Cart Bar (Visible when items added) -->
-    <div class="floating-cart glass" id="floatingCart">
-        <div class="cart-summary">
-            <span id="itemsAdded">1 Item added</span>
-            <span class="total">Total: ₹349</span>
+        <!-- Tabs -->
+        <div class="res-tabs">
+            <div class="res-tab">Overview</div>
+            <div class="res-tab active">Order Online</div>
+            <div class="res-tab">Reviews</div>
+            <div class="res-tab">Photos</div>
+            <div class="res-tab">Menu</div>
         </div>
-        <button class="view-cart-btn" onclick="window.location.href='checkout.html'">
-            View Cart <i class="fas fa-chevron-right"></i>
-        </button>
+
+        <!-- Menu Section -->
+        <div style="display: flex; gap: 40px;">
+            <div style="width: 200px; border-right: 1px solid var(--border-color); position: sticky; top: 130px; height: max-content;">
+                <ul style="line-height: 2.5;">
+                    <li style="font-weight: 500; border-right: 3px solid var(--primary-red); color: var(--primary-red);">Recommended</li>
+                    <li>Starters</li>
+                    <li>Main Course</li>
+                    <li>Desserts</li>
+                </ul>
+            </div>
+
+            <div class="menu-list" id="menuList">
+                <h3>Recommended</h3>
+                <div style="text-align:center; padding: 40px; color: var(--text-muted);">
+                    <i class="fas fa-circle-notch fa-spin" style="font-size: 2rem;"></i>
+                    <p style="margin-top:10px">Loading menu...</p>
+                </div>
+            </div>
+            
+            <!-- Dummy Cart Widget for visual completeness -->
+            <div style="width: 300px;">
+                <div style="border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 20px; position: sticky; top: 130px;">
+                    <h3 style="margin-bottom: 15px;">Cart</h3>
+                    <p class="text-muted" style="text-align: center; margin-bottom: 20px;">Your cart is empty</p>
+                    <button class="btn btn-primary btn-block" style="opacity: 0.5; cursor: not-allowed;" id="dummyCheckout">Checkout</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Bottom Navigation for Mobile -->
-    <nav class="mobile-nav">
-        <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="search.html" class="nav-item"><i class="fas fa-search"></i><span>Explore</span></a>
-        <a href="tracking.html" class="nav-item"><i class="fas fa-shopping-basket"></i><span>Orders</span></a>
-        <a href="profile.html" class="nav-item"><i class="fas fa-user"></i><span>Profile</span></a>
-    </nav>
-
+    <!-- Auth Modal & Toast Included from script.js logic -->
+    <!-- (We omit duplicating the modal HTML here to save space, but script.js handles checkAuth) -->
+    
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const resId = params.get('id');
+            
+            if(resId) {
+                fetch(`api/restaurants.php?action=menu&id=${resId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if(data.success) {
+                        const res = data.restaurant;
+                        document.getElementById('breadcrumbName').textContent = res.name;
+                        document.getElementById('resTitle').textContent = res.name;
+                        document.getElementById('resCuisines').textContent = res.category;
+                        document.getElementById('resRating').innerHTML = `${res.rating} <i class="fas fa-star" style="font-size:0.8rem"></i>`;
+                        document.getElementById('resTime').textContent = `Delivery in ${res.delivery_time}`;
+                        
+                        const menuList = document.getElementById('menuList');
+                        if(data.menu && data.menu.length > 0) {
+                            menuList.innerHTML = '<h3>Recommended</h3>' + data.menu.map(item => `
+                                <div class="menu-item">
+                                    <div class="menu-item-info">
+                                        <div style="color: #24963F; margin-bottom:5px;"><i class="fas fa-caret-square-up"></i></div>
+                                        <h4>${item.name}</h4>
+                                        <span class="price">₹${item.price}</span>
+                                        <p>${item.description}</p>
+                                    </div>
+                                    <div class="menu-item-img">
+                                        <img src="${item.image_url}" alt="${item.name}">
+                                        <button class="add-btn">ADD</button>
+                                    </div>
+                                </div>
+                            `).join('');
+                        } else {
+                            menuList.innerHTML = '<p class="text-muted">No menu items found for this restaurant.</p>';
+                        }
+                    }
+                })
+                .catch(err => console.error(err));
+            }
+        });
+    </script>
 </body>
 </html>
