@@ -17,9 +17,10 @@
                 <a href="#">Get the App</a>
             </div>
             <div class="hero-nav-right">
-                <a href="#">Add restaurant</a>
-                <span id="loginBtn">Log in</span>
-                <span id="signupBtn">Sign up</span>
+                <a href="#" style="color:white;">Add restaurant</a>
+                <span id="loginBtn" style="cursor:pointer;">Log in</span>
+                <span id="signupBtn" style="cursor:pointer;">Sign up</span>
+                <span id="userGreeting" style="display:none; cursor:pointer;" onclick="window.location.href='profile.html'"></span>
             </div>
         </header>
 
@@ -27,15 +28,16 @@
             <h1 class="hero-logo">zomato</h1>
             <h2 class="hero-subtitle">Discover the best food & drinks in your city</h2>
             
-            <div class="hero-search-bar">
+            <div class="hero-search-bar" onclick="document.getElementById('mainSearch').focus()" style="cursor:text;">
                 <div class="location-input">
                     <i class="fas fa-map-marker-alt"></i>
                     <input type="text" placeholder="Your City, Country" value="New York, USA">
                 </div>
                 <div class="search-input">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="mainSearch" placeholder="Search for restaurant, cuisine or a dish">
+                    <input type="text" id="mainSearch" placeholder="Search for restaurant, cuisine or a dish" onkeypress="if(event.key==='Enter' && this.value.trim()){window.location.href='search.html?q='+encodeURIComponent(this.value.trim())}">
                 </div>
+                <button onclick="searchNow()" style="background:var(--primary-red);color:white;border:none;padding:10px 20px;border-radius:4px;cursor:pointer;font-weight:500;white-space:nowrap;">Find Food</button>
             </div>
         </div>
     </section>
@@ -205,5 +207,26 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+    function searchNow() {
+        const q = document.getElementById('mainSearch').value.trim();
+        if (q) window.location.href = 'search.html?q=' + encodeURIComponent(q);
+        else window.location.href = 'dashboard.html';
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+        if (user) {
+            const loginBtn = document.getElementById('loginBtn');
+            const signupBtn = document.getElementById('signupBtn');
+            const greeting = document.getElementById('userGreeting');
+            if (loginBtn) loginBtn.style.display = 'none';
+            if (signupBtn) signupBtn.style.display = 'none';
+            if (greeting) { greeting.textContent = 'Hi, ' + user.name.split(' ')[0] + ' ▾'; greeting.style.display = 'inline'; }
+        }
+        // Modal close on overlay click
+        const overlay = document.getElementById('authModal');
+        if (overlay) overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.classList.remove('active'); });
+    });
+    </script>
 </body>
 </html>

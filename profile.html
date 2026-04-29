@@ -3,194 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile | FoodieHub</title>
-    <!-- Google Fonts: Outfit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <title>My Profile | Zomato</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="dashboard-body">
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar-nav">
-        <div class="logo">
-            <i class="fas fa-utensils"></i>
-            <span>FoodieHub</span>
+<body style="background:#f2f2f2;">
+
+<header class="inner-header">
+    <div class="container inner-nav">
+        <button class="back-btn" onclick="window.history.back()"><i class="fas fa-chevron-left"></i></button>
+        <a href="index.html" class="logo-link">zomato</a>
+        <span class="page-title" style="margin-left:8px;">My Account</span>
+        <div class="spacer"></div>
+        <div class="nav-actions">
+            <a href="dashboard.html"><i class="fas fa-home"></i></a>
+            <button class="logout-btn" onclick="logout()">Logout</button>
         </div>
+    </div>
+</header>
 
-        <nav class="nav-group">
-            <span class="nav-label">Menu</span>
-            <a href="dashboard.html" class="sidebar-link">
-                <i class="fas fa-house"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="search.html" class="sidebar-link">
-                <i class="fas fa-search"></i>
-                <span>Explore</span>
-            </a>
-            <a href="tracking.html" class="sidebar-link">
-                <i class="fas fa-clock-rotate-left"></i>
-                <span>Orders</span>
-            </a>
-            <a href="referral.html" class="sidebar-link">
-                <i class="fas fa-gift"></i>
-                <span>Refer & Earn</span>
-            </a>
-        </nav>
-
-        <nav class="nav-group">
-            <span class="nav-label">Account</span>
-            <a href="profile.html" class="sidebar-link active">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-            </a>
-            <a href="settings.html" class="sidebar-link">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </a>
-            <a href="help.html" class="sidebar-link">
-                <i class="fas fa-headset"></i>
-                <span>Support</span>
-            </a>
-        </nav>
-
-        <div class="sidebar-footer">
-            <div class="promo-card">
-                <h4>FoodieHub Pro</h4>
-                <p>Get free delivery on every order!</p>
-                <button class="btn-primary btn-sidebar">Upgrade Now</button>
+<div class="inner-page container">
+    <div class="profile-layout">
+        <!-- Sidebar -->
+        <aside class="profile-sidebar-card">
+            <div class="profile-avatar-section">
+                <img id="profileAvatar" src="https://ui-avatars.com/api/?name=User&background=fff&color=E23744" alt="Avatar">
+                <h3 id="profileName">Loading...</h3>
+                <p id="profileEmail">...</p>
             </div>
-        </div>
-    </aside>
+            <div class="profile-nav-list">
+                <div class="profile-nav-item active" onclick="showTab('orders', this)"><i class="fas fa-receipt"></i> Order History</div>
+                <div class="profile-nav-item" onclick="showTab('addresses', this)"><i class="fas fa-map-marker-alt"></i> Saved Addresses</div>
+                <div class="profile-nav-item" onclick="window.location.href='settings.html'"><i class="fas fa-cog"></i> Account Settings</div>
+                <div class="profile-nav-item" onclick="window.location.href='referral.html'"><i class="fas fa-gift"></i> Refer & Earn</div>
+                <div class="profile-nav-item danger" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
+            </div>
+        </aside>
 
-    <!-- Header -->
-    <header class="dash-header glass">
-        <div class="nav-container">
-            <div class="header-left">
-                <button class="btn-back" onclick="window.history.back()">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="location-picker">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Mumbai, India</span>
-                    <i class="fas fa-chevron-down"></i>
+        <!-- Main Content -->
+        <div class="profile-main-content">
+            <!-- Orders Tab -->
+            <div id="tab-orders">
+                <div class="profile-card">
+                    <h3>Recent Orders</h3>
+                    <div id="ordersList">
+                        <div style="text-align:center;padding:2rem;color:var(--text-muted);"><i class="fas fa-circle-notch fa-spin fa-2x"></i><p style="margin-top:12px;">Loading orders...</p></div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search orders, addresses...">
-            </div>
 
-            <div class="user-actions">
-                <button class="cart-btn" onclick="window.location.href='checkout.html'">
-                    <i class="fas fa-shopping-basket"></i>
-                    <span class="badge">2</span>
-                </button>
-                <div class="user-profile active">
-                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="Profile">
+            <!-- Addresses Tab -->
+            <div id="tab-addresses" style="display:none;">
+                <div class="profile-card">
+                    <h3>Saved Addresses</h3>
+                    <div class="address-card-item active">
+                        <span class="addr-tag">Home</span>
+                        <h4 id="addrName">Your Name</h4>
+                        <p>123 Main Street, Downtown, New York - 10001</p>
+                    </div>
+                    <button class="add-address-btn"><i class="fas fa-plus"></i> Add New Address</button>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</div>
 
-    <main class="profile-content">
-        <div class="profile-grid">
-            <!-- Left Sidebar: Navigation Tabs -->
-            <aside class="profile-sidebar glass">
-                <div class="user-info-brief">
-                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="John Doe">
-                    <h3>John Doe</h3>
-                    <p>john.doe@example.com</p>
-                </div>
-                <nav class="profile-nav">
-                    <ul>
-                        <li class="active"><i class="fas fa-history"></i> Order History</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Saved Addresses</li>
-                        <li><i class="fas fa-credit-card"></i> Payments</li>
-                        <li onclick="window.location.href='referral.html'" style="cursor: pointer;"><i class="fas fa-gift"></i> Refer & Earn</li>
-                        <li onclick="window.location.href='settings.html'" style="cursor: pointer;"><i class="fas fa-cog"></i> Account Settings</li>
-                        <li class="logout"><i class="fas fa-sign-out-alt"></i> Logout</li>
-                    </ul>
-                </nav>
-            </aside>
+<div class="toast-container" id="toastContainer"></div>
+<script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (!user) { window.location.href = 'index.html'; return; }
 
-            <!-- Main Content Area -->
-            <div class="profile-main">
-                <!-- Membership Card -->
-                <section class="membership-card">
-                    <div class="gold-gradient-bg"></div>
-                    <div class="card-content">
-                        <div class="card-header">
-                            <span class="gold-badge">CRAVE GOLD</span>
-                            <i class="fas fa-crown"></i>
-                        </div>
-                        <h2>Unlock Free Delivery & Premium Offers</h2>
-                        <p>Join 2M+ members and save an average of $50 per month on your gourmet orders.</p>
-                        <button class="btn-gold">Upgrade Now</button>
-                    </div>
-                </section>
+    document.getElementById('profileName').textContent = user.name;
+    document.getElementById('profileEmail').textContent = user.email;
+    document.getElementById('addrName').textContent = user.name;
+    document.getElementById('profileAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=fff&color=E23744&bold=true`;
 
-                <!-- Recent Orders -->
-                <section class="orders-section glass">
-                    <div class="section-header">
-                        <h3>Recent Orders</h3>
-                        <a href="#" class="view-all">View all orders</a>
-                    </div>
-                    <div class="orders-list">
-                        <!-- Order 1 -->
-                        <div class="order-history-card">
-                            <div class="order-header">
-                                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=50&q=80" alt="The Spice Haven">
-                                <div class="order-id-info">
-                                    <h4>The Spice Haven</h4>
-                                    <p>Order #CD-88291 • Today, 9:45 PM</p>
-                                </div>
-                                <div class="order-status preparing">Preparing</div>
-                            </div>
-                            <div class="order-body">
-                                <p>1 x Classic Margherita Pizza</p>
-                                <div class="order-footer">
-                                    <span class="total">Total: ₹399</span>
-                                    <button class="btn-outline-small">Reorder</button>
+    // Load orders from API
+    if (user.id) {
+        fetch(`api/orders.php?action=history&user_id=${user.id}`)
+            .then(r => r.json())
+            .then(data => {
+                const list = document.getElementById('ordersList');
+                if (data.success && data.data.length > 0) {
+                    list.innerHTML = data.data.map(o => `
+                        <div class="order-history-item">
+                            <div class="order-left">
+                                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=50&q=80" alt="order">
+                                <div class="order-detail">
+                                    <h4>Order #${o.id}</h4>
+                                    <p>${new Date(o.created_at).toLocaleDateString()} &bull; ₹${o.total_amount}</p>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Order 2 -->
-                        <div class="order-history-card">
-                            <div class="order-header">
-                                <img src="https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=50&q=80" alt="Sushi Zen">
-                                <div class="order-id-info">
-                                    <h4>Sushi Zen</h4>
-                                    <p>Order #CD-77120 • 23 Apr, 1:30 PM</p>
-                                </div>
-                                <div class="order-status delivered">Delivered</div>
+                            <div>
+                                <span class="order-status-badge ${o.status === 'Processing' ? 'preparing' : 'delivered'}">${o.status}</span>
+                                <br><button class="reorder-btn" onclick="window.location.href='dashboard.html'">Reorder</button>
                             </div>
-                            <div class="order-body">
-                                <p>2 x Salmon Nigiri, 1 x Miso Soup</p>
-                                <div class="order-footer">
-                                    <span class="total">Total: ₹850</span>
-                                    <button class="btn-outline-small">Reorder</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-    </main>
+                        </div>`).join('');
+                } else {
+                    list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No orders yet. <a href="dashboard.html" style="color:var(--primary-red);">Order now!</a></p>';
+                }
+            })
+            .catch(() => {
+                document.getElementById('ordersList').innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No orders yet.</p>';
+            });
+    } else {
+        document.getElementById('ordersList').innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No orders yet. <a href="dashboard.html" style="color:var(--primary-red);">Order now!</a></p>';
+    }
+});
 
-    <!-- Bottom Navigation for Mobile -->
-    <nav class="mobile-nav">
-        <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="search.html" class="nav-item"><i class="fas fa-search"></i><span>Explore</span></a>
-        <a href="tracking.html" class="nav-item"><i class="fas fa-shopping-basket"></i><span>Orders</span></a>
-        <a href="profile.html" class="nav-item active"><i class="fas fa-user"></i><span>Profile</span></a>
-    </nav>
+function showTab(tab, el) {
+    document.querySelectorAll('.profile-nav-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('tab-orders').style.display = 'none';
+    document.getElementById('tab-addresses').style.display = 'none';
+    document.getElementById('tab-' + tab).style.display = 'block';
+}
 
-    <script src="script.js"></script>
+function logout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = 'index.html';
+}
+</script>
 </body>
 </html>

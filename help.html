@@ -3,192 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help Center | FoodieHub</title>
-    <!-- Google Fonts: Outfit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <title>Help Center | Zomato</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .help-hero { background: var(--primary-red); padding: 40px 0; text-align: center; color: white; margin-bottom: 0; }
+        .help-hero h1 { font-size: 2rem; font-weight: 500; margin-bottom: 20px; }
+        .help-search { display: flex; align-items: center; background: white; border-radius: var(--radius-sm); padding: 12px 20px; gap: 12px; max-width: 600px; margin: 0 auto; }
+        .help-search i { color: var(--text-muted); }
+        .help-search input { border: none; outline: none; width: 100%; font-size: 1rem; font-family: inherit; color: var(--text-main); }
+        .help-cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0; }
+        .help-cat { background: white; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px 16px; text-align: center; cursor: pointer; transition: box-shadow 0.2s; }
+        .help-cat:hover { box-shadow: var(--shadow-md); }
+        .help-cat i { font-size: 2rem; color: var(--primary-red); margin-bottom: 12px; }
+        .help-cat h4 { font-size: 0.95rem; font-weight: 500; margin-bottom: 6px; }
+        .help-cat p { font-size: 0.82rem; color: var(--text-muted); }
+        .help-layout { display: grid; grid-template-columns: 1fr 380px; gap: 24px; }
+        .faq-card { background: white; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; }
+        .faq-card h2 { font-size: 1.2rem; margin-bottom: 20px; }
+        .faq-item { border-bottom: 1px solid var(--border-color); }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-question { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; cursor: pointer; font-size: 0.95rem; font-weight: 500; }
+        .faq-question i { color: var(--text-muted); transition: transform 0.2s; }
+        .faq-item.open .faq-question i { transform: rotate(180deg); color: var(--primary-red); }
+        .faq-item.open .faq-question { color: var(--primary-red); }
+        .faq-answer { display: none; padding: 0 0 16px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+        .faq-item.open .faq-answer { display: block; }
+        .contact-card { background: white; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; height: fit-content; position: sticky; top: 90px; }
+        .contact-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; }
+        .contact-card .sub { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 20px; }
+        .support-form .form-group { margin-bottom: 14px; }
+        .support-form label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 6px; }
+        .support-form input, .support-form select, .support-form textarea { width: 100%; padding: 10px 12px; border: 1px solid #cfcfcf; border-radius: var(--radius-sm); font-size: 0.9rem; font-family: inherit; outline: none; }
+        .support-form textarea { resize: vertical; min-height: 100px; }
+        .support-form input:focus, .support-form select:focus, .support-form textarea:focus { border-color: var(--primary-red); }
+        .contact-channels { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+        .channel-btn { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); cursor: pointer; background: none; text-align: left; font-family: inherit; }
+        .channel-btn i { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+        .channel-btn.chat i { background: #dcfce7; color: #16a34a; }
+        .channel-btn.call i { background: #dbeafe; color: #2563eb; }
+        .channel-btn div h4 { font-size: 0.9rem; font-weight: 500; margin-bottom: 2px; }
+        .channel-btn div p { font-size: 0.8rem; color: var(--text-muted); }
+        @media (max-width: 900px) { .help-cats { grid-template-columns: 1fr 1fr; } .help-layout { grid-template-columns: 1fr; } .contact-card { position: static; } }
+    </style>
 </head>
-<body class="dashboard-body">
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar-nav">
-        <div class="logo">
-            <i class="fas fa-utensils"></i>
-            <span>FoodieHub</span>
+<body style="background:#f2f2f2;">
+
+<header class="inner-header">
+    <div class="container inner-nav">
+        <button class="back-btn" onclick="window.history.back()"><i class="fas fa-chevron-left"></i></button>
+        <a href="index.html" class="logo-link">zomato</a>
+        <span class="page-title" style="margin-left:8px;">Help Center</span>
+        <div class="spacer"></div>
+        <div class="nav-actions">
+            <a href="dashboard.html"><i class="fas fa-home"></i></a>
+            <a href="profile.html"><i class="fas fa-user"></i></a>
         </div>
+    </div>
+</header>
 
-        <nav class="nav-group">
-            <span class="nav-label">Menu</span>
-            <a href="dashboard.html" class="sidebar-link">
-                <i class="fas fa-house"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="search.html" class="sidebar-link">
-                <i class="fas fa-search"></i>
-                <span>Explore</span>
-            </a>
-            <a href="tracking.html" class="sidebar-link">
-                <i class="fas fa-clock-rotate-left"></i>
-                <span>Orders</span>
-            </a>
-            <a href="referral.html" class="sidebar-link">
-                <i class="fas fa-gift"></i>
-                <span>Refer & Earn</span>
-            </a>
-        </nav>
+<!-- Hero Search -->
+<div class="help-hero">
+    <div class="container">
+        <h1>How can we help you?</h1>
+        <div class="help-search">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search for articles, topics or issues...">
+        </div>
+    </div>
+</div>
 
-        <nav class="nav-group">
-            <span class="nav-label">Account</span>
-            <a href="profile.html" class="sidebar-link">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-            </a>
-            <a href="settings.html" class="sidebar-link">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </a>
-            <a href="help.html" class="sidebar-link active">
-                <i class="fas fa-headset"></i>
-                <span>Support</span>
-            </a>
-        </nav>
+<div class="inner-page container">
+    <!-- Category Cards -->
+    <div class="help-cats">
+        <div class="help-cat"><i class="fas fa-box-open"></i><h4>Orders</h4><p>Tracking, cancellations and issues</p></div>
+        <div class="help-cat"><i class="fas fa-credit-card"></i><h4>Payments</h4><p>Refunds, billing and methods</p></div>
+        <div class="help-cat"><i class="fas fa-user-circle"></i><h4>Account</h4><p>Login, profile and security</p></div>
+        <div class="help-cat"><i class="fas fa-star"></i><h4>Zomato Gold</h4><p>Membership and benefits</p></div>
+    </div>
 
-        <div class="sidebar-footer">
-            <div class="promo-card">
-                <h4>FoodieHub Pro</h4>
-                <p>Get free delivery on every order!</p>
-                <button class="btn-primary btn-sidebar">Upgrade Now</button>
+    <div class="help-layout">
+        <!-- FAQ -->
+        <div class="faq-card">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)"><span>How do I track my order?</span><i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Track your order in real-time from your order history or from the success confirmation page. We provide live updates on preparation and delivery partner's location.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)"><span>Can I cancel my order?</span><i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Orders can be cancelled within 60 seconds of placement. After this, the restaurant begins preparation and cancellation may not be possible. Contact support for assistance.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)"><span>How do I get a refund?</span><i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Refunds are processed within 5-7 business days to your original payment method. For eligible cases, credits are added within 24 hours. Raise a request through the order details page.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)"><span>What are Zomato Gold benefits?</span><i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Gold members enjoy unlimited free delivery on all orders, exclusive discounts at 15,000+ partner restaurants, priority support, and early access to new features and offers.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)"><span>How does the referral program work?</span><i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Share your unique referral code with friends. When they sign up and place their first order, both of you receive ₹500 in Zomato Credits automatically.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)"><span>Why is my payment failing?</span><i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Payment failures can happen due to insufficient balance, incorrect card details, or bank security checks. Try a different payment method or contact your bank. Zomato does not charge you for failed transactions.</div>
             </div>
         </div>
-    </aside>
 
-    <!-- Header -->
-    <header class="dash-header glass">
-        <div class="nav-container">
-            <div class="header-left">
-                <button class="btn-back" onclick="window.history.back()">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="logo-text" style="font-weight: 700; font-size: 1.2rem; color: var(--primary);">Help Center</div>
-            </div>
-            
-            <div class="user-actions">
-                <button class="cart-btn" onclick="window.location.href='checkout.html'">
-                    <i class="fas fa-shopping-basket"></i>
-                    <span class="badge">2</span>
-                </button>
-                <div class="user-profile" onclick="window.location.href='profile.html'" style="cursor: pointer;">
-                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="Profile">
+        <!-- Contact -->
+        <div class="contact-card">
+            <h3>Still need help?</h3>
+            <p class="sub">Send us a message and we'll get back to you within 24 hours.</p>
+            <form class="support-form" onsubmit="submitSupport(event)">
+                <div class="form-group">
+                    <label>Issue Category</label>
+                    <select required>
+                        <option value="">Select a category</option>
+                        <option>Order Issue</option>
+                        <option>Payment / Refund</option>
+                        <option>Account Problem</option>
+                        <option>Technical Issue</option>
+                        <option>Other</option>
+                    </select>
                 </div>
-            </div>
-        </div>
-    </header>
-
-    <main class="help-content">
-        <!-- Hero Section -->
-        <section class="help-hero">
-            <h1 class="text-gradient">How can we help you today?</h1>
-            <div class="help-search-large">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search for articles, topics, or issues...">
-            </div>
-        </section>
-
-        <!-- Category Grid -->
-        <section class="help-categories">
-            <div class="help-cat-card glass">
-                <i class="fas fa-box-open"></i>
-                <h3>Orders</h3>
-                <p>Tracking, cancellations, and order issues.</p>
-            </div>
-            <div class="help-cat-card glass">
-                <i class="fas fa-credit-card"></i>
-                <h3>Payments</h3>
-                <p>Refunds, payment methods, and billing.</p>
-            </div>
-            <div class="help-cat-card glass">
-                <i class="fas fa-user-circle"></i>
-                <h3>Account</h3>
-                <p>Security, profile settings, and login.</p>
-            </div>
-            <div class="help-cat-card glass">
-                <i class="fas fa-crown"></i>
-                <h3>CraveGold</h3>
-                <p>Membership benefits and subscriptions.</p>
-            </div>
-        </section>
-
-        <div class="help-main-grid">
-            <!-- FAQ Section -->
-            <section class="faq-section glass">
-                <h2 class="text-gradient">Frequently Asked Questions</h2>
-                <div class="accordion">
-                    <div class="accordion-item">
-                        <button class="accordion-header">
-                            <span>How do I track my order?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="accordion-body">
-                            <p>You can track your order in real-time by clicking the "Track Order" button in your order history or the success confirmation page. We provide live updates on the preparation and delivery partner's progress.</p>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <button class="accordion-header">
-                            <span>Can I cancel my order?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="accordion-body">
-                            <p>Orders can be cancelled within 60 seconds of placement. After this period, the restaurant begins preparing your meal, and cancellation may not be possible.</p>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <button class="accordion-header">
-                            <span>What are the benefits of CraveGold?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="accordion-body">
-                            <p>CraveGold members enjoy unlimited free delivery on orders over ₹199, exclusive discounts at top-rated restaurants, and priority customer support.</p>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea placeholder="Describe your issue..." required></textarea>
                 </div>
-            </section>
+                <button type="submit" class="btn btn-primary btn-block" id="supportBtn">SEND MESSAGE</button>
+            </form>
 
-            <!-- Contact Section -->
-            <section class="contact-section glass">
-                <h2>Still need help?</h2>
-                <p>Send us a message and our team will get back to you within 24 hours.</p>
-                <form id="supportForm" class="support-form">
-                    <div class="form-group">
-                        <label>Issue Category</label>
-                        <select required>
-                            <option value="">Select a category</option>
-                            <option value="order">Order Issue</option>
-                            <option value="payment">Payment/Refund</option>
-                            <option value="tech">Technical Problem</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Message</label>
-                        <textarea placeholder="Describe your issue in detail..." rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn-primary btn-block">SEND MESSAGE</button>
-                </form>
-            </section>
+            <div class="contact-channels">
+                <button class="channel-btn chat"><i class="fas fa-comment-dots"></i><div><h4>Live Chat</h4><p>Usually replies in seconds</p></div></button>
+                <button class="channel-btn call"><i class="fas fa-phone-alt"></i><div><h4>Call Support</h4><p>Available 24/7</p></div></button>
+            </div>
         </div>
-    </main>
+    </div>
+</div>
 
-    <!-- Bottom Navigation for Mobile -->
-    <nav class="mobile-nav">
-        <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="search.html" class="nav-item"><i class="fas fa-search"></i><span>Explore</span></a>
-        <a href="tracking.html" class="nav-item"><i class="fas fa-shopping-basket"></i><span>Orders</span></a>
-        <a href="profile.html" class="nav-item"><i class="fas fa-user"></i><span>Profile</span></a>
-    </nav>
+<div class="toast-container" id="toastContainer"></div>
+<script src="script.js"></script>
+<script>
+function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+}
 
-    <script src="script.js"></script>
+function submitSupport(e) {
+    e.preventDefault();
+    const btn = document.getElementById('supportBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending...';
+    setTimeout(() => {
+        showToast('Message sent! We\'ll respond within 24 hours.', 'success');
+        btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+        btn.style.background = '#16a34a';
+        e.target.reset();
+    }, 1500);
+}
+
+function showToast(msg, type) {
+    const c = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.innerHTML = `<i class="fas fa-check-circle"></i><span>${msg}</span>`;
+    c.appendChild(t);
+    setTimeout(() => t.remove(), 3500);
+}
+</script>
 </body>
 </html>

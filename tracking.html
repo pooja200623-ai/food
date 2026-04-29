@@ -3,168 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Track Order | FoodieHub</title>
-    <!-- Google Fonts: Outfit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <title>Track Order | Zomato</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="dashboard-body">
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar-nav">
-        <div class="logo">
-            <i class="fas fa-utensils"></i>
-            <span>FoodieHub</span>
+<body style="background:#f2f2f2;">
+
+<header class="inner-header">
+    <div class="container inner-nav">
+        <button class="back-btn" onclick="window.history.back()"><i class="fas fa-chevron-left"></i></button>
+        <a href="index.html" class="logo-link">zomato</a>
+        <span class="page-title" style="margin-left:8px;">Order Tracking</span>
+        <div class="spacer"></div>
+        <div class="nav-actions">
+            <a href="help.html" style="color:var(--primary-red);">Help</a>
         </div>
+    </div>
+</header>
 
-        <nav class="nav-group">
-            <span class="nav-label">Menu</span>
-            <a href="dashboard.html" class="sidebar-link">
-                <i class="fas fa-house"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="search.html" class="sidebar-link">
-                <i class="fas fa-search"></i>
-                <span>Explore</span>
-            </a>
-            <a href="tracking.html" class="sidebar-link active">
-                <i class="fas fa-clock-rotate-left"></i>
-                <span>Orders</span>
-            </a>
-            <a href="referral.html" class="sidebar-link">
-                <i class="fas fa-gift"></i>
-                <span>Refer & Earn</span>
-            </a>
-        </nav>
-
-        <nav class="nav-group">
-            <span class="nav-label">Account</span>
-            <a href="profile.html" class="sidebar-link">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-            </a>
-            <a href="settings.html" class="sidebar-link">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </a>
-            <a href="help.html" class="sidebar-link">
-                <i class="fas fa-headset"></i>
-                <span>Support</span>
-            </a>
-        </nav>
-
-        <div class="sidebar-footer">
-            <div class="promo-card">
-                <h4>FoodieHub Pro</h4>
-                <p>Get free delivery on every order!</p>
-                <button class="btn-primary btn-sidebar">Upgrade Now</button>
-            </div>
+<div class="inner-page container">
+    <!-- ETA Banner -->
+    <div class="tracking-banner">
+        <div>
+            <h2>Arriving in 18 mins</h2>
+            <p>Order #ZO-88291 &bull; The Spice Haven</p>
         </div>
-    </aside>
+        <div class="eta">18<span style="font-size:1rem; font-weight:400;"> min</span></div>
+    </div>
 
-    <!-- Header -->
-    <header class="dash-header glass">
-        <div class="nav-container">
-            <div class="header-left">
-                <button class="btn-back" onclick="window.history.back()">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="tracking-title">
-                    <h2>Order #CD-88291</h2>
-                    <span>Arriving in 18 mins</span>
+    <div class="tracking-layout">
+        <!-- Left: Map + Partner -->
+        <div>
+            <div class="map-card">
+                <div class="map-text">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <p style="margin-top:10px; font-size:0.95rem;">Live map tracking<br><span style="font-size:0.85rem;">Your order is on the way!</span></p>
+                </div>
+                <!-- Animated bike indicator -->
+                <div style="position:absolute; bottom:30px; right:40px; font-size:2rem; color:var(--primary-red); animation: bounce 1s infinite alternate;">
+                    <i class="fas fa-motorcycle"></i>
                 </div>
             </div>
-            
-            <div class="user-actions">
-                <button class="help-btn" onclick="window.location.href='help.html'">Help</button>
-                <div class="user-profile" onclick="window.location.href='profile.html'" style="cursor: pointer;">
-                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=FF5F52&color=fff" alt="Profile">
+
+            <!-- Delivery Partner -->
+            <div class="partner-card">
+                <div class="partner-info">
+                    <img src="https://ui-avatars.com/api/?name=Alex+R&background=E23744&color=fff" alt="Partner">
+                    <div>
+                        <h4>Alex Rodriguez</h4>
+                        <p><i class="fas fa-star" style="color:#f59e0b;"></i> 4.9 &bull; Delivery Partner</p>
+                    </div>
+                </div>
+                <div class="partner-actions">
+                    <button class="icon-btn" title="Call"><i class="fas fa-phone-alt"></i></button>
+                    <button class="icon-btn" title="Message"><i class="fas fa-comment-dots"></i></button>
                 </div>
             </div>
         </div>
-    </header>
 
-    <main class="tracking-content">
-        <div class="tracking-grid">
-            <!-- Left: Map View -->
-            <div class="map-section glass">
-                <div class="map-placeholder" style="background-image: url('assets/map.png');">
-                    <div class="bike-marker">
-                        <i class="fas fa-motorcycle"></i>
-                    </div>
-                    <div class="user-marker">
-                        <i class="fas fa-home"></i>
-                    </div>
-                </div>
-                <div class="delivery-card glass">
-                    <div class="partner-info">
-                        <img src="https://ui-avatars.com/api/?name=Alex+R&background=FFB800&color=fff" alt="Delivery Partner">
-                        <div>
-                            <h4>Alex Rodriguez</h4>
-                            <p><i class="fas fa-star"></i> 4.9 • Delivery Partner</p>
-                        </div>
-                    </div>
-                    <div class="partner-actions">
-                        <button class="btn-icon"><i class="fas fa-phone-alt"></i></button>
-                        <button class="btn-icon"><i class="fas fa-comment-dots"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right: Status Timeline -->
-            <aside class="status-sidebar glass">
+        <!-- Right: Timeline -->
+        <div>
+            <div class="timeline-card">
                 <h3>Order Status</h3>
                 <div class="timeline">
-                    <div class="timeline-item completed">
-                        <div class="time-marker"><i class="fas fa-check"></i></div>
-                        <div class="time-content">
+                    <div class="timeline-step done">
+                        <div class="step-dot"><i class="fas fa-check"></i></div>
+                        <div class="step-info">
                             <h4>Order Confirmed</h4>
-                            <p>Today, 9:45 PM</p>
+                            <p>Your order was placed &bull; 9:45 PM</p>
                         </div>
                     </div>
-                    <div class="timeline-item active">
-                        <div class="time-marker"><div class="pulse"></div></div>
-                        <div class="time-content">
+                    <div class="timeline-step done">
+                        <div class="step-dot"><i class="fas fa-check"></i></div>
+                        <div class="step-info">
+                            <h4>Restaurant Accepted</h4>
+                            <p>The Spice Haven accepted &bull; 9:47 PM</p>
+                        </div>
+                    </div>
+                    <div class="timeline-step active">
+                        <div class="step-dot"><i class="fas fa-fire" style="color:var(--primary-red);"></i></div>
+                        <div class="step-info">
                             <h4>Preparing your meal</h4>
-                            <p>The Spice Haven is preparing your order</p>
+                            <p>Your food is being prepared</p>
                         </div>
                     </div>
-                    <div class="timeline-item pending">
-                        <div class="time-marker"></div>
-                        <div class="time-content">
-                            <h4>Out for delivery</h4>
-                            <p>Your delivery partner is on the way</p>
+                    <div class="timeline-step">
+                        <div class="step-dot"></div>
+                        <div class="step-info">
+                            <h4>Out for Delivery</h4>
+                            <p>Partner will pick up soon</p>
                         </div>
                     </div>
-                    <div class="timeline-item pending">
-                        <div class="time-marker"></div>
-                        <div class="time-content">
+                    <div class="timeline-step">
+                        <div class="step-dot"></div>
+                        <div class="step-info">
                             <h4>Delivered</h4>
-                            <p>Enjoy your gourmet meal!</p>
+                            <p>Enjoy your meal!</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="order-mini-summary">
-                    <h4>Order From</h4>
-                    <p>The Spice Haven • 1 Item</p>
-                    <a href="#" class="view-details">View Details</a>
+                <div class="order-mini-card">
+                    <p>Order from</p>
+                    <h4>The Spice Haven &bull; 1 Item</h4>
+                    <p style="margin-top:6px;">1 x Classic Margherita Pizza &bull; ₹399</p>
                 </div>
-            </aside>
+            </div>
         </div>
-    </main>
+    </div>
+</div>
 
-    <!-- Bottom Navigation for Mobile -->
-    <nav class="mobile-nav">
-        <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="search.html" class="nav-item"><i class="fas fa-search"></i><span>Explore</span></a>
-        <a href="tracking.html" class="nav-item active"><i class="fas fa-shopping-basket"></i><span>Orders</span></a>
-        <a href="profile.html" class="nav-item"><i class="fas fa-user"></i><span>Profile</span></a>
-    </nav>
-
-    <script src="script.js"></script>
+<style>
+@keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+</style>
+<div class="toast-container" id="toastContainer"></div>
+<script src="script.js"></script>
 </body>
 </html>

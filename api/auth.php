@@ -1,154 +1,165 @@
 <?php
-require_once 'db.php';
 header('Content-Type: application/json');
 
-// Get raw POST data
 $rawData = file_get_contents('php://input');
 $data = json_decode($rawData, true);
-
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 
+// -------------------------------------------------------
+// Try to connect to DB. If it fails, use session-based
+// fallback so the app still works for demo/offline use.
+// -------------------------------------------------------
+$dbAvailable = false;
+$conn = null;
+
+$host = 'localhost';
+$db_name = 'foodiehub_db';
+$db_user = 'root';
+$db_pass = '';
+
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $dbAvailable = true;
+} catch(PDOException $e) {
+    // DB not available - will use session fallback
+    $dbAvailable = false;
+}
+
+// Start session for OTP fallback
+session_start();
+
+// -------------------------------------------------------
+// ACTION: send_otp
+// -------------------------------------------------------
 if ($action === 'send_otp') {
     $email = isset($data['email']) ? filter_var(trim($data['email']), FILTER_SANITIZE_EMAIL) : '';
-    $name = isset($data['name']) ? htmlspecialchars(trim($data['name'])) : 'Foodie';
-    $otp = isset($data['otp']) ? trim($data['otp']) : '';
+    $name  = isset($data['name'])  ? htmlspecialchars(trim($data['name'])) : 'Foodie';
 
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode(['success' => false, 'message' => 'Invalid email address provided.']);
+        echo json_encode(['success' => false, 'message' => 'Invalid email address.']);
         exit;
     }
 
-    if (empty($otp) || strlen($otp) !== 4) {
-        echo json_encode(['success' => false, 'message' => 'Invalid OTP generated.']);
-        exit;
-    }
+    // Generate OTP on the SERVER (never sent from client)
+    $otp    = strval(rand(1000, 9999));
+    $expiry = time() + 600; // 10 minutes
 
-    // Save or update user in database
-    try {
-        // Check if user exists
-        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        $user = $stmt->fetch();
-
-        // Expiry time (e.g., 10 minutes from now)
-        $expiry = date('Y-m-d H:i:s', strtotime('+10 minutes'));
-
-        if ($user) {
-            // Update existing user with new OTP
-            $updateStmt = $conn->prepare("UPDATE users SET otp = ?, otp_expiry = ? WHERE email = ?");
-            $updateStmt->execute([$otp, $expiry, $email]);
-        } else {
-            // Create new user
-            $insertStmt = $conn->prepare("INSERT INTO users (name, email, otp, otp_expiry) VALUES (?, ?, ?, ?)");
-            $insertStmt->execute([$name, $email, $otp, $expiry]);
+    // Store in DB if available
+    if ($dbAvailable) {
+        try {
+            $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+            $stmt->execute([$email]);
+            $user = $stmt->fetch();
+            $expiryDt = date('Y-m-d H:i:s', $expiry);
+            if ($user) {
+                $conn->prepare("UPDATE users SET name=?, otp=?, otp_expiry=? WHERE email=?")->execute([$name, $otp, $expiryDt, $email]);
+            } else {
+                $conn->prepare("INSERT INTO users (name, email, otp, otp_expiry) VALUES (?, ?, ?, ?)")->execute([$name, $email, $otp, $expiryDt]);
+            }
+        } catch(PDOException $e) {
+            // Fall through to session fallback
         }
-    } catch(PDOException $e) {
-        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
-        exit;
     }
 
-    // Prepare the email
-    $subject = "Your FoodieHub OTP Code";
-    $message = "
-    <html>
-    <head>
-      <title>FoodieHub OTP</title>
-      <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; line-height: 1.6; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px; background-color: #fafafa; }
-        .header { text-align: center; margin-bottom: 20px; }
-        .header h2 { color: #FF5F52; }
-        .otp-code { font-size: 32px; font-weight: bold; color: #FF5F52; text-align: center; margin: 20px 0; letter-spacing: 5px; }
-        .footer { font-size: 12px; color: #777; text-align: center; margin-top: 30px; }
-      </style>
-    </head>
-    <body>
-      <div class='container'>
-        <div class='header'>
-          <h2>Welcome to FoodieHub!</h2>
-        </div>
-        <p>Hello <strong>{$name}</strong>,</p>
-        <p>We received a request to log in to your FoodieHub account. Please use the following One-Time Password (OTP) to complete your verification:</p>
-        
-        <div class='otp-code'>{$otp}</div>
-        
-        <p>This code will expire in 10 minutes. If you did not request this code, please safely ignore this email.</p>
-        
-        <div class='footer'>
-          &copy; " . date('Y') . " FoodieHub. All rights reserved.<br>
-          Taste the world, one dash at a time.
-        </div>
-      </div>
-    </body>
-    </html>
-    ";
+    // Always store in session as fallback
+    $_SESSION['otp_' . md5($email)] = ['otp' => $otp, 'expiry' => $expiry, 'name' => $name, 'email' => $email];
+
+    // Try to send email
+    $subject = "Your Zomato Login OTP";
+    $body = "
+    <html><body style='font-family:Arial,sans-serif;'>
+    <div style='max-width:500px;margin:0 auto;padding:30px;border-radius:12px;border:1px solid #eee;'>
+      <h2 style='color:#E23744;'>Zomato</h2>
+      <p>Hi <strong>{$name}</strong>,</p>
+      <p>Your One-Time Password (OTP) for login is:</p>
+      <div style='font-size:36px;font-weight:bold;color:#E23744;letter-spacing:8px;text-align:center;margin:24px 0;'>{$otp}</div>
+      <p style='color:#666;font-size:0.9em;'>This code expires in 10 minutes. Do not share it with anyone.</p>
+      <hr style='border:none;border-top:1px solid #eee;margin:20px 0;'>
+      <p style='color:#999;font-size:0.8em;'>&copy; " . date('Y') . " Zomato. All rights reserved.</p>
+    </div></body></html>";
 
     $headers  = "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-    $headers .= "From: FoodieHub <noreply@foodiehub.local>\r\n";
-    $headers .= "Reply-To: noreply@foodiehub.local\r\n";
-    $headers .= "X-Mailer: PHP/" . phpversion();
+    $headers .= "From: Zomato <noreply@zomato.local>\r\n";
 
-    $mailSent = @mail($email, $subject, $message, $headers);
+    $mailSent = @mail($email, $subject, $body, $headers);
 
-    if ($mailSent) {
-        echo json_encode(['success' => true, 'message' => 'OTP sent successfully.']);
-    } else {
-        // Fallback for development if XAMPP SMTP is not configured
-        echo json_encode([
-            'success' => true, // Return true so dev doesn't block
-            'message' => 'Failed to send real email (XAMPP SMTP not configured). Dev mode active.',
-            'dev_otp' => $otp
-        ]);
+    // Always return success but include dev_otp if mail failed (for local dev)
+    $response = ['success' => true, 'message' => 'OTP sent to ' . $email];
+    if (!$mailSent) {
+        $response['dev_otp'] = $otp; // Show OTP in toast for local development
+        $response['message'] = 'Email not configured. Dev mode: OTP shown below.';
     }
 
-} elseif ($action === 'verify_otp') {
-    $email = isset($data['email']) ? filter_var(trim($data['email']), FILTER_SANITIZE_EMAIL) : '';
-    $enteredOTP = isset($data['otp']) ? trim($data['otp']) : '';
+    echo json_encode($response);
+    exit;
+}
+
+// -------------------------------------------------------
+// ACTION: verify_otp
+// -------------------------------------------------------
+if ($action === 'verify_otp') {
+    $email      = isset($data['email']) ? filter_var(trim($data['email']), FILTER_SANITIZE_EMAIL) : '';
+    $enteredOTP = isset($data['otp'])   ? trim($data['otp']) : '';
 
     if (empty($email) || empty($enteredOTP)) {
         echo json_encode(['success' => false, 'message' => 'Email and OTP are required.']);
         exit;
     }
 
-    try {
-        $stmt = $conn->prepare("SELECT id, name, email, otp, otp_expiry FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        $user = $stmt->fetch();
+    $sessionKey = 'otp_' . md5($email);
+    $verified   = false;
+    $userData   = null;
 
-        if ($user) {
-            $now = new DateTime();
-            $expiry = new DateTime($user['otp_expiry']);
+    // Try DB first
+    if ($dbAvailable) {
+        try {
+            $stmt = $conn->prepare("SELECT id, name, email, otp, otp_expiry FROM users WHERE email = ?");
+            $stmt->execute([$email]);
+            $user = $stmt->fetch();
 
-            if ($user['otp'] === $enteredOTP) {
+            if ($user && $user['otp'] === $enteredOTP) {
+                $now    = new DateTime();
+                $expiry = new DateTime($user['otp_expiry']);
                 if ($now <= $expiry) {
-                    // OTP is valid and not expired
-                    // Clear the OTP to prevent reuse
-                    $updateStmt = $conn->prepare("UPDATE users SET otp = NULL, otp_expiry = NULL WHERE id = ?");
-                    $updateStmt->execute([$user['id']]);
-
-                    echo json_encode([
-                        'success' => true, 
-                        'message' => 'Login successful',
-                        'user' => [
-                            'id' => $user['id'],
-                            'name' => $user['name'],
-                            'email' => $user['email']
-                        ]
-                    ]);
+                    // Clear OTP after use
+                    $conn->prepare("UPDATE users SET otp=NULL, otp_expiry=NULL WHERE id=?")->execute([$user['id']]);
+                    $verified = true;
+                    $userData = ['id' => $user['id'], 'name' => $user['name'], 'email' => $user['email']];
                 } else {
-                    echo json_encode(['success' => false, 'message' => 'OTP has expired.']);
+                    echo json_encode(['success' => false, 'message' => 'OTP has expired. Please request a new one.']);
+                    exit;
                 }
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Invalid OTP.']);
             }
-        } else {
-            echo json_encode(['success' => false, 'message' => 'User not found.']);
+        } catch(PDOException $e) {
+            // Fall through to session check
         }
-    } catch(PDOException $e) {
-        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
     }
-} else {
-    echo json_encode(['success' => false, 'message' => 'Invalid action.']);
+
+    // Session fallback if DB not available or user not found in DB
+    if (!$verified && isset($_SESSION[$sessionKey])) {
+        $sess = $_SESSION[$sessionKey];
+        if ($sess['otp'] === $enteredOTP) {
+            if (time() <= $sess['expiry']) {
+                $verified = true;
+                $userData = ['id' => null, 'name' => $sess['name'], 'email' => $sess['email']];
+                unset($_SESSION[$sessionKey]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'OTP has expired. Please request a new one.']);
+                exit;
+            }
+        }
+    }
+
+    if ($verified && $userData) {
+        echo json_encode(['success' => true, 'message' => 'Login successful!', 'user' => $userData]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Invalid OTP. Please check and try again.']);
+    }
+    exit;
 }
+
+echo json_encode(['success' => false, 'message' => 'Invalid action.']);
 ?>
