@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders | Crave</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=5">
+</head>
+<body class="dashboard-body">
+
+    <!-- Navbar -->
+    <nav class="dash-nav">
+        <div class="nav-brand">
+            <i class="fas fa-utensils"></i> Crave
+        </div>
+        
+        <div class="nav-links" style="display: flex; gap: 25px; align-items: center; font-weight: 500; font-size: 1.05rem;">
+            <a href="index.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Home</a>
+            <a href="index.html#menu" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Our Menu</a>
+            <a href="cart.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Cart <i class="fas fa-shopping-cart"></i></a>
+            <a href="orders.html" style="text-decoration: none; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Orders</a>
+            <a href="profile.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Profile</a>
+        </div>
+
+        <div class="user-profile">
+            <span id="userNameDisplay">User</span>
+            <div class="user-avatar" id="userAvatar">U</div>
+            <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </nav>
+
+    <main class="dashboard-container" style="padding-top: 120px;">
+        <div style="background: white; padding: 3rem; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto;">
+            <i class="fas fa-box-open" style="font-size: 4rem; color: #eee; margin-bottom: 1rem;"></i>
+            <h2>No Past Orders</h2>
+            <p style="color: #666; margin-bottom: 2rem;">You haven't placed any orders yet. Once you do, you can track them here!</p>
+            <a href="index.html" class="btn-primary" style="text-decoration: none; display: inline-block;">Order Now</a>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const session = JSON.parse(localStorage.getItem('user_session'));
+            if (!session) {
+                window.location.replace('signin.html');
+                return;
+            }
+            document.getElementById('userNameDisplay').textContent = session.name;
+            document.getElementById('userAvatar').textContent = session.name.charAt(0).toUpperCase();
+
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                localStorage.removeItem('user_session');
+                window.location.href = 'signin.html';
+            });
+        });
+    </script>
+</body>
+</html>
