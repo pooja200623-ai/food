@@ -52,17 +52,23 @@
                 <form id="authForm">
                     <!-- Step 1: Name and Email -->
                     <div id="step-1" class="form-step active">
-                        <div class="input-group">
-                            <i class="far fa-user"></i>
-                            <input type="text" id="name" name="name" placeholder="Full Name" required>
+                        <div style="margin-bottom: 1rem; text-align: left;">
+                            <label for="name" style="font-weight: bold; display: block; margin-bottom: 0.5rem; color: var(--text-main);">Name Text Box:</label>
+                            <div class="input-group">
+                                <i class="far fa-user"></i>
+                                <input type="text" id="name" name="name" placeholder="Enter Full Name" required>
+                            </div>
                         </div>
-                        <div class="input-group">
-                            <i class="far fa-envelope"></i>
-                            <input type="email" id="email" name="email" placeholder="Email Address" required>
+                        
+                        <div style="margin-bottom: 1rem; text-align: left;">
+                            <label for="email" style="font-weight: bold; display: block; margin-bottom: 0.5rem; color: var(--text-main);">Email Text Box:</label>
+                            <div class="input-group">
+                                <i class="far fa-envelope"></i>
+                                <input type="email" id="email" name="email" placeholder="Enter Email Address" required>
+                            </div>
                         </div>
-                        <button type="submit" id="loginBtn" class="btn-primary">
-                            Login <i class="fas fa-sign-in-alt"></i>
-                        </button>
+                        
+                        <input type="submit" id="loginBtn" class="btn-primary" value="Submit Button" style="display: block; width: 100%; font-size: 1.2rem; font-weight: bold; margin-top: 1.5rem; cursor: pointer;">
                     </div>
                 </form>
             </div>
