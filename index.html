@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
     <script>
@@ -17,6 +17,19 @@
             window.location.replace('dashboard.html');
         }
     </script>
+
+    <nav class="dash-nav" style="position: absolute; width: 100%; top: 0; background: transparent; box-shadow: none; z-index: 1000; padding: 1.5rem 4rem;">
+        <div class="nav-brand" style="color: white; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); font-size: 2rem;">
+            <i class="fas fa-utensils"></i> Crave
+        </div>
+        <div style="display:flex; gap: 30px; color: white; font-weight: 500; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); font-size: 1.1rem; align-items: center;">
+            <a href="#" style="color:white; text-decoration:none; transition: color 0.3s;">Home</a>
+            <a href="#" style="color:white; text-decoration:none; transition: color 0.3s;">Our Menu</a>
+            <a href="#" style="color:white; text-decoration:none; transition: color 0.3s;">About Us</a>
+            <a href="#" style="color:white; text-decoration:none; transition: color 0.3s;">Contact</a>
+            <span style="background: var(--primary-color); padding: 8px 20px; border-radius: 50px; cursor:pointer;">Login / Sign Up</span>
+        </div>
+    </nav>
 
     <div class="auth-container">
         <!-- Left side: Visual/Branding -->
