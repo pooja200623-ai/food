@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('user_session');
-            window.location.href = 'login.html';
+            window.location.href = 'signin.html';
         });
     }
 
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             userAvatar.textContent = session.name.charAt(0).toUpperCase();
         } else {
             // Not logged in, redirect to login
-            window.location.replace('login.html');
+            window.location.replace('signin.html');
         }
     }
 

@@ -8,11 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
     <script>
-        // Check if user is already logged in (1 time verification rule)
         if (localStorage.getItem('user_session')) {
             window.location.replace('index.html');
         }
@@ -27,7 +26,6 @@
             <a href="#" style="color:white; text-decoration:none; transition: color 0.3s;">Our Menu</a>
             <a href="#" style="color:white; text-decoration:none; transition: color 0.3s;">About Us</a>
             <a href="#" style="color:white; text-decoration:none; transition: color 0.3s;">Contact</a>
-            <span style="background: var(--primary-color); padding: 8px 20px; border-radius: 50px; cursor:pointer;">Login / Sign Up</span>
         </div>
     </nav>
 
@@ -50,7 +48,6 @@
                 </div>
 
                 <form id="authForm" style="display: flex; flex-direction: column; gap: 1rem;">
-                    <!-- Login Form -->
                     <div class="input-group">
                         <i class="far fa-user"></i>
                         <input type="text" id="name" name="name" placeholder="Full Name" required>
@@ -61,17 +58,17 @@
                         <input type="email" id="email" name="email" placeholder="Email Address" required>
                     </div>
                     
-                    <button type="submit" id="loginBtn" style="background-color: #ff4757; color: white; padding: 15px; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold; cursor: pointer; width: 100%; display: block !important; visibility: visible !important; opacity: 1 !important;">
-                        LOGIN TO DASHBOARD
+                    <!-- EXPLICIT SUBMIT BUTTON -->
+                    <button type="submit" id="loginBtn" class="btn-primary" style="margin-top: 10px; display: block; width: 100%;">
+                        Login to Dashboard <i class="fas fa-arrow-right"></i>
                     </button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification Container -->
     <div id="toastContainer"></div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=5"></script>
 </body>
 </html>
