@@ -46,7 +46,7 @@
             <div class="auth-form-container">
                 <div class="form-header">
                     <h2>Welcome Back</h2>
-                    <p>Enter your details to receive a one-time password.</p>
+                    <p>Enter your details to access your account.</p>
                 </div>
 
                 <form id="authForm">
@@ -60,27 +60,9 @@
                             <i class="far fa-envelope"></i>
                             <input type="email" id="email" name="email" placeholder="Email Address" required>
                         </div>
-                        <button type="button" id="sendOtpBtn" class="btn-primary">
-                            Send OTP <i class="fas fa-arrow-right"></i>
+                        <button type="submit" id="loginBtn" class="btn-primary">
+                            Login <i class="fas fa-sign-in-alt"></i>
                         </button>
-                    </div>
-
-                    <!-- Step 2: OTP Verification -->
-                    <div id="step-2" class="form-step">
-                        <div class="otp-instruction">
-                            <p>We've sent a 4-digit code to <br><strong id="displayEmail"></strong></p>
-                        </div>
-                        <div class="otp-inputs">
-                            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
-                            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
-                            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
-                            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
-                            <input type="hidden" id="otpValue" name="otpValue">
-                        </div>
-                        <button type="submit" id="verifyBtn" class="btn-primary">
-                            Verify & Login <i class="fas fa-check-circle"></i>
-                        </button>
-                        <a href="#" id="backBtn" class="back-link"><i class="fas fa-arrow-left"></i> Change Email</a>
                     </div>
                 </form>
             </div>
