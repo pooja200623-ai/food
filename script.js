@@ -99,7 +99,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (verifyBtn) {
         verifyBtn.addEventListener('click', () => {
             const email = emailInput.value.trim();
-            const name = isSignupMode ? userNameInput.value.trim() : 'Foodie';
+            let name = 'Foodie';
+            if (userNameInput && userNameInput.value.trim()) {
+                name = userNameInput.value.trim();
+            } else if (isSignupMode) {
+                name = userNameInput ? userNameInput.value.trim() : 'Foodie';
+            }
 
             if (!email) {
                 showToast('Please enter a valid email', 'error');
@@ -177,9 +182,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.success) {
                     localStorage.setItem('currentUser', JSON.stringify(data.user));
                     showToast(`Welcome, ${data.user.name}!`, 'success');
-                    authModal.classList.remove('active');
+                    if (authModal) authModal.classList.remove('active');
                     checkAuth();
-                    // Optionally refresh page or load data based on auth
+                    
+                    // Redirect to dashboard if on index page
+                    const path = window.location.pathname;
+                    if (path.endsWith('index.html') || path.endsWith('/') || path.endsWith('zomato/')) {
+                        window.location.href = 'dashboard.html';
+                    }
                 } else {
                     showToast(data.message || 'Invalid OTP', 'error');
                 }
