@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showToast('Login successful! Redirecting...', 'success');
                     
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = 'index.html';
                     }, 800);
                 } else {
                     showToast(data.message || 'Invalid OTP', 'error');
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('user_session');
-            window.location.href = 'index.html';
+            window.location.href = 'login.html';
         });
     }
 
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
             userAvatar.textContent = session.name.charAt(0).toUpperCase();
         } else {
             // Not logged in, redirect to login
-            window.location.replace('index.html');
+            window.location.replace('login.html');
         }
     }
 

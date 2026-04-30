@@ -3,93 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome | Secure Login</title>
-    <!-- Google Fonts -->
+    <title>Crave | Discover Food</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css?v=3">
 </head>
-<body>
-    <script>
-        // Check if user is already logged in (1 time verification rule)
-        if (localStorage.getItem('user_session')) {
-            window.location.replace('dashboard.html');
-        }
-    </script>
+<body class="dashboard-body">
 
-    <nav class="dash-nav" style="position: absolute; width: 100%; top: 0; background: transparent; box-shadow: none; z-index: 1000; padding: 1.5rem 4rem;">
-        <div class="nav-brand" style="color: white; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); font-size: 2rem;">
+    <!-- Navbar -->
+    <nav class="dash-nav">
+        <div class="nav-brand">
             <i class="fas fa-utensils"></i> Crave
         </div>
-        <div style="display:flex; gap: 30px; color: white; font-weight: 500; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); font-size: 1.1rem; align-items: center;">
-            <a href="#" style="color:white; text-decoration:none; transition: color 0.3s;">Home</a>
-            <a href="#" style="color:white; text-decoration:none; transition: color 0.3s;">Our Menu</a>
-            <a href="#" style="color:white; text-decoration:none; transition: color 0.3s;">About Us</a>
-            <a href="#" style="color:white; text-decoration:none; transition: color 0.3s;">Contact</a>
-            <span style="background: var(--primary-color); padding: 8px 20px; border-radius: 50px; cursor:pointer;">Login / Sign Up</span>
+        
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search for variety foods...">
+        </div>
+
+        <div class="user-profile">
+            <span id="userNameDisplay">User</span>
+            <div class="user-avatar" id="userAvatar">U</div>
+            <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
         </div>
     </nav>
 
-    <div class="auth-container">
-        <!-- Left side: Visual/Branding -->
-        <div class="auth-visual">
-            <div class="visual-content">
-                <h1>Taste the Best</h1>
-                <p>Log in to discover premium culinary experiences crafted just for you.</p>
-            </div>
-            <div class="glass-overlay"></div>
+    <!-- Hero Banner -->
+    <header class="dash-hero">
+        <div class="hero-content">
+            <h1>What are you craving today?</h1>
+            <p>Discover the best variety of foods delivered right to your door.</p>
+        </div>
+    </header>
+
+    <!-- Dashboard Container -->
+    <main class="dashboard-container">
+        
+        <!-- Filters -->
+        <div class="filters-section">
+            <button class="filter-pill active" data-category="all">All</button>
+            <button class="filter-pill" data-category="Fast Food">Fast Food</button>
+            <button class="filter-pill" data-category="Healthy">Healthy</button>
+            <button class="filter-pill" data-category="Asian">Asian</button>
+            <button class="filter-pill" data-category="Desserts">Desserts</button>
         </div>
 
-        <!-- Right side: Form -->
-        <div class="auth-form-wrapper">
-            <div class="auth-form-container">
-                <div class="form-header">
-                    <h2>Welcome Back</h2>
-                    <p>Enter your details to receive a one-time password.</p>
-                </div>
-
-                <form id="authForm">
-                    <!-- Step 1: Name and Email -->
-                    <div id="step-1" class="form-step active">
-                        <div class="input-group">
-                            <i class="far fa-user"></i>
-                            <input type="text" id="name" name="name" placeholder="Full Name" required>
-                        </div>
-                        <div class="input-group">
-                            <i class="far fa-envelope"></i>
-                            <input type="email" id="email" name="email" placeholder="Email Address" required>
-                        </div>
-                        <button type="button" id="sendOtpBtn" class="btn-primary">
-                            Send OTP <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <!-- Step 2: OTP Verification -->
-                    <div id="step-2" class="form-step">
-                        <div class="otp-instruction">
-                            <p>We've sent a 4-digit code to <br><strong id="displayEmail"></strong></p>
-                        </div>
-                        <div class="otp-inputs">
-                            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
-                            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
-                            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
-                            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
-                            <input type="hidden" id="otpValue" name="otpValue">
-                        </div>
-                        <button type="submit" id="verifyBtn" class="btn-primary">
-                            Verify & Login <i class="fas fa-check-circle"></i>
-                        </button>
-                        <a href="#" id="backBtn" class="back-link"><i class="fas fa-arrow-left"></i> Change Email</a>
-                    </div>
-                </form>
-            </div>
+        <!-- Food Grid -->
+        <div class="food-grid" id="foodGrid">
+            <!-- Loading Skeleton -->
+            <div class="food-card skeleton"></div>
+            <div class="food-card skeleton"></div>
+            <div class="food-card skeleton"></div>
+            <div class="food-card skeleton"></div>
         </div>
-    </div>
 
-    <!-- Toast Notification Container -->
-    <div id="toastContainer"></div>
+    </main>
 
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check auth
+            const session = JSON.parse(localStorage.getItem('user_session'));
+            if (!session) {
+                window.location.replace('login.html');
+                return;
+            }
+
+            const userNameDisplay = document.getElementById('userNameDisplay');
+            const userAvatar = document.getElementById('userAvatar');
+            if (userNameDisplay) userNameDisplay.textContent = session.name;
+            if (userAvatar) userAvatar.textContent = session.name.charAt(0).toUpperCase();
+
+            // Fetch Foods
+            const foodGrid = document.getElementById('foodGrid');
+            const filterPills = document.querySelectorAll('.filter-pill');
+
+            function loadFoods(category = 'all') {
+                const url = category === 'all' ? 'api/foods.php' : `api/foods.php?action=category&category=${encodeURIComponent(category)}`;
+                
+                foodGrid.innerHTML = `
+                    <div class="food-card skeleton"></div>
+                    <div class="food-card skeleton"></div>
+                    <div class="food-card skeleton"></div>
+                `;
+
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success && data.data.length > 0) {
+                            foodGrid.innerHTML = data.data.map(food => `
+                                <div class="food-card">
+                                    <div class="food-image">
+                                        <img src="${food.image_url}" alt="${food.name}">
+                                        <div class="food-time"><i class="far fa-clock"></i> ${food.delivery_time}</div>
+                                    </div>
+                                    <div class="food-info">
+                                        <div class="food-header">
+                                            <h3>${food.name}</h3>
+                                            <span class="food-rating"><i class="fas fa-star"></i> ${food.rating}</span>
+                                        </div>
+                                        <p class="food-desc">${food.description}</p>
+                                        <div class="food-footer">
+                                            <span class="food-price">$${food.price}</span>
+                                            <button class="add-btn"><i class="fas fa-plus"></i> Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('');
+                        } else {
+                            foodGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #888;">No foods found.</div>';
+                        }
+                    })
+                    .catch(err => {
+                        foodGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: red;">Failed to load foods.</div>';
+                    });
+            }
+
+            // Init Load
+            loadFoods('all');
+
+            // Filter Clicks
+            filterPills.forEach(pill => {
+                pill.addEventListener('click', () => {
+                    filterPills.forEach(p => p.classList.remove('active'));
+                    pill.classList.add('active');
+                    loadFoods(pill.getAttribute('data-category'));
+                });
+            });
+
+            // Logout
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('user_session');
+                    window.location.href = 'login.html';
+                });
+            }
+        });
+    </script>
 </body>
 </html>
