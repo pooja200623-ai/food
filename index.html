@@ -3,170 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zomato | Login</title>
+    <title>Welcome | Secure Login</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        .login-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            text-align: center;
-        }
-
-        .login-card h1 {
-            color: var(--primary-red, #e23744);
-            font-style: italic;
-            font-weight: 900;
-            font-size: 3rem;
-            margin-bottom: 10px;
-            margin-top: 0;
-        }
-
-        .login-card p {
-            color: #555;
-            margin-bottom: 30px;
-            font-size: 1.1rem;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 14px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-red, #e23744);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(226, 55, 68, 0.1);
-        }
-
-        .btn-primary {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary-red, #e23744);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background: #c02b38;
-        }
-
-        .btn-primary:disabled {
-            background: #f19a9f;
-            cursor: not-allowed;
-        }
-
-        #otpStep {
-            display: none;
-        }
-
-        #backToEmail {
-            color: var(--primary-red, #e23744);
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-block;
-            margin-top: 20px;
-        }
-
-        #backToEmail:hover {
-            text-decoration: underline;
-        }
-    </style>
 </head>
 <body>
-
     <script>
-        // Redirect immediately if already logged in
-        if (localStorage.getItem('currentUser')) {
+        // Check if user is already logged in (1 time verification rule)
+        if (localStorage.getItem('user_session')) {
             window.location.replace('dashboard.html');
         }
     </script>
 
-    <div class="login-overlay">
-        <div class="login-card">
-            <h1>zomato</h1>
-            <p>Discover the best food & drinks</p>
+    <div class="auth-container">
+        <!-- Left side: Visual/Branding -->
+        <div class="auth-visual">
+            <div class="visual-content">
+                <h1>Taste the Best</h1>
+                <p>Log in to discover premium culinary experiences crafted just for you.</p>
+            </div>
+            <div class="glass-overlay"></div>
+        </div>
 
-            <form id="authForm">
-                <div id="initialStep">
-                    <div class="form-group">
-                        <input type="text" id="userName" class="form-control" placeholder="Full Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="email" class="form-control" placeholder="Email Address" required>
-                    </div>
-                    <button type="button" id="verifyBtn" class="btn btn-primary">Send OTP</button>
+        <!-- Right side: Form -->
+        <div class="auth-form-wrapper">
+            <div class="auth-form-container">
+                <div class="form-header">
+                    <h2>Welcome Back</h2>
+                    <p>Enter your details to receive a one-time password.</p>
                 </div>
 
-                <div id="otpStep">
-                    <div class="form-group">
-                        <p style="margin-bottom: 15px; font-size: 0.95rem; color: #666;">We've sent an OTP to your email.</p>
-                        <input type="text" id="otp" class="form-control" placeholder="Enter OTP" required>
+                <form id="authForm">
+                    <!-- Step 1: Name and Email -->
+                    <div id="step-1" class="form-step active">
+                        <div class="input-group">
+                            <i class="far fa-user"></i>
+                            <input type="text" id="name" name="name" placeholder="Full Name" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="far fa-envelope"></i>
+                            <input type="email" id="email" name="email" placeholder="Email Address" required>
+                        </div>
+                        <button type="button" id="sendOtpBtn" class="btn-primary">
+                            Send OTP <i class="fas fa-arrow-right"></i>
+                        </button>
                     </div>
-                    <button type="submit" class="btn btn-primary">Verify & Login</button>
-                    <div>
-                        <a href="#" id="backToEmail"><i class="fas fa-arrow-left"></i> Back</a>
+
+                    <!-- Step 2: OTP Verification -->
+                    <div id="step-2" class="form-step">
+                        <div class="otp-instruction">
+                            <p>We've sent a 4-digit code to <br><strong id="displayEmail"></strong></p>
+                        </div>
+                        <div class="otp-inputs">
+                            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
+                            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
+                            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
+                            <input type="text" class="otp-box" maxlength="1" pattern="[0-9]" required>
+                            <input type="hidden" id="otpValue" name="otpValue">
+                        </div>
+                        <button type="submit" id="verifyBtn" class="btn-primary">
+                            Verify & Login <i class="fas fa-check-circle"></i>
+                        </button>
+                        <a href="#" id="backBtn" class="back-link"><i class="fas fa-arrow-left"></i> Change Email</a>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 
-    <!-- Ensure style.css's Toast works without errors by having an element or letting script.js create it -->
-    
+    <!-- Toast Notification Container -->
+    <div id="toastContainer"></div>
+
     <script src="script.js"></script>
-    <script>
-        // Override isSignupMode logic for this page so Name is always sent
-        document.addEventListener('DOMContentLoaded', () => {
-            // Force signup mode in script.js context so it reads userName
-            const userNameInput = document.getElementById('userName');
-            const verifyBtn = document.getElementById('verifyBtn');
-            
-            // We'll let script.js attach its listeners, but we ensure Name is passed
-            // The script.js checks `isSignupMode`. To avoid hacking its variable, 
-            // we will replace its logic or intercept it. 
-            // Let's modify script.js to always use Name if it's available, or just use a custom script here to be safe and clean.
-        });
-    </script>
 </body>
 </html>

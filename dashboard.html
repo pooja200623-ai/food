@@ -3,128 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delivery, Dining out & Nightlife | Zomato</title>
+    <title>Dashboard | Custom App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #f0f2f5;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="dash-header">
-        <div class="container dash-nav">
-            <div class="dash-logo" style="cursor: pointer;" onclick="window.location.href='index.html'">zomato</div>
+    <div class="dashboard-container">
+        <header class="dash-header">
+            <h1>My Custom App</h1>
             
-            <div class="dash-search-container">
-                <div class="dash-search-bar">
-                    <div class="location-input" style="width: 250px;">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <input type="text" value="New York, USA">
-                        <i class="fas fa-caret-down" style="color:var(--text-muted); font-size: 0.8rem; margin-left: 5px;"></i>
-                    </div>
-                    <div class="search-input" style="flex: 1;">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search for restaurant, cuisine or a dish">
-                    </div>
-                </div>
+            <div class="user-profile">
+                <span id="userNameDisplay">User</span>
+                <div class="user-avatar" id="userAvatar">U</div>
+                <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
+        </header>
 
-            <div class="dash-user-actions">
-                <span id="navLoginBtn">Log in</span>
-                <span id="navSignupBtn">Sign up</span>
-                <div id="userProfile" style="display: none; align-items: center; gap: 10px;">
-                    <img id="userAvatar" src="https://ui-avatars.com/api/?name=User&background=E23744&color=fff" alt="User">
-                    <span id="userNameDisplay" class="font-medium">User</span>
-                    <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Filters & Breadcrumbs -->
-    <section class="filters-section">
-        <div class="container">
-            <div class="breadcrumbs">
-                <a href="index.html">Home</a> / <a href="index.html">USA</a> / <span class="text-muted">New York Restaurants</span>
-            </div>
-            
-            <div class="filters-row">
-                <div class="filter-pill"><i class="fas fa-sliders-h"></i> Filters</div>
-                <div class="filter-pill">Rating: 4.0+</div>
-                <div class="filter-pill">Pure Veg</div>
-                <div class="filter-pill">Cuisines <i class="fas fa-chevron-down"></i></div>
-                <div class="filter-pill category-filter active" data-category="all">All</div>
-                <div class="filter-pill category-filter" data-category="pizza">Pizza</div>
-                <div class="filter-pill category-filter" data-category="burger">Burger</div>
-                <div class="filter-pill category-filter" data-category="sushi">Sushi</div>
-                <div class="filter-pill category-filter" data-category="indian">Indian</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Listings -->
-    <section class="listing-section container">
-        <h2>Delivery Restaurants in New York</h2>
-        
-        <div id="skeletonGrid" class="restaurant-grid" style="display: none;">
-            <!-- Simple Skeleton implementation -->
-            <div class="res-card skeleton" style="height: 300px;"></div>
-            <div class="res-card skeleton" style="height: 300px;"></div>
-            <div class="res-card skeleton" style="height: 300px;"></div>
-        </div>
-
-        <div id="restaurantGrid" class="restaurant-grid">
-            <!-- Rendered by script.js -->
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container" style="text-align: center; color: var(--text-muted);">
-            <h2 style="color: var(--text-main); font-style: italic; font-weight: 800; font-size: 2.5rem; margin-bottom: 20px;">zomato</h2>
-            <p>By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies.</p>
-            <p style="margin-top: 10px;">&copy; 2026 Zomato Clone.</p>
-        </div>
-    </footer>
-
-    <!-- Auth Modal (Reused) -->
-    <div class="modal-overlay" id="authModal">
-        <div class="modal-content">
-            <i class="fas fa-times close-modal" id="closeAuthModal"></i>
-            <div class="modal-header">
-                <h2 id="authModalTitle">Login</h2>
-            </div>
-            
-            <form id="authForm">
-                <div id="initialStep">
-                    <div class="form-group" id="nameGroup" style="display: none;">
-                        <input type="text" id="userName" class="form-control" placeholder="Full Name">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="email" class="form-control" placeholder="Email" required>
-                    </div>
-                    <button type="button" id="verifyBtn" class="btn btn-primary btn-block">Send OTP</button>
-                    
-                    <div style="margin-top: 20px; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
-                        <span id="authToggleText">New to Zomato?</span> 
-                        <a href="#" id="toggleAuthMode" style="color: var(--primary-red); cursor: pointer;">Create account</a>
-                    </div>
-                </div>
-
-                <div id="otpStep" style="display: none;">
-                    <div class="form-group">
-                        <input type="text" id="otp" class="form-control" placeholder="Enter OTP" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Verify & Continue</button>
-                    <div style="margin-top: 15px; text-align: center;">
-                        <a href="#" id="backToEmail" style="color: var(--primary-red); font-size: 0.9rem;">Back</a>
-                    </div>
-                </div>
-            </form>
+        <div style="background: white; padding: 3rem; border-radius: 15px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <i class="fas fa-check-circle" style="font-size: 4rem; color: #2ed573; margin-bottom: 1rem;"></i>
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">You are securely logged in!</h2>
+            <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+                Welcome to your new custom application dashboard. The 1-time verification was successful. Next time you visit the index page, you will be redirected here automatically.
+            </p>
         </div>
     </div>
-
-    <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
 
     <script src="script.js"></script>
 </body>

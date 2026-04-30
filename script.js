@@ -1,280 +1,198 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // -------------------------------------------------------------
-    // Authentication & Modal Logic
-    // -------------------------------------------------------------
-    const authModal = document.getElementById('authModal');
-    const closeAuthModal = document.getElementById('closeAuthModal');
-    const loginBtns = document.querySelectorAll('#loginBtn, #navLoginBtn');
-    const signupBtns = document.querySelectorAll('#signupBtn, #navSignupBtn');
     
-    const authModalTitle = document.getElementById('authModalTitle');
-    const nameGroup = document.getElementById('nameGroup');
-    const toggleAuthMode = document.getElementById('toggleAuthMode');
-    const authToggleText = document.getElementById('authToggleText');
-    const userNameInput = document.getElementById('userName');
-    
-    let isSignupMode = false;
-
-    // Open Modal Handlers
-    const openModal = (signup = false) => {
-        isSignupMode = signup;
-        updateModalUI();
-        if(authModal) authModal.classList.add('active');
-    };
-
-    loginBtns.forEach(btn => btn?.addEventListener('click', () => openModal(false)));
-    signupBtns.forEach(btn => btn?.addEventListener('click', () => openModal(true)));
-
-    // Close Modal Handler
-    if (closeAuthModal) {
-        closeAuthModal.addEventListener('click', () => {
-            authModal.classList.remove('active');
-        });
-    }
-
-    // Toggle Login/Signup Mode
-    if (toggleAuthMode) {
-        toggleAuthMode.addEventListener('click', (e) => {
-            e.preventDefault();
-            isSignupMode = !isSignupMode;
-            updateModalUI();
-        });
-    }
-
-    function updateModalUI() {
-        if (!authModalTitle) return;
-        if (isSignupMode) {
-            authModalTitle.textContent = 'Sign up';
-            nameGroup.style.display = 'block';
-            authToggleText.textContent = 'Already have an account?';
-            toggleAuthMode.textContent = 'Log in';
-        } else {
-            authModalTitle.textContent = 'Login';
-            nameGroup.style.display = 'none';
-            authToggleText.textContent = 'New to Zomato?';
-            toggleAuthMode.textContent = 'Create account';
-        }
-    }
-
-    // Check Auth State
-    const checkAuth = () => {
-        const user = JSON.parse(localStorage.getItem('currentUser'));
-        const navLoginBtn = document.getElementById('navLoginBtn');
-        const navSignupBtn = document.getElementById('navSignupBtn');
-        const userProfile = document.getElementById('userProfile');
-        const userNameDisplay = document.getElementById('userNameDisplay');
-        const userAvatar = document.getElementById('userAvatar');
-
-        const indexLoginBtn = document.getElementById('loginBtn');
-        const indexSignupBtn = document.getElementById('signupBtn');
-
-        if (user) {
-            // Update Dashboard/Index Header
-            if(navLoginBtn) navLoginBtn.style.display = 'none';
-            if(navSignupBtn) navSignupBtn.style.display = 'none';
-            if(userProfile) {
-                userProfile.style.display = 'flex';
-                userNameDisplay.textContent = user.name;
-                userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=E23744&color=fff`;
-            }
-
-            if(indexLoginBtn) indexLoginBtn.style.display = 'none';
-            if(indexSignupBtn) indexSignupBtn.textContent = user.name;
-        }
-    };
-
-    checkAuth();
-
-    // -------------------------------------------------------------
-    // Login API Logic
-    // -------------------------------------------------------------
-    const authForm = document.getElementById('authForm');
+    // Elements
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const sendOtpBtn = document.getElementById('sendOtpBtn');
     const verifyBtn = document.getElementById('verifyBtn');
-    const initialStep = document.getElementById('initialStep');
-    const otpStep = document.getElementById('otpStep');
-    const backToEmail = document.getElementById('backToEmail');
+    const backBtn = document.getElementById('backBtn');
+    const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
-    const otpInput = document.getElementById('otp');
+    const displayEmail = document.getElementById('displayEmail');
+    const authForm = document.getElementById('authForm');
+    const otpBoxes = document.querySelectorAll('.otp-box');
+    const otpValueInput = document.getElementById('otpValue');
 
-    if (verifyBtn) {
-        verifyBtn.addEventListener('click', () => {
+    // OTP Box Navigation Logic
+    if (otpBoxes.length > 0) {
+        otpBoxes.forEach((box, index) => {
+            box.addEventListener('input', (e) => {
+                if (e.target.value.length === 1) {
+                    if (index < otpBoxes.length - 1) {
+                        otpBoxes[index + 1].focus();
+                    }
+                }
+                updateOtpValue();
+            });
+
+            box.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '') {
+                    if (index > 0) {
+                        otpBoxes[index - 1].focus();
+                    }
+                }
+            });
+        });
+    }
+
+    function updateOtpValue() {
+        if(otpValueInput) {
+            otpValueInput.value = Array.from(otpBoxes).map(box => box.value).join('');
+        }
+    }
+
+    // Send OTP
+    if (sendOtpBtn) {
+        sendOtpBtn.addEventListener('click', () => {
+            const name = nameInput.value.trim();
             const email = emailInput.value.trim();
-            let name = 'Foodie';
-            if (userNameInput && userNameInput.value.trim()) {
-                name = userNameInput.value.trim();
-            } else if (isSignupMode) {
-                name = userNameInput ? userNameInput.value.trim() : 'Foodie';
-            }
 
-            if (!email) {
-                showToast('Please enter a valid email', 'error');
+            if (!name || !email) {
+                showToast('Please enter both name and email', 'error');
                 return;
             }
 
-            verifyBtn.disabled = true;
-            verifyBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending OTP...';
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('Please enter a valid email address', 'error');
+                return;
+            }
+
+            sendOtpBtn.disabled = true;
+            sendOtpBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
 
             fetch('api/auth.php?action=send_otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, name: name })
+                body: JSON.stringify({ name, email })
             })
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
-                verifyBtn.disabled = false;
-                verifyBtn.innerHTML = 'Send OTP';
+                sendOtpBtn.disabled = false;
+                sendOtpBtn.innerHTML = 'Send OTP <i class="fas fa-arrow-right"></i>';
 
                 if (data.success) {
-                    initialStep.style.display = 'none';
-                    otpStep.style.display = 'block';
-                    showToast(`OTP sent to ${email}`, 'success');
+                    displayEmail.textContent = email;
+                    step1.classList.remove('active');
+                    step2.classList.add('active');
+                    showToast('OTP sent successfully!', 'success');
                     
                     if (data.dev_otp) {
-                        showToast(`[DEV MODE] OTP: ${data.dev_otp}`, 'info');
+                        showToast(`[DEV] Your OTP is: ${data.dev_otp}`, 'info');
                     }
+                    
+                    // Focus first OTP box
+                    setTimeout(() => otpBoxes[0].focus(), 100);
                 } else {
                     showToast(data.message || 'Failed to send OTP', 'error');
                 }
             })
             .catch(err => {
-                console.error('Error:', err);
-                verifyBtn.disabled = false;
-                verifyBtn.innerHTML = 'Send OTP';
-                showToast('Server error', 'error');
+                console.error(err);
+                sendOtpBtn.disabled = false;
+                sendOtpBtn.innerHTML = 'Send OTP <i class="fas fa-arrow-right"></i>';
+                showToast('Server connection error.', 'error');
             });
         });
     }
 
-    if (backToEmail) {
-        backToEmail.addEventListener('click', (e) => {
+    // Back button
+    if (backBtn) {
+        backBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            otpStep.style.display = 'none';
-            initialStep.style.display = 'block';
+            step2.classList.remove('active');
+            step1.classList.add('active');
+            otpBoxes.forEach(box => box.value = '');
+            updateOtpValue();
         });
     }
 
+    // Verify OTP
     if (authForm) {
         authForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            if (initialStep.style.display !== 'none') {
-                verifyBtn.click();
+            // Only trigger if we are on step 2
+            if (step1.classList.contains('active')) {
+                sendOtpBtn.click();
                 return;
             }
 
-            const enteredOTP = otpInput.value.trim();
             const email = emailInput.value.trim();
-            const submitBtn = authForm.querySelector('button[type="submit"]');
+            const otp = otpValueInput.value.trim();
 
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Verifying...';
+            if (otp.length !== 4) {
+                showToast('Please enter a valid 4-digit OTP', 'error');
+                return;
+            }
+
+            verifyBtn.disabled = true;
+            verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
 
             fetch('api/auth.php?action=verify_otp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, otp: enteredOTP })
+                body: JSON.stringify({ email, otp })
             })
-            .then(response => response.json())
-            .then(data => {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = 'Verify & Continue';
-
-                if (data.success) {
-                    localStorage.setItem('currentUser', JSON.stringify(data.user));
-                    showToast(`Welcome, ${data.user.name}!`, 'success');
-                    if (authModal) authModal.classList.remove('active');
-                    checkAuth();
-                    
-                    // Redirect to dashboard if on index page
-                    const path = window.location.pathname;
-                    if (path.endsWith('index.html') || path.endsWith('/') || path.endsWith('zomato/')) {
-                        window.location.href = 'dashboard.html';
-                    }
-                } else {
-                    showToast(data.message || 'Invalid OTP', 'error');
-                }
-            })
-            .catch(err => {
-                console.error('Error:', err);
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = 'Verify & Continue';
-                showToast('Server error', 'error');
-            });
-        });
-    }
-
-    // -------------------------------------------------------------
-    // Dashboard Data Fetching
-    // -------------------------------------------------------------
-    const restaurantGrid = document.getElementById('restaurantGrid');
-    const skeletonGrid = document.getElementById('skeletonGrid');
-    const filterPills = document.querySelectorAll('.category-filter');
-
-    function loadRestaurants(category = 'all') {
-        if (!restaurantGrid || !skeletonGrid) return;
-        
-        restaurantGrid.style.display = 'none';
-        skeletonGrid.style.display = 'grid';
-        
-        // Match Zomato styling
-        const url = category === 'all' 
-            ? 'api/restaurants.php?action=all' 
-            : `api/restaurants.php?action=category&category=${encodeURIComponent(category)}`;
-            
-        fetch(url)
             .then(res => res.json())
             .then(data => {
-                skeletonGrid.style.display = 'none';
-                restaurantGrid.style.display = 'grid';
-                
-                if (data.success && data.data.length > 0) {
-                    restaurantGrid.innerHTML = data.data.map(res => `
-                        <div class="res-card" onclick="window.location.href='restaurant.html?id=${res.id}'">
-                            <div class="res-image-container">
-                                <img src="${res.image_url}" alt="${res.name}">
-                                ${res.rating >= 4.5 ? '<span class="res-promoted">Promoted</span>' : ''}
-                                <span class="res-discount">50% OFF up to 100</span>
-                                <span class="res-time">${res.delivery_time}</span>
-                            </div>
-                            <div class="res-info-row">
-                                <h4 class="res-name">${res.name}</h4>
-                                <span class="res-rating">${res.rating} <i class="fas fa-star" style="font-size:0.7rem"></i></span>
-                            </div>
-                            <div class="res-meta-row">
-                                <span class="res-cuisines">${res.category}</span>
-                                <span>₹200 for one</span>
-                            </div>
-                        </div>
-                    `).join('');
+                verifyBtn.disabled = false;
+                verifyBtn.innerHTML = 'Verify & Login <i class="fas fa-check-circle"></i>';
+
+                if (data.success) {
+                    // 1-Time Verification Rule: Save session to localStorage
+                    localStorage.setItem('user_session', JSON.stringify({
+                        name: data.user.name,
+                        email: data.user.email
+                    }));
+                    
+                    showToast('Login successful! Redirecting...', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 800);
                 } else {
-                    restaurantGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color:var(--text-muted)">No restaurants found for this filter.</div>';
+                    showToast(data.message || 'Invalid OTP', 'error');
+                    // Clear OTP boxes
+                    otpBoxes.forEach(box => box.value = '');
+                    otpBoxes[0].focus();
+                    updateOtpValue();
                 }
             })
             .catch(err => {
-                console.error('API Error:', err);
-                skeletonGrid.style.display = 'none';
-                restaurantGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color:var(--primary-red)">Failed to load data. Ensure MySQL is running and setup_database.php was executed.</div>';
-                restaurantGrid.style.display = 'block';
-            });
-    }
-
-    if (restaurantGrid) {
-        loadRestaurants('all');
-
-        filterPills.forEach(pill => {
-            pill.addEventListener('click', () => {
-                filterPills.forEach(p => p.classList.remove('active'));
-                pill.classList.add('active');
-                const cat = pill.getAttribute('data-category');
-                const dbCat = cat === 'all' ? 'all' : cat.charAt(0).toUpperCase() + cat.slice(1);
-                loadRestaurants(dbCat);
+                console.error(err);
+                verifyBtn.disabled = false;
+                verifyBtn.innerHTML = 'Verify & Login <i class="fas fa-check-circle"></i>';
+                showToast('Server connection error.', 'error');
             });
         });
     }
 
-    // -------------------------------------------------------------
-    // Toast Notification System
-    // -------------------------------------------------------------
+    // Dashboard Logout Logic
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('user_session');
+            window.location.href = 'index.html';
+        });
+    }
+
+    // Dashboard User Init
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    const userAvatar = document.getElementById('userAvatar');
+    if (userNameDisplay && userAvatar) {
+        const session = JSON.parse(localStorage.getItem('user_session'));
+        if (session) {
+            userNameDisplay.textContent = session.name;
+            userAvatar.textContent = session.name.charAt(0).toUpperCase();
+        } else {
+            // Not logged in, redirect to login
+            window.location.replace('index.html');
+        }
+    }
+
+    // Toast Function
     function showToast(message, type = 'success') {
         let container = document.getElementById('toastContainer');
         if (!container) {
@@ -296,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         setTimeout(() => {
             toast.style.opacity = '0';
-            toast.style.transform = 'translateY(100%)';
+            toast.style.transform = 'translateX(100%)';
             toast.style.transition = 'all 0.3s ease';
             setTimeout(() => toast.remove(), 300);
         }, 3000);
