@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Crave</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=6">
+</head>
+<body class="dashboard-body">
+
+    <!-- Navbar -->
+    <nav class="dash-nav">
+        <div class="nav-brand">
+            <i class="fas fa-utensils"></i> Crave
+        </div>
+        
+        <div class="nav-links" style="display: flex; gap: 20px; align-items: center; font-weight: 500; font-size: 0.95rem;">
+            <a href="index.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Home</a>
+            <a href="index.html#menu" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Our Menu</a>
+            <a href="#" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Offers</a>
+            <a href="cart.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s; position: relative;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">
+                Cart <i class="fas fa-shopping-cart"></i>
+                <span id="cartCount" style="position: absolute; top: -10px; right: -15px; background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; font-weight: bold;">0</span>
+            </a>
+            <a href="orders.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Orders</a>
+            <a href="profile.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Profile</a>
+            <a href="about.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">About</a>
+            <a href="contact.html" style="text-decoration: none; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Contact</a>
+        </div>
+
+        <div class="user-profile">
+            <span id="userNameDisplay">User</span>
+            <div class="user-avatar" id="userAvatar">U</div>
+            <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </nav>
+
+    <main class="dashboard-container" style="padding-top: 150px; max-width: 1000px; margin: 0 auto; padding-bottom: 80px;">
+        
+        <div style="text-align: center; margin-bottom: 5rem;">
+            <h1 style="font-size: 3.5rem; color: var(--text-main); margin-bottom: 1.5rem;">Contact <span style="color: var(--primary-color);">Us</span></h1>
+            <p style="font-size: 1.25rem; color: #666;">We're here to help you with anything you need.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; flex-wrap: wrap;">
+            <!-- Contact Info -->
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                <div style="background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: #fff5f6; color: var(--primary-color); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 0.3rem;">Phone</h4>
+                        <p style="color: #666;">+1 (555) 000-FOOD</p>
+                    </div>
+                </div>
+                <div style="background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: #f0f7ff; color: #1e90ff; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 0.3rem;">Email</h4>
+                        <p style="color: #666;">support@craveapp.com</p>
+                    </div>
+                </div>
+                <div style="background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: #fdfaf0; color: #f1c40f; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 0.3rem;">Location</h4>
+                        <p style="color: #666;">123 Foodie Lane, Gourmet City</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div style="background: white; padding: 3.5rem; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.08);">
+                <form id="contactForm">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div>
+                            <label style="display: block; margin-bottom: 0.8rem; font-weight: 600;">Full Name</label>
+                            <input type="text" placeholder="John Doe" style="width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px; font-family: inherit; font-size: 1rem;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.8rem; font-weight: 600;">Email Address</label>
+                            <input type="email" placeholder="john@example.com" style="width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px; font-family: inherit; font-size: 1rem;">
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 2rem;">
+                        <label style="display: block; margin-bottom: 0.8rem; font-weight: 600;">Message</label>
+                        <textarea placeholder="How can we help you?" style="width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px; font-family: inherit; font-size: 1rem; height: 150px; resize: none;"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%; padding: 18px; font-size: 1.1rem; border-radius: 15px;">
+                        Send Message <i class="fas fa-paper-plane" style="margin-left: 10px;"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const session = JSON.parse(localStorage.getItem('user_session'));
+            if (session) {
+                document.getElementById('userNameDisplay').textContent = session.name;
+                document.getElementById('userAvatar').textContent = session.name.charAt(0).toUpperCase();
+            }
+            if (typeof saveCart === 'function') {
+                saveCart(getCart());
+            }
+
+            document.getElementById('contactForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                showToast('Thank you! Your message has been sent.', 'success');
+                e.target.reset();
+            });
+        });
+    </script>
+</body>
+</html>
