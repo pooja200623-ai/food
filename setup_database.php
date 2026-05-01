@@ -30,6 +30,27 @@ try {
     )");
     echo "Foods table created.<br>";
     
+    // Create Orders table
+    $conn->exec("CREATE TABLE IF NOT EXISTS orders (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_email VARCHAR(255) NOT NULL,
+        total_price DECIMAL(10,2) NOT NULL,
+        order_status VARCHAR(50) DEFAULT 'Pending',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+    echo "Orders table created.<br>";
+
+    // Create Order Items table
+    $conn->exec("CREATE TABLE IF NOT EXISTS order_items (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        order_id INT NOT NULL,
+        food_name VARCHAR(255) NOT NULL,
+        price DECIMAL(10,2) NOT NULL,
+        quantity INT DEFAULT 1,
+        FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+    )");
+    echo "Order items table created.<br>";
+    
     // Check if table is empty
     $stmt = $conn->query("SELECT COUNT(*) FROM foods");
     if ($stmt->fetchColumn() == 0) {

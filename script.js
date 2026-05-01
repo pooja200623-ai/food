@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Toast Function
-    function showToast(message, type = 'success') {
+    window.showToast = function(message, type = 'success') {
         let container = document.getElementById('toastContainer');
         if (!container) {
             container = document.createElement('div');
@@ -100,10 +100,67 @@ document.addEventListener('DOMContentLoaded', () => {
         container.appendChild(toast);
         
         setTimeout(() => {
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+        }, 10);
+        
+        setTimeout(() => {
             toast.style.opacity = '0';
             toast.style.transform = 'translateX(100%)';
-            toast.style.transition = 'all 0.3s ease';
             setTimeout(() => toast.remove(), 300);
         }, 3000);
+    }
+
+    // Cart Management
+    window.getCart = function() {
+        return JSON.parse(localStorage.getItem('cart')) || [];
+    }
+
+    window.saveCart = function(cart) {
+        localStorage.setItem('cart', JSON.stringify(cart));
+        // Update cart count if exists in UI
+        const cartCount = document.getElementById('cartCount');
+        if (cartCount) {
+            cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+        }
+    }
+
+    window.addToCart = function(food) {
+        const cart = getCart();
+        const existingItem = cart.find(item => item.name === food.name);
+        
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({
+                ...food,
+                quantity: 1
+            });
+        }
+        
+        saveCart(cart);
+        showToast(`${food.name} added to cart!`, 'success');
+    }
+
+    window.updateQuantity = function(foodName, delta) {
+        let cart = getCart();
+        const item = cart.find(i => i.name === foodName);
+        if (item) {
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.name !== foodName);
+            }
+            saveCart(cart);
+            // If we are on cart page, re-render
+            if (typeof renderCart === 'function') renderCart();
+        }
+    }
+
+    window.removeFromCart = function(foodName) {
+        let cart = getCart();
+        cart = cart.filter(item => item.name !== foodName);
+        saveCart(cart);
+        showToast('Item removed from cart', 'info');
+        if (typeof renderCart === 'function') renderCart();
     }
 });

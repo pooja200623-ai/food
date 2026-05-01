@@ -19,7 +19,10 @@
         <div class="nav-links" style="display: flex; gap: 25px; align-items: center; font-weight: 500; font-size: 1.05rem;">
             <a href="index.html" style="text-decoration: none; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Home</a>
             <a href="index.html#menu" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Our Menu</a>
-            <a href="cart.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Cart <i class="fas fa-shopping-cart"></i></a>
+            <a href="cart.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s; position: relative;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">
+                Cart <i class="fas fa-shopping-cart"></i>
+                <span id="cartCount" style="position: absolute; top: -10px; right: -15px; background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; font-weight: bold;">0</span>
+            </a>
             <a href="orders.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Orders</a>
             <a href="profile.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Profile</a>
         </div>
@@ -117,7 +120,7 @@
                                         <p class="food-desc">${food.description}</p>
                                         <div class="food-footer">
                                             <span class="food-price">₹${food.price}</span>
-                                            <button class="add-btn"><i class="fas fa-plus"></i> Add</button>
+                                            <button class="add-btn" onclick='addToCart(${JSON.stringify(food).replace(/'/g, "&apos;")})'><i class="fas fa-plus"></i> Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -133,6 +136,11 @@
 
             // Init Load
             loadFoods('all');
+            
+            // Initialize cart count
+            if (typeof saveCart === 'function') {
+                saveCart(getCart());
+            }
 
             // Filter Clicks
             filterPills.forEach(pill => {

@@ -19,7 +19,10 @@
         <div class="nav-links" style="display: flex; gap: 25px; align-items: center; font-weight: 500; font-size: 1.05rem;">
             <a href="index.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Home</a>
             <a href="index.html#menu" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Our Menu</a>
-            <a href="cart.html" style="text-decoration: none; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Cart <i class="fas fa-shopping-cart"></i></a>
+            <a href="cart.html" style="text-decoration: none; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px; position: relative;">
+                Cart <i class="fas fa-shopping-cart"></i>
+                <span id="cartCount" style="position: absolute; top: -10px; right: -15px; background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; font-weight: bold;">0</span>
+            </a>
             <a href="orders.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Orders</a>
             <a href="profile.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Profile</a>
         </div>
@@ -31,15 +34,47 @@
         </div>
     </nav>
 
-    <main class="dashboard-container" style="padding-top: 120px;">
-        <div style="background: white; padding: 3rem; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto;">
-            <i class="fas fa-shopping-basket" style="font-size: 4rem; color: #eee; margin-bottom: 1rem;"></i>
+    <main class="dashboard-container" style="padding-top: 120px; max-width: 1000px; margin: 0 auto; padding-bottom: 50px;">
+        <h1 style="margin-bottom: 2rem; color: var(--text-main);">Your Cart</h1>
+        
+        <div id="cartContent" style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem;">
+            <!-- Cart Items -->
+            <div id="cartItemsList" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- Dynamically filled -->
+            </div>
+
+            <!-- Order Summary -->
+            <div id="orderSummary" style="background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: fit-content;">
+                <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">Order Summary</h3>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                    <span>Subtotal</span>
+                    <span id="subtotal">₹0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                    <span>Delivery Fee</span>
+                    <span style="color: #27ae60; font-weight: 500;">FREE</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 1.5rem; border-top: 1px solid #eee; padding-top: 1rem; font-size: 1.25rem; font-weight: 700;">
+                    <span>Total</span>
+                    <span id="totalPrice">₹0</span>
+                </div>
+                <button id="placeOrderBtn" class="btn-primary" style="width: 100%; margin-top: 2rem; padding: 15px; font-size: 1.1rem;">
+                    Place Order <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="emptyCartMessage" style="display: none; background: white; padding: 4rem 2rem; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+            <i class="fas fa-shopping-basket" style="font-size: 5rem; color: #eee; margin-bottom: 1.5rem;"></i>
             <h2>Your Cart is Empty</h2>
-            <p style="color: #666; margin-bottom: 2rem;">Looks like you haven't added anything to your cart yet.</p>
-            <a href="index.html" class="btn-primary" style="text-decoration: none; display: inline-block;">Browse Foods</a>
+            <p style="color: #666; margin-bottom: 2.5rem;">Looks like you haven't added anything to your cart yet.</p>
+            <a href="index.html" class="btn-primary" style="text-decoration: none; padding: 12px 30px;">Browse Delicious Foods</a>
         </div>
     </main>
 
+    <div id="toastContainer"></div>
+
+    <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const session = JSON.parse(localStorage.getItem('user_session'));
@@ -47,12 +82,97 @@
                 window.location.replace('signin.html');
                 return;
             }
-            document.getElementById('userNameDisplay').textContent = session.name;
-            document.getElementById('userAvatar').textContent = session.name.charAt(0).toUpperCase();
 
-            document.getElementById('logoutBtn').addEventListener('click', () => {
-                localStorage.removeItem('user_session');
-                window.location.href = 'signin.html';
+            const cartItemsList = document.getElementById('cartItemsList');
+            const cartContent = document.getElementById('cartContent');
+            const emptyCartMessage = document.getElementById('emptyCartMessage');
+            const subtotalEl = document.getElementById('subtotal');
+            const totalEl = document.getElementById('totalPrice');
+            const placeOrderBtn = document.getElementById('placeOrderBtn');
+
+            window.renderCart = function() {
+                const cart = getCart();
+                if (cart.length === 0) {
+                    cartContent.style.display = 'none';
+                    emptyCartMessage.style.display = 'block';
+                    return;
+                }
+
+                cartContent.style.display = 'grid';
+                emptyCartMessage.style.display = 'none';
+
+                let total = 0;
+                cartItemsList.innerHTML = cart.map(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    return `
+                        <div style="background: white; padding: 1.5rem; border-radius: 15px; display: flex; align-items: center; gap: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.02);">
+                            <img src="${item.image_url}" alt="${item.name}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 12px;">
+                            <div style="flex: 1;">
+                                <h3 style="margin-bottom: 0.5rem;">${item.name}</h3>
+                                <p style="color: #666; font-size: 0.9rem; margin-bottom: 0.5rem;">${item.category}</p>
+                                <span style="font-weight: 700; color: var(--primary-color);">₹${item.price}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem; background: #f8f9fa; padding: 5px 15px; border-radius: 50px;">
+                                <button onclick="updateQuantity('${item.name}', -1)" style="border: none; background: none; cursor: pointer; color: #666;"><i class="fas fa-minus"></i></button>
+                                <span style="font-weight: 600; min-width: 20px; text-align: center;">${item.quantity}</span>
+                                <button onclick="updateQuantity('${item.name}', 1)" style="border: none; background: none; cursor: pointer; color: #666;"><i class="fas fa-plus"></i></button>
+                            </div>
+                            <div style="text-align: right; min-width: 100px;">
+                                <div style="font-weight: 700; margin-bottom: 0.5rem;">₹${itemTotal}</div>
+                                <button onclick="removeFromCart('${item.name}')" style="border: none; background: none; color: #ff4757; cursor: pointer; font-size: 0.9rem;"><i class="fas fa-trash"></i> Remove</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                subtotalEl.textContent = `₹${total}`;
+                totalEl.textContent = `₹${total}`;
+                
+                // Update nav count
+                if (typeof saveCart === 'function') {
+                    const count = cart.reduce((t, i) => t + i.quantity, 0);
+                    document.getElementById('cartCount').textContent = count;
+                }
+            }
+
+            renderCart();
+
+            placeOrderBtn.addEventListener('click', async () => {
+                const cart = getCart();
+                if (cart.length === 0) return;
+
+                placeOrderBtn.disabled = true;
+                placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+                try {
+                    const response = await fetch('api/orders.php?action=place_order', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: session.email,
+                            cart: cart,
+                            total_price: cart.reduce((t, i) => t + (i.price * i.quantity), 0)
+                        })
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        showToast('Order placed successfully!', 'success');
+                        localStorage.removeItem('cart');
+                        setTimeout(() => {
+                            window.location.href = 'orders.html';
+                        }, 1500);
+                    } else {
+                        showToast(data.message || 'Failed to place order', 'error');
+                        placeOrderBtn.disabled = false;
+                        placeOrderBtn.innerHTML = 'Place Order <i class="fas fa-arrow-right"></i>';
+                    }
+                } catch (error) {
+                    showToast('Connection error. Please try again.', 'error');
+                    placeOrderBtn.disabled = false;
+                    placeOrderBtn.innerHTML = 'Place Order <i class="fas fa-arrow-right"></i>';
+                }
             });
         });
     </script>
