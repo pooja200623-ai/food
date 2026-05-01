@@ -2,7 +2,7 @@
 // Database configuration
 $host = 'localhost';
 $db_user = 'root';
-$db_pass = '';
+$db_pass = 'password';
 $db_name = 'custom_app_db';
 $port = '3306'; // Default MySQL port
 
@@ -13,7 +13,7 @@ try {
     
     // Auto-create database if it doesn't exist
     $conn->exec("CREATE DATABASE IF NOT EXISTS `$db_name` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci");
-    $conn->exec("USE `$db_name` text");
+    $conn->exec("USE `$db_name` ");
     
     // Check if tables exist, if not, basic setup
     $conn->exec("CREATE TABLE IF NOT EXISTS `orders` (
