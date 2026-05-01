@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offers & Deals | Crave</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=7">
+</head>
+<body class="dashboard-body">
+
+    <!-- Navbar -->
+    <nav class="dash-nav">
+        <div class="nav-brand">
+            <i class="fas fa-utensils"></i> Crave
+        </div>
+        
+        <div class="nav-links" style="display: flex; gap: 20px; align-items: center; font-weight: 500; font-size: 0.95rem;">
+            <a href="index.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Home</a>
+            <a href="menu.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Our Menu</a>
+            <a href="offers.html" style="text-decoration: none; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Offers</a>
+            <a href="cart.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s; position: relative;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">
+                Cart <i class="fas fa-shopping-cart"></i>
+                <span id="cartCount" style="position: absolute; top: -10px; right: -15px; background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; font-weight: bold;">0</span>
+            </a>
+            <a href="orders.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Orders</a>
+            <a href="profile.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Profile</a>
+            <a href="about.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">About</a>
+            <a href="contact.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Contact</a>
+        </div>
+
+        <div class="user-profile">
+            <span id="userNameDisplay">User</span>
+            <div class="user-avatar" id="userAvatar">U</div>
+            <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </nav>
+
+    <main class="dashboard-container" style="padding-top: 130px; max-width: 1100px; margin: 0 auto; padding-bottom: 80px;">
+        
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <h1 style="font-size: 3rem; color: var(--text-main); margin-bottom: 1rem;">Exclusive <span style="color: var(--primary-color);">Offers</span></h1>
+            <p style="color: #666; font-size: 1.1rem;">Save big on your favorite meals with our daily deals.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem;">
+            
+            <!-- Offer Card 1 -->
+            <div style="background: linear-gradient(135deg, #ff4757, #ff6b81); padding: 3rem 2rem; border-radius: 30px; color: white; position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(255, 71, 87, 0.3); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                <i class="fas fa-percentage" style="position: absolute; top: -20px; right: -20px; font-size: 8rem; opacity: 0.1;"></i>
+                <span style="background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">Limited Time</span>
+                <h2 style="font-size: 2.5rem; margin: 1.5rem 0 0.5rem;">50% OFF</h2>
+                <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem;">On your first 3 orders above ₹500.</p>
+                <div style="background: white; color: var(--primary-color); display: inline-block; padding: 10px 25px; border-radius: 12px; font-weight: 800; font-size: 1.2rem; letter-spacing: 2px;">CRAVE50</div>
+            </div>
+
+            <!-- Offer Card 2 -->
+            <div style="background: linear-gradient(135deg, #2ed573, #7bed9f); padding: 3rem 2rem; border-radius: 30px; color: white; position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(46, 213, 115, 0.3); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                <i class="fas fa-truck" style="position: absolute; top: -20px; right: -20px; font-size: 8rem; opacity: 0.1;"></i>
+                <span style="background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">Every Weekend</span>
+                <h2 style="font-size: 2.5rem; margin: 1.5rem 0 0.5rem;">FREE Delivery</h2>
+                <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem;">No delivery charges on all orders this Sunday!</p>
+                <div style="background: white; color: #2ed573; display: inline-block; padding: 10px 25px; border-radius: 12px; font-weight: 800; font-size: 1.2rem; letter-spacing: 2px;">WEEKEND</div>
+            </div>
+
+            <!-- Offer Card 3 -->
+            <div style="background: linear-gradient(135deg, #1e90ff, #70a1ff); padding: 3rem 2rem; border-radius: 30px; color: white; position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(30, 144, 255, 0.3); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                <i class="fas fa-pizza-slice" style="position: absolute; top: -20px; right: -20px; font-size: 8rem; opacity: 0.1;"></i>
+                <span style="background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">Mega Deal</span>
+                <h2 style="font-size: 2.5rem; margin: 1.5rem 0 0.5rem;">B1G1 FREE</h2>
+                <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem;">Buy 1 get 1 free on all Large Pizzas today.</p>
+                <div style="background: white; color: #1e90ff; display: inline-block; padding: 10px 25px; border-radius: 12px; font-weight: 800; font-size: 1.2rem; letter-spacing: 2px;">PIZZAPARTY</div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const session = JSON.parse(localStorage.getItem('user_session'));
+            if (session) {
+                document.getElementById('userNameDisplay').textContent = session.name;
+                document.getElementById('userAvatar').textContent = session.name.charAt(0).toUpperCase();
+            }
+            if (typeof saveCart === 'function') {
+                saveCart(getCart());
+            }
+        });
+    </script>
+</body>
+</html>
