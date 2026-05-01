@@ -8,22 +8,8 @@ $action = isset($_GET['action']) ? $_GET['action'] : '';
 // Start session for OTP fallback since we might not have the DB set up yet
 session_start();
 
-// Database configuration (optional for this initial setup, we will rely on session if it fails)
-$dbAvailable = false;
-$conn = null;
-$host = 'localhost';
-$db_name = 'custom_app_db';
-$db_user = 'root';
-$db_pass = '';
-
-try {
-    $conn = new PDO("mysql:host=$host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    $dbAvailable = true;
-} catch(PDOException $e) {
-    $dbAvailable = false;
-}
+require_once 'config.php';
+$dbAvailable = true; // Set to true as config.php handles failure via exit
 
 // -------------------------------------------------------
 // ACTION: send_otp
