@@ -16,15 +16,18 @@
             <i class="fas fa-utensils"></i> Crave
         </div>
         
-        <div class="nav-links" style="display: flex; gap: 25px; align-items: center; font-weight: 500; font-size: 1.05rem;">
+        <div class="nav-links" style="display: flex; gap: 20px; align-items: center; font-weight: 500; font-size: 0.95rem;">
             <a href="index.html" style="text-decoration: none; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Home</a>
             <a href="index.html#menu" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Our Menu</a>
+            <a href="#" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Offers</a>
             <a href="cart.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s; position: relative;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">
                 Cart <i class="fas fa-shopping-cart"></i>
                 <span id="cartCount" style="position: absolute; top: -10px; right: -15px; background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; font-weight: bold;">0</span>
             </a>
             <a href="orders.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Orders</a>
             <a href="profile.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Profile</a>
+            <a href="#about" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">About</a>
+            <a href="#contact" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Contact</a>
         </div>
         
         <div class="search-bar">
@@ -73,6 +76,46 @@
         </div>
 
     </main>
+114: 
+115:     <!-- About Section -->
+116:     <section id="about" style="padding: 8rem 2rem; background: white; margin-top: 4rem;">
+117:         <div style="max-width: 1000px; margin: 0 auto; display: flex; align-items: center; gap: 4rem; flex-wrap: wrap;">
+118:             <div style="flex: 1; min-width: 300px;">
+119:                 <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="About Crave" style="width: 100%; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+120:             </div>
+121:             <div style="flex: 1; min-width: 300px;">
+122:                 <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--text-main);">Crafting Culinary <span style="color: var(--primary-color);">Experiences</span></h2>
+123:                 <p style="color: #666; line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.1rem;">At Crave, we believe that great food is more than just a meal—it's an experience. Founded in 2024, our mission is to connect you with the most talented local chefs and finest restaurants in the city.</p>
+124:                 <p style="color: #666; line-height: 1.8; font-size: 1.1rem;">Whether you're craving a classic home-style comfort dish or an exotic international flavor, we bring the best of the culinary world directly to your doorstep with speed and care.</p>
+125:             </div>
+126:         </div>
+127:     </section>
+128: 
+129:     <!-- Contact Section -->
+130:     <section id="contact" style="padding: 8rem 2rem; background: #f8f9fa;">
+131:         <div style="max-width: 1000px; margin: 0 auto; text-align: center;">
+132:             <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-main);">Get in <span style="color: var(--primary-color);">Touch</span></h2>
+133:             <p style="color: #666; margin-bottom: 4rem; font-size: 1.1rem;">Have a question or feedback? We'd love to hear from you.</p>
+134:             
+135:             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+136:                 <div style="background: white; padding: 3rem 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+137:                     <i class="fas fa-phone-alt" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 1.5rem;"></i>
+138:                     <h3 style="margin-bottom: 1rem;">Call Us</h3>
+139:                     <p style="color: #666;">+1 (555) 000-FOOD</p>
+140:                 </div>
+141:                 <div style="background: white; padding: 3rem 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+142:                     <i class="fas fa-envelope" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 1.5rem;"></i>
+143:                     <h3 style="margin-bottom: 1rem;">Email Us</h3>
+144:                     <p style="color: #666;">support@craveapp.com</p>
+145:                 </div>
+146:                 <div style="background: white; padding: 3rem 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+147:                     <i class="fas fa-map-marker-alt" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 1.5rem;"></i>
+148:                     <h3 style="margin-bottom: 1rem;">Visit Us</h3>
+149:                     <p style="color: #666;">123 Foodie Lane, Gourmet City</p>
+150:                 </div>
+151:             </div>
+152:         </div>
+153:     </section>
 
     <!-- Floating Cart Button -->
     <a href="cart.html" class="floating-cart" style="position: fixed; bottom: 30px; right: 30px; background: var(--primary-color); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 10px 30px rgba(255, 71, 87, 0.4); text-decoration: none; z-index: 999; transition: transform 0.3s;">
