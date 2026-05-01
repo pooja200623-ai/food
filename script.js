@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.addToCart = function(food) {
+    window.addToCart = function(food, btn) {
         const cart = getCart();
         const existingItem = cart.find(item => item.name === food.name);
         
@@ -211,6 +211,20 @@ document.addEventListener('DOMContentLoaded', () => {
         
         saveCart(cart);
         showToast(`${food.name} added to cart!`, 'success');
+
+        // Visual feedback on button
+        if (btn) {
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+            btn.style.background = '#2ed573';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHtml;
+                btn.style.background = '';
+                btn.disabled = false;
+            }, 1500);
+        }
     }
 
     window.updateQuantity = function(foodName, delta) {

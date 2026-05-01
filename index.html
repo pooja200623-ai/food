@@ -195,7 +195,7 @@
                                         <div class="food-footer">
                                             <span class="food-price">₹${food.price}</span>
                                             <div style="display: flex; gap: 8px;">
-                                                <button class="add-btn" onclick='addToCart(${JSON.stringify(food).replace(/'/g, "&apos;")})'><i class="fas fa-plus"></i></button>
+                                                <button class="add-btn" style="padding: 8px 20px; font-size: 0.9rem;" onclick='addToCart(${JSON.stringify(food).replace(/'/g, "&apos;")}, this)'>Add</button>
                                                 <button class="btn-primary" style="padding: 8px 15px; font-size: 0.9rem;" onclick='orderNow(${JSON.stringify(food).replace(/'/g, "&apos;")})'>Order Now</button>
                                             </div>
                                         </div>
