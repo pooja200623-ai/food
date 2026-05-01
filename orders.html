@@ -98,6 +98,12 @@
                                             </div>
                                         `).join('')}
                                     </div>
+
+                                    <div style="margin-top: 1.5rem; padding: 1rem; background: #fafafa; border-radius: 12px; font-size: 0.9rem;">
+                                        <div style="margin-bottom: 0.5rem;"><i class="fas fa-map-marker-alt" style="color: var(--primary-color); width: 20px;"></i> <strong>Delivery to:</strong> ${order.delivery_address}</div>
+                                        <div><i class="fas fa-credit-card" style="color: var(--primary-color); width: 20px;"></i> <strong>Paid via:</strong> ${order.payment_method.toUpperCase()}</div>
+                                    </div>
+
                                     <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed #eee; display: flex; justify-content: flex-end;">
                                         <button class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem; background: #eee; color: #333;" onclick="showToast('Tracking coming soon!', 'info')">Track Order</button>
                                     </div>

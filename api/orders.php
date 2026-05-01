@@ -23,6 +23,8 @@ if ($action === 'place_order') {
     $email = isset($data['email']) ? $data['email'] : '';
     $cart = isset($data['cart']) ? $data['cart'] : [];
     $total_price = isset($data['total_price']) ? $data['total_price'] : 0;
+    $address = isset($data['address']) ? $data['address'] : '';
+    $payment_method = isset($data['payment_method']) ? $data['payment_method'] : 'cod';
 
     if (empty($email) || empty($cart)) {
         echo json_encode(['success' => false, 'message' => 'Invalid order data.']);
@@ -33,8 +35,8 @@ if ($action === 'place_order') {
         $conn->beginTransaction();
 
         // 1. Insert into orders table
-        $stmt = $conn->prepare("INSERT INTO orders (user_email, total_price, order_status) VALUES (?, ?, 'Pending')");
-        $stmt->execute([$email, $total_price]);
+        $stmt = $conn->prepare("INSERT INTO orders (user_email, total_price, delivery_address, payment_method, order_status) VALUES (?, ?, ?, ?, 'Pending')");
+        $stmt->execute([$email, $total_price, $address, $payment_method]);
         $order_id = $conn->lastInsertId();
 
         // 2. Insert items into order_items table

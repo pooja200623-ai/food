@@ -45,7 +45,22 @@
 
             <!-- Order Summary -->
             <div id="orderSummary" style="background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: fit-content;">
-                <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">Order Summary</h3>
+                <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">Checkout Details</h3>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">Delivery Address</label>
+                    <textarea id="deliveryAddress" placeholder="Enter your full delivery address..." style="width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 12px; font-family: inherit; resize: none; height: 80px;"></textarea>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">Payment Method</label>
+                    <select id="paymentMethod" style="width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 12px; font-family: inherit; background: white;">
+                        <option value="cod">Cash on Delivery</option>
+                        <option value="card">Credit / Debit Card</option>
+                        <option value="upi">UPI / Net Banking</option>
+                    </select>
+                </div>
+
                 <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                     <span>Subtotal</span>
                     <span id="subtotal">₹0</span>
@@ -140,7 +155,16 @@
 
             placeOrderBtn.addEventListener('click', async () => {
                 const cart = getCart();
+                const address = document.getElementById('deliveryAddress').value.trim();
+                const payment = document.getElementById('paymentMethod').value;
+
                 if (cart.length === 0) return;
+                
+                if (!address) {
+                    showToast('Please enter a delivery address', 'error');
+                    document.getElementById('deliveryAddress').focus();
+                    return;
+                }
 
                 placeOrderBtn.disabled = true;
                 placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
@@ -152,6 +176,8 @@
                         body: JSON.stringify({
                             email: session.email,
                             cart: cart,
+                            address: address,
+                            payment_method: payment,
                             total_price: cart.reduce((t, i) => t + (i.price * i.quantity), 0)
                         })
                     });

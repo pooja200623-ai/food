@@ -13,47 +13,121 @@ document.addEventListener('DOMContentLoaded', () => {
     const otpBoxes = document.querySelectorAll('.otp-box');
     const otpValueInput = document.getElementById('otpValue');
 
-    // Simple Login
+    // Simple Login & OTP Flow
     if (authForm) {
-        authForm.addEventListener('submit', (e) => {
+        // Step 1: Send OTP
+        if (sendOtpBtn) {
+            sendOtpBtn.addEventListener('click', async () => {
+                const name = nameInput.value.trim();
+                const email = emailInput.value.trim();
+
+                if (!name || !email) {
+                    showToast('Please enter both name and email', 'error');
+                    return;
+                }
+
+                sendOtpBtn.disabled = true;
+                sendOtpBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+                try {
+                    const response = await fetch('api/auth.php?action=send_otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email })
+                    });
+                    const data = await response.json();
+
+                    if (data.success) {
+                        displayEmail.textContent = email;
+                        step1.classList.remove('active');
+                        step1.style.display = 'none';
+                        step2.classList.add('active');
+                        step2.style.display = 'block';
+                        showToast(`OTP sent! (Dev: ${data.dev_otp})`, 'info');
+                    } else {
+                        showToast(data.message, 'error');
+                        sendOtpBtn.disabled = false;
+                        sendOtpBtn.innerHTML = 'Get Verification Code <i class="fas fa-paper-plane"></i>';
+                    }
+                } catch (err) {
+                    showToast('Network error', 'error');
+                    sendOtpBtn.disabled = false;
+                    sendOtpBtn.innerHTML = 'Get Verification Code <i class="fas fa-paper-plane"></i>';
+                }
+            });
+        }
+
+        // OTP Box Logic
+        otpBoxes.forEach((box, index) => {
+            box.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < otpBoxes.length - 1) {
+                    otpBoxes[index + 1].focus();
+                }
+                combineOTP();
+            });
+
+            box.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    otpBoxes[index - 1].focus();
+                }
+            });
+        });
+
+        function combineOTP() {
+            let otp = '';
+            otpBoxes.forEach(box => otp += box.value);
+            otpValueInput.value = otp;
+        }
+
+        // Step 2: Verify OTP
+        authForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            const name = nameInput.value.trim();
+            const otp = otpValueInput.value;
             const email = emailInput.value.trim();
 
-            if (!name || !email) {
-                showToast('Please enter both name and email', 'error');
+            if (otp.length !== 4) {
+                showToast('Please enter 4-digit OTP', 'error');
                 return;
             }
 
-            // Basic email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showToast('Please enter a valid email address', 'error');
-                return;
-            }
+            verifyBtn.disabled = true;
+            verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
 
-            const loginBtn = document.getElementById('loginBtn');
-            if (loginBtn) {
-                loginBtn.disabled = true;
-                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
-            }
+            try {
+                const response = await fetch('api/auth.php?action=verify_otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, otp })
+                });
+                const data = await response.json();
 
-            // Simulate a brief network delay for UX
-            setTimeout(() => {
-                // 1-Time Verification Rule: Save session to localStorage
-                localStorage.setItem('user_session', JSON.stringify({
-                    name: name,
-                    email: email
-                }));
-                
-                showToast('Login successful! Redirecting...', 'success');
-                
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 800);
-            }, 600);
+                if (data.success) {
+                    localStorage.setItem('user_session', JSON.stringify(data.user));
+                    showToast('Login successful!', 'success');
+                    setTimeout(() => window.location.href = 'index.html', 1000);
+                } else {
+                    showToast(data.message, 'error');
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerHTML = 'Verify & Login <i class="fas fa-check-double"></i>';
+                }
+            } catch (err) {
+                showToast('Network error', 'error');
+                verifyBtn.disabled = false;
+                verifyBtn.innerHTML = 'Verify & Login <i class="fas fa-check-double"></i>';
+            }
         });
+
+        // Back button
+        if (backBtn) {
+            backBtn.addEventListener('click', () => {
+                step2.classList.remove('active');
+                step2.style.display = 'none';
+                step1.classList.add('active');
+                step1.style.display = 'block';
+                sendOtpBtn.disabled = false;
+                sendOtpBtn.innerHTML = 'Get Verification Code <i class="fas fa-paper-plane"></i>';
+            });
+        }
     }
 
     // Dashboard Logout Logic
@@ -73,9 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (session) {
             userNameDisplay.textContent = session.name;
             userAvatar.textContent = session.name.charAt(0).toUpperCase();
-        } else {
-            // Not logged in, redirect to login
-            window.location.replace('signin.html');
         }
     }
 

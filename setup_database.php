@@ -35,6 +35,8 @@ try {
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_email VARCHAR(255) NOT NULL,
         total_price DECIMAL(10,2) NOT NULL,
+        delivery_address TEXT,
+        payment_method VARCHAR(50),
         order_status VARCHAR(50) DEFAULT 'Pending',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");

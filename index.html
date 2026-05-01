@@ -29,7 +29,7 @@
         
         <div class="search-bar">
             <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Search for variety foods...">
+            <input type="text" id="searchInput" placeholder="Search for your favorite food...">
         </div>
 
         <div class="user-profile">
@@ -73,6 +73,49 @@
         </div>
 
     </main>
+
+    <!-- Floating Cart Button -->
+    <a href="cart.html" class="floating-cart" style="position: fixed; bottom: 30px; right: 30px; background: var(--primary-color); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 10px 30px rgba(255, 71, 87, 0.4); text-decoration: none; z-index: 999; transition: transform 0.3s;">
+        <i class="fas fa-shopping-basket"></i>
+        <span id="floatCartCount" style="position: absolute; top: 0; right: 0; background: white; color: var(--primary-color); border-radius: 50%; width: 22px; height: 22px; font-size: 0.75rem; font-weight: 800; display: flex; align-items: center; justify-content: center;">0</span>
+    </a>
+
+    <footer style="background: #2d3436; color: white; padding: 5rem 2rem 2rem; margin-top: 5rem;">
+        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 4rem;">
+            <div>
+                <h2 style="color: var(--primary-color); font-style: italic; margin-bottom: 1.5rem;"><i class="fas fa-utensils"></i> Crave</h2>
+                <p style="opacity: 0.7; line-height: 1.6;">Discover the best culinary experiences delivered right to your doorstep. We partner with the finest local restaurants to bring you quality food, fast.</p>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem;">Quick Links</h3>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.8rem;">
+                    <li><a href="index.html" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.3s;">Home</a></li>
+                    <li><a href="index.html#menu" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.3s;">Our Menu</a></li>
+                    <li><a href="orders.html" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.3s;">My Orders</a></li>
+                    <li><a href="profile.html" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.3s;">Profile Settings</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem;">Contact Us</h3>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.8rem; opacity: 0.7;">
+                    <li><i class="fas fa-map-marker-alt" style="margin-right: 10px; color: var(--primary-color);"></i> 123 Foodie Lane, Gourmet City</li>
+                    <li><i class="fas fa-phone-alt" style="margin-right: 10px; color: var(--primary-color);"></i> +1 (555) 000-FOOD</li>
+                    <li><i class="fas fa-envelope" style="margin-right: 10px; color: var(--primary-color);"></i> support@craveapp.com</li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem;">Follow Us</h3>
+                <div style="display: flex; gap: 15px; font-size: 1.5rem;">
+                    <a href="#" style="color: white; opacity: 0.7; transition: 0.3s;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: white; opacity: 0.7; transition: 0.3s;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: white; opacity: 0.7; transition: 0.3s;"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.5; font-size: 0.9rem;">
+            &copy; 2026 Crave Food Delivery. All rights reserved.
+        </div>
+    </footer>
 
     <script src="script.js"></script>
     <script>
@@ -120,7 +163,10 @@
                                         <p class="food-desc">${food.description}</p>
                                         <div class="food-footer">
                                             <span class="food-price">₹${food.price}</span>
-                                            <button class="add-btn" onclick='addToCart(${JSON.stringify(food).replace(/'/g, "&apos;")})'><i class="fas fa-plus"></i> Add</button>
+                                            <div style="display: flex; gap: 8px;">
+                                                <button class="add-btn" onclick='addToCart(${JSON.stringify(food).replace(/'/g, "&apos;")})'><i class="fas fa-plus"></i></button>
+                                                <button class="btn-primary" style="padding: 8px 15px; font-size: 0.9rem;" onclick='orderNow(${JSON.stringify(food).replace(/'/g, "&apos;")})'>Order Now</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -139,7 +185,12 @@
             
             // Initialize cart count
             if (typeof saveCart === 'function') {
-                saveCart(getCart());
+                const cart = getCart();
+                saveCart(cart);
+                const floatCartCount = document.getElementById('floatCartCount');
+                if (floatCartCount) {
+                    floatCartCount.textContent = cart.reduce((t, i) => t + i.quantity, 0);
+                }
             }
 
             // Filter Clicks
@@ -158,6 +209,28 @@
                     localStorage.removeItem('user_session');
                     window.location.href = 'signin.html';
                 });
+            }
+
+            // Search Logic
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                const cards = document.querySelectorAll('.food-card');
+                cards.forEach(card => {
+                    const name = card.querySelector('h3').textContent.toLowerCase();
+                    const desc = card.querySelector('.food-desc').textContent.toLowerCase();
+                    if (name.includes(term) || desc.includes(term)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+
+            // Order Now logic
+            window.orderNow = function(food) {
+                addToCart(food);
+                window.location.href = 'cart.html';
             }
         });
     </script>
