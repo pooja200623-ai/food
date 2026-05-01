@@ -93,9 +93,33 @@
                 <textarea id="quickAddress" placeholder="Enter your full address..." style="width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 15px; font-family: inherit; resize: none; height: 100px; font-size: 1rem;"></textarea>
             </div>
 
-            <div style="background: #f8f9fa; padding: 1rem; border-radius: 15px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight: 600;">Total Amount:</span>
-                <span id="quickOrderPrice" style="font-size: 1.25rem; font-weight: 800; color: var(--primary-color);">₹0</span>
+            <div style="margin-bottom: 2rem;">
+                <label style="display: block; margin-bottom: 0.8rem; font-weight: 600;">Payment Method</label>
+                <select id="quickPayment" style="width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 15px; font-family: inherit; background: white; font-size: 1rem;">
+                    <option value="cod">Cash on Delivery</option>
+                    <option value="card">Credit / Debit Card</option>
+                    <option value="upi">UPI / Net Banking</option>
+                </select>
+            </div>
+
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 1rem; color: #444; border-bottom: 1px dashed #ddd; padding-bottom: 0.5rem;">Price Details</h4>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.95rem;">
+                    <span style="color: #666;">Item Price</span>
+                    <span id="quickSubtotal">₹0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.95rem;">
+                    <span style="color: #666;">Taxes & GST (5%)</span>
+                    <span id="quickGST">₹0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 0.95rem;">
+                    <span style="color: #666;">Delivery Fee</span>
+                    <span style="color: #27ae60; font-weight: 600;">FREE</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; border-top: 1px solid #ddd; padding-top: 0.8rem; font-weight: 800; font-size: 1.1rem; color: var(--text-main);">
+                    <span>To Pay</span>
+                    <span id="quickOrderPrice" style="color: var(--primary-color);">₹0</span>
+                </div>
             </div>
 
             <button id="confirmOrderBtn" class="btn-primary" style="width: 100%; padding: 18px; font-size: 1.1rem; border-radius: 15px;">
@@ -166,6 +190,7 @@
             // Fetch Foods
             const foodGrid = document.getElementById('foodGrid');
             const filterPills = document.querySelectorAll('.filter-pill');
+            window.currentFoods = []; // Global storage for current view
 
             function loadFoods(category = 'all') {
                 const url = category === 'all' ? 'api/foods.php' : `api/foods.php?action=category&category=${encodeURIComponent(category)}`;
@@ -180,7 +205,8 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.success && data.data.length > 0) {
-                            foodGrid.innerHTML = data.data.map(food => `
+                            window.currentFoods = data.data;
+                            foodGrid.innerHTML = data.data.map((food, index) => `
                                 <div class="food-card">
                                     <div class="food-image">
                                         <img src="${food.image_url}" alt="${food.name}">
@@ -195,8 +221,8 @@
                                         <div class="food-footer">
                                             <span class="food-price">₹${food.price}</span>
                                             <div style="display: flex; gap: 8px;">
-                                                <button class="add-btn" style="padding: 8px 20px; font-size: 0.9rem;" onclick='addToCart(${JSON.stringify(food).replace(/'/g, "&apos;")}, this)'>Add</button>
-                                                <button class="btn-primary" style="padding: 8px 15px; font-size: 0.9rem;" onclick='orderNow(${JSON.stringify(food).replace(/'/g, "&apos;")})'>Order Now</button>
+                                                <button class="add-btn" style="padding: 8px 20px; font-size: 0.9rem;" onclick="addToCart(window.currentFoods[${index}], this)">Add</button>
+                                                <button class="btn-primary" style="padding: 8px 15px; font-size: 0.9rem;" onclick="orderNow(window.currentFoods[${index}])">Order Now</button>
                                             </div>
                                         </div>
                                     </div>
@@ -263,8 +289,15 @@
 
             window.orderNow = function(food) {
                 currentQuickFood = food;
+                const price = parseFloat(food.price);
+                const gst = Math.round(price * 0.05);
+                const total = price + gst;
+
                 document.getElementById('quickOrderFoodName').textContent = food.name;
-                document.getElementById('quickOrderPrice').textContent = `₹${food.price}`;
+                document.getElementById('quickSubtotal').textContent = `₹${price}`;
+                document.getElementById('quickGST').textContent = `₹${gst}`;
+                document.getElementById('quickOrderPrice').textContent = `₹${total}`;
+                
                 document.getElementById('quickOrderModal').style.display = 'flex';
                 document.getElementById('quickAddress').focus();
             }
@@ -275,6 +308,7 @@
 
             document.getElementById('confirmOrderBtn').addEventListener('click', async () => {
                 const address = document.getElementById('quickAddress').value.trim();
+                const payment = document.getElementById('quickPayment').value;
                 const confirmBtn = document.getElementById('confirmOrderBtn');
 
                 if (!address) {
@@ -298,8 +332,8 @@
                                 image_url: currentQuickFood.image_url
                             }],
                             address: address,
-                            payment_method: 'cod',
-                            total_price: currentQuickFood.price
+                            payment_method: payment,
+                            total_price: parseFloat(currentQuickFood.price) + Math.round(parseFloat(currentQuickFood.price) * 0.05)
                         })
                     });
 

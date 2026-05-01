@@ -149,103 +149,110 @@ document.addEventListener('DOMContentLoaded', () => {
             userAvatar.textContent = session.name.charAt(0).toUpperCase();
         }
     }
+});
 
-    // Toast Function
-    window.showToast = function(message, type = 'success') {
-        let container = document.getElementById('toastContainer');
-        if (!container) {
-            container = document.createElement('div');
-            container.id = 'toastContainer';
-            container.className = 'toast-container';
-            document.body.appendChild(container);
-        }
-        
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        
-        let icon = 'fa-info-circle';
-        if (type === 'success') icon = 'fa-check-circle';
-        if (type === 'error') icon = 'fa-exclamation-circle';
+// --- Global Utility Functions (Available for inline event handlers) ---
 
-        toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span>`;
-        container.appendChild(toast);
+// Toast Function
+window.showToast = function(message, type = 'success') {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+    
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    let icon = 'fa-info-circle';
+    if (type === 'success') icon = 'fa-check-circle';
+    if (type === 'error') icon = 'fa-exclamation-circle';
+
+    toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span>`;
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateY(0)';
+    }, 10);
+    
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Cart Management
+window.getCart = function() {
+    return JSON.parse(localStorage.getItem('cart')) || [];
+}
+
+window.saveCart = function(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+    
+    // Update all possible cart count indicators
+    const cartCount = document.getElementById('cartCount');
+    if (cartCount) cartCount.textContent = totalItems;
+    
+    const floatCartCount = document.getElementById('floatCartCount');
+    if (floatCartCount) floatCartCount.textContent = totalItems;
+}
+
+window.addToCart = function(food, btn) {
+    const cart = getCart();
+    const existingItem = cart.find(item => item.name === food.name);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            ...food,
+            quantity: 1
+        });
+    }
+    
+    saveCart(cart);
+    showToast(`${food.name} added to cart!`, 'success');
+
+    // Visual feedback on button
+    if (btn) {
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+        btn.style.background = '#2ed573';
+        btn.style.borderColor = '#2ed573';
+        btn.disabled = true;
         
         setTimeout(() => {
-            toast.style.opacity = '1';
-            toast.style.transform = 'translateY(0)';
-        }, 10);
-        
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateX(100%)';
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
+            btn.innerHTML = originalHtml;
+            btn.style.background = '';
+            btn.style.borderColor = '';
+            btn.disabled = false;
+        }, 1500);
     }
+}
 
-    // Cart Management
-    window.getCart = function() {
-        return JSON.parse(localStorage.getItem('cart')) || [];
-    }
-
-    window.saveCart = function(cart) {
-        localStorage.setItem('cart', JSON.stringify(cart));
-        // Update cart count if exists in UI
-        const cartCount = document.getElementById('cartCount');
-        if (cartCount) {
-            cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+window.updateQuantity = function(foodName, delta) {
+    let cart = getCart();
+    const item = cart.find(i => i.name === foodName);
+    if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+            cart = cart.filter(i => i.name !== foodName);
         }
-    }
-
-    window.addToCart = function(food, btn) {
-        const cart = getCart();
-        const existingItem = cart.find(item => item.name === food.name);
-        
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push({
-                ...food,
-                quantity: 1
-            });
-        }
-        
         saveCart(cart);
-        showToast(`${food.name} added to cart!`, 'success');
-
-        // Visual feedback on button
-        if (btn) {
-            const originalHtml = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> Added!';
-            btn.style.background = '#2ed573';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                btn.innerHTML = originalHtml;
-                btn.style.background = '';
-                btn.disabled = false;
-            }, 1500);
-        }
-    }
-
-    window.updateQuantity = function(foodName, delta) {
-        let cart = getCart();
-        const item = cart.find(i => i.name === foodName);
-        if (item) {
-            item.quantity += delta;
-            if (item.quantity <= 0) {
-                cart = cart.filter(i => i.name !== foodName);
-            }
-            saveCart(cart);
-            // If we are on cart page, re-render
-            if (typeof renderCart === 'function') renderCart();
-        }
-    }
-
-    window.removeFromCart = function(foodName) {
-        let cart = getCart();
-        cart = cart.filter(item => item.name !== foodName);
-        saveCart(cart);
-        showToast('Item removed from cart', 'info');
+        // If we are on cart page, re-render
         if (typeof renderCart === 'function') renderCart();
     }
-});
+}
+
+window.removeFromCart = function(foodName) {
+    let cart = getCart();
+    cart = cart.filter(item => item.name !== foodName);
+    saveCart(cart);
+    showToast('Item removed from cart', 'info');
+    if (typeof renderCart === 'function') renderCart();
+}
