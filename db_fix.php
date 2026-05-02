@@ -46,6 +46,32 @@ try {
         FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
     )");
 
+    // 4. Ensure 'users' table columns exist
+    $conn->exec("CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100),
+        email VARCHAR(100) UNIQUE,
+        otp VARCHAR(10),
+        otp_expiry DATETIME
+    )");
+
+    $userCols = $conn->query("SHOW COLUMNS FROM users")->fetchAll(PDO::FETCH_COLUMN);
+    $missingUserCols = [
+        'phone' => "VARCHAR(20) AFTER email",
+        'address' => "TEXT AFTER phone",
+        'city' => "VARCHAR(100) AFTER address",
+        'zip' => "VARCHAR(20) AFTER city",
+        'points' => "INT DEFAULT 0 AFTER zip",
+        'avatar_color' => "VARCHAR(20) DEFAULT '#ff4757' AFTER points"
+    ];
+
+    foreach ($missingUserCols as $col => $definition) {
+        if (!in_array($col, $userCols)) {
+            $conn->exec("ALTER TABLE users ADD COLUMN $col $definition");
+            echo "Added '$col' column to users table.<br>";
+        }
+    }
+
     echo "Database structure is verified and fixed! You can now place orders.";
 
 } catch(PDOException $e) {

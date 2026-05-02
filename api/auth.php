@@ -40,6 +40,12 @@ if ($action === 'send_otp') {
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(100),
                 email VARCHAR(100) UNIQUE,
+                phone VARCHAR(20),
+                address TEXT,
+                city VARCHAR(100),
+                zip VARCHAR(20),
+                points INT DEFAULT 0,
+                avatar_color VARCHAR(20) DEFAULT '#ff4757',
                 otp VARCHAR(10),
                 otp_expiry DATETIME
             )");
