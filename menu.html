@@ -47,17 +47,27 @@
             </div>
         </div>
 
-        <!-- Filters -->
-        <div class="filters-section">
-            <button class="filter-pill active" data-category="all">All</button>
-            <button class="filter-pill" data-category="Indian">Indian</button>
-            <button class="filter-pill" data-category="Chinese">Chinese</button>
-            <button class="filter-pill" data-category="Korean">Korean</button>
-            <button class="filter-pill" data-category="Japanese">Japanese</button>
-            <button class="filter-pill" data-category="American">American</button>
-            <button class="filter-pill" data-category="Fast Food">Fast Food</button>
-            <button class="filter-pill" data-category="Healthy">Healthy</button>
-            <button class="filter-pill" data-category="Desserts">Desserts</button>
+        <!-- Filters & Sorting -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1.5rem;">
+            <div class="filters-section" style="margin-bottom: 0; flex: 1;">
+                <button class="filter-pill active" data-category="all">All Varieties</button>
+                <button class="filter-pill" data-category="Indian">Indian</button>
+                <button class="filter-pill" data-category="Chinese">Chinese</button>
+                <button class="filter-pill" data-category="Korean">Korean</button>
+                <button class="filter-pill" data-category="Japanese">Japanese</button>
+                <button class="filter-pill" data-category="American">American</button>
+                <button class="filter-pill" data-category="Fast Food">Fast Food</button>
+                <button class="filter-pill" data-category="Healthy">Healthy</button>
+                <button class="filter-pill" data-category="Desserts">Desserts</button>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; background: white; padding: 10px 20px; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <label style="font-weight: 600; color: var(--text-muted); font-size: 0.9rem;">Sort By:</label>
+                <select id="sortSelect" style="border: none; background: transparent; font-weight: 600; color: var(--primary-color); outline: none; cursor: pointer; font-family: inherit;">
+                    <option value="rating">Top Rated</option>
+                    <option value="priceLow">Price: Low to High</option>
+                    <option value="priceHigh">Price: High to Low</option>
+                </select>
+            </div>
         </div>
 
         <div class="food-grid" id="menuGrid">
@@ -111,6 +121,25 @@
             const filterPills = document.querySelectorAll('.filter-pill');
             window.currentFoods = [];
 
+            function renderMenu(foods) {
+                menuGrid.innerHTML = foods.map((food, index) => `
+                    <div class="food-card">
+                        <div class="food-image"><img src="${food.image_url}"></div>
+                        <div class="food-info">
+                            <div class="food-header"><h3>${food.name}</h3><span class="food-rating">${food.rating} ★</span></div>
+                            <p class="food-desc">${food.description}</p>
+                            <div class="food-footer">
+                                <span class="food-price">₹${food.price}</span>
+                                <div style="display: flex; gap: 8px;">
+                                    <button class="add-btn" onclick="addToCart(window.currentFoods[${index}], this)">Add</button>
+                                    <button class="btn-primary" onclick="orderNow(window.currentFoods[${index}])">Order Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
             function fetchMenu(category = 'all') {
                 const url = category === 'all' ? 'api/foods.php' : `api/foods.php?action=category&category=${encodeURIComponent(category)}`;
                 menuGrid.innerHTML = '<div class="food-card skeleton"></div>'.repeat(6);
@@ -119,23 +148,19 @@
                     .then(res => res.json())
                     .then(data => {
                         window.currentFoods = data.data;
-                        menuGrid.innerHTML = data.data.map((food, index) => `
-                            <div class="food-card">
-                                <div class="food-image"><img src="${food.image_url}"></div>
-                                <div class="food-info">
-                                    <div class="food-header"><h3>${food.name}</h3><span class="food-rating">${food.rating} ★</span></div>
-                                    <p class="food-desc">${food.description}</p>
-                                    <div class="food-footer">
-                                        <span class="food-price">₹${food.price}</span>
-                                        <div style="display: flex; gap: 8px;">
-                                            <button class="add-btn" onclick="addToCart(window.currentFoods[${index}], this)">Add</button>
-                                            <button class="btn-primary" onclick="orderNow(window.currentFoods[${index}])">Order Now</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `).join('');
+                        applySort();
                     });
+            }
+
+            function applySort() {
+                const sortBy = document.getElementById('sortSelect').value;
+                let sortedFoods = [...window.currentFoods];
+                
+                if (sortBy === 'priceLow') sortedFoods.sort((a, b) => a.price - b.price);
+                else if (sortBy === 'priceHigh') sortedFoods.sort((a, b) => b.price - a.price);
+                else if (sortBy === 'rating') sortedFoods.sort((a, b) => b.rating - a.rating);
+                
+                renderMenu(sortedFoods);
             }
 
             fetchMenu('all');
@@ -147,6 +172,8 @@
                     fetchMenu(pill.getAttribute('data-category'));
                 });
             });
+
+            document.getElementById('sortSelect').addEventListener('change', applySort);
 
             // Search
             document.getElementById('menuSearch').addEventListener('input', (e) => {

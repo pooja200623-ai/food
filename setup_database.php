@@ -53,21 +53,24 @@ try {
     )");
     echo "Order items table created.<br>";
     
-    // Check if table is empty
-    $stmt = $conn->query("SELECT COUNT(*) FROM foods");
-    if ($stmt->fetchColumn() == 0) {
-        require_once 'food_data.php';
-        $foods = $global_foods;
-        
-        $insert = $conn->prepare("INSERT INTO foods (name, category, price, rating, image_url, delivery_time, description) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        
-        foreach ($foods as $f) {
-            $insert->execute($f);
-        }
-        echo "Seeded ".count($foods)." foods.<br>";
-    } else {
-        echo "Foods table already seeded.<br>";
+    // Seed data
+    require_once 'food_data.php';
+    $foods = $global_foods;
+    
+    $insert = $conn->prepare("INSERT INTO foods (name, category, price, rating, image_url, delivery_time, description) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    
+    foreach ($foods as $f) {
+        $insert->execute([
+            $f['name'], 
+            $f['category'], 
+            $f['price'], 
+            $f['rating'], 
+            $f['image_url'], 
+            $f['delivery_time'], 
+            $f['description']
+        ]);
     }
+    echo "Seeded ".count($foods)." foods successfully into the database.<br>";
     
     echo "<h2>Setup Complete! You can now close this page.</h2>";
 
