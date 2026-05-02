@@ -3,108 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Menu | Crave</title>
+    <title>Our Menu | 80+ Varieties</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=7">
+    <link rel="stylesheet" href="style.css?v=10">
+    <style>
+        .menu-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+        .menu-sidebar {
+            position: sticky;
+            top: 100px;
+            height: calc(100vh - 150px);
+            background: white;
+            padding: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            border-radius: 12px;
+            transition: 0.3s;
+            margin-bottom: 5px;
+        }
+        .sidebar-link:hover, .sidebar-link.active {
+            background: rgba(255, 71, 87, 0.1);
+            color: var(--primary-color);
+        }
+        .category-section {
+            margin-bottom: 5rem;
+            scroll-margin-top: 100px;
+        }
+        .category-title {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        @media (max-width: 992px) {
+            .menu-layout { grid-template-columns: 1fr; }
+            .menu-sidebar { display: none; }
+        }
+    </style>
 </head>
 <body class="dashboard-body">
 
     <!-- Navbar -->
     <nav class="dash-nav">
-        <div class="nav-brand">
-            <i class="fas fa-utensils"></i> Crave
+        <!-- (Same navbar as index for consistency) -->
+        <div class="nav-brand"><i class="fas fa-utensils"></i> Crave</div>
+        <div class="nav-links" style="display: flex; gap: 20px; align-items: center;">
+            <a href="index.html" style="text-decoration: none; color: var(--text-main);">Home</a>
+            <a href="menu.html" style="text-decoration: none; color: var(--primary-color); border-bottom: 2px solid var(--primary-color);">Our Menu</a>
+            <a href="offers.html" style="text-decoration: none; color: var(--text-main);">Offers</a>
+            <a href="cart.html" style="text-decoration: none; color: var(--text-main);">Cart</a>
+            <a href="orders.html" style="text-decoration: none; color: var(--text-main);">Orders</a>
+            <a href="profile.html" style="text-decoration: none; color: var(--text-main);">Profile</a>
         </div>
-        
-        <div class="nav-links" style="display: flex; gap: 20px; align-items: center; font-weight: 500; font-size: 0.95rem;">
-            <a href="index.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Home</a>
-            <a href="menu.html" style="text-decoration: none; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Our Menu</a>
-            <a href="offers.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Offers</a>
-            <a href="cart.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s; position: relative;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">
-                Cart <i class="fas fa-shopping-cart"></i>
-                <span id="cartCount" style="position: absolute; top: -10px; right: -15px; background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; font-weight: bold;">0</span>
-            </a>
-            <a href="orders.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Orders</a>
-            <a href="profile.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Profile</a>
-            <a href="about.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">About</a>
-            <a href="contact.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Contact</a>
-        </div>
-
         <div class="user-profile">
             <span id="userNameDisplay">User</span>
             <div class="user-avatar" id="userAvatar">U</div>
-            <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
         </div>
     </nav>
 
-    <main class="dashboard-container" style="padding-top: 130px;">
-        
-        <div style="margin-bottom: 3rem;">
-            <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Explore Our <span style="color: var(--primary-color);">Delicacies</span></h1>
-            <div class="search-bar" style="width: 100%; max-width: 600px; margin-bottom: 2rem;">
-                <i class="fas fa-search"></i>
-                <input type="text" id="menuSearch" placeholder="Search for dishes, cuisines...">
-            </div>
-        </div>
+    <main class="dashboard-container">
+        <header style="text-align: center; margin-bottom: 4rem;">
+            <h1 style="font-size: 3rem; margin-bottom: 1rem;">Explore Our <span style="color: var(--primary-color);">Delicacies</span></h1>
+            <p style="color: #666; font-size: 1.2rem;">Choose from 80+ handcrafted dishes across 8 global varieties.</p>
+        </header>
 
-        <!-- Filters & Sorting -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1.5rem;">
-            <div class="filters-section" style="margin-bottom: 0; flex: 1;">
-                <button class="filter-pill active" data-category="all">All Varieties</button>
-                <button class="filter-pill" data-category="Indian">Indian</button>
-                <button class="filter-pill" data-category="Chinese">Chinese</button>
-                <button class="filter-pill" data-category="Korean">Korean</button>
-                <button class="filter-pill" data-category="Japanese">Japanese</button>
-                <button class="filter-pill" data-category="American">American</button>
-                <button class="filter-pill" data-category="Fast Food">Fast Food</button>
-                <button class="filter-pill" data-category="Healthy">Healthy</button>
-                <button class="filter-pill" data-category="Desserts">Desserts</button>
-            </div>
-            <div style="display: flex; align-items: center; gap: 10px; background: white; padding: 10px 20px; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                <label style="font-weight: 600; color: var(--text-muted); font-size: 0.9rem;">Sort By:</label>
-                <select id="sortSelect" style="border: none; background: transparent; font-weight: 600; color: var(--primary-color); outline: none; cursor: pointer; font-family: inherit;">
-                    <option value="rating">Top Rated</option>
-                    <option value="priceLow">Price: Low to High</option>
-                    <option value="priceHigh">Price: High to Low</option>
-                </select>
-            </div>
-        </div>
+        <div class="menu-layout">
+            <!-- Sticky Sidebar -->
+            <aside class="menu-sidebar">
+                <h3 style="margin-bottom: 1.5rem; color: #888; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Varieties</h3>
+                <a href="#Indian" class="sidebar-link active"><i class="fas fa-pepper-hot"></i> Indian</a>
+                <a href="#Chinese" class="sidebar-link"><i class="fas fa-bowl-food"></i> Chinese</a>
+                <a href="#Korean" class="sidebar-link"><i class="fas fa-fire"></i> Korean</a>
+                <a href="#Japanese" class="sidebar-link"><i class="fas fa-fish"></i> Japanese</a>
+                <a href="#American" class="sidebar-link"><i class="fas fa-hamburger"></i> American</a>
+                <a href="#Fast Food" class="sidebar-link"><i class="fas fa-pizza-slice"></i> Fast Food</a>
+                <a href="#Healthy" class="sidebar-link"><i class="fas fa-leaf"></i> Healthy</a>
+                <a href="#Desserts" class="sidebar-link"><i class="fas fa-ice-cream"></i> Desserts</a>
+            </aside>
 
-        <div class="food-grid" id="menuGrid">
-            <!-- Loaded via JS -->
-        </div>
-
-    </main>
-
-    <!-- Quick Order Modal (Shared) -->
-    <div id="quickOrderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; backdrop-filter: blur(5px); align-items: center; justify-content: center;">
-        <div style="background: white; width: 90%; max-width: 450px; padding: 2.5rem; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); position: relative; animation: slideUp 0.4s ease;">
-            <button onclick="closeQuickOrder()" style="position: absolute; top: 20px; right: 20px; border: none; background: none; font-size: 1.5rem; cursor: pointer; color: #999;">&times;</button>
-            <h2 style="margin-bottom: 0.5rem;">Instant Checkout</h2>
-            <p style="color: #666; margin-bottom: 2rem;">Place order for <strong id="quickOrderFoodName" style="color: var(--primary-color);"></strong></p>
-            
-            <div style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.8rem; font-weight: 600;">Delivery Address</label>
-                <textarea id="quickAddress" placeholder="Enter your full address..." style="width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 15px; font-family: inherit; resize: none; height: 80px;"></textarea>
-            </div>
-
-            <div style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.8rem; font-weight: 600;">Payment Method</label>
-                <select id="quickPayment" style="width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 12px; font-family: inherit; background: white;">
-                    <option value="cod">Cash on Delivery</option>
-                    <option value="card">Credit Card</option>
-                    <option value="upi">UPI</option>
-                </select>
-            </div>
-
-            <div style="background: #f8f9fa; padding: 1rem; border-radius: 15px; margin-bottom: 2rem;">
-                <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.1rem;">
-                    <span>Total Pay</span>
-                    <span id="quickOrderPrice" style="color: var(--primary-color);">₹0</span>
+            <!-- Menu Content -->
+            <div class="menu-content">
+                <div id="menuContainer">
+                    <!-- Categories will be injected here -->
                 </div>
             </div>
+        </div>
+    </main>
 
-            <button id="confirmOrderBtn" class="btn-primary" style="width: 100%; padding: 15px; border-radius: 12px;">Confirm Order</button>
+    <!-- Modal and script logic -->
+    <div id="quickOrderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; backdrop-filter: blur(5px); align-items: center; justify-content: center;">
+        <div style="background: white; width: 90%; max-width: 450px; padding: 2.5rem; border-radius: 25px; position: relative;">
+            <button onclick="closeQuickOrder()" style="position: absolute; top: 20px; right: 20px; border: none; background: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            <h2 id="modalFoodName">Food Name</h2>
+            <p id="modalFoodPrice" style="color: var(--primary-color); font-size: 1.5rem; font-weight: 800; margin: 1rem 0;">₹0</p>
+            <textarea id="quickAddress" placeholder="Delivery Address" style="width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #eee; margin-bottom: 1.5rem; height: 80px;"></textarea>
+            <button id="confirmOrderBtn" class="btn-primary" style="width: 100%; padding: 15px;">Place Instant Order</button>
         </div>
     </div>
 
@@ -112,109 +122,99 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const session = JSON.parse(localStorage.getItem('user_session'));
-            if (session) {
-                document.getElementById('userNameDisplay').textContent = session.name;
-                document.getElementById('userAvatar').textContent = session.name.charAt(0).toUpperCase();
-            }
+            const menuContainer = document.getElementById('menuContainer');
+            const categories = ['Indian', 'Chinese', 'Korean', 'Japanese', 'American', 'Fast Food', 'Healthy', 'Desserts'];
 
-            const menuGrid = document.getElementById('menuGrid');
-            const filterPills = document.querySelectorAll('.filter-pill');
-            window.currentFoods = [];
-
-            function renderMenu(foods) {
-                menuGrid.innerHTML = foods.map((food, index) => `
-                    <div class="food-card">
-                        <div class="food-image"><img src="${food.image_url}"></div>
-                        <div class="food-info">
-                            <div class="food-header"><h3>${food.name}</h3><span class="food-rating">${food.rating} ★</span></div>
-                            <p class="food-desc">${food.description}</p>
-                            <div class="food-footer">
-                                <span class="food-price">₹${food.price}</span>
-                                <div style="display: flex; gap: 8px;">
-                                    <button class="add-btn" onclick="addToCart(window.currentFoods[${index}], this)">Add</button>
-                                    <button class="btn-primary" onclick="orderNow(window.currentFoods[${index}])">Order Now</button>
-                                </div>
+            async function loadFullMenu() {
+                menuContainer.innerHTML = '';
+                for (const cat of categories) {
+                    const res = await fetch(`api/foods.php?action=category&category=${encodeURIComponent(cat)}`);
+                    const data = await res.json();
+                    
+                    if (data.success) {
+                        const section = document.createElement('div');
+                        section.id = cat;
+                        section.className = 'category-section';
+                        
+                        section.innerHTML = `
+                            <h2 class="category-title">${cat} <small style="font-size: 0.9rem; color: #888; font-weight: 400;">(${data.data.length} varieties)</small></h2>
+                            <div class="food-grid">
+                                ${data.data.map((food, i) => `
+                                    <div class="food-card">
+                                        <div class="food-image"><img src="${food.image_url}"></div>
+                                        <div class="food-info">
+                                            <div class="food-header">
+                                                <h3>${food.name}</h3>
+                                                <span class="food-rating">${food.rating} ★</span>
+                                            </div>
+                                            <p class="food-desc">${food.description}</p>
+                                            <div class="food-footer">
+                                                <span class="food-price">₹${food.price}</span>
+                                                <button class="btn-primary" onclick='openQuickOrder(${JSON.stringify(food).replace(/'/g, "&apos;")})'>Order</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
                             </div>
-                        </div>
-                    </div>
-                `).join('');
+                        `;
+                        menuContainer.appendChild(section);
+                    }
+                }
             }
 
-            function fetchMenu(category = 'all') {
-                const url = category === 'all' ? 'api/foods.php' : `api/foods.php?action=category&category=${encodeURIComponent(category)}`;
-                menuGrid.innerHTML = '<div class="food-card skeleton"></div>'.repeat(6);
+            loadFullMenu();
 
-                fetch(url)
-                    .then(res => res.json())
-                    .then(data => {
-                        window.currentFoods = data.data;
-                        applySort();
-                    });
-            }
-
-            function applySort() {
-                const sortBy = document.getElementById('sortSelect').value;
-                let sortedFoods = [...window.currentFoods];
-                
-                if (sortBy === 'priceLow') sortedFoods.sort((a, b) => a.price - b.price);
-                else if (sortBy === 'priceHigh') sortedFoods.sort((a, b) => b.price - a.price);
-                else if (sortBy === 'rating') sortedFoods.sort((a, b) => b.rating - a.rating);
-                
-                renderMenu(sortedFoods);
-            }
-
-            fetchMenu('all');
-
-            filterPills.forEach(pill => {
-                pill.addEventListener('click', () => {
-                    filterPills.forEach(p => p.classList.remove('active'));
-                    pill.classList.add('active');
-                    fetchMenu(pill.getAttribute('data-category'));
-                });
-            });
-
-            document.getElementById('sortSelect').addEventListener('change', applySort);
-
-            // Search
-            document.getElementById('menuSearch').addEventListener('input', (e) => {
-                const term = e.target.value.toLowerCase();
-                document.querySelectorAll('.food-card').forEach(card => {
-                    const name = card.querySelector('h3').textContent.toLowerCase();
-                    card.style.display = name.includes(term) ? 'block' : 'none';
-                });
-            });
-
-            // Order Logic
-            let currentQuickFood = null;
-            window.orderNow = function(food) {
-                currentQuickFood = food;
-                document.getElementById('quickOrderFoodName').textContent = food.name;
-                document.getElementById('quickOrderPrice').textContent = `₹${food.price}`;
+            // Modal logic
+            let selectedFood = null;
+            window.openQuickOrder = (food) => {
+                selectedFood = food;
+                document.getElementById('modalFoodName').textContent = food.name;
+                document.getElementById('modalFoodPrice').textContent = `₹${food.price}`;
                 document.getElementById('quickOrderModal').style.display = 'flex';
-            }
-            window.closeQuickOrder = () => document.getElementById('quickOrderModal').style.display = 'none';
+            };
+
+            window.closeQuickOrder = () => {
+                document.getElementById('quickOrderModal').style.display = 'none';
+            };
 
             document.getElementById('confirmOrderBtn').addEventListener('click', async () => {
-                const addr = document.getElementById('quickAddress').value;
-                const pay = document.getElementById('quickPayment').value;
-                if(!addr) { showToast('Address required', 'error'); return; }
-
-                const response = await fetch('api/orders.php?action=place_order', {
+                const address = document.getElementById('quickAddress').value;
+                if(!address) return showToast('Please enter address', 'error');
+                
+                const res = await fetch('api/orders.php?action=place_order', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
                         email: session.email,
-                        cart: [{...currentQuickFood, quantity: 1}],
-                        address: addr,
-                        payment_method: pay,
-                        total_price: currentQuickFood.price
+                        cart: [{...selectedFood, quantity: 1}],
+                        address: address,
+                        payment_method: 'cod',
+                        total_price: selectedFood.price
                     })
                 });
-                const data = await response.json();
+                const data = await res.json();
                 if(data.success) {
                     showToast('Order placed!', 'success');
-                    setTimeout(() => window.location.href = 'orders.html', 1000);
+                    closeQuickOrder();
                 }
+            });
+
+            // Scroll spy for sidebar
+            window.addEventListener('scroll', () => {
+                let current = "";
+                categories.forEach(cat => {
+                    const section = document.getElementById(cat);
+                    if (section && window.pageYOffset >= section.offsetTop - 150) {
+                        current = cat;
+                    }
+                });
+
+                document.querySelectorAll('.sidebar-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
             });
         });
     </script>

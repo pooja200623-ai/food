@@ -2,7 +2,7 @@
 // Database configuration
 $host = 'localhost';
 $db_user = 'root';
-$db_pass = 'password';
+$db_pass = '';
 $db_name = 'custom_app_db';
 $port = '3306'; // Default MySQL port
 
