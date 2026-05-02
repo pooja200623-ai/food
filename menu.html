@@ -110,14 +110,51 @@
         </div>
     </main>
 
-    <!-- Modal and script logic -->
-    <div id="quickOrderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; backdrop-filter: blur(5px); align-items: center; justify-content: center;">
-        <div style="background: white; width: 90%; max-width: 450px; padding: 2.5rem; border-radius: 25px; position: relative;">
-            <button onclick="closeQuickOrder()" style="position: absolute; top: 20px; right: 20px; border: none; background: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
-            <h2 id="modalFoodName">Food Name</h2>
-            <p id="modalFoodPrice" style="color: var(--primary-color); font-size: 1.5rem; font-weight: 800; margin: 1rem 0;">₹0</p>
-            <textarea id="quickAddress" placeholder="Delivery Address" style="width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #eee; margin-bottom: 1.5rem; height: 80px;"></textarea>
-            <button id="confirmOrderBtn" class="btn-primary" style="width: 100%; padding: 15px;">Place Instant Order</button>
+    <div id="quickOrderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; backdrop-filter: blur(8px); align-items: center; justify-content: center;">
+        <div style="background: white; width: 95%; max-width: 500px; padding: 2.5rem; border-radius: 30px; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.2);">
+            <button onclick="closeQuickOrder()" style="position: absolute; top: 25px; right: 25px; border: none; background: #f1f2f6; width: 35px; height: 35px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s;">&times;</button>
+            
+            <h2 id="modalFoodName" style="font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--text-main);">Food Name</h2>
+            <p style="color: #666; margin-bottom: 2rem;">Confirm your instant order details below.</p>
+
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.8rem; font-weight: 600; font-size: 0.95rem; color: #444;">Delivery Address</label>
+                <textarea id="quickAddress" placeholder="Enter your full delivery address..." style="width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #eee; font-family: inherit; resize: none; height: 100px; font-size: 1rem; transition: 0.3s;" onfocus="this.style.borderColor='var(--primary-color)'" onblur="this.style.borderColor='#eee'"></textarea>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <label style="display: block; margin-bottom: 0.8rem; font-weight: 600; font-size: 0.95rem; color: #444;">Payment Method</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <label style="border: 2px solid #eee; padding: 12px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.3s;" id="labelCod">
+                        <input type="radio" name="quickPayment" value="cod" checked onclick="updatePaymentUI('cod')"> 
+                        <span style="font-size: 0.9rem; font-weight: 500;">Cash on Delivery</span>
+                    </label>
+                    <label style="border: 2px solid #eee; padding: 12px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.3s;" id="labelCard">
+                        <input type="radio" name="quickPayment" value="card" onclick="updatePaymentUI('card')"> 
+                        <span style="font-size: 0.9rem; font-weight: 500;">Online Payment</span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 1rem; color: #444; border-bottom: 1px solid #e9ecef; padding-bottom: 0.8rem;">Price Details</h4>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.95rem;">
+                    <span style="color: #666;">Item Price</span>
+                    <span id="modalItemPrice" style="font-weight: 600;">₹0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.95rem;">
+                    <span style="color: #666;">Delivery Fee</span>
+                    <span style="color: #27ae60; font-weight: 600;">FREE</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 1rem; border-top: 1px solid #e9ecef; padding-top: 1rem; font-size: 1.2rem; font-weight: 800;">
+                    <span>Total Amount</span>
+                    <span id="modalTotalPrice" style="color: var(--primary-color);">₹0</span>
+                </div>
+            </div>
+
+            <button id="confirmOrderBtn" class="btn-primary" style="width: 100%; padding: 18px; border-radius: 18px; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);">
+                Place Order <i class="fas fa-check-circle" style="margin-left: 10px;"></i>
+            </button>
         </div>
     </div>
 
@@ -177,36 +214,85 @@
 
             // Modal logic
             let selectedFood = null;
+
+            window.updatePaymentUI = (method) => {
+                const cod = document.getElementById('labelCod');
+                const card = document.getElementById('labelCard');
+                if (method === 'cod') {
+                    cod.style.borderColor = 'var(--primary-color)';
+                    cod.style.background = 'rgba(255, 71, 87, 0.05)';
+                    card.style.borderColor = '#eee';
+                    card.style.background = 'transparent';
+                } else {
+                    card.style.borderColor = 'var(--primary-color)';
+                    card.style.background = 'rgba(255, 71, 87, 0.05)';
+                    cod.style.borderColor = '#eee';
+                    cod.style.background = 'transparent';
+                }
+            };
+
             window.openQuickOrder = (food) => {
                 selectedFood = food;
                 document.getElementById('modalFoodName').textContent = food.name;
-                document.getElementById('modalFoodPrice').textContent = `₹${food.price}`;
+                document.getElementById('modalItemPrice').textContent = `₹${food.price}`;
+                document.getElementById('modalTotalPrice').textContent = `₹${food.price}`;
                 document.getElementById('quickOrderModal').style.display = 'flex';
+                updatePaymentUI('cod');
             };
 
             window.closeQuickOrder = () => {
                 document.getElementById('quickOrderModal').style.display = 'none';
+                localStorage.removeItem('quick_order_food');
             };
 
+            // Handle redirect from index
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('instant_order') === 'true') {
+                const quickFood = JSON.parse(localStorage.getItem('quick_order_food'));
+                if (quickFood) {
+                    setTimeout(() => openQuickOrder(quickFood), 500);
+                }
+            }
+
             document.getElementById('confirmOrderBtn').addEventListener('click', async () => {
-                const address = document.getElementById('quickAddress').value;
-                if(!address) return showToast('Please enter address', 'error');
+                const address = document.getElementById('quickAddress').value.trim();
+                const payment = document.querySelector('input[name="quickPayment"]:checked').value;
                 
-                const res = await fetch('api/orders.php?action=place_order', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        email: session.email,
-                        cart: [{...selectedFood, quantity: 1}],
-                        address: address,
-                        payment_method: 'cod',
-                        total_price: selectedFood.price
-                    })
-                });
-                const data = await res.json();
-                if(data.success) {
-                    showToast('Order placed!', 'success');
-                    closeQuickOrder();
+                if(!address) {
+                    showToast('Please enter delivery address', 'error');
+                    document.getElementById('quickAddress').focus();
+                    return;
+                }
+                
+                document.getElementById('confirmOrderBtn').disabled = true;
+                document.getElementById('confirmOrderBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Placing Order...';
+
+                try {
+                    const res = await fetch('api/orders.php?action=place_order', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            email: session.email,
+                            cart: [{...selectedFood, quantity: 1}],
+                            address: address,
+                            payment_method: payment,
+                            total_price: selectedFood.price
+                        })
+                    });
+                    const data = await res.json();
+                    if(data.success) {
+                        showToast('Order placed successfully!', 'success');
+                        closeQuickOrder();
+                        setTimeout(() => window.location.href = 'orders.html', 1500);
+                    } else {
+                        showToast(data.message || 'Error placing order', 'error');
+                        document.getElementById('confirmOrderBtn').disabled = false;
+                        document.getElementById('confirmOrderBtn').innerHTML = 'Place Order <i class="fas fa-check-circle" style="margin-left: 10px;"></i>';
+                    }
+                } catch (err) {
+                    showToast('Connection error', 'error');
+                    document.getElementById('confirmOrderBtn').disabled = false;
+                    document.getElementById('confirmOrderBtn').innerHTML = 'Place Order <i class="fas fa-check-circle" style="margin-left: 10px;"></i>';
                 }
             });
 
