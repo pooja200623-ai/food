@@ -144,6 +144,11 @@
             const categories = ['Indian', 'Chinese', 'Korean', 'Japanese', 'American', 'Fast Food', 'Healthy', 'Desserts'];
             const showcase = document.getElementById('varietyShowcase');
 
+            // Initialize cart count
+            if (typeof getCart === 'function' && typeof saveCart === 'function') {
+                saveCart(getCart());
+            }
+
             async function loadVarietyShowcase() {
                 showcase.innerHTML = '';
                 for (const cat of categories) {
@@ -175,7 +180,10 @@
                                                 <p class="food-desc">${food.description}</p>
                                                 <div class="food-footer">
                                                     <span class="food-price">₹${food.price}</span>
-                                                    <button class="btn-primary" style="padding: 8px 15px; font-size: 0.9rem;" onclick="orderNowFromData(${JSON.stringify(food).replace(/"/g, '&quot;')})">Order Now</button>
+                                                    <div style="display: flex; gap: 8px;">
+                                                        <button class="add-btn" onclick="addToCart(${JSON.stringify(food).replace(/"/g, '&quot;')}, this)">Add</button>
+                                                        <button class="btn-primary" style="padding: 8px 15px; font-size: 0.9rem;" onclick="orderNowFromData(${JSON.stringify(food).replace(/"/g, '&quot;')})">Order</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
