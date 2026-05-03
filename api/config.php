@@ -41,8 +41,26 @@ try {
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `name` varchar(100),
         `email` varchar(100) UNIQUE,
+        `phone` varchar(20),
+        `address` TEXT,
+        `city` varchar(100),
+        `zip` varchar(20),
+        `points` int DEFAULT 0,
+        `avatar_color` varchar(20) DEFAULT '#ff4757',
         `otp` varchar(10),
         `otp_expiry` datetime,
+        PRIMARY KEY (`id`)
+    )");
+
+    $conn->exec("CREATE TABLE IF NOT EXISTS `foods` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `name` varchar(255) NOT NULL,
+        `description` text,
+        `price` decimal(10,2) NOT NULL DEFAULT 0,
+        `rating` decimal(3,1) DEFAULT 4.5,
+        `category` varchar(100) NOT NULL,
+        `image_url` text,
+        `delivery_time` varchar(50) DEFAULT '25-35 min',
         PRIMARY KEY (`id`)
     )");
 
