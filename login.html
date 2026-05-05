@@ -69,9 +69,26 @@
         </div>
     </div>
 
-    <!-- Toast Notification Container -->
-    <div id="toastContainer"></div>
+    <script>
+        const authForm = document.getElementById('authForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
 
-    <script src="script.js"></script>
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!name || !email || !emailRegex.test(email)) {
+                alert("Please enter your name and valid email");
+                return;
+            }
+
+            // Success: Store session and redirect
+            localStorage.setItem('user_session', JSON.stringify({ name, email }));
+            window.location.href = 'index.html';
+        });
+    </script>
 </body>
 </html>
