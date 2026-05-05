@@ -72,11 +72,9 @@
                             <strong id="displayEmail" style="color: var(--primary-color);">user@example.com</strong>
                         </div>
 
-                        <div class="otp-inputs" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 2rem;">
-                            <input type="text" class="otp-box" maxlength="1" pattern="\d*" inputmode="numeric">
-                            <input type="text" class="otp-box" maxlength="1" pattern="\d*" inputmode="numeric">
-                            <input type="text" class="otp-box" maxlength="1" pattern="\d*" inputmode="numeric">
-                            <input type="text" class="otp-box" maxlength="1" pattern="\d*" inputmode="numeric">
+                        <div class="input-group" style="margin-bottom: 1.5rem;">
+                            <i class="fas fa-key"></i>
+                            <input type="text" id="otpDisplay" placeholder="Enter 4-digit OTP" maxlength="4" pattern="\d*" inputmode="numeric" style="width: 100%; border: none; outline: none; font-size: 1rem; letter-spacing: 2px; font-weight: 600;" required>
                         </div>
 
                         <input type="hidden" id="otpValue">

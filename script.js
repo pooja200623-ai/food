@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayEmail = document.getElementById('displayEmail');
     const authForm = document.getElementById('authForm');
     const otpBoxes = document.querySelectorAll('.otp-box');
+    const otpDisplay = document.getElementById('otpDisplay');
     const otpValueInput = document.getElementById('otpValue');
 
     // Simple Login & OTP Flow
@@ -67,26 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // OTP Box Logic
-        otpBoxes.forEach((box, index) => {
-            box.addEventListener('input', (e) => {
-                if (e.target.value.length === 1 && index < otpBoxes.length - 1) {
-                    otpBoxes[index + 1].focus();
-                }
-                combineOTP();
+        // OTP Input Logic (Simplified)
+        if (otpDisplay) {
+            otpDisplay.addEventListener('input', () => {
+                otpValueInput.value = otpDisplay.value;
             });
-
-            box.addEventListener('keydown', (e) => {
-                if (e.key === 'Backspace' && !e.target.value && index > 0) {
-                    otpBoxes[index - 1].focus();
-                }
-            });
-        });
-
-        function combineOTP() {
-            let otp = '';
-            otpBoxes.forEach(box => otp += box.value);
-            otpValueInput.value = otp;
         }
 
         // Step 2: Verify OTP
