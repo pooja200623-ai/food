@@ -48,45 +48,19 @@
                 </div>
 
                 <form id="authForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    <!-- Step 1: Name & Email -->
-                    <div id="step-1" class="form-step active">
-                        <div class="input-group">
-                            <i class="far fa-user"></i>
-                            <input type="text" id="name" name="name" placeholder="Full Name" required>
-                        </div>
-                        
-                        <div class="input-group">
-                            <i class="far fa-envelope"></i>
-                            <input type="email" id="email" name="email" placeholder="Email Address" required>
-                        </div>
-                        
-                        <button type="button" id="sendOtpBtn" class="btn-primary" style="width: 100%;">
-                            Get Verification Code <i class="fas fa-paper-plane"></i>
-                        </button>
+                    <div class="input-group">
+                        <i class="far fa-user"></i>
+                        <input type="text" id="name" name="name" placeholder="Full Name" required>
                     </div>
-
-                    <!-- Step 2: OTP Verification -->
-                    <div id="step-2" class="form-step">
-                        <div style="text-align: center; margin-bottom: 1.5rem;">
-                            <p style="color: #666;">We've sent a 4-digit code to</p>
-                            <strong id="displayEmail" style="color: var(--primary-color);">user@example.com</strong>
-                        </div>
-
-                        <div class="input-group" style="margin-bottom: 1.5rem;">
-                            <i class="fas fa-key"></i>
-                            <input type="text" id="otpDisplay" placeholder="Enter 4-digit OTP" maxlength="4" pattern="\d*" inputmode="numeric" style="width: 100%; border: none; outline: none; font-size: 1rem; letter-spacing: 2px; font-weight: 600;" required>
-                        </div>
-
-                        <input type="hidden" id="otpValue">
-                        
-                        <button type="submit" id="verifyBtn" class="btn-primary" style="width: 100%;">
-                            Verify & Login <i class="fas fa-check-double"></i>
-                        </button>
-                        
-                        <button type="button" id="backBtn" class="back-link" style="border:none; background:none; cursor:pointer; width:100%;">
-                            <i class="fas fa-arrow-left"></i> Change Email
-                        </button>
+                    
+                    <div class="input-group">
+                        <i class="far fa-envelope"></i>
+                        <input type="email" id="email" name="email" placeholder="Email Address" required>
                     </div>
+                    
+                    <button type="submit" id="loginBtn" class="btn-primary" style="width: 100%;">
+                        Login <i class="fas fa-sign-in-alt"></i>
+                    </button>
                 </form>
             </div>
         </div>
@@ -94,6 +68,24 @@
 
     <div id="toastContainer"></div>
 
-    <script src="script.js?v=5"></script>
+    <script>
+        const authForm = document.getElementById('authForm');
+        
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!name || !email || !emailRegex.test(email)) {
+                alert("Please enter your name and valid email");
+                return;
+            }
+
+            // Success: Store session and redirect
+            localStorage.setItem('user_session', JSON.stringify({ name, email }));
+            window.location.href = 'index.html';
+        });
+    </script>
 </body>
 </html>
