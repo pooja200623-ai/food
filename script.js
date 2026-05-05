@@ -43,9 +43,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         step1.style.display = 'none';
                         step2.classList.add('active');
                         step2.style.display = 'block';
-                        showToast(`OTP sent! (Dev: ${data.dev_otp})`, 'info');
+                        showToast(data.message, 'success');
                     } else {
-                        showToast(data.message, 'error');
+                        // If it failed but provided a dev_otp (fallback), show it
+                        if (data.dev_otp) {
+                            displayEmail.textContent = email;
+                            step1.classList.remove('active');
+                            step1.style.display = 'none';
+                            step2.classList.add('active');
+                            step2.style.display = 'block';
+                            showToast(`${data.message} (Dev OTP: ${data.dev_otp})`, 'warning');
+                        } else {
+                            showToast(data.message, 'error');
+                        }
                         sendOtpBtn.disabled = false;
                         sendOtpBtn.innerHTML = 'Get Verification Code <i class="fas fa-paper-plane"></i>';
                     }

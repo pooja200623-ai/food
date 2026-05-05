@@ -9,6 +9,7 @@ $action = isset($_GET['action']) ? $_GET['action'] : '';
 session_start();
 
 require_once 'config.php';
+require_once 'mail_helper.php';
 $dbAvailable = true; // Set to true as config.php handles failure via exit
 
 // -------------------------------------------------------
@@ -68,12 +69,22 @@ if ($action === 'send_otp') {
     // Always store in session as primary/fallback mechanism
     $_SESSION['otp_' . md5($email)] = ['otp' => $otp, 'expiry' => $expiry, 'name' => $name, 'email' => $email];
 
-    // Response - sending DEV OTP in response so it works without real email server
-    echo json_encode([
-        'success' => true, 
-        'message' => 'OTP generated successfully.',
-        'dev_otp' => $otp
-    ]);
+    // Send the actual email
+    $mailResult = sendOTPEmail($email, $name, $otp);
+
+    if ($mailResult['success']) {
+        echo json_encode([
+            'success' => true, 
+            'message' => 'OTP has been sent to your email.'
+        ]);
+    } else {
+        // Log error internally if possible, but return failure to user
+        echo json_encode([
+            'success' => false, 
+            'message' => 'Failed to send OTP email. ' . $mailResult['message'],
+            'dev_otp' => $otp // Still provide dev_otp on failure so user can proceed during setup
+        ]);
+    }
     exit;
 }
 

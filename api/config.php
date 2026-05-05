@@ -6,6 +6,13 @@ $db_pass = '';
 $db_name = 'custom_app_db';
 $port = '3306'; // Default MySQL port
 
+// SMTP Configuration (Gmail)
+define('SMTP_HOST', 'smtp.gmail.com');
+define('SMTP_PORT', 587);
+define('SMTP_USER', 'pooja200623@gmail.com');
+define('SMTP_PASS', 'your-app-password'); 
+define('SMTP_FROM_NAME', 'Crave Food App');
+
 try {
     // Attempt to connect to MySQL (without db name first to ensure we can create it if missing)
     $conn = new PDO("mysql:host=$host;port=$port;charset=utf8", $db_user, $db_pass);
