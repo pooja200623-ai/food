@@ -146,7 +146,7 @@ if ($action === 'verify_otp') {
     if ($verified && $userData) {
         echo json_encode(['success' => true, 'message' => 'Login successful!', 'user' => $userData]);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Invalid OTP.']);
+        echo json_encode(['success' => false, 'message' => 'Invalid OTP. Please try again']);
     }
     exit;
 }
