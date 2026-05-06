@@ -134,10 +134,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const session = JSON.parse(localStorage.getItem('user_session'));
-            if (!session) {
-                window.location.replace('signin.html');
-                return;
-            }
+            if (!session) { window.location.replace('signin.html'); return; }
 
             const cartItemsList = document.getElementById('cartItemsList');
             const cartContent = document.getElementById('cartContent');
@@ -196,12 +193,6 @@
 
                 subtotalEl.textContent = `₹${total}`;
                 totalEl.textContent = `₹${total}`;
-                
-                // Update nav count
-                if (typeof saveCart === 'function') {
-                    const count = cart.reduce((t, i) => t + i.quantity, 0);
-                    document.getElementById('cartCount').textContent = count;
-                }
             }
 
             // Payment icon updater for dropdown
@@ -221,8 +212,8 @@
                 const iconEl = document.getElementById('paymentIcon');
                 const hintEl = document.getElementById('paymentHint');
                 const val = sel.value;
-                iconEl.innerHTML = `<i class="fas ${iconMap[val]}"></i>`;
-                hintEl.innerHTML = `<i class="fas fa-shield-alt" style="color:var(--primary-color);"></i> ${hintMap[val]}`;
+                if(iconEl) iconEl.innerHTML = `<i class="fas ${iconMap[val]}"></i>`;
+                if(hintEl) hintEl.innerHTML = `<i class="fas fa-shield-alt" style="color:var(--primary-color);"></i> ${hintMap[val]}`;
             };
 
             renderCart();

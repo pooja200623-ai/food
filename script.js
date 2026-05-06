@@ -145,6 +145,26 @@ document.addEventListener('DOMContentLoaded', () => {
             userAvatar.textContent = session.name.charAt(0).toUpperCase();
         }
     }
+
+    // Active Link Highlighting
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPath) {
+            link.style.color = 'var(--primary-color)';
+            link.style.borderBottom = '2px solid var(--primary-color)';
+            link.style.paddingBottom = '5px';
+        } else {
+            link.style.color = 'var(--text-main)';
+            link.style.borderBottom = 'none';
+        }
+    });
+
+    // Sync Cart Count on load
+    if (typeof getCart === 'function') {
+        saveCart(getCart());
+    }
 });
 
 // --- Global Utility Functions (Available for inline event handlers) ---

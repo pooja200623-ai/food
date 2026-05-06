@@ -82,17 +82,5 @@
     </main>
 
     <script src="script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const session = JSON.parse(localStorage.getItem('user_session'));
-            if (session) {
-                document.getElementById('userNameDisplay').textContent = session.name;
-                document.getElementById('userAvatar').textContent = session.name.charAt(0).toUpperCase();
-            }
-            if (typeof saveCart === 'function') {
-                saveCart(getCart());
-            }
-        });
-    </script>
 </body>
 </html>

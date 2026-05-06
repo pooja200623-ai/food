@@ -187,51 +187,51 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const session = JSON.parse(localStorage.getItem('user_session'));
+            if (!session) { window.location.replace('signin.html'); return; }
+
             const menuContainer = document.getElementById('menuContainer');
             const categories = ['Indian', 'Chinese', 'Korean', 'Japanese', 'American', 'Fast Food', 'Healthy', 'Desserts'];
 
-            // Initialize cart count
-            if (typeof getCart === 'function' && typeof saveCart === 'function') {
-                saveCart(getCart());
-            }
-
             async function loadFullMenu() {
-                menuContainer.innerHTML = '';
+                menuContainer.innerHTML = '<div style="text-align:center; padding: 5rem; grid-column: 1/-1;"><i class="fas fa-spinner fa-spin fa-3x" style="color:var(--primary-color)"></i><p style="margin-top:1rem; font-size:1.2rem;">Loading our 80+ varieties...</p></div>';
                 for (const cat of categories) {
-                    const res = await fetch(`api/foods.php?action=category&category=${encodeURIComponent(cat)}`);
-                    const data = await res.json();
-                    
-                    if (data.success) {
-                        const section = document.createElement('div');
-                        section.id = cat;
-                        section.className = 'category-section';
+                    try {
+                        const res = await fetch(`api/foods.php?action=category&category=${encodeURIComponent(cat)}`);
+                        const data = await res.json();
                         
-                        section.innerHTML = `
-                            <h2 class="category-title">${cat} <small style="font-size: 0.9rem; color: #888; font-weight: 400;">(${data.data.length} varieties)</small></h2>
-                            <div class="food-grid">
-                                ${data.data.map((food, i) => `
-                                    <div class="food-card">
-                                        <div class="food-image"><img src="${food.image_url}"></div>
-                                        <div class="food-info">
-                                            <div class="food-header">
-                                                <h3>${food.name}</h3>
-                                                <span class="food-rating">${food.rating} ★</span>
-                                            </div>
-                                            <p class="food-desc">${food.description}</p>
-                                            <div class="food-footer">
-                                                <span class="food-price">₹${food.price}</span>
-                                                <div style="display: flex; gap: 8px;">
-                                                    <button class="add-btn" onclick='addToCart(${JSON.stringify(food).replace(/'/g, "&apos;")}, this)'>Add</button>
-                                                    <button class="btn-primary" onclick='openQuickOrder(${JSON.stringify(food).replace(/'/g, "&apos;")})'>Order</button>
+                        if (data.success) {
+                            if (menuContainer.querySelector('.fa-spinner')) menuContainer.innerHTML = '';
+                            const section = document.createElement('div');
+                            section.id = cat;
+                            section.className = 'category-section';
+                            
+                            section.innerHTML = `
+                                <h2 class="category-title">${cat} <small style="font-size: 0.9rem; color: #888; font-weight: 400;">(${data.data.length} varieties)</small></h2>
+                                <div class="food-grid">
+                                    ${data.data.map((food, i) => `
+                                        <div class="food-card">
+                                            <div class="food-image"><img src="${food.image_url}"></div>
+                                            <div class="food-info">
+                                                <div class="food-header">
+                                                    <h3>${food.name}</h3>
+                                                    <span class="food-rating">${food.rating} ★</span>
+                                                </div>
+                                                <p class="food-desc">${food.description}</p>
+                                                <div class="food-footer">
+                                                    <span class="food-price">₹${food.price}</span>
+                                                    <div style="display: flex; gap: 8px;">
+                                                        <button class="add-btn" onclick='addToCart(${JSON.stringify(food).replace(/'/g, "&apos;")}, this)'>Add</button>
+                                                        <button class="btn-primary" onclick='openQuickOrder(${JSON.stringify(food).replace(/'/g, "&apos;")})'>Order</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        `;
-                        menuContainer.appendChild(section);
-                    }
+                                    `).join('')}
+                                </div>
+                            `;
+                            menuContainer.appendChild(section);
+                        }
+                    } catch (err) { console.error(err); }
                 }
             }
 

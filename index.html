@@ -138,25 +138,18 @@
             const session = JSON.parse(localStorage.getItem('user_session'));
             if (!session) { window.location.replace('signin.html'); return; }
 
-            document.getElementById('userNameDisplay').textContent = session.name;
-            document.getElementById('userAvatar').textContent = session.name.charAt(0).toUpperCase();
-
             const categories = ['Indian', 'Chinese', 'Korean', 'Japanese', 'American', 'Fast Food', 'Healthy', 'Desserts'];
             const showcase = document.getElementById('varietyShowcase');
 
-            // Initialize cart count
-            if (typeof getCart === 'function' && typeof saveCart === 'function') {
-                saveCart(getCart());
-            }
-
             async function loadVarietyShowcase() {
-                showcase.innerHTML = '';
+                showcase.innerHTML = '<div style="text-align:center; padding: 3rem;"><i class="fas fa-spinner fa-spin fa-2x" style="color:var(--primary-color)"></i><p>Loading varieties...</p></div>';
                 for (const cat of categories) {
                     try {
                         const res = await fetch(`api/foods.php?action=category&category=${encodeURIComponent(cat)}`);
                         const data = await res.json();
                         
                         if (data.success && data.data.length > 0) {
+                            if (showcase.querySelector('.fa-spinner')) showcase.innerHTML = '';
                             const section = document.createElement('section');
                             section.className = 'category-showcase';
                             
@@ -199,17 +192,9 @@
             loadVarietyShowcase();
 
             window.orderNowFromData = (food) => {
-                // Reuse existing modal logic from menu.html or script.js
-                // For simplicity on index, redirect to menu with a param or handle locally
                 localStorage.setItem('quick_order_food', JSON.stringify(food));
                 window.location.href = 'menu.html?instant_order=true';
             };
-
-            // Logout
-            document.getElementById('logoutBtn').addEventListener('click', () => {
-                localStorage.removeItem('user_session');
-                window.location.href = 'signin.html';
-            });
         });
     </script>
 </body>

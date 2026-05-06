@@ -209,23 +209,15 @@
 
     <div class="toast-container" id="toastContainer"></div>
 
+    <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const session = JSON.parse(localStorage.getItem('user_session'));
-            if (!session) {
-                window.location.replace('signin.html');
-                return;
-            }
+            if (!session) { window.location.replace('signin.html'); return; }
             
             loadUserProfile(session.email);
             
-            // Sync cart count
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            document.getElementById('cartCount').textContent = cart.reduce((acc, item) => acc + item.quantity, 0);
-
             // Button handlers
-            document.getElementById('logoutBtn').addEventListener('click', logout);
-            document.getElementById('logoutSidebarBtn').addEventListener('click', logout);
             document.getElementById('editProfileBtn').addEventListener('click', toggleEditMode);
             document.getElementById('cancelEditBtn').addEventListener('click', toggleEditMode);
             
@@ -234,7 +226,6 @@
                 e.preventDefault();
                 const formData = new FormData(e.target);
                 const data = {
-                    action: 'update_profile',
                     email: session.email,
                     name: formData.get('name'),
                     phone: formData.get('phone')
@@ -248,7 +239,6 @@
                 e.preventDefault();
                 const formData = new FormData(e.target);
                 const data = {
-                    action: 'update_profile',
                     email: session.email,
                     address: formData.get('address'),
                     city: formData.get('city'),
@@ -262,15 +252,11 @@
 
         async function loadUserProfile(email) {
             try {
-                const response = await fetch(`api/user.php?action=get_profile&email=${email}`);
+                const response = await fetch(`api/user.php?action=get_profile&email=${encodeURIComponent(email)}`);
                 const result = await response.json();
                 
                 if (result.success) {
                     const user = result.user;
-                    
-                    // Nav
-                    document.getElementById('userNameDisplay').textContent = user.name;
-                    document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
                     
                     // Sidebar
                     document.getElementById('sidebarName').textContent = user.name;
@@ -290,19 +276,13 @@
                         document.getElementById('inputAddress').value = user.address;
                         document.getElementById('inputCity').value = user.city || '';
                         document.getElementById('inputZip').value = user.zip || '';
+                        document.getElementById('savedAddressText').textContent = `${user.address}, ${user.city || ''} ${user.zip || ''}`;
                     }
 
                     // Rewards
                     document.getElementById('userPoints').textContent = user.points || 0;
                     const progress = Math.min(((user.points || 0) % 1000) / 10, 100);
                     document.getElementById('pointsProgress').style.width = `${progress}%`;
-
-                    // Update session name if changed
-                    const session = JSON.parse(localStorage.getItem('user_session'));
-                    if (session.name !== user.name) {
-                        session.name = user.name;
-                        localStorage.setItem('user_session', JSON.stringify(session));
-                    }
                 }
             } catch (error) {
                 console.error('Error loading profile:', error);
@@ -321,6 +301,16 @@
                 if (result.success) {
                     showToast(result.message, 'success');
                     loadUserProfile(data.email);
+                    
+                    // Update session if name changed
+                    if(data.name) {
+                        const session = JSON.parse(localStorage.getItem('user_session'));
+                        session.name = data.name;
+                        localStorage.setItem('user_session', JSON.stringify(session));
+                        // Refresh navbar display
+                        document.getElementById('userNameDisplay').textContent = data.name;
+                        document.getElementById('userAvatar').textContent = data.name.charAt(0).toUpperCase();
+                    }
                 } else {
                     showToast(result.message, 'error');
                 }
@@ -355,37 +345,13 @@
 
         function cancelAddressEdit() {
             const address = document.getElementById('inputAddress').value;
-            if (!address) {
+            if (address) {
+                document.getElementById('addressDisplay').style.display = 'none';
+                document.getElementById('addressForm').style.display = 'grid';
+            } else {
                 document.getElementById('addressDisplay').style.display = 'block';
                 document.getElementById('addressForm').style.display = 'none';
             }
-        }
-
-        function logout() {
-            localStorage.removeItem('user_session');
-            window.location.href = 'signin.html';
-        }
-
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            
-            let icon = 'info-circle';
-            if (type === 'success') icon = 'check-circle';
-            if (type === 'error') icon = 'exclamation-circle';
-            
-            toast.innerHTML = `
-                <i class="fas fa-${icon}"></i>
-                <span>${message}</span>
-            `;
-            
-            container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(100%)';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
         }
     </script>
 </body>
