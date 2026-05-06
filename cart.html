@@ -57,7 +57,6 @@
             <!-- Order Summary -->
             <div id="orderSummary" style="background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: fit-content;">
                 <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">Checkout Details</h3>
-                
                 <div style="margin-bottom: 1.5rem;">
                     <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">Delivery Address</label>
                     <textarea id="deliveryAddress" placeholder="Enter your full delivery address..." style="width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 12px; font-family: inherit; resize: none; height: 80px;"></textarea>
@@ -102,9 +101,22 @@
                     </p>
                 </div>
 
+                <div style="margin-bottom: 1.5rem; background: #f9f9f9; padding: 1.2rem; border-radius: 14px; border: 1px dashed #ddd;">
+                    <label style="display: block; margin-bottom: 0.6rem; font-weight: 600; font-size: 0.9rem;">Have a Coupon?</label>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" id="couponCode" placeholder="Enter code (e.g. CRAVE50)" style="flex: 1; padding: 10px; border: 2px solid #eee; border-radius: 10px; font-family: inherit; text-transform: uppercase;">
+                        <button onclick="applyCoupon()" style="background: #2d3436; color: white; border: none; padding: 0 15px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s;" onmouseover="this.style.background='black'" onmouseout="this.style.background='#2d3436'">Apply</button>
+                    </div>
+                    <div id="couponMessage" style="margin-top: 8px; font-size: 0.82rem; font-weight: 500; display: none;"></div>
+                </div>
+
                 <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                     <span>Subtotal</span>
                     <span id="subtotal">₹0</span>
+                </div>
+                <div id="discountRow" style="display: none; justify-content: space-between; margin-bottom: 1rem; color: #27ae60; font-weight: 500;">
+                    <span id="discountLabel">Discount</span>
+                    <span id="discountAmount">-₹0</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                     <span>Delivery Fee</span>
@@ -216,6 +228,67 @@
                 if(hintEl) hintEl.innerHTML = `<i class="fas fa-shield-alt" style="color:var(--primary-color);"></i> ${hintMap[val]}`;
             };
 
+            let currentDiscount = 0;
+            window.applyCoupon = function() {
+                const code = document.getElementById('couponCode').value.trim().toUpperCase();
+                const msg = document.getElementById('couponMessage');
+                const discRow = document.getElementById('discountRow');
+                const discAmt = document.getElementById('discountAmount');
+                const discLbl = document.getElementById('discountLabel');
+                const cart = getCart();
+                const subtotal = cart.reduce((t, i) => t + (i.price * i.quantity), 0);
+
+                if (!code) {
+                    showToast('Please enter a coupon code', 'error');
+                    return;
+                }
+
+                let discount = 0;
+                let valid = false;
+                let message = '';
+
+                if (code === 'CRAVE50') {
+                    discount = Math.min(subtotal * 0.5, 200);
+                    message = `🎉 CRAVE50 applied! ₹${discount} saved.`;
+                    valid = true;
+                } else if (code === 'LOYAL20') {
+                    discount = subtotal * 0.2;
+                    message = `✨ LOYAL20 applied! 20% off.`;
+                    valid = true;
+                } else if (code === 'NEWUSER30') {
+                    discount = subtotal * 0.3;
+                    message = `👋 Welcome! 30% discount applied.`;
+                    valid = true;
+                } else if (code === 'PIZZAPARTY') {
+                    discount = subtotal * 0.25;
+                    message = `🍕 Pizza Party! 25% off applied.`;
+                    valid = true;
+                } else {
+                    message = '❌ Invalid or expired coupon code.';
+                    valid = false;
+                }
+
+                if (valid) {
+                    currentDiscount = discount;
+                    msg.style.color = '#27ae60';
+                    msg.textContent = message;
+                    msg.style.display = 'block';
+                    discRow.style.display = 'flex';
+                    discAmt.textContent = `-₹${Math.round(discount)}`;
+                    discLbl.textContent = `Discount (${code})`;
+                    totalEl.textContent = `₹${Math.round(subtotal - discount)}`;
+                    showToast('Coupon applied successfully!', 'success');
+                } else {
+                    currentDiscount = 0;
+                    msg.style.color = '#e84393';
+                    msg.textContent = message;
+                    msg.style.display = 'block';
+                    discRow.style.display = 'none';
+                    totalEl.textContent = `₹${subtotal}`;
+                    showToast('Invalid coupon code', 'error');
+                }
+            };
+
             renderCart();
 
             placeOrderBtn.addEventListener('click', async () => {
@@ -243,7 +316,9 @@
                             cart: cart,
                             address: address,
                             payment_method: payment,
-                            total_price: cart.reduce((t, i) => t + (i.price * i.quantity), 0)
+                            coupon_code: document.getElementById('couponCode').value.trim() || null,
+                            discount_amount: currentDiscount,
+                            total_price: Math.round(cart.reduce((t, i) => t + (i.price * i.quantity), 0) - currentDiscount)
                         })
                     });
 

@@ -40,17 +40,24 @@
             color: var(--primary-color);
         }
         .category-section {
-            margin-bottom: 5rem;
+            margin-bottom: 5.5rem;
             scroll-margin-top: 100px;
+            animation: fadeUp 0.8s ease backwards;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .category-title {
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #eee;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 2px solid #f1f2f6;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
+            letter-spacing: -1px;
         }
         @media (max-width: 992px) {
             .menu-layout { grid-template-columns: 1fr; }
@@ -82,9 +89,12 @@
     </nav>
 
     <main class="dashboard-container">
-        <header style="text-align: center; margin-bottom: 4rem;">
-            <h1 style="font-size: 3rem; margin-bottom: 1rem;">Explore Our <span style="color: var(--primary-color);">Delicacies</span></h1>
-            <p style="color: #666; font-size: 1.2rem;">Choose from 80+ handcrafted dishes across 8 global varieties.</p>
+        <header style="text-align: center; margin: 4rem 0 6rem;">
+            <div style="background: rgba(255, 71, 87, 0.08); color: var(--primary-color); padding: 8px 24px; border-radius: 50px; display: inline-block; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem;">
+                🍳 Global Flavors
+            </div>
+            <h1 style="font-size: 4rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 1rem;">Explore Our <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Delicacies</span></h1>
+            <p style="color: var(--text-muted); font-size: 1.3rem; max-width: 600px; margin: 0 auto; line-height: 1.6;">Discover over 80+ handcrafted dishes prepared with authentic ingredients from around the world.</p>
         </header>
 
         <div class="menu-layout">

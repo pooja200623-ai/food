@@ -17,31 +17,46 @@
         }
     </script>
 
-    <nav class="dash-nav" style="position: absolute; width: 100%; top: 0; background: transparent; box-shadow: none; z-index: 1000; padding: 1.5rem 4rem;">
-        <div class="nav-brand" style="color: white; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); font-size: 2rem;">
+    <nav class="dash-nav" style="position: absolute; width: 100%; top: 0; background: transparent; box-shadow: none; z-index: 1000; padding: 2rem 4rem;">
+        <div class="nav-brand" style="color: white; text-shadow: 0 4px 15px rgba(0,0,0,0.3); font-size: 2.2rem; font-weight: 900; letter-spacing: -1px;">
             <i class="fas fa-utensils"></i> Crave
         </div>
-        <div style="display:flex; gap: 30px; color: white; font-weight: 500; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); font-size: 1.1rem; align-items: center;">
-            <a href="index.html" style="color:white; text-decoration:none; transition: color 0.3s;">Home</a>
-            <a href="index.html#menu" style="color:white; text-decoration:none; transition: color 0.3s;">Our Menu</a>
-            <a href="index.html#about" style="color:white; text-decoration:none; transition: color 0.3s;">About Us</a>
-            <a href="index.html#contact" style="color:white; text-decoration:none; transition: color 0.3s;">Contact</a>
+        <div style="display:flex; gap: 35px; color: white; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.5); font-size: 1rem; align-items: center;">
+            <a href="index.html" style="color:white; text-decoration:none; transition: 0.3s; opacity: 0.8;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">Home</a>
+            <a href="menu.html" style="color:white; text-decoration:none; transition: 0.3s; opacity: 0.8;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">Menu</a>
+            <a href="offers.html" style="color:white; text-decoration:none; transition: 0.3s; opacity: 0.8;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">Deals</a>
+            <a href="about.html" style="color:white; text-decoration:none; transition: 0.3s; opacity: 0.8;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">Our Story</a>
         </div>
     </nav>
 
     <div class="auth-container">
         <!-- Left side: Visual/Branding -->
-        <div class="auth-visual">
-            <div class="visual-content">
-                <h1>Taste the Best</h1>
-                <p>Log in to discover premium culinary experiences crafted just for you.</p>
+        <div class="auth-visual" style="flex: 1.2;">
+            <div class="visual-content" style="text-align: left; padding: 4rem;">
+                <div style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 50px; display: inline-block; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.3);">
+                    ✨ Experience Excellence
+                </div>
+                <h1 style="font-size: 5rem; line-height: 1; margin-bottom: 1.5rem; letter-spacing: -2px;">Taste the<br><span style="color: #ffeb3b;">Sublime</span>.</h1>
+                <p style="font-size: 1.4rem; max-width: 500px; opacity: 0.9; line-height: 1.6;">Join 50,000+ food lovers and discover premium culinary experiences crafted just for you.</p>
+                
+                <div style="margin-top: 4rem; display: flex; gap: 30px;">
+                    <div>
+                        <div style="font-size: 2rem; font-weight: 800;">80+</div>
+                        <div style="opacity: 0.7; font-size: 0.9rem;">Varieties</div>
+                    </div>
+                    <div style="width: 1px; background: rgba(255,255,255,0.2);"></div>
+                    <div>
+                        <div style="font-size: 2rem; font-weight: 800;">4.9 ★</div>
+                        <div style="opacity: 0.7; font-size: 0.9rem;">User Rating</div>
+                    </div>
+                </div>
             </div>
-            <div class="glass-overlay"></div>
+            <div class="glass-overlay" style="background: linear-gradient(135deg, rgba(255, 71, 87, 0.85), rgba(45, 52, 54, 0.9));"></div>
         </div>
 
         <!-- Right side: Form -->
-        <div class="auth-form-wrapper">
-            <div class="auth-form-container">
+        <div class="auth-form-wrapper" style="background: #fdfdfd;">
+            <div class="auth-form-container" style="box-shadow: 0 30px 60px rgba(0,0,0,0.1); border: 1px solid #f0f0f0;">
                 
                 <form id="authForm" autocomplete="off">
                     <!-- STEP 1: Enter Details -->

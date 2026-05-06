@@ -151,13 +151,43 @@
         .stat-num  { font-size: 2rem; font-weight: 800; color: var(--primary-color); }
         .stat-lbl  { font-size: 0.85rem; color: #636e72; font-weight: 500; }
 
-        /* ── Toast ── */
-        #toastContainer { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        /* ── How to Use ── */
+        .how-to-use {
+            background: white; border-radius: 24px; padding: 3rem;
+            margin-bottom: 3.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+            position: relative;
+        }
+        .step { text-align: center; position: relative; }
+        .step-num {
+            width: 40px; height: 40px; background: var(--primary-color);
+            color: white; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center;
+            font-weight: 800; margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 15px rgba(232,67,67,0.3);
+        }
+        .step h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .step p { font-size: 0.9rem; color: #636e72; line-height: 1.6; }
+        .step:not(:last-child)::after {
+            content: '→'; position: absolute; right: -1rem; top: 1.5rem;
+            font-size: 1.5rem; color: #eee; font-weight: 300;
+        }
+
+        .use-now-btn {
+            width: 100%; margin-top: 1.2rem; background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.4); color: white;
+            padding: 10px; border-radius: 12px; font-weight: 700;
+            cursor: pointer; transition: all 0.3s; text-decoration: none;
+            display: inline-block; text-align: center;
+        }
+        .use-now-btn:hover { background: white; color: var(--primary-color); border-color: white; }
 
         @media(max-width:640px){
             .offers-hero h1 { font-size: 2.2rem; }
             .stats-bar { grid-template-columns: 1fr; }
             .offers-grid { grid-template-columns: 1fr; }
+            .how-to-use { grid-template-columns: 1fr; padding: 2rem; }
+            .step:not(:last-child)::after { content: '↓'; right: 50%; bottom: -1.5rem; top: auto; transform: translateX(50%); }
         }
     </style>
 </head>
@@ -197,6 +227,25 @@
 
     <!-- Main Content -->
     <main class="offers-main">
+
+        <!-- How to Use Section -->
+        <div class="how-to-use">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3>Pick & Copy</h3>
+                <p>Choose your favorite offer and click "Copy" to save the coupon code.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3>Build Your Box</h3>
+                <p>Go to the menu, add your delicious items to the cart as usual.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3>Apply & Save</h3>
+                <p>Paste the code in the "Apply Coupon" field at checkout to save instantly.</p>
+            </div>
+        </div>
 
         <!-- Stats bar -->
         <div class="stats-bar">
@@ -241,6 +290,7 @@
                         <span class="coupon-code">CRAVE50</span>
                         <button class="copy-btn" onclick="copyCoupon('CRAVE50',this)"><i class="fas fa-copy"></i> Copy</button>
                     </div>
+                    <a href="menu.html" class="use-now-btn">Use Now <i class="fas fa-external-link-alt"></i></a>
                 </div>
                 <div class="offer-footer g-red">
                     <span><i class="fas fa-clock"></i> Expires in</span>
@@ -259,6 +309,7 @@
                         <span class="coupon-code">WEEKEND</span>
                         <button class="copy-btn" onclick="copyCoupon('WEEKEND',this)"><i class="fas fa-copy"></i> Copy</button>
                     </div>
+                    <a href="menu.html" class="use-now-btn">Use Now <i class="fas fa-external-link-alt"></i></a>
                 </div>
                 <div class="offer-footer g-green">
                     <span><i class="fas fa-calendar-alt"></i> Valid this Sunday</span>
@@ -277,6 +328,7 @@
                         <span class="coupon-code">PIZZAPARTY</span>
                         <button class="copy-btn" onclick="copyCoupon('PIZZAPARTY',this)"><i class="fas fa-copy"></i> Copy</button>
                     </div>
+                    <a href="menu.html" class="use-now-btn">Use Now <i class="fas fa-external-link-alt"></i></a>
                 </div>
                 <div class="offer-footer g-blue">
                     <span><i class="fas fa-fire"></i> Today Only</span>
@@ -295,6 +347,7 @@
                         <span class="coupon-code">WALLET100</span>
                         <button class="copy-btn" onclick="copyCoupon('WALLET100',this)"><i class="fas fa-copy"></i> Copy</button>
                     </div>
+                    <a href="menu.html" class="use-now-btn">Use Now <i class="fas fa-external-link-alt"></i></a>
                 </div>
                 <div class="offer-footer g-orange">
                     <span><i class="fas fa-clock"></i> Expires in</span>
@@ -313,6 +366,7 @@
                         <span class="coupon-code">NEWUSER30</span>
                         <button class="copy-btn" onclick="copyCoupon('NEWUSER30',this)"><i class="fas fa-copy"></i> Copy</button>
                     </div>
+                    <a href="menu.html" class="use-now-btn">Use Now <i class="fas fa-external-link-alt"></i></a>
                 </div>
                 <div class="offer-footer g-purple">
                     <span><i class="fas fa-gift"></i> One-time use</span>
@@ -331,6 +385,7 @@
                         <span class="coupon-code">LOYAL20</span>
                         <button class="copy-btn" onclick="copyCoupon('LOYAL20',this)"><i class="fas fa-copy"></i> Copy</button>
                     </div>
+                    <a href="menu.html" class="use-now-btn">Use Now <i class="fas fa-external-link-alt"></i></a>
                 </div>
                 <div class="offer-footer g-pink">
                     <span><i class="fas fa-clock"></i> Expires in</span>
