@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="style.css?v=7">
     <style>
         .hero-section {
-            height: 60vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80');
+            height: 70vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -18,20 +18,28 @@
             justify-content: center;
             text-align: center;
             color: white;
-            border-radius: 0 0 50px 50px;
-            margin-bottom: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 150px; background: linear-gradient(to top, var(--bg-color), transparent);
         }
         .hero-content h1 {
-            font-size: 4.5rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
+            font-size: 5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         .hero-content p {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             opacity: 0.9;
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
-            animation: fadeInUp 1.2s ease;
+            line-height: 1.5;
+            animation: fadeInUp 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         .stats-grid {
             display: grid;
@@ -45,21 +53,27 @@
         .stat-card {
             background: white;
             padding: 2.5rem;
-            border-radius: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 30px;
+            box-shadow: var(--shadow-premium);
             text-align: center;
-            transition: transform 0.3s;
+            transition: all 0.4s;
+            border: 1px solid rgba(0,0,0,0.02);
         }
         .stat-card:hover { transform: translateY(-10px); }
         .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary-color);
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
         }
         .stat-label {
             color: var(--text-muted);
-            font-weight: 500;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
         }
         .section-title {
             text-align: center;

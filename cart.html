@@ -22,7 +22,7 @@
             <a href="offers.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Offers</a>
             <a href="cart.html" style="text-decoration: none; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px; position: relative;">
                 Cart <i class="fas fa-shopping-cart"></i>
-                <span id="cartCount" style="position: absolute; top: -10px; right: -15px; background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; font-weight: bold;">0</span>
+                <span id="cartCount" style="position: absolute; top: -10px; right: -15px; background: var(--primary-color); color: white; border-radius: 50%; padding: 4px 8px; font-size: 0.7rem; font-weight: 800; box-shadow: 0 4px 10px rgba(255,71,87,0.3);">0</span>
             </a>
             <a href="orders.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Orders</a>
             <a href="profile.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Profile</a>
@@ -55,8 +55,8 @@
             </div>
 
             <!-- Order Summary -->
-            <div id="orderSummary" style="background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); height: fit-content;">
-                <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">Checkout Details</h3>
+            <div id="orderSummary" style="background: white; padding: 2.5rem; border-radius: 30px; box-shadow: var(--shadow-premium); height: fit-content; border: 1px solid rgba(0,0,0,0.02);">
+                <h3 style="margin-bottom: 2rem; border-bottom: 2px solid #f8f9fa; padding-bottom: 1.2rem; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px;">Checkout Details</h3>
                 <div style="margin-bottom: 1.5rem;">
                     <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">Delivery Address</label>
                     <textarea id="deliveryAddress" placeholder="Enter your full delivery address..." style="width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 12px; font-family: inherit; resize: none; height: 80px;"></textarea>
@@ -175,9 +175,9 @@
                     total += itemTotal;
                     const escapedName = item.name.replace(/'/g, "\\'");
                     return `
-                        <div class="cart-item-card">
-                            <div class="cart-item-img-wrap">
-                                <img src="${item.image_url}" alt="${item.name}" class="cart-item-img">
+                        <div class="cart-item-card" style="background: white; border-radius: 20px; padding: 1.2rem; display: flex; gap: 1.5rem; box-shadow: var(--shadow-soft); transition: 0.3s; border: 1px solid rgba(0,0,0,0.02);" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+                            <div class="cart-item-img-wrap" style="width: 110px; height: 110px; border-radius: 15px; overflow: hidden;">
+                                <img src="${item.image_url}" alt="${item.name}" class="cart-item-img" style="width: 100%; height: 100%; object-fit: cover;">
                             </div>
                             <div class="cart-item-details">
                                 <div class="cart-item-top">

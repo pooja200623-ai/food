@@ -11,17 +11,17 @@
     <style>
         /* ── Hero Banner ── */
         .offers-hero {
-            background: linear-gradient(135deg, #ff4757 0%, #c0392b 60%, #ff6b81 100%);
-            padding: 5rem 2rem 7rem;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d3436 100%);
+            padding: 7rem 2rem 10rem;
             text-align: center;
             color: white;
             position: relative;
             overflow: hidden;
         }
-        .offers-hero::before {
+        .offers-hero::after {
             content: '';
-            position: absolute; inset: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 150px; background: linear-gradient(to top, var(--bg-color), transparent);
         }
         .offers-hero h1 { font-size: 3.2rem; font-weight: 800; margin-bottom: 0.8rem; position: relative; }
         .offers-hero p  { font-size: 1.15rem; opacity: 0.9; position: relative; }
@@ -123,12 +123,12 @@
         }
 
         /* ── Gradients per card ── */
-        .g-red    { background: linear-gradient(135deg, #ff4757, #c0392b); }
-        .g-green  { background: linear-gradient(135deg, #2ed573, #27ae60); }
-        .g-blue   { background: linear-gradient(135deg, #1e90ff, #2980b9); }
-        .g-orange { background: linear-gradient(135deg, #ff9f43, #e67e22); }
-        .g-purple { background: linear-gradient(135deg, #a29bfe, #6c5ce7); }
-        .g-pink   { background: linear-gradient(135deg, #fd79a8, #e84393); }
+        .g-red    { background: linear-gradient(135deg, #ff4757, #ff6b81); }
+        .g-green  { background: linear-gradient(135deg, #26de81, #2bcbba); }
+        .g-blue   { background: linear-gradient(135deg, #45aaf2, #2d98da); }
+        .g-orange { background: linear-gradient(135deg, #fd9644, #fa8231); }
+        .g-purple { background: linear-gradient(135deg, #a55eea, #8854d0); }
+        .g-pink   { background: linear-gradient(135deg, #fc5c65, #eb3b5a); }
 
         /* copy btn colour matching */
         .g-red    .copy-btn { color: #ff4757; }
@@ -221,8 +221,8 @@
         <span class="orb">🍕</span><span class="orb">🍔</span>
         <span class="orb">🎉</span><span class="orb">💸</span>
         <div class="hero-badge">🔥 Hot Deals — Updated Daily</div>
-        <h1>Exclusive <span style="text-decoration:underline;text-decoration-color:rgba(255,255,255,0.4);">Offers</span> &amp; Coupons</h1>
-        <p>Save big on every order — copy a code and enjoy the discount instantly!</p>
+        <h1>Exclusive <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Offers</span> &amp; Coupons</h1>
+        <p style="opacity: 0.8; max-width: 600px; margin: 0 auto; font-size: 1.2rem;">Save big on every order — copy a code and enjoy the discount instantly!</p>
     </section>
 
     <!-- Main Content -->
