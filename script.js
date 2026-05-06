@@ -165,7 +165,60 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof getCart === 'function') {
         saveCart(getCart());
     }
+
+    // Render Centralized Footer
+    renderFooter();
 });
+
+function renderFooter() {
+    const footerContainer = document.getElementById('footerContainer');
+    if (!footerContainer) return;
+
+    footerContainer.innerHTML = `
+        <footer style="background: #1c1c1c; color: white; padding: 5rem 2rem 2rem; margin-top: 5rem; font-family: 'Outfit', sans-serif;">
+            <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 4rem;">
+                <div>
+                    <h2 style="color: var(--primary-color); font-size: 2.5rem; margin-bottom: 1.5rem; font-weight: 700;"><i class="fas fa-utensils"></i> Crave</h2>
+                    <p style="opacity: 0.7; line-height: 1.8; font-size: 1.1rem;">Experience the finest global cuisines delivered to your doorstep. We bridge the gap between world-class chefs and food lovers.</p>
+                    <div style="display: flex; gap: 15px; margin-top: 2rem;">
+                        <a href="#" style="color: white; font-size: 1.5rem; opacity: 0.6; transition: 0.3s;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white; font-size: 1.5rem; opacity: 0.6; transition: 0.3s;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: white; font-size: 1.5rem; opacity: 0.6; transition: 0.3s;"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 2rem; font-size: 1.3rem; border-left: 4px solid var(--primary-color); padding-left: 15px;">Discover</h3>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem; padding: 0;">
+                        <li><a href="index.html" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">Home</a></li>
+                        <li><a href="menu.html" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">Our Menu</a></li>
+                        <li><a href="offers.html" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">Special Offers</a></li>
+                        <li><a href="orders.html" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">Order Tracking</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 2rem; font-size: 1.3rem; border-left: 4px solid var(--primary-color); padding-left: 15px;">Company</h3>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem; padding: 0;">
+                        <li><a href="about.html" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">About Us</a></li>
+                        <li><a href="contact.html" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">Contact Us</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">Privacy Policy</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 2rem; font-size: 1.3rem; border-left: 4px solid var(--primary-color); padding-left: 15px;">Newsletter</h3>
+                    <p style="opacity: 0.7; margin-bottom: 1.5rem;">Get the latest updates and offers.</p>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="email" placeholder="Email Address" style="background: #333; border: none; padding: 12px; border-radius: 8px; color: white; flex: 1;">
+                        <button style="background: var(--primary-color); color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer;"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.5; font-size: 0.9rem;">
+                &copy; 2026 Crave Food Delivery. All rights reserved. Made with <i class="fas fa-heart" style="color: var(--primary-color);"></i> for Food Lovers.
+            </div>
+        </footer>
+    `;
+}
 
 // --- Global Utility Functions (Available for inline event handlers) ---
 
