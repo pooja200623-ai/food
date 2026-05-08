@@ -105,7 +105,7 @@
                         <h3>Account Statistics</h3>
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; text-align: center;">
                             <div style="padding: 1.5rem; background: #f8f9fa; border-radius: 15px;">
-                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">12</div>
+                                <div id="totalOrdersCount" style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">0</div>
                                 <div style="font-size: 0.8rem; color: var(--text-muted);">Total Orders</div>
                             </div>
                             <div style="padding: 1.5rem; background: #f8f9fa; border-radius: 15px;">
@@ -113,7 +113,7 @@
                                 <div style="font-size: 0.8rem; color: var(--text-muted);">Review Avg</div>
                             </div>
                             <div style="padding: 1.5rem; background: #f8f9fa; border-radius: 15px;">
-                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">Gold</div>
+                                <div id="membershipStatus" style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">Gold</div>
                                 <div style="font-size: 0.8rem; color: var(--text-muted);">Membership</div>
                             </div>
                         </div>
@@ -285,6 +285,17 @@
                     document.getElementById('userPoints').textContent = user.points || 0;
                     const progress = Math.min(((user.points || 0) % 1000) / 10, 100);
                     document.getElementById('pointsProgress').style.width = `${progress}%`;
+
+                    // Statistics
+                    document.getElementById('totalOrdersCount').textContent = user.total_orders || 0;
+                    
+                    // Dynamic Membership
+                    const points = parseInt(user.points || 0);
+                    let membership = 'Bronze';
+                    if (points >= 1500) membership = 'Platinum';
+                    else if (points >= 1000) membership = 'Gold';
+                    else if (points >= 500) membership = 'Silver';
+                    document.getElementById('membershipStatus').textContent = membership;
                 }
             } catch (error) {
                 console.error('Error loading profile:', error);

@@ -15,7 +15,9 @@ if ($action === 'get_profile') {
     }
 
     try {
-        $stmt = $conn->prepare("SELECT name, email, phone, address, city, zip, points, avatar_color FROM users WHERE email = ?");
+        $stmt = $conn->prepare("SELECT name, email, phone, address, city, zip, points, avatar_color, 
+            (SELECT COUNT(*) FROM orders WHERE user_email = users.email) as total_orders 
+            FROM users WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
