@@ -125,31 +125,7 @@
 <body class="dashboard-body">
 
     <!-- Navbar -->
-    <nav class="dash-nav">
-        <div class="nav-brand">
-            <i class="fas fa-utensils"></i> Crave
-        </div>
-        
-        <div class="nav-links" style="display: flex; gap: 20px; align-items: center; font-weight: 500; font-size: 0.95rem;">
-            <a href="index.html">Home</a>
-            <a href="menu.html">Our Menu</a>
-            <a href="offers.html">Offers</a>
-            <a href="cart.html" style="position: relative;">
-                Cart <i class="fas fa-shopping-cart"></i>
-                <span id="cartCount" style="position: absolute; top: -10px; right: -15px; background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; font-weight: bold;">0</span>
-            </a>
-            <a href="orders.html">Orders</a>
-            <a href="profile.html">Profile</a>
-            <a href="about.html" class="active" style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">About</a>
-            <a href="contact.html">Contact</a>
-        </div>
-
-        <div class="user-profile">
-            <span id="userNameDisplay">User</span>
-            <div class="user-avatar" id="userAvatar">U</div>
-            <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
-        </div>
-    </nav>
+    <nav class="dash-nav"></nav>
 
     <!-- Hero Section -->
     <header class="hero-section">
@@ -179,10 +155,10 @@
         </div>
     </div>
 
-    <main class="dashboard-container" style="max-width: 1100px; margin: 0 auto;">
+    <main class="dashboard-container reveal" style="max-width: 1100px; margin: 0 auto; animation-delay: 0.1s;">
         
         <!-- Story Section -->
-        <div style="display: flex; gap: 5rem; align-items: center; margin-bottom: 8rem; flex-wrap: wrap;">
+        <div class="reveal" style="display: flex; gap: 5rem; align-items: center; margin-bottom: 8rem; flex-wrap: wrap; animation-delay: 0.2s;">
             <div style="flex: 1; min-width: 350px;">
                 <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80" alt="Cooking" style="width: 100%; border-radius: 40px; box-shadow: 0 30px 60px rgba(0,0,0,0.15);">
             </div>
@@ -194,7 +170,7 @@
         </div>
 
         <!-- Team Section -->
-        <div class="section-title">
+        <div class="section-title reveal" style="animation-delay: 0.3s;">
             <h2>Meet Our <span style="color: var(--primary-color);">Leadership</span></h2>
             <p style="color: #888; font-size: 1.1rem; margin-top: 1rem;">The passionate minds behind your favorite food app.</p>
         </div>

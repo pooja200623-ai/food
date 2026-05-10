@@ -88,83 +88,58 @@
 <body class="dashboard-body">
 
     <!-- Navbar -->
-    <nav class="dash-nav">
-        <div class="nav-brand">
-            <i class="fas fa-utensils"></i> Crave
-        </div>
-        
-        <div class="nav-links" style="display: flex; gap: 20px; align-items: center; font-weight: 500; font-size: 0.95rem;">
-            <a href="index.html" style="text-decoration: none; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">Home</a>
-            <a href="menu.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Our Menu</a>
-            <a href="offers.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Offers</a>
-            <a href="cart.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s; position: relative;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">
-                Cart <i class="fas fa-shopping-cart"></i>
-                <span id="cartCount" style="position: absolute; top: -10px; right: -15px; background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; font-weight: bold;">0</span>
-            </a>
-            <a href="orders.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Orders</a>
-            <a href="profile.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Profile</a>
-            <a href="about.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">About</a>
-            <a href="contact.html" style="text-decoration: none; color: var(--text-main); transition: 0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Contact</a>
-        </div>
-        
-        <div class="user-profile">
-            <span id="userNameDisplay">User</span>
-            <div class="user-avatar" id="userAvatar">U</div>
-            <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
-        </div>
-    </nav>
+    <nav class="dash-nav"></nav>
 
     <!-- Hero Banner -->
-    <header class="dash-hero">
-        <div class="hero-floating-badge" style="top: 25%; left: 10%; animation-delay: 0s;">
-            <div style="width: 40px; height: 40px; background: #FFD700; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #000;">
+    <header class="dash-hero reveal">
+        <div class="hero-floating-badge" style="top: 15%; left: 8%; animation: float 5s ease-in-out infinite;">
+            <div style="width: 45px; height: 45px; background: #FFD700; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #000; font-size: 1.2rem; box-shadow: 0 8px 20px rgba(255,215,0,0.3);">
                 <i class="fas fa-crown"></i>
             </div>
             <div>
-                <div style="font-size: 0.75rem; opacity: 0.8;">Best Choice</div>
-                <div>Top Rated Foods</div>
+                <div style="font-size: 0.8rem; opacity: 0.7; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Elite Choice</div>
+                <div style="font-size: 1.1rem; font-weight: 800;">5-Star Rated</div>
             </div>
         </div>
 
-        <div class="hero-floating-badge" style="bottom: 20%; right: 12%; animation-delay: 1s;">
-            <div style="width: 40px; height: 40px; background: #2ed573; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff;">
+        <div class="hero-floating-badge" style="bottom: 15%; right: 8%; animation: float 4s ease-in-out infinite reverse;">
+            <div style="width: 45px; height: 45px; background: #2ed573; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.2rem; box-shadow: 0 8px 20px rgba(46,213,115,0.3);">
                 <i class="fas fa-bolt"></i>
             </div>
             <div>
-                <div style="font-size: 0.75rem; opacity: 0.8;">Super Fast</div>
-                <div>30 Min Delivery</div>
+                <div style="font-size: 0.8rem; opacity: 0.7; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Express</div>
+                <div style="font-size: 1.1rem; font-weight: 800;">Instant Delivery</div>
             </div>
         </div>
 
-        <div class="hero-content" style="max-width: 900px; position: relative; z-index: 10;">
-            <h1 style="font-size: 4.5rem; font-weight: 900; letter-spacing: -2px; line-height: 1; margin-bottom: 1.5rem; text-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                Crave the <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">World</span>.<br>
-                Taste the Best.
+        <div class="hero-content" style="max-width: 1000px; position: relative; z-index: 10; padding: 0 2rem;">
+            <h1 style="font-size: 5.5rem; font-weight: 900; letter-spacing: -3px; line-height: 0.95; margin-bottom: 2rem; text-shadow: 0 15px 40px rgba(0,0,0,0.3);">
+                Savor the <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Extraordinary</span>.<br>
+                <span style="font-size: 4rem; opacity: 0.9;">Redefining Taste.</span>
             </h1>
-            <p style="font-size: 1.5rem; margin-bottom: 2.5rem; opacity: 0.9; font-weight: 400; max-width: 700px; margin-left: auto; margin-right: auto;">
-                Explore 80+ handcrafted varieties from global cuisines. <br>
-                Authentic flavors, delivered to your doorstep in record time.
+            <p style="font-size: 1.6rem; margin-bottom: 3.5rem; opacity: 0.9; font-weight: 400; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.5;">
+                Join the revolution of flavor. Over 80+ handcrafted global delicacies, 
+                curated by master chefs and delivered with surgical precision.
             </p>
-            <div class="search-bar" style="width: 100%; max-width: 650px; margin: 0 auto; padding: 1rem 2rem; border-radius: 20px; background: rgba(255,255,255,0.95); box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 1px solid white;">
-                <i class="fas fa-search" style="font-size: 1.2rem; color: var(--primary-color);"></i>
-                <input type="text" id="searchInput" placeholder="Search for sushi, burgers, or any craving..." style="font-size: 1.1rem; font-weight: 500;">
+            <div class="search-bar glass-card" style="width: 100%; max-width: 700px; margin: 0 auto; padding: 1.2rem 2.5rem; border-radius: 24px; box-shadow: var(--shadow-premium); border: 1px solid rgba(255,255,255,0.3);">
+                <i class="fas fa-search" style="font-size: 1.4rem; color: var(--primary-color);"></i>
+                <input type="text" id="searchInput" placeholder="Search for your next obsession..." style="font-size: 1.2rem; font-weight: 500; color: var(--text-main);">
             </div>
         </div>
     </header>
 
-    <main class="dashboard-container" style="padding-top: 4rem;">
+    <main class="dashboard-container" style="padding-top: 6rem;">
         
         <!-- Quick Variety Access -->
-        <section style="margin-bottom: 5rem;">
-            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <section class="reveal" style="margin-bottom: 7rem; animation-delay: 0.2s;">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <span style="background: rgba(255, 71, 87, 0.1); color: var(--primary-color); padding: 8px 20px; border-radius: 50px; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;">Popular Categories</span>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
                 <button class="filter-pill active" onclick="location.href='menu.html'">All Menu</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Indian'">Indian</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Chinese'">Chinese</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=American'">American</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Korean'">Korean</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Japanese'">Japanese</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Healthy'">Healthy</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Desserts'">Desserts</button>
+                ${['Indian', 'Chinese', 'American', 'Korean', 'Japanese', 'Healthy', 'Desserts'].map(cat => `
+                    <button class="filter-pill" onclick="location.href='menu.html?category=${cat}'">${cat}</button>
+                `).join('')}
             </div>
         </section>
 
@@ -176,6 +151,7 @@
     </main>
 
     <div id="footerContainer"></div>
+
 
     <script src="script.js"></script>
     <script>

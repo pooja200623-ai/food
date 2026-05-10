@@ -194,35 +194,17 @@
 <body class="dashboard-body">
 
     <!-- Navbar -->
-    <nav class="dash-nav">
-        <div class="nav-brand"><i class="fas fa-utensils"></i> Crave</div>
-        <div class="nav-links" style="display:flex;gap:20px;align-items:center;font-weight:500;font-size:0.95rem;">
-            <a href="index.html" style="text-decoration:none;color:var(--text-main);transition:0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Home</a>
-            <a href="menu.html"  style="text-decoration:none;color:var(--text-main);transition:0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Our Menu</a>
-            <a href="offers.html" style="text-decoration:none;color:var(--primary-color);border-bottom:2px solid var(--primary-color);padding-bottom:5px;">Offers</a>
-            <a href="cart.html"  style="text-decoration:none;color:var(--text-main);transition:0.3s;position:relative;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">
-                Cart <i class="fas fa-shopping-cart"></i>
-                <span id="cartCount" style="position:absolute;top:-10px;right:-15px;background:var(--primary-color);color:white;border-radius:50%;padding:2px 6px;font-size:0.75rem;font-weight:bold;">0</span>
-            </a>
-            <a href="orders.html"  style="text-decoration:none;color:var(--text-main);transition:0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Orders</a>
-            <a href="profile.html" style="text-decoration:none;color:var(--text-main);transition:0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Profile</a>
-            <a href="about.html"   style="text-decoration:none;color:var(--text-main);transition:0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">About</a>
-            <a href="contact.html" style="text-decoration:none;color:var(--text-main);transition:0.3s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-main)'">Contact</a>
-        </div>
-        <div class="user-profile">
-            <span id="userNameDisplay">User</span>
-            <div class="user-avatar" id="userAvatar">U</div>
-            <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
-        </div>
-    </nav>
+    <nav class="dash-nav"></nav>
 
     <!-- Hero -->
-    <section class="offers-hero">
+    <section class="offers-hero reveal">
         <span class="orb">🍕</span><span class="orb">🍔</span>
         <span class="orb">🎉</span><span class="orb">💸</span>
-        <div class="hero-badge">🔥 Hot Deals — Updated Daily</div>
-        <h1>Exclusive <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Offers</span> &amp; Coupons</h1>
-        <p style="opacity: 0.8; max-width: 600px; margin: 0 auto; font-size: 1.2rem;">Save big on every order — copy a code and enjoy the discount instantly!</p>
+        <div style="background: rgba(255, 71, 87, 0.15); color: #fff; padding: 10px 30px; border-radius: 50px; display: inline-block; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 2rem; box-shadow: 0 5px 15px rgba(255,71,87,0.1); border: 1px solid rgba(255,255,255,0.1);">
+            🔥 Hot Deals — Updated Daily
+        </div>
+        <h1 style="font-size: 5rem; font-weight: 900; letter-spacing: -3px; margin-bottom: 1.5rem; line-height: 1;">Exclusive <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Offers</span> &amp; Coupons</h1>
+        <p style="opacity: 0.8; max-width: 700px; margin: 0 auto; font-size: 1.4rem; line-height: 1.6;">Unlock massive savings on every bite. Hand-picked deals for our most cherished food lovers.</p>
     </section>
 
     <!-- Main Content -->

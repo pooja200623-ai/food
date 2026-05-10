@@ -68,47 +68,31 @@
 <body class="dashboard-body">
 
     <!-- Navbar -->
-    <nav class="dash-nav">
-        <!-- (Same navbar as index for consistency) -->
-        <div class="nav-brand"><i class="fas fa-utensils"></i> Crave</div>
-        <div class="nav-links" style="display: flex; gap: 20px; align-items: center;">
-            <a href="index.html" style="text-decoration: none; color: var(--text-main);">Home</a>
-            <a href="menu.html" style="text-decoration: none; color: var(--primary-color); border-bottom: 2px solid var(--primary-color);">Our Menu</a>
-            <a href="offers.html" style="text-decoration: none; color: var(--text-main);">Offers</a>
-            <a href="cart.html" style="text-decoration: none; color: var(--text-main); position: relative;">
-                Cart <i class="fas fa-shopping-cart"></i>
-                <span id="cartCount" style="position: absolute; top: -10px; right: -15px; background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; font-weight: bold;">0</span>
-            </a>
-            <a href="orders.html" style="text-decoration: none; color: var(--text-main);">Orders</a>
-            <a href="profile.html" style="text-decoration: none; color: var(--text-main);">Profile</a>
-        </div>
-        <div class="user-profile">
-            <span id="userNameDisplay">User</span>
-            <div class="user-avatar" id="userAvatar">U</div>
-        </div>
-    </nav>
+    <nav class="dash-nav"></nav>
 
     <main class="dashboard-container">
-        <header style="text-align: center; margin: 4rem 0 6rem;">
-            <div style="background: rgba(255, 71, 87, 0.08); color: var(--primary-color); padding: 8px 24px; border-radius: 50px; display: inline-block; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem;">
-                🍳 Global Flavors
+        <header class="reveal" style="text-align: center; margin: 6rem 0 8rem;">
+            <div style="background: rgba(255, 71, 87, 0.1); color: var(--primary-color); padding: 10px 30px; border-radius: 50px; display: inline-block; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 2rem; box-shadow: 0 5px 15px rgba(255,71,87,0.1);">
+                🍳 Handcrafted Selection
             </div>
-            <h1 style="font-size: 4rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 1rem;">Explore Our <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Delicacies</span></h1>
-            <p style="color: var(--text-muted); font-size: 1.3rem; max-width: 600px; margin: 0 auto; line-height: 1.6;">Discover over 80+ handcrafted dishes prepared with authentic ingredients from around the world.</p>
+            <h1 style="font-size: 5rem; font-weight: 900; letter-spacing: -3px; margin-bottom: 1.5rem; line-height: 1;">Explore <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Global Flavors</span></h1>
+            <p style="color: var(--text-muted); font-size: 1.4rem; max-width: 700px; margin: 0 auto; line-height: 1.6; opacity: 0.8;">An exquisite journey through 80+ handcrafted dishes, prepared with authentic ingredients and master-class techniques.</p>
         </header>
 
-        <div class="menu-layout">
+        <div class="menu-layout reveal" style="animation-delay: 0.1s;">
             <!-- Sticky Sidebar -->
-            <aside class="menu-sidebar">
-                <h3 style="margin-bottom: 1.5rem; color: #888; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Varieties</h3>
-                <a href="#Indian" class="sidebar-link active"><i class="fas fa-pepper-hot"></i> Indian</a>
-                <a href="#Chinese" class="sidebar-link"><i class="fas fa-bowl-food"></i> Chinese</a>
-                <a href="#Korean" class="sidebar-link"><i class="fas fa-fire"></i> Korean</a>
-                <a href="#Japanese" class="sidebar-link"><i class="fas fa-fish"></i> Japanese</a>
-                <a href="#American" class="sidebar-link"><i class="fas fa-hamburger"></i> American</a>
-                <a href="#Fast Food" class="sidebar-link"><i class="fas fa-pizza-slice"></i> Fast Food</a>
-                <a href="#Healthy" class="sidebar-link"><i class="fas fa-leaf"></i> Healthy</a>
-                <a href="#Desserts" class="sidebar-link"><i class="fas fa-ice-cream"></i> Desserts</a>
+            <aside class="menu-sidebar glass-card" style="border-radius: 30px; padding: 2.5rem;">
+                <h3 style="margin-bottom: 2rem; color: var(--text-main); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; opacity: 0.6;">Categories</h3>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <a href="#Indian" class="sidebar-link active"><i class="fas fa-pepper-hot"></i> Indian</a>
+                    <a href="#Chinese" class="sidebar-link"><i class="fas fa-bowl-food"></i> Chinese</a>
+                    <a href="#Korean" class="sidebar-link"><i class="fas fa-fire"></i> Korean</a>
+                    <a href="#Japanese" class="sidebar-link"><i class="fas fa-fish"></i> Japanese</a>
+                    <a href="#American" class="sidebar-link"><i class="fas fa-hamburger"></i> American</a>
+                    <a href="#Fast Food" class="sidebar-link"><i class="fas fa-pizza-slice"></i> Fast Food</a>
+                    <a href="#Healthy" class="sidebar-link"><i class="fas fa-leaf"></i> Healthy</a>
+                    <a href="#Desserts" class="sidebar-link"><i class="fas fa-ice-cream"></i> Desserts</a>
+                </div>
             </aside>
 
             <!-- Menu Content -->
