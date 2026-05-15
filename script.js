@@ -10,13 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailInput = document.getElementById('email');
     const displayEmail = document.getElementById('displayEmail');
     const authForm = document.getElementById('authForm');
-    const otpBoxes = document.querySelectorAll('.otp-box');
     const otpDisplay = document.getElementById('otpDisplay');
     const otpValueInput = document.getElementById('otpValue');
 
     // Simple Login & OTP Flow
     if (authForm) {
-        // Step 1: Send OTP
         if (sendOtpBtn) {
             sendOtpBtn.addEventListener('click', async () => {
                 const name = nameInput.value.trim();
@@ -46,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         step2.style.display = 'block';
                         showToast(data.message, 'success');
                     } else {
-                        // If it failed but provided a dev_otp (fallback), show it
                         if (data.dev_otp) {
                             displayEmail.textContent = email;
                             step1.classList.remove('active');
@@ -68,14 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // OTP Input Logic (Simplified)
         if (otpDisplay) {
             otpDisplay.addEventListener('input', () => {
                 otpValueInput.value = otpDisplay.value;
             });
         }
 
-        // Step 2: Verify OTP
         authForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const otp = otpValueInput.value;
@@ -113,7 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Back button
         if (backBtn) {
             backBtn.addEventListener('click', () => {
                 step2.classList.remove('active');
@@ -146,21 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Active Link Highlighting
-    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-    const navLinks = document.querySelectorAll('.nav-links a');
-    navLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === currentPath) {
-            link.style.color = 'var(--primary-color)';
-            link.style.borderBottom = '2px solid var(--primary-color)';
-            link.style.paddingBottom = '5px';
-        } else {
-            link.style.color = 'var(--text-main)';
-            link.style.borderBottom = 'none';
-        }
-    });
-
     // Sync Cart Count on load
     if (typeof getCart === 'function') {
         saveCart(getCart());
@@ -169,6 +148,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Render Centralized UI Components
     renderNavbar();
     renderFooter();
+
+    // Sticky Navbar Logic
+    window.addEventListener('scroll', () => {
+        const dashNav = document.querySelector('.dash-nav');
+        if (dashNav) {
+            if (window.scrollY > 50) {
+                dashNav.classList.add('sticky-active');
+                dashNav.style.padding = '0.8rem 4rem';
+                dashNav.style.background = 'rgba(255, 255, 255, 0.85)';
+                dashNav.style.boxShadow = '0 15px 35px rgba(0,0,0,0.1)';
+            } else {
+                dashNav.classList.remove('sticky-active');
+                dashNav.style.padding = '1.2rem 4rem';
+                dashNav.style.background = 'rgba(255, 255, 255, 0.95)';
+                dashNav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.03)';
+            }
+        }
+    });
 });
 
 function renderNavbar() {
@@ -180,53 +177,59 @@ function renderNavbar() {
     
     const links = [
         { name: 'Home', href: 'index.html', icon: 'fa-home' },
-        { name: 'Our Menu', href: 'menu.html', icon: 'fa-utensils' },
+        { name: 'Menu', href: 'menu.html', icon: 'fa-utensils' },
         { name: 'Offers', href: 'offers.html', icon: 'fa-tags' },
         { name: 'Cart', href: 'cart.html', icon: 'fa-shopping-cart', id: 'cartLink' },
         { name: 'Orders', href: 'orders.html', icon: 'fa-history' },
-        { name: 'Profile', href: 'profile.html', icon: 'fa-user-circle' },
-        { name: 'About', href: 'about.html', icon: 'fa-info-circle' },
-        { name: 'Contact', href: 'contact.html', icon: 'fa-envelope' }
+        { name: 'Profile', href: 'profile.html', icon: 'fa-user-circle' }
     ];
 
+    dashNav.style.transition = 'all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)';
+    dashNav.style.backdropFilter = 'blur(20px)';
+    dashNav.style.webkitBackdropFilter = 'blur(20px)';
+    dashNav.style.borderBottom = '1px solid rgba(0,0,0,0.05)';
+
     dashNav.innerHTML = `
-        <div class="nav-brand" style="cursor: pointer;" onclick="location.href='index.html'">
-            <i class="fas fa-utensils"></i> Crave
+        <div class="nav-brand" style="cursor: pointer; font-size: 2.4rem; font-weight: 900; letter-spacing: -2px; transition: 0.4s; font-style: italic;" onclick="location.href='index.html'" onmouseover="this.style.transform='scale(1.05) rotate(-2deg)'" onmouseout="this.style.transform='scale(1) rotate(0deg)'">
+            <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Crave</span>
         </div>
         
-        <div class="nav-links" style="display: flex; gap: 8px; align-items: center;">
+        <div class="nav-links" style="display: flex; gap: 8px; align-items: center; background: rgba(0,0,0,0.04); padding: 8px; border-radius: 24px; border: 1px solid rgba(0,0,0,0.02);">
             ${links.map(link => `
                 <a href="${link.href}" class="${currentPath === link.href ? 'active' : ''}" style="
                     text-decoration: none; 
-                    color: ${currentPath === link.href ? 'var(--primary-color)' : 'var(--text-main)'};
-                    padding: 8px 16px;
-                    border-radius: 12px;
-                    font-weight: 600;
+                    color: ${currentPath === link.href ? 'white' : 'var(--text-main)'};
+                    padding: 12px 22px;
+                    border-radius: 18px;
+                    font-weight: 700;
                     font-size: 0.95rem;
-                    transition: all 0.3s ease;
+                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                     display: flex;
                     align-items: center;
-                    gap: 8px;
-                    background: ${currentPath === link.href ? 'rgba(255, 71, 87, 0.08)' : 'transparent'};
-                " onmouseover="if('${currentPath}' !== '${link.href}') { this.style.background='rgba(0,0,0,0.03)'; this.style.color='var(--primary-color)'; }" 
-                   onmouseout="if('${currentPath}' !== '${link.href}') { this.style.background='transparent'; this.style.color='var(--text-main)'; }">
-                    <i class="fas ${link.icon}" style="font-size: 0.9rem; opacity: 0.8;"></i>
+                    gap: 10px;
+                    background: ${currentPath === link.href ? 'var(--gradient-main)' : 'transparent'};
+                    box-shadow: ${currentPath === link.href ? '0 8px 20px rgba(255, 71, 87, 0.35)' : 'none'};
+                " onmouseover="if('${currentPath}' !== '${link.href}') { this.style.background='rgba(255,255,255,0.9)'; this.style.color='var(--primary-color)'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.05)'; }" 
+                   onmouseout="if('${currentPath}' !== '${link.href}') { this.style.background='transparent'; this.style.color='var(--text-main)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'; }">
+                    <i class="fas ${link.icon}" style="font-size: 1.1rem; opacity: 0.9;"></i>
                     ${link.name}
-                    ${link.id === 'cartLink' ? `<span id="cartCount" style="background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; font-weight: 800; min-width: 18px; text-align: center;">0</span>` : ''}
+                    ${link.id === 'cartLink' ? `<span id="cartCount" style="background: ${currentPath === link.href ? 'white' : 'var(--primary-color)'}; color: ${currentPath === link.href ? 'var(--primary-color)' : 'white'}; border-radius: 50%; padding: 3px 8px; font-size: 0.8rem; font-weight: 900; min-width: 22px; text-align: center; margin-left: 5px; box-shadow: 0 3px 8px rgba(0,0,0,0.15);">0</span>` : ''}
                 </a>
             `).join('')}
         </div>
         
-        <div class="user-profile" style="display: flex; align-items: center; gap: 12px; padding: 4px 4px 4px 12px; border-radius: 50px; background: rgba(0,0,0,0.03);">
-            <span style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">${session.name}</span>
-            <div class="user-avatar" style="width: 38px; height: 38px; border-radius: 50%; background: var(--gradient-main); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; box-shadow: 0 4px 10px rgba(255,71,87,0.2);">
+        <div class="user-profile" style="display: flex; align-items: center; gap: 15px; padding: 6px 6px 6px 20px; border-radius: 50px; background: white; box-shadow: var(--shadow-soft); border: 1px solid rgba(0,0,0,0.04);">
+            <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                <span style="font-weight: 800; font-size: 1rem; color: var(--text-main); line-height: 1;">${session.name}</span>
+                <span style="font-size: 0.75rem; color: #2ed573; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Premium Elite</span>
+            </div>
+            <div class="user-avatar" style="width: 45px; height: 45px; border-radius: 50%; background: var(--gradient-main); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem; box-shadow: 0 5px 15px rgba(255,71,87,0.3); border: 2px solid white;">
                 ${session.name.charAt(0).toUpperCase()}
             </div>
-            <button id="logoutBtn" class="logout-btn" style="margin-left: 5px;"><i class="fas fa-sign-out-alt"></i></button>
+            <button id="logoutBtn" class="logout-btn" style="width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border-radius: 50%; transition: 0.3s; color: var(--text-muted);" onmouseover="this.style.background='#ff4757';this.style.color='white';this.style.transform='rotate(90deg)'" onmouseout="this.style.background='#f8f9fa';this.style.color='var(--text-muted)';this.style.transform='rotate(0deg)'"><i class="fas fa-sign-out-alt"></i></button>
         </div>
     `;
 
-    // Re-bind logout listener
     const logoutBtn = dashNav.querySelector('#logoutBtn');
     if (logoutBtn) {
         logoutBtn.onclick = () => {
@@ -235,7 +238,6 @@ function renderNavbar() {
         };
     }
     
-    // Initial cart sync
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const count = cart.reduce((total, item) => total + item.quantity, 0);
     const cartCount = document.getElementById('cartCount');
@@ -247,59 +249,57 @@ function renderFooter() {
     if (!footerContainer) return;
 
     footerContainer.innerHTML = `
-        <footer style="background: #111; color: white; padding: 6rem 2rem 3rem; margin-top: 8rem; font-family: 'Outfit', sans-serif; position: relative; overflow: hidden;">
-            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--gradient-main);"></div>
-            <div style="max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 5rem;">
+        <footer style="background: #0d0d0d; color: white; padding: 8rem 2rem 4rem; margin-top: 10rem; font-family: 'Outfit', sans-serif; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--gradient-main);"></div>
+            <div style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 6rem;">
                 <div class="reveal">
-                    <h2 style="color: var(--primary-color); font-size: 2.8rem; margin-bottom: 1.5rem; font-weight: 800; font-style: italic;"><i class="fas fa-utensils"></i> Crave</h2>
-                    <p style="opacity: 0.6; line-height: 1.8; font-size: 1.1rem; margin-bottom: 2.5rem;">Elevating your dining experience with flavors from every corner of the globe. Authentic, fast, and remarkably delicious.</p>
-                    <div style="display: flex; gap: 15px;">
+                    <h2 style="font-size: 3.5rem; margin-bottom: 2rem; font-weight: 900; font-style: italic; letter-spacing: -2px;"><span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Crave</span></h2>
+                    <p style="opacity: 0.7; line-height: 1.8; font-size: 1.2rem; margin-bottom: 3rem; font-weight: 300;">Defining the future of culinary delivery. We bring master-chef creations from global kitchens directly to your sanctuary.</p>
+                    <div style="display: flex; gap: 20px;">
                         ${['facebook-f', 'instagram', 'twitter', 'youtube'].map(icon => `
-                            <a href="#" style="width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s;" 
-                               onmouseover="this.style.background='var(--primary-color)'; this.style.transform='translateY(-5px)'" 
-                               onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)'">
-                                <i class="fab fa-${icon}"></i>
+                            <a href="#" style="width: 50px; height: 50px; border-radius: 15px; background: rgba(255,255,255,0.08); color: white; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.4s; border: 1px solid rgba(255,255,255,0.05);" 
+                               onmouseover="this.style.background='var(--primary-color)'; this.style.transform='translateY(-8px) rotate(10deg)'; this.style.boxShadow='0 10px 20px rgba(255,71,87,0.3)'" 
+                               onmouseout="this.style.background='rgba(255,255,255,0.08)'; this.style.transform='translateY(0) rotate(0deg)'; this.style.boxShadow='none'">
+                                <i class="fab fa-${icon}" style="font-size: 1.2rem;"></i>
                             </a>
                         `).join('')}
                     </div>
                 </div>
                 <div class="reveal" style="animation-delay: 0.1s;">
-                    <h3 style="margin-bottom: 2rem; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--primary-light);">Explore</h3>
-                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 1.2rem; padding: 0;">
-                        ${['Home', 'Our Menu', 'Special Offers', 'Track Orders'].map(item => `
-                            <li><a href="${item === 'Home' ? 'index.html' : item.toLowerCase().replace(' ', '') + '.html'}" style="color: white; text-decoration: none; opacity: 0.6; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onmouseover="this.style.opacity=1; this.style.paddingLeft='8px'" onmouseout="this.style.opacity=0.6; this.style.paddingLeft='0'"><i class="fas fa-chevron-right" style="font-size: 0.7rem; color: var(--primary-color);"></i> ${item}</a></li>
+                    <h3 style="margin-bottom: 2.5rem; font-size: 1.3rem; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: var(--primary-light);">Gastronomy</h3>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 1.5rem; padding: 0;">
+                        ${['Home', 'Menu Explore', 'Exclusive Offers', 'Live Tracking'].map(item => `
+                            <li><a href="#" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.4s; display: flex; align-items: center; gap: 12px; font-weight: 500;" onmouseover="this.style.opacity=1; this.style.paddingLeft='12px'; this.style.color='var(--primary-color)'" onmouseout="this.style.opacity=0.7; this.style.paddingLeft='0'; this.style.color='white'"><i class="fas fa-arrow-right" style="font-size: 0.8rem; color: var(--primary-color);"></i> ${item}</a></li>
                         `).join('')}
                     </ul>
                 </div>
                 <div class="reveal" style="animation-delay: 0.2s;">
-                    <h3 style="margin-bottom: 2rem; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--primary-light);">Company</h3>
-                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 1.2rem; padding: 0;">
-                        ${['About Us', 'Contact Us', 'Privacy Policy', 'Terms of Use'].map(item => `
-                            <li><a href="${item.toLowerCase().split(' ')[0]}.html" style="color: white; text-decoration: none; opacity: 0.6; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onmouseover="this.style.opacity=1; this.style.paddingLeft='8px'" onmouseout="this.style.opacity=0.6; this.style.paddingLeft='0'"><i class="fas fa-chevron-right" style="font-size: 0.7rem; color: var(--primary-color);"></i> ${item}</a></li>
+                    <h3 style="margin-bottom: 2.5rem; font-size: 1.3rem; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: var(--primary-light);">The Brand</h3>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 1.5rem; padding: 0;">
+                        ${['Our Story', 'Join the Kitchen', 'Privacy Concierge', 'Legacy Terms'].map(item => `
+                            <li><a href="#" style="color: white; text-decoration: none; opacity: 0.7; transition: 0.4s; display: flex; align-items: center; gap: 12px; font-weight: 500;" onmouseover="this.style.opacity=1; this.style.paddingLeft='12px'; this.style.color='var(--primary-color)'" onmouseout="this.style.opacity=0.7; this.style.paddingLeft='0'; this.style.color='white'"><i class="fas fa-arrow-right" style="font-size: 0.8rem; color: var(--primary-color);"></i> ${item}</a></li>
                         `).join('')}
                     </ul>
                 </div>
                 <div class="reveal" style="animation-delay: 0.3s;">
-                    <h3 style="margin-bottom: 2rem; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--primary-light);">Newsletter</h3>
-                    <p style="opacity: 0.6; margin-bottom: 2rem;">Join 10k+ foodies for exclusive weekly deals.</p>
-                    <div style="background: rgba(255,255,255,0.05); padding: 6px; border-radius: 16px; display: flex; gap: 10px; border: 1px solid rgba(255,255,255,0.1);">
-                        <input type="email" placeholder="Your Email" style="background: transparent; border: none; padding: 10px 15px; color: white; flex: 1; outline: none; font-family: inherit;">
-                        <button style="background: var(--gradient-main); color: white; border: none; padding: 12px 25px; border-radius: 12px; cursor: pointer; font-weight: 700; transition: 0.3s; box-shadow: 0 4px 15px rgba(255,71,87,0.3);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Join</button>
+                    <h3 style="margin-bottom: 2.5rem; font-size: 1.3rem; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: var(--primary-light);">The Inner Circle</h3>
+                    <p style="opacity: 0.7; margin-bottom: 2.5rem; font-size: 1.1rem; font-weight: 300;">Subscribe for early access to seasonal menus and elite member rewards.</p>
+                    <div style="background: rgba(255,255,255,0.04); padding: 8px; border-radius: 20px; display: flex; gap: 12px; border: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);">
+                        <input type="email" placeholder="Email Address" style="background: transparent; border: none; padding: 12px 20px; color: white; flex: 1; outline: none; font-family: inherit; font-size: 1.05rem;">
+                        <button style="background: var(--gradient-main); color: white; border: none; padding: 12px 30px; border-radius: 15px; cursor: pointer; font-weight: 800; transition: 0.4s; box-shadow: 0 10px 20px rgba(255,71,87,0.3); text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 15px 30px rgba(255,71,87,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 10px 20px rgba(255,71,87,0.3)'">Join</button>
                     </div>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 6rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.05); opacity: 0.4; font-size: 0.95rem; display: flex; flex-direction: column; gap: 10px;">
-                <span>&copy; 2026 Crave Food Delivery. Premium Quality Guaranteed.</span>
-                <span style="font-size: 0.8rem;">Designed for the ultimate food experience.</span>
+            <div style="text-align: center; margin-top: 8rem; padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.05); opacity: 0.5; font-size: 1rem; display: flex; flex-direction: column; gap: 12px; font-weight: 300;">
+                <span style="letter-spacing: 1px;">&copy; 2026 CRAVE LUXE GASTRONOMY. ALL RIGHTS RESERVED.</span>
+                <span style="font-size: 0.85rem; color: var(--primary-light); font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">Excellence in Every Byte.</span>
             </div>
         </footer>
     `;
 }
 
+// --- Global Utility Functions ---
 
-// --- Global Utility Functions (Available for inline event handlers) ---
-
-// Toast Function
 window.showToast = function(message, type = 'success') {
     let container = document.getElementById('toastContainer');
     if (!container) {
@@ -310,28 +310,40 @@ window.showToast = function(message, type = 'success') {
     }
     
     const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
+    toast.className = `toast ${type} glass-card`;
+    toast.style.borderRadius = '18px';
+    toast.style.border = '1px solid rgba(255,255,255,0.4)';
+    toast.style.background = type === 'success' ? 'rgba(46, 213, 115, 0.95)' : (type === 'error' ? 'rgba(255, 71, 87, 0.95)' : 'rgba(30, 144, 255, 0.95)');
+    toast.style.color = 'white';
+    toast.style.backdropFilter = 'blur(15px)';
+    toast.style.padding = '1.2rem 2.5rem';
+    toast.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
+    toast.style.display = 'flex';
+    toast.style.alignItems = 'center';
+    toast.style.gap = '15px';
+    toast.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(20px) scale(0.9)';
     
     let icon = 'fa-info-circle';
     if (type === 'success') icon = 'fa-check-circle';
     if (type === 'error') icon = 'fa-exclamation-circle';
 
-    toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span>`;
+    toast.innerHTML = `<i class="fas ${icon}" style="font-size: 1.6rem;"></i><span style="font-weight: 800; font-size: 1.05rem; color: white;">${message}</span>`;
     container.appendChild(toast);
     
     setTimeout(() => {
         toast.style.opacity = '1';
-        toast.style.transform = 'translateY(0)';
-    }, 10);
+        toast.style.transform = 'translateY(0) scale(1)';
+    }, 50);
     
     setTimeout(() => {
         toast.style.opacity = '0';
-        toast.style.transform = 'translateX(100%)';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
+        toast.style.transform = 'translateX(100%) scale(0.9)';
+        setTimeout(() => toast.remove(), 500);
+    }, 4000);
 }
 
-// Cart Management
 window.getCart = function() {
     return JSON.parse(localStorage.getItem('cart')) || [];
 }
@@ -339,13 +351,8 @@ window.getCart = function() {
 window.saveCart = function(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
     const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-    
-    // Update all possible cart count indicators
     const cartCount = document.getElementById('cartCount');
     if (cartCount) cartCount.textContent = totalItems;
-    
-    const floatCartCount = document.getElementById('floatCartCount');
-    if (floatCartCount) floatCartCount.textContent = totalItems;
 }
 
 window.addToCart = function(food, btn) {
@@ -355,26 +362,24 @@ window.addToCart = function(food, btn) {
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        cart.push({
-            ...food,
-            quantity: 1
-        });
+        cart.push({ ...food, quantity: 1 });
     }
     
     saveCart(cart);
     showToast(`${food.name} added to cart!`, 'success');
 
-    // Visual feedback on button
     if (btn) {
         const originalHtml = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+        btn.innerHTML = '<i class="fas fa-check"></i> Added';
         btn.style.background = '#2ed573';
+        btn.style.color = 'white';
         btn.style.borderColor = '#2ed573';
         btn.disabled = true;
         
         setTimeout(() => {
             btn.innerHTML = originalHtml;
             btn.style.background = '';
+            btn.style.color = '';
             btn.style.borderColor = '';
             btn.disabled = false;
         }, 1500);
@@ -390,7 +395,6 @@ window.updateQuantity = function(foodName, delta) {
             cart = cart.filter(i => i.name !== foodName);
         }
         saveCart(cart);
-        // If we are on cart page, re-render
         if (typeof renderCart === 'function') renderCart();
     }
 }

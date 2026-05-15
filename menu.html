@@ -71,27 +71,34 @@
     <nav class="dash-nav"></nav>
 
     <main class="dashboard-container">
-        <header class="reveal" style="text-align: center; margin: 6rem 0 8rem;">
-            <div style="background: rgba(255, 71, 87, 0.1); color: var(--primary-color); padding: 10px 30px; border-radius: 50px; display: inline-block; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 2rem; box-shadow: 0 5px 15px rgba(255,71,87,0.1);">
-                🍳 Handcrafted Selection
+        <header class="reveal" style="text-align: center; margin: 8rem 0 10rem;">
+            <div style="background: rgba(255, 71, 87, 0.1); color: var(--primary-color); padding: 12px 35px; border-radius: 50px; display: inline-block; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 2.5rem; box-shadow: 0 8px 20px rgba(255,71,87,0.12); border: 1px solid rgba(255,71,87,0.2);">
+                ✨ Master-Class Selection
             </div>
-            <h1 style="font-size: 5rem; font-weight: 900; letter-spacing: -3px; margin-bottom: 1.5rem; line-height: 1;">Explore <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Global Flavors</span></h1>
-            <p style="color: var(--text-muted); font-size: 1.4rem; max-width: 700px; margin: 0 auto; line-height: 1.6; opacity: 0.8;">An exquisite journey through 80+ handcrafted dishes, prepared with authentic ingredients and master-class techniques.</p>
+            <h1 style="font-size: 6rem; font-weight: 900; letter-spacing: -4px; margin-bottom: 2rem; line-height: 0.9; text-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                Discover <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Global Flavors</span>
+            </h1>
+            <p style="color: var(--text-muted); font-size: 1.6rem; max-width: 800px; margin: 0 auto; line-height: 1.6; opacity: 0.9; font-weight: 400;">
+                A curated symphony of 80+ handcrafted dishes, featuring authentic global ingredients 
+                and techniques that redefine the art of fine dining.
+            </p>
         </header>
 
         <div class="menu-layout reveal" style="animation-delay: 0.1s;">
             <!-- Sticky Sidebar -->
-            <aside class="menu-sidebar glass-card" style="border-radius: 30px; padding: 2.5rem;">
-                <h3 style="margin-bottom: 2rem; color: var(--text-main); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; opacity: 0.6;">Categories</h3>
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <a href="#Indian" class="sidebar-link active"><i class="fas fa-pepper-hot"></i> Indian</a>
-                    <a href="#Chinese" class="sidebar-link"><i class="fas fa-bowl-food"></i> Chinese</a>
-                    <a href="#Korean" class="sidebar-link"><i class="fas fa-fire"></i> Korean</a>
-                    <a href="#Japanese" class="sidebar-link"><i class="fas fa-fish"></i> Japanese</a>
-                    <a href="#American" class="sidebar-link"><i class="fas fa-hamburger"></i> American</a>
-                    <a href="#Fast Food" class="sidebar-link"><i class="fas fa-pizza-slice"></i> Fast Food</a>
-                    <a href="#Healthy" class="sidebar-link"><i class="fas fa-leaf"></i> Healthy</a>
-                    <a href="#Desserts" class="sidebar-link"><i class="fas fa-ice-cream"></i> Desserts</a>
+            <aside class="menu-sidebar glass-card" style="border-radius: var(--radius-xl); padding: 3rem; background: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.4);">
+                <h3 style="margin-bottom: 2.5rem; color: var(--text-main); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; font-weight: 900; opacity: 0.7; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-list-ul" style="color: var(--primary-color);"></i> Categories
+                </h3>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <a href="#Indian" class="sidebar-link active"><i class="fas fa-pepper-hot"></i> Indian Cuisine</a>
+                    <a href="#Chinese" class="sidebar-link"><i class="fas fa-bowl-food"></i> Chinese Wok</a>
+                    <a href="#Korean" class="sidebar-link"><i class="fas fa-fire"></i> Korean BBQ</a>
+                    <a href="#Japanese" class="sidebar-link"><i class="fas fa-fish"></i> Japanese Sushi</a>
+                    <a href="#American" class="sidebar-link"><i class="fas fa-hamburger"></i> American Classics</a>
+                    <a href="#Fast Food" class="sidebar-link"><i class="fas fa-pizza-slice"></i> Artisan Fast Food</a>
+                    <a href="#Healthy" class="sidebar-link"><i class="fas fa-leaf"></i> Wholesome Greens</a>
+                    <a href="#Desserts" class="sidebar-link"><i class="fas fa-ice-cream"></i> Sweet Delights</a>
                 </div>
             </aside>
 
@@ -104,75 +111,80 @@
         </div>
     </main>
 
-    <div id="quickOrderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; backdrop-filter: blur(8px); align-items: center; justify-content: center;">
-        <div style="background: white; width: 95%; max-width: 500px; padding: 2.5rem; border-radius: 30px; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.2);">
-            <button onclick="closeQuickOrder()" style="position: absolute; top: 25px; right: 25px; border: none; background: #f1f2f6; width: 35px; height: 35px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s;">&times;</button>
+    <!-- Premium Quick Order Modal -->
+    <div id="quickOrderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); align-items: center; justify-content: center; padding: 20px;">
+        <div class="glass-card" style="width: 100%; max-width: 550px; padding: 3.5rem; border-radius: var(--radius-xl); position: relative; box-shadow: var(--shadow-premium); border: 1px solid rgba(255,255,255,0.3); animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+            <button onclick="closeQuickOrder()" style="position: absolute; top: 30px; right: 30px; border: none; background: rgba(255,255,255,0.5); width: 40px; height: 40px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; color: var(--text-main);" onmouseover="this.style.background='#ff4757';this.style.color='white'" onmouseout="this.style.background='rgba(255,255,255,0.5)';this.style.color='var(--text-main)'">&times;</button>
             
-            <h2 id="modalFoodName" style="font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--text-main);">Food Name</h2>
-            <p style="color: #666; margin-bottom: 2rem;">Confirm your instant order details below.</p>
-
-            <div style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.8rem; font-weight: 600; font-size: 0.95rem; color: #444;">Delivery Address</label>
-                <textarea id="quickAddress" placeholder="Enter your full delivery address..." style="width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #eee; font-family: inherit; resize: none; height: 100px; font-size: 1rem; transition: 0.3s;" onfocus="this.style.borderColor='var(--primary-color)'" onblur="this.style.borderColor='#eee'"></textarea>
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <h2 id="modalFoodName" style="font-size: 2.2rem; font-weight: 900; margin-bottom: 0.8rem; color: var(--text-main); letter-spacing: -1px;">Food Name</h2>
+                <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">Secure your instant gourmet experience.</p>
             </div>
 
             <div style="margin-bottom: 2rem;">
-                <label for="quickPaymentValue" style="display: block; margin-bottom: 0.6rem; font-weight: 600; font-size: 0.95rem; color: #444;">Payment Method</label>
+                <label style="display: block; margin-bottom: 1rem; font-weight: 700; font-size: 0.9rem; color: var(--text-main); text-transform: uppercase; letter-spacing: 1.5px;">Delivery Destination</label>
                 <div style="position: relative;">
-                    <span id="quickPaymentIcon" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--primary-color); font-size: 1rem; pointer-events: none;">
+                    <i class="fas fa-map-marker-alt" style="position: absolute; left: 15px; top: 20px; color: var(--primary-color); font-size: 1.1rem;"></i>
+                    <textarea id="quickAddress" placeholder="Enter your full delivery address..." style="width: 100%; padding: 18px 18px 18px 45px; border-radius: 20px; border: 2px solid rgba(0,0,0,0.05); font-family: inherit; resize: none; height: 110px; font-size: 1.05rem; transition: 0.4s; background: rgba(255,255,255,0.8);" onfocus="this.style.borderColor='var(--primary-color)';this.style.background='white';this.style.boxShadow='0 0 0 5px rgba(255,71,87,0.1)'" onblur="this.style.borderColor='rgba(0,0,0,0.05)';this.style.background='rgba(255,255,255,0.8)';this.style.boxShadow='none'"></textarea>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2.5rem;">
+                <label style="display: block; margin-bottom: 1rem; font-weight: 700; font-size: 0.9rem; color: var(--text-main); text-transform: uppercase; letter-spacing: 1.5px;">Payment Method</label>
+                <div style="position: relative;">
+                    <span id="quickPaymentIcon" style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--primary-color); font-size: 1.2rem; pointer-events: none;">
                         <i class="fas fa-money-bill-wave"></i>
                     </span>
                     <select id="quickPaymentValue" onchange="updateQuickPaymentIcon(this)" style="
                         width: 100%;
-                        padding: 13px 42px 13px 42px;
-                        border: 2px solid #eee;
-                        border-radius: 12px;
+                        padding: 15px 50px;
+                        border: 2px solid rgba(0,0,0,0.05);
+                        border-radius: 18px;
                         font-family: inherit;
-                        font-size: 0.95rem;
-                        font-weight: 500;
+                        font-size: 1.05rem;
+                        font-weight: 600;
                         color: var(--text-main);
-                        background: #fff;
+                        background: rgba(255,255,255,0.8);
                         appearance: none;
                         -webkit-appearance: none;
                         cursor: pointer;
-                        transition: border-color 0.3s, box-shadow 0.3s;
+                        transition: all 0.4s;
                         outline: none;
                     "
-                    onfocus="this.style.borderColor='var(--primary-color)';this.style.boxShadow='0 0 0 3px rgba(232,67,67,0.12)'"
-                    onblur="this.style.borderColor='#eee';this.style.boxShadow='none'">
-                        <option value="cod">🏠 Cash on Delivery — Pay when you receive</option>
-                        <option value="card">💳 Credit / Debit Card — All major cards supported</option>
-                        <option value="upi">📱 UPI / Net Banking — Fast &amp; secure payment</option>
-                        <option value="wallet">👛 Wallet — Use your Crave wallet balance</option>
+                    onfocus="this.style.borderColor='var(--primary-color)';this.style.background='white';this.style.boxShadow='0 0 0 5px rgba(255,71,87,0.1)'"
+                    onblur="this.style.borderColor='rgba(0,0,0,0.05)';this.style.background='rgba(255,255,255,0.8)';this.style.boxShadow='none'">
+                        <option value="cod">🏠 Cash on Delivery</option>
+                        <option value="card">💳 Credit / Debit Card</option>
+                        <option value="upi">📱 UPI / Net Banking</option>
+                        <option value="wallet">👛 Crave Wallet</option>
                     </select>
-                    <span style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #aaa; pointer-events: none;">
+                    <span style="position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: #bbb; pointer-events: none;">
                         <i class="fas fa-chevron-down"></i>
                     </span>
                 </div>
-                <p id="quickPaymentHint" style="margin-top: 6px; font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 5px;">
-                    <i class="fas fa-shield-alt" style="color: var(--primary-color);"></i>
-                    100% secure &amp; encrypted payment
+                <p id="quickPaymentHint" style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px; font-weight: 500;">
+                    <i class="fas fa-shield-alt" style="color: #2ed573;"></i>
+                    Secured by 256-bit encryption
                 </p>
             </div>
 
-            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 20px; margin-bottom: 2rem;">
-                <h4 style="margin-bottom: 1rem; color: #444; border-bottom: 1px solid #e9ecef; padding-bottom: 0.8rem;">Price Details</h4>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.95rem;">
-                    <span style="color: #666;">Item Price</span>
-                    <span id="modalItemPrice" style="font-weight: 600;">₹0</span>
+            <div style="background: rgba(0,0,0,0.03); padding: 2rem; border-radius: 25px; margin-bottom: 2.5rem; border: 1px solid rgba(0,0,0,0.05);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 1rem; font-weight: 500;">
+                    <span style="color: var(--text-muted);">Gourmet Selection</span>
+                    <span id="modalItemPrice" style="color: var(--text-main); font-weight: 700;">₹0</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.95rem;">
-                    <span style="color: #666;">Delivery Fee</span>
-                    <span style="color: #27ae60; font-weight: 600;">FREE</span>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1.2rem; font-size: 1rem; font-weight: 500;">
+                    <span style="color: var(--text-muted);">Priority Delivery</span>
+                    <span style="color: #2ed573; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Complimentary</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-top: 1rem; border-top: 1px solid #e9ecef; padding-top: 1rem; font-size: 1.2rem; font-weight: 800;">
-                    <span>Total Amount</span>
-                    <span id="modalTotalPrice" style="color: var(--primary-color);">₹0</span>
+                <div style="display: flex; justify-content: space-between; margin-top: 1.2rem; border-top: 2px dashed rgba(0,0,0,0.1); padding-top: 1.2rem; font-size: 1.4rem; font-weight: 900;">
+                    <span style="letter-spacing: -0.5px;">Grand Total</span>
+                    <span id="modalTotalPrice" style="color: var(--primary-color); font-size: 1.8rem;">₹0</span>
                 </div>
             </div>
 
-            <button id="confirmOrderBtn" class="btn-primary" style="width: 100%; padding: 18px; border-radius: 18px; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);">
-                Place Order <i class="fas fa-check-circle" style="margin-left: 10px;"></i>
+            <button id="confirmOrderBtn" class="btn-primary" style="width: 100%; padding: 22px; border-radius: 22px; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 15px 35px rgba(255, 71, 87, 0.4);">
+                Finalize Order <i class="fas fa-arrow-right" style="margin-left: 12px;"></i>
             </button>
         </div>
     </div>
