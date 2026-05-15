@@ -3,41 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Orders | Crave</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Your Legacy | Crave Orders</title>
+    <!-- Fonts via style.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=16">
+    <style>
+        .order-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-bottom: 3.5rem;
+        }
+        .order-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 140, 66, 0.2);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+        }
+        .status-badge {
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
 </head>
 <body class="dashboard-body">
 
     <!-- Navbar -->
     <nav class="dash-nav"></nav>
 
-    <main class="dashboard-container reveal" style="padding-top: 120px; max-width: 1000px; margin: 0 auto; padding-bottom: 80px;">
-        <div style="margin-bottom: 3rem; text-align: center;">
-            <h1 style="font-size: 3rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 0.5rem; color: var(--text-main);">My <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Orders</span></h1>
-            <p style="color: var(--text-muted); font-size: 1.1rem;">Track and manage your delicious journey with Crave.</p>
-        </div>
+    <main class="dashboard-container reveal" style="padding-top: 15rem; max-width: 1100px; margin: 0 auto; padding-bottom: 12rem;">
+        <header style="margin-bottom: 8rem; text-align: center;">
+            <div style="background: rgba(255, 140, 66, 0.1); color: var(--primary-color); padding: 12px 35px; border-radius: 50px; display: inline-block; font-weight: 900; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 3rem; border: 1px solid rgba(255, 140, 66, 0.2);">
+                📜 The Culinary Journey
+            </div>
+            <h1 style="font-size: 6rem; font-weight: 400; color: white; margin-bottom: 1.5rem; font-family: 'DM Serif Display', serif; letter-spacing: -2px;">Your <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Legacy</span></h1>
+            <p style="color: var(--text-muted); font-size: 1.5rem; font-weight: 300; max-width: 600px; margin: 0 auto;">A chronicle of your exquisite encounters with Crave Luxe.</p>
+        </header>
         
-        <div id="ordersList" style="display: flex; flex-direction: column; gap: 2rem;">
+        <div id="ordersList" style="display: flex; flex-direction: column;">
             <!-- Loading state -->
-            <div style="text-align: center; padding: 3rem;">
-                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary-color);"></i>
-                <p style="margin-top: 1rem; color: #666;">Fetching your orders...</p>
+            <div style="text-align: center; padding: 10rem;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 3.5rem; color: var(--primary-color); opacity: 0.6;"></i>
+                <p style="margin-top: 2rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; font-weight: 700;">Recalling your history...</p>
             </div>
         </div>
 
-        <div id="emptyOrdersMessage" style="display: none; background: white; padding: 4rem 2rem; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-            <i class="fas fa-box-open" style="font-size: 5rem; color: #eee; margin-bottom: 1.5rem;"></i>
-            <h2>No Orders Yet</h2>
-            <p style="color: #666; margin-bottom: 2.5rem;">Hungry? Place your first order today!</p>
-            <a href="index.html" class="btn-primary" style="text-decoration: none; padding: 12px 30px;">Order Now</a>
+        <div id="emptyOrdersMessage" style="display: none; background: rgba(255,255,255,0.02); padding: 10rem 4rem; border-radius: var(--radius-xl); text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+            <i class="fas fa-box-open" style="font-size: 6rem; color: rgba(255,255,255,0.05); margin-bottom: 3rem;"></i>
+            <h2 style="font-family: 'DM Serif Display', serif; font-size: 3.5rem; margin-bottom: 1.5rem;">The Scroll is Empty</h2>
+            <p style="color: var(--text-muted); margin-bottom: 4.5rem; font-size: 1.4rem; font-weight: 300;">Your first gourmet experience is just a choice away.</p>
+            <a href="index.html" class="btn-primary" style="text-decoration: none; padding: 20px 50px; border-radius: 25px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; background: var(--gradient-main); color: #000;">Indulge Now</a>
         </div>
     </main>
 
+    <div id="footerContainer"></div>
     <div id="toastContainer"></div>
 
-    <div id="footerContainer"></div>
     <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -54,57 +82,57 @@
 
                     if (data.success && data.data.length > 0) {
                         ordersList.innerHTML = data.data.map(order => {
-                            const statusColors = {
-                                'Pending': { bg: '#fff4e6', text: '#d9480f' },
-                                'Preparing': { bg: '#e7f5ff', text: '#1971c2' },
-                                'Out for Delivery': { bg: '#f3f0ff', text: '#6741d9' },
-                                'Delivered': { bg: '#ebfbee', text: '#2b8a3e' },
-                                'Cancelled': { bg: '#fff5f5', text: '#c92a2a' }
+                            const statusStyles = {
+                                'Pending': { color: '#FF8C42', bg: 'rgba(255, 140, 66, 0.1)' },
+                                'Preparing': { color: '#F9C80E', bg: 'rgba(249, 200, 14, 0.1)' },
+                                'Out for Delivery': { color: '#30E3CA', bg: 'rgba(48, 227, 202, 0.1)' },
+                                'Delivered': { color: '#2ed573', bg: 'rgba(46, 213, 115, 0.1)' },
+                                'Cancelled': { color: '#ff4757', bg: 'rgba(255, 71, 87, 0.1)' }
                             };
-                            const status = statusColors[order.order_status] || { bg: '#f1f3f5', text: '#495057' };
+                            const status = statusStyles[order.order_status] || { color: '#fff', bg: 'rgba(255,255,255,0.1)' };
                             
                             return `
-                            <div style="background: white; border-radius: 24px; box-shadow: var(--shadow-soft); overflow: hidden; margin-bottom: 2.5rem; border: 1px solid rgba(0,0,0,0.02); transition: 0.3s;" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='var(--shadow-premium)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='var(--shadow-soft)'">
-                                <div style="background: #fafafa; padding: 1.8rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f2f6;">
+                            <div class="order-card">
+                                <div style="background: rgba(255,255,255,0.01); padding: 2.5rem 3.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
                                     <div>
-                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
-                                            <span style="color: #adb5bd; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Order ID:</span>
-                                            <span style="font-weight: 800; color: var(--text-main); font-size: 1.1rem;">#${order.id}</span>
+                                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 8px;">
+                                            <span style="color: var(--text-muted); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Protocol ID</span>
+                                            <span style="font-weight: 800; color: white; font-size: 1.4rem; font-family: 'DM Serif Display', serif;">#${order.id}</span>
                                         </div>
-                                        <div style="color: #adb5bd; font-size: 0.85rem;"><i class="far fa-calendar-alt"></i> ${new Date(order.created_at).toLocaleString()}</div>
+                                        <div style="color: var(--text-muted); font-size: 1rem; font-weight: 300;"><i class="far fa-calendar-alt"></i> ${new Date(order.created_at).toLocaleString()}</div>
                                     </div>
                                     <div style="text-align: right;">
-                                        <span style="background: ${status.bg}; color: ${status.text}; padding: 6px 18px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid rgba(0,0,0,0.05);">${order.order_status}</span>
-                                        <div style="font-weight: 900; margin-top: 8px; font-size: 1.4rem; color: var(--text-main);">₹${order.total_price}</div>
+                                        <span class="status-badge" style="background: ${status.bg}; color: ${status.color}; border-color: ${status.color}33;">${order.order_status}</span>
+                                        <div style="font-weight: 400; margin-top: 15px; font-size: 2.2rem; color: white; font-family: 'DM Serif Display', serif;">₹${order.total_price}</div>
                                     </div>
                                 </div>
-                                <div style="padding: 2rem;">
-                                    <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+                                <div style="padding: 3.5rem;">
+                                    <div style="display: flex; flex-direction: column; gap: 1.8rem; margin-bottom: 3.5rem;">
                                         ${order.items.map(item => `
                                             <div style="display: flex; justify-content: space-between; align-items: center;">
-                                                <div style="display: flex; align-items: center; gap: 15px;">
-                                                    <div style="background: var(--bg-color); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 0.85rem; font-weight: 800; color: var(--primary-color); border: 1px solid #eee;">${item.quantity}x</div>
-                                                    <span style="font-weight: 600; color: var(--text-main); font-size: 1.05rem;">${item.food_name}</span>
+                                                <div style="display: flex; align-items: center; gap: 20px;">
+                                                    <div style="background: rgba(255,140,66,0.1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 0.9rem; font-weight: 900; color: var(--primary-color); border: 1px solid rgba(255,140,66,0.2);">${item.quantity}x</div>
+                                                    <span style="font-weight: 600; color: white; font-size: 1.2rem; font-family: 'DM Serif Display', serif;">${item.food_name}</span>
                                                 </div>
-                                                <div style="font-weight: 700; color: var(--text-muted);">₹${item.price * item.quantity}</div>
+                                                <div style="font-weight: 700; color: var(--text-muted); font-size: 1.1rem;">₹${item.price * item.quantity}</div>
                                             </div>
                                         `).join('')}
                                     </div>
 
-                                    <div style="margin-top: 2rem; padding: 1.5rem; background: #f8f9fa; border-radius: 18px; font-size: 0.95rem; border: 1px solid #f1f2f6;">
-                                        <div style="margin-bottom: 0.8rem; display: flex; gap: 12px; color: var(--text-main);">
-                                            <i class="fas fa-map-marker-alt" style="color: var(--primary-color); margin-top: 3px;"></i> 
-                                            <div><strong style="display: block; font-size: 0.75rem; color: #adb5bd; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px;">Delivery to</strong> ${order.delivery_address}</div>
+                                    <div style="padding: 2.5rem; background: rgba(255,255,255,0.02); border-radius: 25px; font-size: 1.1rem; border: 1px solid rgba(255,255,255,0.05); display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+                                        <div style="display: flex; gap: 18px; color: white;">
+                                            <i class="fas fa-map-marker-alt" style="color: var(--primary-color); font-size: 1.2rem; margin-top: 5px;"></i> 
+                                            <div><strong style="display: block; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 8px;">The Sanctuary</strong> ${order.delivery_address}</div>
                                         </div>
-                                        <div style="display: flex; gap: 12px; color: var(--text-main);">
-                                            <i class="fas fa-credit-card" style="color: var(--primary-color); margin-top: 3px;"></i> 
-                                            <div><strong style="display: block; font-size: 0.75rem; color: #adb5bd; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px;">Paid via</strong> ${order.payment_method.toUpperCase()}</div>
+                                        <div style="display: flex; gap: 18px; color: white;">
+                                            <i class="fas fa-credit-card" style="color: var(--primary-color); font-size: 1.2rem; margin-top: 5px;"></i> 
+                                            <div><strong style="display: block; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 8px;">Protocol</strong> ${order.payment_method.toUpperCase()}</div>
                                         </div>
                                     </div>
 
-                                    <div style="margin-top: 2rem; display: flex; gap: 12px;">
-                                        <button class="btn-primary" style="flex: 1; padding: 14px; font-size: 0.95rem; background: #fff; color: var(--text-main); border: 2px solid #eee; border-radius: 15px;" onclick="showToast('Tracking coming soon!', 'info')"><i class="fas fa-route"></i> Track Live</button>
-                                        <button class="btn-primary" style="flex: 1; padding: 14px; font-size: 0.95rem; border-radius: 15px;" onclick="location.href='menu.html'"><i class="fas fa-redo"></i> Order Again</button>
+                                    <div style="margin-top: 3.5rem; display: flex; gap: 20px;">
+                                        <button class="btn-primary" style="flex: 1; padding: 20px; font-size: 0.9rem; background: rgba(255,255,255,0.03); color: white; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;" onclick="showToast('Protocol tracking initializing...', 'info')"><i class="fas fa-route" style="margin-right: 10px;"></i> Live Map</button>
+                                        <button class="btn-primary" style="flex: 1; padding: 20px; font-size: 0.9rem; border-radius: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; background: var(--gradient-main); color: #000;" onclick="location.href='menu.html'"><i class="fas fa-redo" style="margin-right: 10px;"></i> Re-Indulge</button>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +142,7 @@
                         emptyOrdersMessage.style.display = 'block';
                     }
                 } catch (error) {
-                    ordersList.innerHTML = `<div style="text-align: center; padding: 2rem; color: red;">Failed to load orders. Please refresh.</div>`;
+                    ordersList.innerHTML = `<div style="text-align: center; padding: 10rem; color: var(--primary-color); font-weight: 700; letter-spacing: 2px;">PROTOCOL ERROR: FAILED TO RETRIEVE HISTORY</div>`;
                 }
             }
 

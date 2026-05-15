@@ -3,38 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile | Crave</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Elite Profile | Crave Luxe</title>
+    <!-- Fonts via style.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=17">
+    <style>
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-bottom: 12rem;
+        }
+        .profile-sidebar {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-xl);
+            padding: 4rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(25px);
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+        .profile-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            padding: 18px 25px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            font-weight: 500;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.4s;
+            margin-bottom: 10px;
+            text-align: left;
+            letter-spacing: 0.5px;
+        }
+        .profile-nav-item:hover, .profile-nav-item.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            padding-left: 35px;
+        }
+        .profile-nav-item.active {
+            background: var(--gradient-main);
+            color: #000;
+            font-weight: 900;
+            box-shadow: 0 15px 30px rgba(255, 140, 66, 0.2);
+        }
+        .profile-tab-content {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-xl);
+            padding: 5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: none;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .profile-tab-content.active {
+            display: block;
+        }
+        input, textarea {
+            background: rgba(255,255,255,0.03) !important;
+            border: 1px solid rgba(255,255,255,0.08) !important;
+            color: white !important;
+            padding: 18px 20px !important;
+            border-radius: 15px !important;
+            font-family: 'Outfit', sans-serif !important;
+            font-size: 1.1rem !important;
+            outline: none !important;
+        }
+        input:focus, textarea:focus {
+            border-color: var(--primary-color) !important;
+            background: rgba(255,255,255,0.05) !important;
+            box-shadow: 0 0 25px rgba(255, 140, 66, 0.1) !important;
+        }
+        input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .rewards-card {
+            background: var(--gradient-main);
+            border-radius: 30px;
+            padding: 4rem;
+            color: #000;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(255, 140, 66, 0.3);
+        }
+        @media (max-width: 1100px) {
+            .profile-grid { grid-template-columns: 1fr; }
+            .profile-sidebar { position: static; }
+        }
+    </style>
 </head>
 <body class="dashboard-body">
 
     <!-- Navbar -->
     <nav class="dash-nav"></nav>
 
-    <main class="dashboard-container reveal" style="padding-top: 100px;">
-        <div class="profile-grid" style="gap: 2.5rem; max-width: 1100px; margin: 0 auto; padding-bottom: 80px;">
+    <main class="dashboard-container reveal" style="padding-top: 15rem;">
+        <div class="profile-grid">
             <!-- Sidebar -->
-            <aside class="profile-sidebar" style="background: white; border-radius: 24px; padding: 2.5rem; box-shadow: var(--shadow-soft); border: 1px solid rgba(0,0,0,0.02); height: fit-content; position: sticky; top: 120px;">
-                <div style="text-align: center; margin-bottom: 2rem;">
-                    <div class="user-avatar" id="profileBigAvatar" style="width: 100px; height: 100px; font-size: 3rem; margin: 0 auto 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">U</div>
-                    <h3 id="sidebarName">User Name</h3>
-                    <p id="sidebarEmail" style="color: var(--text-muted); font-size: 0.9rem;">user@example.com</p>
+            <aside class="profile-sidebar">
+                <div style="text-align: center; margin-bottom: 4rem;">
+                    <div class="user-avatar" id="profileBigAvatar" style="width: 120px; height: 120px; font-size: 3.5rem; margin: 0 auto 2.5rem; background: var(--gradient-main); color: #000; font-weight: 900; border: 4px solid #000; box-shadow: 0 10px 30px rgba(255,140,66,0.3);">U</div>
+                    <h3 id="sidebarName" style="font-family: 'DM Serif Display', serif; font-size: 2.4rem; margin-bottom: 0.5rem; font-weight: 400; color: white;">User Name</h3>
+                    <p id="sidebarEmail" style="color: var(--accent-color); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 3px; font-weight: 700; opacity: 0.7;">user@example.com</p>
                 </div>
 
                 <div class="profile-nav">
-                    <button class="profile-nav-item active" onclick="switchTab('personal')">
-                        <i class="fas fa-user"></i> Personal Info
+                    <button class="profile-nav-item active" onclick="switchTab('personal', this)">
+                        <i class="fas fa-user-shield"></i> Identity
                     </button>
-                    <button class="profile-nav-item" onclick="switchTab('address')">
-                        <i class="fas fa-map-marker-alt"></i> Saved Address
+                    <button class="profile-nav-item" onclick="switchTab('address', this)">
+                        <i class="fas fa-map-marker-alt"></i> Sanctuaries
                     </button>
-                    <button class="profile-nav-item" onclick="switchTab('rewards')">
-                        <i class="fas fa-star"></i> My Rewards
+                    <button class="profile-nav-item" onclick="switchTab('rewards', this)">
+                        <i class="fas fa-crown"></i> Luxe Status
                     </button>
-                    <button class="profile-nav-item" id="logoutSidebarBtn" style="color: var(--primary-color); background: rgba(255, 71, 87, 0.05); margin-top: 2rem;">
-                        <i class="fas fa-sign-out-alt"></i> Log Out
+                    <button class="profile-nav-item" id="logoutSidebarBtn" style="color: var(--primary-color); background: rgba(255, 71, 87, 0.05); margin-top: 4rem; justify-content: center; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">
+                        <i class="fas fa-sign-out-alt"></i> Depart
                     </button>
                 </div>
             </aside>
@@ -42,55 +134,58 @@
             <!-- Main Content Area -->
             <section class="profile-content-area">
                 <!-- Tab: Personal Info -->
-                <div id="personalTab" class="profile-tab-content active" style="background: white; border-radius: 24px; padding: 2.5rem; box-shadow: var(--shadow-soft); border: 1px solid rgba(0,0,0,0.02);">
-                    <div class="profile-info-header" style="margin-bottom: 2.5rem; display: flex; justify-content: space-between; align-items: center;">
-                        <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -0.5px;">Personal Information</h2>
-                        <button class="btn-primary" id="editProfileBtn" style="width: auto; padding: 12px 30px; border-radius: 50px;">Edit Profile</button>
-                    </div>
+                <div id="personalTab" class="profile-tab-content active">
+                    <header style="margin-bottom: 5rem; display: flex; justify-content: space-between; align-items: flex-end;">
+                        <div>
+                            <h2 style="font-size: 3.5rem; font-weight: 400; font-family: 'DM Serif Display', serif; letter-spacing: -1.5px; color: white;">Private Identity</h2>
+                            <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 300;">Manage your secure credentials.</p>
+                        </div>
+                        <button class="btn-primary" id="editProfileBtn" style="width: auto; padding: 15px 40px; border-radius: 50px; font-size: 0.9rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">Update Protocol</button>
+                    </header>
 
-                    <form id="profileForm" class="profile-form-grid">
-                        <div class="input-group full-width">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">Full Name</label>
+                    <form id="profileForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+                        <div class="input-group" style="grid-column: 1 / -1;">
+                            <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Full Distinction</label>
                             <div style="position: relative;">
-                                <i class="fas fa-user" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #aaa;"></i>
-                                <input type="text" id="inputName" name="name" style="padding-left: 3rem;" disabled required>
+                                <i class="fas fa-user" style="position: absolute; left: 20px; top: 22px; color: var(--accent-color); opacity: 0.6;"></i>
+                                <input type="text" id="inputName" name="name" style="padding-left: 55px !important; width: 100%;" disabled required>
                             </div>
                         </div>
                         <div class="input-group">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">Email Address</label>
+                            <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Secure Email</label>
                             <div style="position: relative;">
-                                <i class="fas fa-envelope" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #aaa;"></i>
-                                <input type="email" id="inputEmail" name="email" style="padding-left: 3rem;" disabled readonly>
+                                <i class="fas fa-envelope" style="position: absolute; left: 20px; top: 22px; color: var(--accent-color); opacity: 0.6;"></i>
+                                <input type="email" id="inputEmail" name="email" style="padding-left: 55px !important; width: 100%;" disabled readonly>
                             </div>
                         </div>
                         <div class="input-group">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">Phone Number</label>
+                            <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Luxe Hotline</label>
                             <div style="position: relative;">
-                                <i class="fas fa-phone" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #aaa;"></i>
-                                <input type="tel" id="inputPhone" name="phone" placeholder="Add phone number" style="padding-left: 3rem;" disabled>
+                                <i class="fas fa-phone" style="position: absolute; left: 20px; top: 22px; color: var(--accent-color); opacity: 0.6;"></i>
+                                <input type="tel" id="inputPhone" name="phone" placeholder="Add contact number" style="padding-left: 55px !important; width: 100%;" disabled>
                             </div>
                         </div>
                         
-                        <div id="formActions" class="full-width" style="display: none; justify-content: flex-end; gap: 1rem;">
-                            <button type="button" id="cancelEditBtn" class="back-link" style="width: auto; margin-top: 0;">Cancel</button>
-                            <button type="submit" class="btn-primary" style="width: auto; padding: 0.7rem 2rem;">Save Changes</button>
+                        <div id="formActions" style="grid-column: 1 / -1; display: none; justify-content: flex-end; gap: 2rem; margin-top: 2rem;">
+                            <button type="button" id="cancelEditBtn" style="background: transparent; border: none; color: white; cursor: pointer; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; opacity: 0.6;">Cancel</button>
+                            <button type="submit" class="btn-primary" style="width: auto; padding: 15px 45px; border-radius: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">Save protocol</button>
                         </div>
                     </form>
 
-                    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #eee;">
-                        <h3>Account Statistics</h3>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; text-align: center;">
-                            <div style="padding: 1.5rem; background: #f8f9fa; border-radius: 15px;">
-                                <div id="totalOrdersCount" style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">0</div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted);">Total Orders</div>
+                    <div style="margin-top: 6rem; padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.05);">
+                        <h3 style="font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 2.5rem; color: white;">Global Statistics</h3>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                            <div style="padding: 2.5rem; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); text-align: center;">
+                                <div id="totalOrdersCount" style="font-size: 3rem; font-weight: 400; color: var(--primary-color); font-family: 'DM Serif Display', serif;">0</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 3px; font-weight: 800; margin-top: 10px;">Indulgences</div>
                             </div>
-                            <div style="padding: 1.5rem; background: #f8f9fa; border-radius: 15px;">
-                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">4.8</div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted);">Review Avg</div>
+                            <div style="padding: 2.5rem; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); text-align: center;">
+                                <div style="font-size: 3rem; font-weight: 400; color: var(--accent-color); font-family: 'DM Serif Display', serif;">4.9</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 3px; font-weight: 800; margin-top: 10px;">Taste Profile</div>
                             </div>
-                            <div style="padding: 1.5rem; background: #f8f9fa; border-radius: 15px;">
-                                <div id="membershipStatus" style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">Gold</div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted);">Membership</div>
+                            <div style="padding: 2.5rem; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); text-align: center;">
+                                <div id="membershipStatus" style="font-size: 2rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 2px; margin-top: 10px;">Elite</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 3px; font-weight: 800; margin-top: 15px;">Circle</div>
                             </div>
                         </div>
                     </div>
@@ -98,85 +193,74 @@
 
                 <!-- Tab: Address -->
                 <div id="addressTab" class="profile-tab-content">
-                    <div class="profile-info-header">
-                        <h2>Saved Address</h2>
-                    </div>
+                    <header style="margin-bottom: 5rem;">
+                        <h2 style="font-size: 3.5rem; font-weight: 400; font-family: 'DM Serif Display', serif; letter-spacing: -1.5px; color: white;">Sanctuaries</h2>
+                        <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 300;">Saved delivery destinations for seamless arrival.</p>
+                    </header>
                     
-                    <div id="addressDisplay" style="padding: 2rem; border: 2px dashed #ddd; border-radius: 15px; text-align: center;">
-                        <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: #ddd; margin-bottom: 1rem;"></i>
-                        <p id="savedAddressText">No address saved yet.</p>
-                        <button class="btn-primary" onclick="enableAddressEdit()" style="width: auto; margin: 1rem auto 0; padding: 0.5rem 1.5rem;">Add Address</button>
+                    <div id="addressDisplay" style="padding: 6rem 3rem; border: 1px dashed rgba(255,255,255,0.1); border-radius: 25px; text-align: center; background: rgba(255,255,255,0.01);">
+                        <i class="fas fa-map-marked-alt" style="font-size: 4rem; color: rgba(255,255,255,0.05); margin-bottom: 2rem;"></i>
+                        <p id="savedAddressText" style="font-size: 1.2rem; color: var(--text-muted); font-weight: 300;">No sanctuary registered in the database.</p>
+                        <button class="btn-primary" onclick="enableAddressEdit()" style="width: auto; margin: 3rem auto 0; padding: 15px 40px; border-radius: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">Register Sanctuary</button>
                     </div>
 
-                    <form id="addressForm" class="profile-form-grid" style="display: none;">
-                        <div class="input-group full-width">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">Street Address</label>
-                            <textarea id="inputAddress" name="address" rows="3" style="width: 100%; padding: 1rem; border: 2px solid var(--input-border); border-radius: 12px; font-size: 1rem;"></textarea>
+                    <form id="addressForm" style="display: none; grid-template-columns: 1fr 1fr; gap: 3rem;">
+                        <div class="input-group" style="grid-column: 1 / -1;">
+                            <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Sanctuary Coordinates</label>
+                            <textarea id="inputAddress" name="address" rows="3" placeholder="Detailed street address..." style="width: 100%; border-radius: 15px;"></textarea>
                         </div>
                         <div class="input-group">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">City</label>
-                            <input type="text" id="inputCity" name="city" style="width: 100%; padding: 1rem; border: 2px solid var(--input-border); border-radius: 12px;">
+                            <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">City Realm</label>
+                            <input type="text" id="inputCity" name="city" style="width: 100%;">
                         </div>
                         <div class="input-group">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">Zip Code</label>
-                            <input type="text" id="inputZip" name="zip" style="width: 100%; padding: 1rem; border: 2px solid var(--input-border); border-radius: 12px;">
+                            <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Postal Code</label>
+                            <input type="text" id="inputZip" name="zip" style="width: 100%;">
                         </div>
-                        <div class="full-width" style="display: flex; justify-content: flex-end; gap: 1rem;">
-                            <button type="button" onclick="cancelAddressEdit()" class="back-link" style="width: auto; margin-top: 0;">Cancel</button>
-                            <button type="submit" class="btn-primary" style="width: auto; padding: 0.7rem 2rem;">Save Address</button>
+                        <div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 2rem; margin-top: 2rem;">
+                            <button type="button" onclick="cancelAddressEdit()" style="background: transparent; border: none; color: white; cursor: pointer; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; opacity: 0.6;">Cancel</button>
+                            <button type="submit" class="btn-primary" style="width: auto; padding: 15px 45px; border-radius: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">Save Sanctuary</button>
                         </div>
                     </form>
                 </div>
 
                 <!-- Tab: Rewards -->
                 <div id="rewardsTab" class="profile-tab-content">
-                    <div class="profile-info-header">
-                        <h2>Crave Rewards</h2>
-                    </div>
+                    <header style="margin-bottom: 5rem;">
+                        <h2 style="font-size: 3.5rem; font-weight: 400; font-family: 'DM Serif Display', serif; letter-spacing: -1.5px; color: white;">Luxe Status</h2>
+                        <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 300;">Your standing within the Crave elite circle.</p>
+                    </header>
 
-                    <div class="rewards-card" style="background: var(--gradient-main); border-radius: 24px; padding: 2.5rem; color: white; margin-bottom: 2.5rem; position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(255, 71, 87, 0.3);">
-                        <i class="fas fa-crown" style="position: absolute; right: -20px; bottom: -20px; font-size: 8rem; opacity: 0.15;"></i>
-                        <div style="display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2;">
+                    <div class="rewards-card">
+                        <i class="fas fa-crown" style="position: absolute; right: -30px; bottom: -30px; font-size: 12rem; opacity: 0.08;"></i>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 2;">
                             <div>
-                                <p style="opacity: 0.9; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Available Points</p>
-                                <div class="points-value" id="userPoints" style="font-size: 3.5rem; font-weight: 900; margin: 0.5rem 0;">750</div>
+                                <p style="opacity: 0.6; font-size: 0.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 4px;">Available Privilege Points</p>
+                                <div class="points-value" id="userPoints" style="font-size: 6rem; font-weight: 400; font-family: 'DM Serif Display', serif; margin: 1rem 0;">750</div>
                             </div>
-                            <div style="background: rgba(255,255,255,0.2); padding: 12px 24px; border-radius: 50px; font-weight: 700; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3);">
-                                Platinum Tier
+                            <div style="background: rgba(0,0,0,0.1); padding: 15px 35px; border-radius: 50px; font-weight: 900; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); text-transform: uppercase; letter-spacing: 3px; font-size: 0.9rem;">
+                                Platinum Elite
                             </div>
                         </div>
-                        <div class="progress-container" style="background: rgba(255,255,255,0.2); height: 10px; border-radius: 10px; margin: 1.5rem 0 1rem; position: relative; z-index: 2;">
-                            <div class="progress-bar" id="pointsProgress" style="width: 75%; background: white; height: 100%; border-radius: 10px; box-shadow: 0 0 15px rgba(255,255,255,0.5);"></div>
+                        <div style="background: rgba(0,0,0,0.05); height: 12px; border-radius: 10px; margin: 3rem 0 1.5rem; position: relative; z-index: 2; border: 1px solid rgba(255,255,255,0.1);">
+                            <div id="pointsProgress" style="width: 75%; background: #000; height: 100%; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.2);"></div>
                         </div>
-                        <p style="font-size: 0.9rem; opacity: 0.9; font-weight: 500; position: relative; z-index: 2;">250 more points until your next free meal!</p>
+                        <p style="font-size: 1rem; opacity: 0.7; font-weight: 800; position: relative; z-index: 2; text-transform: uppercase; letter-spacing: 2px;">250 points until your next complimentary masterpiece.</p>
                     </div>
 
-                    <h3>Redeemable Offers</h3>
-                    <div style="display: grid; gap: 1rem; margin-top: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border: 1px solid #eee; border-radius: 15px;">
-                            <div style="display: flex; gap: 1rem; align-items: center;">
-                                <div style="width: 50px; height: 50px; background: #fff5f6; color: var(--primary-color); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                    <h3 style="margin: 6rem 0 3rem; font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: white;">Exclusive Redemptions</h3>
+                    <div style="display: grid; gap: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 2.5rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; transition: 0.4s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'; this.style.borderColor='rgba(255,140,66,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.borderColor='rgba(255,255,255,0.05)'">
+                            <div style="display: flex; gap: 2rem; align-items: center;">
+                                <div style="width: 65px; height: 65px; background: rgba(255,140,66,0.1); color: var(--primary-color); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 1px solid rgba(255,140,66,0.2);">
                                     <i class="fas fa-ticket-alt"></i>
                                 </div>
                                 <div>
-                                    <h4 style="margin: 0;">50% Off Your Next Pizza</h4>
-                                    <p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Redeem for 500 points</p>
+                                    <h4 style="margin: 0; font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: white;">50% Privilege Pass</h4>
+                                    <p style="margin: 5px 0 0; font-size: 0.85rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">Unlock for 500 points</p>
                                 </div>
                             </div>
-                            <button class="btn-primary" style="width: auto; padding: 0.5rem 1rem; font-size: 0.9rem;">Redeem</button>
-                        </div>
-                        
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border: 1px solid #eee; border-radius: 15px;">
-                            <div style="display: flex; gap: 1rem; align-items: center;">
-                                <div style="width: 50px; height: 50px; background: #fff5f6; color: var(--primary-color); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
-                                    <i class="fas fa-truck"></i>
-                                </div>
-                                <div>
-                                    <h4 style="margin: 0;">Free Delivery for 1 Month</h4>
-                                    <p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Redeem for 1000 points</p>
-                                </div>
-                            </div>
-                            <button class="btn-primary" style="width: auto; padding: 0.5rem 1rem; font-size: 0.9rem; opacity: 0.5;" disabled>Locked</button>
+                            <button class="btn-primary" style="width: auto; padding: 12px 35px; font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; border-radius: 12px;">Redeem</button>
                         </div>
                     </div>
                 </div>
@@ -184,9 +268,9 @@
         </div>
     </main>
 
-    <div class="toast-container" id="toastContainer"></div>
-
     <div id="footerContainer"></div>
+    <div id="toastContainer"></div>
+
     <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -199,6 +283,14 @@
             document.getElementById('editProfileBtn').addEventListener('click', toggleEditMode);
             document.getElementById('cancelEditBtn').addEventListener('click', toggleEditMode);
             
+            const logoutSidebarBtn = document.getElementById('logoutSidebarBtn');
+            if (logoutSidebarBtn) {
+                logoutSidebarBtn.onclick = () => {
+                    localStorage.removeItem('user_session');
+                    window.location.href = 'signin.html';
+                };
+            }
+
             // Forms
             document.getElementById('profileForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -236,18 +328,14 @@
                 if (result.success) {
                     const user = result.user;
                     
-                    // Sidebar
                     document.getElementById('sidebarName').textContent = user.name;
                     document.getElementById('sidebarEmail').textContent = user.email;
                     document.getElementById('profileBigAvatar').textContent = user.name.charAt(0).toUpperCase();
-                    document.getElementById('profileBigAvatar').style.background = user.avatar_color || 'var(--primary-color)';
                     
-                    // Personal Tab
                     document.getElementById('inputName').value = user.name;
                     document.getElementById('inputEmail').value = user.email;
                     document.getElementById('inputPhone').value = user.phone || '';
                     
-                    // Address Tab
                     if (user.address) {
                         document.getElementById('addressDisplay').style.display = 'none';
                         document.getElementById('addressForm').style.display = 'grid';
@@ -257,20 +345,17 @@
                         document.getElementById('savedAddressText').textContent = `${user.address}, ${user.city || ''} ${user.zip || ''}`;
                     }
 
-                    // Rewards
                     document.getElementById('userPoints').textContent = user.points || 0;
                     const progress = Math.min(((user.points || 0) % 1000) / 10, 100);
                     document.getElementById('pointsProgress').style.width = `${progress}%`;
 
-                    // Statistics
                     document.getElementById('totalOrdersCount').textContent = user.total_orders || 0;
                     
-                    // Dynamic Membership
                     const points = parseInt(user.points || 0);
-                    let membership = 'Bronze';
-                    if (points >= 1500) membership = 'Platinum';
-                    else if (points >= 1000) membership = 'Gold';
-                    else if (points >= 500) membership = 'Silver';
+                    let membership = 'Elite';
+                    if (points >= 1500) membership = 'Platinum Elite';
+                    else if (points >= 1000) membership = 'Gold Circle';
+                    else if (points >= 500) membership = 'Silver Tier';
                     document.getElementById('membershipStatus').textContent = membership;
                 }
             } catch (error) {
@@ -291,29 +376,24 @@
                     showToast(result.message, 'success');
                     loadUserProfile(data.email);
                     
-                    // Update session if name changed
                     if(data.name) {
                         const session = JSON.parse(localStorage.getItem('user_session'));
                         session.name = data.name;
                         localStorage.setItem('user_session', JSON.stringify(session));
-                        // Refresh navbar display
-                        document.getElementById('userNameDisplay').textContent = data.name;
-                        document.getElementById('userAvatar').textContent = data.name.charAt(0).toUpperCase();
+                        renderNavbar(); // Global function to refresh nav
                     }
                 } else {
                     showToast(result.message, 'error');
                 }
             } catch (error) {
-                showToast('Something went wrong', 'error');
+                showToast('Protocol interruption', 'error');
             }
         }
 
-        function switchTab(tab) {
-            // Update buttons
-            document.querySelectorAll('.profile-nav-item').forEach(btn => btn.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+        function switchTab(tab, btn) {
+            document.querySelectorAll('.profile-nav-item').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
-            // Update content
             document.querySelectorAll('.profile-tab-content').forEach(content => content.classList.remove('active'));
             document.getElementById(`${tab}Tab`).classList.add('active');
         }

@@ -3,119 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cart | Crave</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Luxe Cart | Your Curated Selection</title>
+    <!-- Fonts via style.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=15">
+    <style>
+        .cart-item-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            display: flex;
+            gap: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.4s;
+        }
+        .cart-item-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateX(10px);
+            border-color: rgba(255, 140, 66, 0.2);
+        }
+        .order-summary-box {
+            background: #161618;
+            padding: 3.5rem;
+            border-radius: var(--radius-xl);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: sticky;
+            top: 120px;
+        }
+        .qty-btn {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .qty-btn:hover {
+            background: var(--primary-color);
+            color: #000;
+        }
+        input, textarea, select {
+            background: rgba(255,255,255,0.03) !important;
+            border: 1px solid rgba(255,255,255,0.08) !important;
+            color: white !important;
+            outline: none;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 20px rgba(255, 140, 66, 0.1) !important;
+        }
+    </style>
 </head>
 <body class="dashboard-body">
 
     <!-- Navbar -->
     <nav class="dash-nav"></nav>
 
-    <main class="dashboard-container reveal" style="padding-top: 120px; max-width: 1200px; margin: 0 auto; padding-bottom: 80px;">
+    <main class="dashboard-container reveal" style="padding-top: 15rem; max-width: 1400px; margin: 0 auto; padding-bottom: 12rem;">
         <!-- Cart Header -->
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
-            <div>
-                <h1 style="font-size: 2rem; font-weight: 800; color: var(--text-main); margin-bottom: 4px;">Your Cart 🛒</h1>
-                <p style="color: var(--text-muted); font-size: 0.95rem;" id="cartItemCount">Loading items...</p>
+        <header style="margin-bottom: 6rem; text-align: left;">
+            <div style="background: rgba(255, 140, 66, 0.1); color: var(--primary-color); padding: 10px 25px; border-radius: 50px; display: inline-block; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 2rem; border: 1px solid rgba(255, 140, 66, 0.2);">
+                🛒 Your Curated Selection
             </div>
-            <a href="menu.html" style="text-decoration: none; display: flex; align-items: center; gap: 8px; color: var(--primary-color); font-weight: 600; font-size: 0.95rem; border: 2px solid var(--primary-color); padding: 10px 20px; border-radius: 50px; transition: all 0.3s;" onmouseover="this.style.background='var(--primary-color)';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='var(--primary-color)'">
-                <i class="fas fa-plus"></i> Add More
-            </a>
-        </div>
-        <div id="cartContent" style="display: grid; grid-template-columns: 1fr 370px; gap: 2rem; align-items: start;">
+            <div style="display: flex; align-items: flex-end; justify-content: space-between;">
+                <div>
+                    <h1 style="font-size: 5rem; font-weight: 400; color: white; margin-bottom: 1rem; font-family: 'DM Serif Display', serif; letter-spacing: -2px;">The Collection</h1>
+                    <p style="color: var(--text-muted); font-size: 1.2rem; font-weight: 300;" id="cartItemCount">Reviewing your gourmet choices...</p>
+                </div>
+                <a href="menu.html" style="text-decoration: none; display: flex; align-items: center; gap: 12px; color: var(--accent-color); font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; border: 1px solid var(--accent-color); padding: 15px 35px; border-radius: 50px; transition: 0.4s;" onmouseover="this.style.background='var(--accent-color)';this.style.color='black';this.style.boxShadow='0 10px 20px rgba(249, 200, 14, 0.2)'" onmouseout="this.style.background='transparent';this.style.color='var(--accent-color)';this.style.boxShadow='none'">
+                    <i class="fas fa-plus"></i> Add Masterpiece
+                </a>
+            </div>
+        </header>
+
+        <div id="cartContent" style="display: grid; grid-template-columns: 1fr 450px; gap: 5rem; align-items: start;">
             <!-- Cart Items -->
-            <div id="cartItemsList" style="display: flex; flex-direction: column; gap: 1rem;">
+            <div id="cartItemsList" style="display: flex; flex-direction: column; gap: 2rem;">
                 <!-- Dynamically filled -->
             </div>
 
             <!-- Order Summary -->
-            <div id="orderSummary" style="background: white; padding: 2.5rem; border-radius: 30px; box-shadow: var(--shadow-premium); height: fit-content; border: 1px solid rgba(0,0,0,0.02);">
-                <h3 style="margin-bottom: 2rem; border-bottom: 2px solid #f8f9fa; padding-bottom: 1.2rem; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px;">Checkout Details</h3>
-                <div style="margin-bottom: 1.5rem;">
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">Delivery Address</label>
-                    <textarea id="deliveryAddress" placeholder="Enter your full delivery address..." style="width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 12px; font-family: inherit; resize: none; height: 80px;"></textarea>
+            <div class="order-summary-box">
+                <h3 style="margin-bottom: 3.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem; font-size: 2rem; font-weight: 400; font-family: 'DM Serif Display', serif; letter-spacing: -1px;">Protocol Details</h3>
+                
+                <div style="margin-bottom: 2.5rem;">
+                    <label style="display: block; margin-bottom: 1.2rem; font-weight: 700; font-size: 0.8rem; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px;">The Delivery Sanctuary</label>
+                    <textarea id="deliveryAddress" placeholder="Enter your full sanctuary address..." style="width: 100%; padding: 18px; border-radius: 15px; font-family: inherit; resize: none; height: 100px; font-size: 1.05rem;"></textarea>
                 </div>
 
-                <div style="margin-bottom: 1.5rem;">
-                    <label for="paymentMethod" style="display: block; margin-bottom: 0.6rem; font-weight: 600; font-size: 0.9rem;">Payment Method</label>
+                <div style="margin-bottom: 2.5rem;">
+                    <label style="display: block; margin-bottom: 1.2rem; font-weight: 700; font-size: 0.8rem; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px;">Payment Protocol</label>
                     <div style="position: relative;">
-                        <span style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--primary-color); font-size: 1rem; pointer-events: none;" id="paymentIcon">
+                        <span style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--accent-color); font-size: 1.1rem; pointer-events: none;" id="paymentIcon">
                             <i class="fas fa-money-bill-wave"></i>
                         </span>
                         <select id="paymentMethod" onchange="updatePaymentIcon(this)" style="
                             width: 100%;
-                            padding: 13px 42px 13px 42px;
-                            border: 2px solid #eee;
-                            border-radius: 12px;
+                            padding: 15px 50px;
+                            border-radius: 15px;
                             font-family: inherit;
-                            font-size: 0.95rem;
-                            font-weight: 500;
-                            color: var(--text-main);
-                            background: #fff;
+                            font-size: 1rem;
+                            font-weight: 600;
                             appearance: none;
-                            -webkit-appearance: none;
                             cursor: pointer;
-                            transition: border-color 0.3s, box-shadow 0.3s;
-                            outline: none;
-                        "
-                        onfocus="this.style.borderColor='var(--primary-color)';this.style.boxShadow='0 0 0 3px rgba(232,67,67,0.12)'"
-                        onblur="this.style.borderColor='#eee';this.style.boxShadow='none'">
-                            <option value="cod">🏠 Cash on Delivery — Pay when you receive</option>
-                            <option value="card">💳 Credit / Debit Card — All major cards supported</option>
-                            <option value="upi">📱 UPI / Net Banking — Fast &amp; secure payment</option>
-                            <option value="wallet">👛 Wallet — Use your Crave wallet balance</option>
+                        ">
+                            <option value="cod">🏠 Cash on Delivery</option>
+                            <option value="card">💳 Elite Credit / Debit</option>
+                            <option value="upi">📱 Secure UPI</option>
+                            <option value="wallet">👛 Luxe Wallet Balance</option>
                         </select>
-                        <span style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #aaa; pointer-events: none;">
+                        <span style="position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3); pointer-events: none;">
                             <i class="fas fa-chevron-down"></i>
                         </span>
                     </div>
-                    <p id="paymentHint" style="margin-top: 6px; font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 5px;">
-                        <i class="fas fa-shield-alt" style="color: var(--primary-color);"></i>
-                        100% secure &amp; encrypted payment
-                    </p>
                 </div>
 
-                <div style="margin-bottom: 1.5rem; background: #f9f9f9; padding: 1.2rem; border-radius: 14px; border: 1px dashed #ddd;">
-                    <label style="display: block; margin-bottom: 0.6rem; font-weight: 600; font-size: 0.9rem;">Have a Coupon?</label>
-                    <div style="display: flex; gap: 8px;">
-                        <input type="text" id="couponCode" placeholder="Enter code (e.g. CRAVE50)" style="flex: 1; padding: 10px; border: 2px solid #eee; border-radius: 10px; font-family: inherit; text-transform: uppercase;">
-                        <button onclick="applyCoupon()" style="background: #2d3436; color: white; border: none; padding: 0 15px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s;" onmouseover="this.style.background='black'" onmouseout="this.style.background='#2d3436'">Apply</button>
+                <div style="margin-bottom: 3rem; background: rgba(255,255,255,0.02); padding: 2rem; border-radius: 20px; border: 1px dashed rgba(255,255,255,0.1);">
+                    <label style="display: block; margin-bottom: 1.2rem; font-weight: 700; font-size: 0.8rem; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px;">Privilege Code</label>
+                    <div style="display: flex; gap: 12px;">
+                        <input type="text" id="couponCode" placeholder="Enter code..." style="flex: 1; padding: 12px 20px; border-radius: 12px; font-family: inherit; text-transform: uppercase; font-weight: 700; letter-spacing: 2px;">
+                        <button onclick="applyCoupon()" style="background: var(--accent-color); color: #000; border: none; padding: 0 25px; border-radius: 12px; font-weight: 900; cursor: pointer; transition: 0.4s; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Apply</button>
                     </div>
-                    <div id="couponMessage" style="margin-top: 8px; font-size: 0.82rem; font-weight: 500; display: none;"></div>
+                    <div id="couponMessage" style="margin-top: 12px; font-size: 0.85rem; font-weight: 600; display: none;"></div>
                 </div>
 
-                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                    <span>Subtotal</span>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem; font-size: 1.1rem; opacity: 0.6;">
+                    <span>Selection Subtotal</span>
                     <span id="subtotal">₹0</span>
                 </div>
-                <div id="discountRow" style="display: none; justify-content: space-between; margin-bottom: 1rem; color: #27ae60; font-weight: 500;">
-                    <span id="discountLabel">Discount</span>
+                <div id="discountRow" style="display: none; justify-content: space-between; margin-bottom: 1.5rem; color: var(--accent-color); font-weight: 700;">
+                    <span id="discountLabel">Privilege Discount</span>
                     <span id="discountAmount">-₹0</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                    <span>Delivery Fee</span>
-                    <span style="color: #27ae60; font-weight: 500;">FREE</span>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem; opacity: 0.6;">
+                    <span>Priority Delivery</span>
+                    <span style="color: var(--accent-color); font-weight: 700;">COMPLIMENTARY</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-top: 1.5rem; border-top: 1px solid #eee; padding-top: 1rem; font-size: 1.25rem; font-weight: 700;">
+                <div style="display: flex; justify-content: space-between; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; font-size: 1.8rem; font-family: 'DM Serif Display', serif;">
                     <span>Total</span>
-                    <span id="totalPrice">₹0</span>
+                    <span id="totalPrice" style="color: var(--accent-color); font-size: 2.5rem;">₹0</span>
                 </div>
-                <button id="placeOrderBtn" class="btn-primary" style="width: 100%; margin-top: 2rem; padding: 15px; font-size: 1.1rem;">
-                    Place Order <i class="fas fa-arrow-right"></i>
+                <button id="placeOrderBtn" class="btn-primary" style="width: 100%; margin-top: 4rem; padding: 25px; border-radius: 25px; font-size: 1.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: 4px; background: var(--gradient-main); color: #000; box-shadow: 0 20px 40px rgba(255, 140, 66, 0.4);">
+                    Confirm Order <i class="fas fa-arrow-right" style="margin-left: 15px;"></i>
                 </button>
             </div>
         </div>
 
-        <div id="emptyCartMessage" style="display: none; background: white; padding: 4rem 2rem; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-            <i class="fas fa-shopping-basket" style="font-size: 5rem; color: #eee; margin-bottom: 1.5rem;"></i>
-            <h2>Your Cart is Empty</h2>
-            <p style="color: #666; margin-bottom: 2.5rem;">Looks like you haven't added anything to your cart yet.</p>
-            <a href="index.html" class="btn-primary" style="text-decoration: none; padding: 12px 30px;">Browse Delicious Foods</a>
+        <div id="emptyCartMessage" style="display: none; background: rgba(255,255,255,0.02); padding: 10rem 4rem; border-radius: var(--radius-xl); text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+            <i class="fas fa-shopping-basket" style="font-size: 6rem; color: rgba(255,255,255,0.05); margin-bottom: 3rem;"></i>
+            <h2 style="font-family: 'DM Serif Display', serif; font-size: 3.5rem; margin-bottom: 1.5rem;">The Vault is Empty</h2>
+            <p style="color: var(--text-muted); margin-bottom: 4.5rem; font-size: 1.4rem; font-weight: 300;">Your collection awaits its first masterpiece.</p>
+            <a href="menu.html" class="btn-primary" style="text-decoration: none; padding: 20px 50px; border-radius: 25px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; background: var(--gradient-main); color: #000;">Discover Menu</a>
         </div>
     </main>
 
+    <div id="footerContainer"></div>
     <div id="toastContainer"></div>
 
     <script src="script.js"></script>
@@ -144,35 +189,35 @@
 
                 let total = 0;
                 const itemCount = cart.reduce((t, i) => t + i.quantity, 0);
-                document.getElementById('cartItemCount').textContent = `${cart.length} item${cart.length > 1 ? 's' : ''} · ${itemCount} total`;
+                document.getElementById('cartItemCount').textContent = `${cart.length} Masterpiece${cart.length > 1 ? 's' : ''} · ${itemCount} Varieties`;
 
                 cartItemsList.innerHTML = cart.map(item => {
                     const itemTotal = item.price * item.quantity;
                     total += itemTotal;
                     const escapedName = item.name.replace(/'/g, "\\'");
                     return `
-                        <div class="cart-item-card" style="background: white; border-radius: 20px; padding: 1.2rem; display: flex; gap: 1.5rem; box-shadow: var(--shadow-soft); transition: 0.3s; border: 1px solid rgba(0,0,0,0.02);" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
-                            <div class="cart-item-img-wrap" style="width: 110px; height: 110px; border-radius: 15px; overflow: hidden;">
-                                <img src="${item.image_url}" alt="${item.name}" class="cart-item-img" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="cart-item-card reveal">
+                            <div style="width: 180px; height: 180px; border-radius: 20px; overflow: hidden; flex-shrink: 0;">
+                                <img src="${item.image_url}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover;">
                             </div>
-                            <div class="cart-item-details">
-                                <div class="cart-item-top">
+                            <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                                     <div>
-                                        <span class="cart-item-badge">${item.category}</span>
-                                        <h3 class="cart-item-name">${item.name}</h3>
-                                        <p class="cart-item-unit-price">₹${item.price} per item</p>
+                                        <span style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: var(--accent-color); margin-bottom: 8px; display: block;">${item.category}</span>
+                                        <h3 style="font-family: 'DM Serif Display', serif; font-size: 2.5rem; margin-bottom: 10px;">${item.name}</h3>
+                                        <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 400;">₹${item.price} per selection</p>
                                     </div>
-                                    <button onclick="removeFromCart('${escapedName}')" class="cart-remove-btn" title="Remove item">
+                                    <button onclick="removeFromCart('${escapedName}')" style="background: rgba(255,71,87,0.1); border: none; color: #ff4757; width: 45px; height: 45px; border-radius: 12px; cursor: pointer; transition: 0.3s;" onmouseover="this.style.background='#ff4757';this.style.color='white'">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </div>
-                                <div class="cart-item-bottom">
-                                    <div class="cart-qty-stepper">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                                    <div style="display: flex; align-items: center; background: rgba(255,255,255,0.03); padding: 8px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); gap: 20px;">
                                         <button onclick="updateQuantity('${escapedName}', -1)" class="qty-btn"><i class="fas fa-minus"></i></button>
-                                        <span class="qty-val">${item.quantity}</span>
+                                        <span style="font-weight: 900; font-size: 1.2rem; min-width: 25px; text-align: center;">${item.quantity}</span>
                                         <button onclick="updateQuantity('${escapedName}', 1)" class="qty-btn"><i class="fas fa-plus"></i></button>
                                     </div>
-                                    <div class="cart-item-total">₹${itemTotal.toLocaleString('en-IN')}</div>
+                                    <div style="font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: white;">₹${itemTotal.toLocaleString('en-IN')}</div>
                                 </div>
                             </div>
                         </div>
@@ -183,25 +228,11 @@
                 totalEl.textContent = `₹${total}`;
             }
 
-            // Payment icon updater for dropdown
             window.updatePaymentIcon = function(sel) {
-                const iconMap = {
-                    cod:    'fa-money-bill-wave',
-                    card:   'fa-credit-card',
-                    upi:    'fa-mobile-alt',
-                    wallet: 'fa-wallet'
-                };
-                const hintMap = {
-                    cod:    'You will pay cash when the order is delivered.',
-                    card:   'Visa, MasterCard, RuPay & more supported.',
-                    upi:    'GPay, PhonePe, Paytm & all UPI apps accepted.',
-                    wallet: 'Instant deduction from your Crave wallet.'
-                };
+                const iconMap = { cod: 'fa-money-bill-wave', card: 'fa-credit-card', upi: 'fa-mobile-alt', wallet: 'fa-wallet' };
                 const iconEl = document.getElementById('paymentIcon');
-                const hintEl = document.getElementById('paymentHint');
                 const val = sel.value;
                 if(iconEl) iconEl.innerHTML = `<i class="fas ${iconMap[val]}"></i>`;
-                if(hintEl) hintEl.innerHTML = `<i class="fas fa-shield-alt" style="color:var(--primary-color);"></i> ${hintMap[val]}`;
             };
 
             let currentDiscount = 0;
@@ -214,54 +245,34 @@
                 const cart = getCart();
                 const subtotal = cart.reduce((t, i) => t + (i.price * i.quantity), 0);
 
-                if (!code) {
-                    showToast('Please enter a coupon code', 'error');
-                    return;
-                }
+                if (!code) { showToast('Protocol Code required', 'error'); return; }
 
                 let discount = 0;
                 let valid = false;
                 let message = '';
 
-                if (code === 'CRAVE50') {
-                    discount = Math.min(subtotal * 0.5, 200);
-                    message = `🎉 CRAVE50 applied! ₹${discount} saved.`;
-                    valid = true;
-                } else if (code === 'LOYAL20') {
-                    discount = subtotal * 0.2;
-                    message = `✨ LOYAL20 applied! 20% off.`;
-                    valid = true;
-                } else if (code === 'NEWUSER30') {
-                    discount = subtotal * 0.3;
-                    message = `👋 Welcome! 30% discount applied.`;
-                    valid = true;
-                } else if (code === 'PIZZAPARTY') {
-                    discount = subtotal * 0.25;
-                    message = `🍕 Pizza Party! 25% off applied.`;
-                    valid = true;
-                } else {
-                    message = '❌ Invalid or expired coupon code.';
-                    valid = false;
-                }
+                if (code === 'CRAVE50') { discount = Math.min(subtotal * 0.5, 200); message = `✨ Code CRAVE50 Valid: ₹${discount} Privilege Applied.`; valid = true; }
+                else if (code === 'LUXE20') { discount = subtotal * 0.2; message = `✨ Code LUXE20 Valid: 20% Privilege Applied.`; valid = true; }
+                else { message = '❌ Invalid Protocol Code.'; valid = false; }
 
                 if (valid) {
                     currentDiscount = discount;
-                    msg.style.color = '#27ae60';
+                    msg.style.color = 'var(--accent-color)';
                     msg.textContent = message;
                     msg.style.display = 'block';
                     discRow.style.display = 'flex';
                     discAmt.textContent = `-₹${Math.round(discount)}`;
-                    discLbl.textContent = `Discount (${code})`;
+                    discLbl.textContent = `Privilege (${code})`;
                     totalEl.textContent = `₹${Math.round(subtotal - discount)}`;
-                    showToast('Coupon applied successfully!', 'success');
+                    showToast('Privilege applied', 'success');
                 } else {
                     currentDiscount = 0;
-                    msg.style.color = '#e84393';
+                    msg.style.color = '#ff4757';
                     msg.textContent = message;
                     msg.style.display = 'block';
                     discRow.style.display = 'none';
                     totalEl.textContent = `₹${subtotal}`;
-                    showToast('Invalid coupon code', 'error');
+                    showToast('Invalid code', 'error');
                 }
             };
 
@@ -273,15 +284,10 @@
                 const payment = document.getElementById('paymentMethod').value;
 
                 if (cart.length === 0) return;
-                
-                if (!address) {
-                    showToast('Please enter a delivery address', 'error');
-                    document.getElementById('deliveryAddress').focus();
-                    return;
-                }
+                if (!address) { showToast('The Sanctuary Address is required', 'error'); return; }
 
                 placeOrderBtn.disabled = true;
-                placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Finalizing Protocol...';
 
                 try {
                     const response = await fetch('api/orders.php?action=place_order', {
@@ -300,20 +306,17 @@
 
                     const data = await response.json();
                     if (data.success) {
-                        showToast('Order placed successfully!', 'success');
+                        showToast('Indulgence Secured', 'success');
                         localStorage.removeItem('cart');
-                        setTimeout(() => {
-                            window.location.href = 'orders.html';
-                        }, 1500);
+                        setTimeout(() => window.location.href = 'orders.html', 1500);
                     } else {
-                        showToast(data.message || 'Failed to place order', 'error');
+                        showToast(data.message || 'Protocol Failed', 'error');
                         placeOrderBtn.disabled = false;
-                        placeOrderBtn.innerHTML = 'Place Order <i class="fas fa-arrow-right"></i>';
+                        placeOrderBtn.innerHTML = 'Confirm Order <i class="fas fa-arrow-right" style="margin-left: 15px;"></i>';
                     }
                 } catch (error) {
-                    showToast('Connection error. Please try again.', 'error');
+                    showToast('Connection interrupted', 'error');
                     placeOrderBtn.disabled = false;
-                    placeOrderBtn.innerHTML = 'Place Order <i class="fas fa-arrow-right"></i>';
                 }
             });
         });

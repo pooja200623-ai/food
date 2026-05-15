@@ -3,77 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | Crave</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Concierge | Crave Luxe Gastronomy</title>
+    <!-- Fonts via style.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=20">
+    <style>
+        .contact-card {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 3.5rem;
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .contact-card:hover {
+            transform: translateX(15px);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 140, 66, 0.2);
+        }
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 140, 66, 0.1);
+            color: var(--primary-color);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 1px solid rgba(255, 140, 66, 0.2);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .contact-form-container {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 5.5rem;
+            border-radius: var(--radius-xl);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+        }
+        input, textarea {
+            background: rgba(255,255,255,0.03) !important;
+            border: 1px solid rgba(255,255,255,0.08) !important;
+            color: white !important;
+            padding: 20px !important;
+            border-radius: 15px !important;
+            font-family: 'Outfit', sans-serif !important;
+            font-size: 1.1rem !important;
+            outline: none !important;
+            width: 100%;
+        }
+        input:focus, textarea:focus {
+            border-color: var(--primary-color) !important;
+            background: rgba(255,255,255,0.05) !important;
+            box-shadow: 0 0 25px rgba(255, 140, 66, 0.1) !important;
+        }
+    </style>
 </head>
 <body class="dashboard-body">
 
     <!-- Navbar -->
     <nav class="dash-nav"></nav>
 
-    <main class="dashboard-container reveal" style="padding-top: 150px; max-width: 1200px; margin: 0 auto; padding-bottom: 80px;">
+    <main class="dashboard-container reveal" style="padding-top: 15rem; max-width: 1400px; margin: 0 auto; padding-bottom: 12rem;">
         
-        <div style="text-align: center; margin-bottom: 6rem;">
-            <div style="background: rgba(255, 71, 87, 0.08); color: var(--primary-color); padding: 8px 24px; border-radius: 50px; display: inline-block; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem;">
-                👋 Get in Touch
+        <div style="text-align: center; margin-bottom: 10rem;">
+            <div style="background: rgba(255, 140, 66, 0.1); color: var(--primary-color); padding: 12px 35px; border-radius: 50px; display: inline-block; font-weight: 900; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 3.5rem; border: 1px solid rgba(255, 140, 66, 0.2);">
+                🛎️ Luxe Concierge
             </div>
-            <h1 style="font-size: 4rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 1rem; color: var(--text-main);">Contact <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Us</span></h1>
-            <p style="font-size: 1.4rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6;">We're here to help you with anything you need. Our team is available 24/7 for your cravings.</p>
+            <h1 style="font-family: 'DM Serif Display', serif; font-size: 6.5rem; font-weight: 400; letter-spacing: -2px; margin-bottom: 2rem; color: white;">Connect <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">With Us</span></h1>
+            <p style="font-size: 1.8rem; color: var(--text-muted); max-width: 800px; margin: 0 auto; line-height: 1.7; font-weight: 300;">Our dedicated concierge team is available 24/7 to ensure your culinary experiences are nothing short of perfection.</p>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; flex-wrap: wrap;">
+        <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 6rem; align-items: start;">
             <!-- Contact Info -->
-            <div style="display: flex; flex-direction: column; gap: 2rem;">
-                <div style="background: white; padding: 2.2rem; border-radius: 24px; box-shadow: var(--shadow-soft); display: flex; align-items: center; gap: 1.8rem; border: 1px solid rgba(0,0,0,0.02); transition: 0.3s;" onmouseover="this.style.transform='translateX(8px)'" onmouseout="this.style.transform='translateX(0)'">
-                    <div style="width: 70px; height: 70px; background: rgba(255, 71, 87, 0.1); color: var(--primary-color); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 8px 20px rgba(255, 71, 87, 0.15);">
+            <div style="display: flex; flex-direction: column; gap: 3rem;">
+                <div class="contact-card">
+                    <div class="contact-icon">
                         <i class="fas fa-phone-alt"></i>
                     </div>
                     <div>
-                        <h4 style="font-size: 1.2rem; margin-bottom: 0.4rem; font-weight: 800;">Phone</h4>
-                        <p style="color: var(--text-muted); font-weight: 500;">+1 (555) 000-FOOD</p>
+                        <h4 style="font-family: 'DM Serif Display', serif; font-size: 1.8rem; margin-bottom: 0.5rem; color: white; font-weight: 400;">Luxe Hotline</h4>
+                        <p style="color: var(--text-muted); font-weight: 400; font-size: 1.1rem; letter-spacing: 1px;">+1 (555) 000-LUXE</p>
                     </div>
                 </div>
-                <div style="background: white; padding: 2.2rem; border-radius: 24px; box-shadow: var(--shadow-soft); display: flex; align-items: center; gap: 1.8rem; border: 1px solid rgba(0,0,0,0.02); transition: 0.3s;" onmouseover="this.style.transform='translateX(8px)'" onmouseout="this.style.transform='translateX(0)'">
-                    <div style="width: 70px; height: 70px; background: rgba(30, 144, 255, 0.1); color: #1e90ff; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 8px 20px rgba(30, 144, 255, 0.15);">
+                <div class="contact-card">
+                    <div class="contact-icon" style="color: var(--accent-color); border-color: rgba(249, 200, 14, 0.2); background: rgba(249, 200, 14, 0.05);">
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div>
-                        <h4 style="font-size: 1.2rem; margin-bottom: 0.4rem; font-weight: 800;">Email</h4>
-                        <p style="color: var(--text-muted); font-weight: 500;">support@craveapp.com</p>
+                        <h4 style="font-family: 'DM Serif Display', serif; font-size: 1.8rem; margin-bottom: 0.5rem; color: white; font-weight: 400;">Concierge Email</h4>
+                        <p style="color: var(--text-muted); font-weight: 400; font-size: 1.1rem; letter-spacing: 1px;">hello@craveluxe.com</p>
                     </div>
                 </div>
-                <div style="background: white; padding: 2.2rem; border-radius: 24px; box-shadow: var(--shadow-soft); display: flex; align-items: center; gap: 1.8rem; border: 1px solid rgba(0,0,0,0.02); transition: 0.3s;" onmouseover="this.style.transform='translateX(8px)'" onmouseout="this.style.transform='translateX(0)'">
-                    <div style="width: 70px; height: 70px; background: rgba(241, 196, 15, 0.1); color: #f1c40f; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 8px 20px rgba(241, 196, 15, 0.15);">
+                <div class="contact-card">
+                    <div class="contact-icon" style="color: #2ed573; border-color: rgba(46, 213, 115, 0.2); background: rgba(46, 213, 115, 0.05);">
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <div>
-                        <h4 style="font-size: 1.2rem; margin-bottom: 0.4rem; font-weight: 800;">Location</h4>
-                        <p style="color: var(--text-muted); font-weight: 500;">123 Foodie Lane, Gourmet City</p>
+                        <h4 style="font-family: 'DM Serif Display', serif; font-size: 1.8rem; margin-bottom: 0.5rem; color: white; font-weight: 400;">The Sanctuary</h4>
+                        <p style="color: var(--text-muted); font-weight: 400; font-size: 1.1rem; letter-spacing: 1px;">777 Gourmet Plaza, Elite City</p>
                     </div>
                 </div>
             </div>
 
             <!-- Contact Form -->
-            <div style="background: white; padding: 4rem; border-radius: 35px; box-shadow: var(--shadow-premium); border: 1px solid rgba(0,0,0,0.02);">
+            <div class="contact-form-container">
                 <form id="contactForm">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem;">
                         <div>
-                            <label style="display: block; margin-bottom: 0.8rem; font-weight: 700; color: var(--text-main); font-size: 0.95rem;">Full Name</label>
-                            <input type="text" placeholder="John Doe" style="width: 100%; padding: 18px; border: 2px solid #f1f2f6; border-radius: 15px; font-family: inherit; font-size: 1rem; transition: 0.3s;" onfocus="this.style.borderColor='var(--primary-color)';this.style.background='var(--input-focus)'" onblur="this.style.borderColor='#f1f2f6';this.style.background='white'">
+                            <label style="display: block; margin-bottom: 1.2rem; font-weight: 700; color: var(--primary-color); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px;">Full Distinction</label>
+                            <input type="text" placeholder="Johnathan Doe" required>
                         </div>
                         <div>
-                            <label style="display: block; margin-bottom: 0.8rem; font-weight: 700; color: var(--text-main); font-size: 0.95rem;">Email Address</label>
-                            <input type="email" placeholder="john@example.com" style="width: 100%; padding: 18px; border: 2px solid #f1f2f6; border-radius: 15px; font-family: inherit; font-size: 1rem; transition: 0.3s;" onfocus="this.style.borderColor='var(--primary-color)';this.style.background='var(--input-focus)'" onblur="this.style.borderColor='#f1f2f6';this.style.background='white'">
+                            <label style="display: block; margin-bottom: 1.2rem; font-weight: 700; color: var(--primary-color); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px;">Secure Email</label>
+                            <input type="email" placeholder="john@luxe.com" required>
                         </div>
                     </div>
-                    <div style="margin-bottom: 2.5rem;">
-                        <label style="display: block; margin-bottom: 0.8rem; font-weight: 700; color: var(--text-main); font-size: 0.95rem;">Message</label>
-                        <textarea placeholder="How can we help you?" style="width: 100%; padding: 18px; border: 2px solid #f1f2f6; border-radius: 15px; font-family: inherit; font-size: 1rem; height: 180px; resize: none; transition: 0.3s;" onfocus="this.style.borderColor='var(--primary-color)';this.style.background='var(--input-focus)'" onblur="this.style.borderColor='#f1f2f6';this.style.background='white'"></textarea>
+                    <div style="margin-bottom: 4rem;">
+                        <label style="display: block; margin-bottom: 1.2rem; font-weight: 700; color: var(--primary-color); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px;">The Inquiry</label>
+                        <textarea placeholder="How may we assist in your culinary journey?" style="height: 220px;" required></textarea>
                     </div>
-                    <button type="submit" class="btn-primary" style="width: 100%; padding: 20px; font-size: 1.1rem; border-radius: 18px; font-weight: 700; box-shadow: 0 10px 20px rgba(255, 71, 87, 0.2);">
-                        Send Message <i class="fas fa-paper-plane" style="margin-left: 12px;"></i>
+                    <button type="submit" class="btn-primary" style="width: 100%; padding: 25px; font-size: 1.1rem; border-radius: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 4px; background: var(--gradient-main); color: #000; box-shadow: 0 20px 40px rgba(255, 140, 66, 0.3);">
+                        Transmit Message <i class="fas fa-paper-plane" style="margin-left: 15px;"></i>
                     </button>
                 </form>
             </div>
@@ -82,12 +136,14 @@
     </main>
 
     <div id="footerContainer"></div>
+    <div id="toastContainer"></div>
+
     <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('contactForm').addEventListener('submit', (e) => {
                 e.preventDefault();
-                showToast('Thank you! Your message has been sent.', 'success');
+                showToast('Protocol received. Our concierge will reach out shortly.', 'success');
                 e.target.reset();
             });
         });

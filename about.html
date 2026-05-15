@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Crave - Premium Food Delivery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Our Story | Crave Luxe Gastronomy</title>
+    <!-- Fonts via style.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=7">
+    <link rel="stylesheet" href="style.css?v=19">
     <style>
-        .hero-section {
-            height: 70vh;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80');
+        .about-hero {
+            height: 90vh;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4), #0a0a0c), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -19,106 +19,95 @@
             text-align: center;
             color: white;
             position: relative;
-            overflow: hidden;
         }
-        .hero-section::after {
-            content: '';
-            position: absolute; bottom: 0; left: 0; right: 0;
-            height: 150px; background: linear-gradient(to top, var(--bg-color), transparent);
+        .about-hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 8rem;
+            font-weight: 400;
+            letter-spacing: -3px;
+            margin-bottom: 2.5rem;
+            line-height: 0.9;
         }
-        .hero-content h1 {
-            font-size: 5rem;
-            font-weight: 900;
-            letter-spacing: -2px;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-        .hero-content p {
-            font-size: 1.6rem;
-            opacity: 0.9;
-            max-width: 700px;
+        .about-hero p {
+            font-size: 2rem;
+            opacity: 0.7;
+            max-width: 850px;
             margin: 0 auto;
-            line-height: 1.5;
-            animation: fadeInUp 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+            line-height: 1.6;
+            font-weight: 300;
         }
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin: -100px auto 5rem;
-            max-width: 1100px;
+            gap: 3rem;
+            margin: -150px auto 10rem;
+            max-width: 1400px;
             position: relative;
             z-index: 10;
         }
         .stat-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 30px;
-            box-shadow: var(--shadow-premium);
+            background: rgba(255, 255, 255, 0.02);
+            padding: 4rem 2rem;
+            border-radius: var(--radius-xl);
+            backdrop-filter: blur(25px);
             text-align: center;
-            transition: all 0.4s;
-            border: 1px solid rgba(0,0,0,0.02);
+            transition: 0.5s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .stat-card:hover { transform: translateY(-10px); }
+        .stat-card:hover { 
+            transform: translateY(-15px);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 140, 66, 0.2);
+        }
         .stat-number {
-            font-size: 3rem;
-            font-weight: 900;
-            background: var(--gradient-main);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
+            font-family: 'DM Serif Display', serif;
+            font-size: 4rem;
+            font-weight: 400;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
         }
         .stat-label {
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 800;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-        .section-title {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-        .section-title h2 {
-            font-size: 3rem;
-            color: var(--text-main);
+            font-size: 0.85rem;
+            letter-spacing: 3px;
         }
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 8rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem;
+            margin-bottom: 12rem;
         }
         .team-card {
-            background: white;
-            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-xl);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.5s;
             text-align: center;
-            padding-bottom: 2rem;
+            padding-bottom: 3.5rem;
         }
-        .team-card:hover { box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        .team-card:hover { 
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 140, 66, 0.2);
+        }
         .team-img {
             width: 100%;
-            height: 300px;
+            height: 400px;
             object-fit: cover;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2.5rem;
+            filter: grayscale(1) contrast(1.1);
+            transition: 0.6s;
         }
-        .team-info h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
-        .team-info p { color: var(--primary-color); font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem; }
-        .social-links { display: flex; justify-content: center; gap: 15px; }
-        .social-links a { color: #ccc; transition: 0.3s; font-size: 1.1rem; }
-        .social-links a:hover { color: var(--primary-color); }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 3rem; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); padding: 0 2rem; margin-top: -50px; }
+        .team-card:hover .team-img { filter: grayscale(0); }
+        .team-info h3 { font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 0.8rem; font-weight: 400; color: white; }
+        .team-info p { color: var(--primary-color); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; }
+        
+        @media (max-width: 992px) {
+            .about-hero h1 { font-size: 4rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); margin-top: -80px; padding: 0 2rem; }
         }
     </style>
 </head>
@@ -128,10 +117,13 @@
     <nav class="dash-nav"></nav>
 
     <!-- Hero Section -->
-    <header class="hero-section">
-        <div class="hero-content">
+    <header class="about-hero">
+        <div class="reveal">
+            <div style="background: rgba(255, 140, 66, 0.1); color: var(--primary-color); padding: 12px 35px; border-radius: 50px; display: inline-block; font-weight: 900; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 3rem; border: 1px solid rgba(255, 140, 66, 0.2); backdrop-filter: blur(10px);">
+                🏰 The Heritage
+            </div>
             <h1>Our Mission</h1>
-            <p>Redefining how the world experiences culinary excellence, one delivery at a time.</p>
+            <p>Redefining how the world experiences culinary excellence, one curated delivery at a time.</p>
         </div>
     </header>
 
@@ -139,84 +131,76 @@
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-number">50k+</div>
-            <div class="stat-label">Happy Customers</div>
+            <div class="stat-label">Connoisseurs</div>
         </div>
         <div class="stat-card">
             <div class="stat-number">120+</div>
-            <div class="stat-label">Partner Restaurants</div>
+            <div class="stat-label">Elite Kitchens</div>
         </div>
         <div class="stat-card">
             <div class="stat-number">25m</div>
-            <div class="stat-label">Avg Delivery Time</div>
+            <div class="stat-label">Arrival Tempo</div>
         </div>
         <div class="stat-card">
-            <div class="stat-number">4.8★</div>
-            <div class="stat-label">App Rating</div>
+            <div class="stat-number">4.9★</div>
+            <div class="stat-label">Global Rating</div>
         </div>
     </div>
 
-    <main class="dashboard-container reveal" style="max-width: 1100px; margin: 0 auto; animation-delay: 0.1s;">
+    <main class="dashboard-container reveal" style="max-width: 1400px; margin: 0 auto; animation-delay: 0.1s;">
         
         <!-- Story Section -->
-        <div class="reveal" style="display: flex; gap: 5rem; align-items: center; margin-bottom: 8rem; flex-wrap: wrap; animation-delay: 0.2s;">
-            <div style="flex: 1; min-width: 350px;">
-                <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80" alt="Cooking" style="width: 100%; border-radius: 40px; box-shadow: 0 30px 60px rgba(0,0,0,0.15);">
+        <div class="reveal" style="display: flex; gap: 8rem; align-items: center; margin-bottom: 15rem; flex-wrap: wrap;">
+            <div style="flex: 1.2; min-width: 400px; position: relative;">
+                <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1200&q=80" alt="Gourmet Prep" style="width: 100%; border-radius: 40px; box-shadow: 0 50px 100px rgba(0,0,0,0.5); filter: contrast(1.1) brightness(0.8);">
+                <div style="position: absolute; bottom: -40px; right: -40px; background: var(--gradient-main); padding: 3rem; border-radius: 30px; box-shadow: 0 20px 40px rgba(255,140,66,0.3); color: #000; font-family: 'DM Serif Display', serif; font-size: 2.5rem; line-height: 1;">
+                    Est.<br>2024
+                </div>
             </div>
-            <div style="flex: 1; min-width: 350px;">
-                <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">The Crave <span style="color: var(--primary-color);">Journey</span></h2>
-                <p style="line-height: 2; color: #666; margin-bottom: 1.5rem; font-size: 1.1rem;">Founded in 2024, Crave was born from a simple observation: the local food scene was rich with talent but lacked a premium connection to the people who love great food.</p>
-                <p style="line-height: 2; color: #666; font-size: 1.1rem;">We've built more than just a delivery app; we've built a platform that celebrates the art of cooking. Every restaurant on our platform is hand-picked, ensuring that when you order through Crave, you're getting the best of the best.</p>
+            <div style="flex: 1; min-width: 400px;">
+                <h2 style="font-family: 'DM Serif Display', serif; font-size: 4rem; margin-bottom: 3rem; font-weight: 400; color: white;">The Crave <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Odyssey</span></h2>
+                <p style="line-height: 2; color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.25rem; font-weight: 300;">Founded in 2024, Crave was born from a simple observation: the local food scene was rich with talent but lacked a premium conduit to those who appreciate the sublime.</p>
+                <p style="line-height: 2; color: var(--text-muted); font-size: 1.25rem; font-weight: 300;">We've built more than just a delivery platform; we've built a stage that celebrates the art of gastronomy. Every kitchen in our collective is hand-picked, ensuring that when you engage with Crave, you're experiencing the zenith of culinary craftsmanship.</p>
             </div>
         </div>
 
         <!-- Team Section -->
-        <div class="section-title reveal" style="animation-delay: 0.3s;">
-            <h2>Meet Our <span style="color: var(--primary-color);">Leadership</span></h2>
-            <p style="color: #888; font-size: 1.1rem; margin-top: 1rem;">The passionate minds behind your favorite food app.</p>
+        <div style="text-align: center; margin-bottom: 8rem;" class="reveal">
+            <h2 style="font-family: 'DM Serif Display', serif; font-size: 4.5rem; font-weight: 400; color: white;">The <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Visionaries</span></h2>
+            <p style="color: var(--text-muted); font-size: 1.3rem; margin-top: 1.5rem; font-weight: 300;">The passionate minds orchestrating your favorite culinary symphony.</p>
         </div>
 
         <div class="team-grid">
             <div class="team-card">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" alt="CEO" class="team-img">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80" alt="CEO" class="team-img">
                 <div class="team-info">
                     <h3>Alex Rivera</h3>
-                    <p>Founder & CEO</p>
+                    <p>Grand Architect & CEO</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
             </div>
             <div class="team-card">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" alt="COO" class="team-img">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80" alt="COO" class="team-img">
                 <div class="team-info">
                     <h3>Sarah Chen</h3>
-                    <p>Chief Operations Officer</p>
+                    <p>Chief Orchestrator</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
             <div class="team-card">
-                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80" alt="CTO" class="team-img">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80" alt="CTO" class="team-img">
                 <div class="team-info">
                     <h3>David Park</h3>
-                    <p>Chief Technology Officer</p>
+                    <p>Master of Technology</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
                         <a href="#"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="team-card">
-                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80" alt="CPO" class="team-img">
-                <div class="team-info">
-                    <h3>Elena Rodriguez</h3>
-                    <p>Head of Product</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-behance"></i></a>
                     </div>
                 </div>
             </div>
