@@ -7,6 +7,10 @@ $action   = isset($_GET['action'])   ? $_GET['action']   : 'all';
 $category = isset($_GET['category']) ? $_GET['category'] : '';
 
 try {
+    if (isset($db_connection_failed) && $db_connection_failed) {
+        throw new PDOException("Database connection failed from config: " . $db_error_message);
+    }
+
     // Auto-seed the foods table if it is empty
     $count = $conn->query("SELECT COUNT(*) FROM foods")->fetchColumn();
     if ((int)$count === 0) {

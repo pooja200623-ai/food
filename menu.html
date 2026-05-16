@@ -101,11 +101,9 @@
                 <div style="display: flex; flex-direction: column;">
                     <a href="#Indian" class="sidebar-link active"><i class="fas fa-pepper-hot"></i> Indian Spice</a>
                     <a href="#Chinese" class="sidebar-link"><i class="fas fa-bowl-food"></i> Imperial Wok</a>
-                    <a href="#Korean" class="sidebar-link"><i class="fas fa-fire"></i> Seoul Soul</a>
                     <a href="#Japanese" class="sidebar-link"><i class="fas fa-fish"></i> Zen Kitchen</a>
+                    <a href="#Korean" class="sidebar-link"><i class="fas fa-fire"></i> Seoul Soul</a>
                     <a href="#American" class="sidebar-link"><i class="fas fa-hamburger"></i> Artisan USA</a>
-                    <a href="#Fast Food" class="sidebar-link"><i class="fas fa-pizza-slice"></i> Gourmet Express</a>
-                    <a href="#Healthy" class="sidebar-link"><i class="fas fa-leaf"></i> Vitality Greens</a>
                     <a href="#Desserts" class="sidebar-link"><i class="fas fa-ice-cream"></i> Sweet Finale</a>
                 </div>
             </aside>
@@ -196,7 +194,7 @@
             if (!session) { window.location.replace('signin.html'); return; }
 
             const menuContainer = document.getElementById('menuContainer');
-            const categories = ['Indian', 'Chinese', 'Korean', 'Japanese', 'American', 'Fast Food', 'Healthy', 'Desserts'];
+            const categories = ['Indian', 'Chinese', 'Japanese', 'Korean', 'American', 'Desserts'];
 
             async function loadFullMenu() {
                 menuContainer.innerHTML = '<div style="text-align:center; padding: 15rem; grid-column: 1/-1;"><i class="fas fa-spinner fa-spin fa-4x" style="color:var(--primary-color)"></i><p style="margin-top:2rem; font-size:1.4rem; font-weight:300; opacity:0.6; letter-spacing:3px; text-transform:uppercase;">Curating the Collection...</p></div>';

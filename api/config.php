@@ -72,13 +72,8 @@ try {
     )");
 
 } catch(PDOException $e) {
-    // Return a clean JSON error for the API
-    header('Content-Type: application/json');
-    echo json_encode([
-        'success' => false, 
-        'message' => 'Database connection failed. Please ensure MySQL is running in XAMPP.',
-        'error_details' => $e->getMessage()
-    ]);
-    exit;
+    // We don't exit here so that scripts with fallbacks (like foods.php) can still run
+    $db_connection_failed = true;
+    $db_error_message = $e->getMessage();
 }
 ?>
