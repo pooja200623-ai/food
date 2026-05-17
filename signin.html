@@ -140,53 +140,13 @@
                                 <input type="email" id="email" name="email" placeholder="Email Address" required>
                             </div>
                             
-                            <button type="button" id="sendOtpBtn" class="btn-primary" style="width: 100%; padding: 22px; border-radius: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; background: var(--gradient-main); color: #000; box-shadow: 0 15px 35px rgba(255,140,66,0.25); margin-top: 1rem; transition: all 0.4s ease; border: 1px solid rgba(255,255,255,0.2);" onmouseover="this.style.transform='translateY(-5px) scale(1.02)'; this.style.boxShadow='0 25px 45px rgba(255,140,66,0.4)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 15px 35px rgba(255,140,66,0.25)'">
-                                Get Secure Code <i class="fas fa-key" style="margin-left: 10px;"></i>
+                            <button type="button" id="loginBtn" class="btn-primary" style="width: 100%; padding: 22px; border-radius: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; background: var(--gradient-main); color: #000; box-shadow: 0 15px 35px rgba(255,140,66,0.25); margin-top: 1rem; transition: all 0.4s ease; border: 1px solid rgba(255,255,255,0.2);" onmouseover="this.style.transform='translateY(-5px) scale(1.02)'; this.style.boxShadow='0 25px 45px rgba(255,140,66,0.4)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 15px 35px rgba(255,140,66,0.25)'">
+                                Login <i class="fas fa-sign-in-alt" style="margin-left: 10px;"></i>
                             </button>
                         </div>
                         
                         <div style="text-align: center; margin-top: 3rem; opacity: 0.4; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 700;">
                             Secured by Crave Concierge
-                        </div>
-                    </div>
-
-                    <!-- STEP 2: Verification -->
-                    <div id="step-2" class="auth-step" style="display: none;">
-                        <div class="form-header" style="text-align: center; margin-bottom: 3.5rem;">
-                            <button type="button" id="backBtn" style="background: none; border: none; color: var(--primary-color); cursor: pointer; font-weight: 800; margin-bottom: 1.5rem; display: inline-flex; align-items: center; gap: 10px; padding: 0; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; opacity: 0.7;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">
-                                <i class="fas fa-arrow-left"></i> Adjust Email
-                            </button>
-                            <h2>Verify Protocol</h2>
-                            <p style="opacity: 0.5; font-size: 1.1rem; font-weight: 300;">We've sent a code to <br><strong id="displayEmail" style="color: white; font-weight: 700;">email@example.com</strong></p>
-                        </div>
-
-                        <div style="display: flex; flex-direction: column; gap: 2rem; align-items: center;">
-                            <div class="otp-container" style="width: 100%;">
-                                <input type="text" id="otpDisplay" maxlength="4" placeholder="0 0 0 0" style="
-                                    width: 100%;
-                                    letter-spacing: 25px;
-                                    text-align: center;
-                                    font-size: 2.5rem;
-                                    font-weight: 400;
-                                    padding: 25px;
-                                    border: 1px solid rgba(255,255,255,0.1);
-                                    border-radius: 20px;
-                                    color: var(--primary-color);
-                                    background: rgba(255,255,255,0.02);
-                                    outline: none;
-                                    transition: 0.4s;
-                                    font-family: 'DM Serif Display', serif;
-                                " onfocus="this.style.borderColor='var(--primary-color)';this.style.background='rgba(255,255,255,0.05)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)';this.style.background='rgba(255,255,255,0.02)'">
-                                <input type="hidden" id="otpValue">
-                            </div>
-
-                            <button type="submit" id="verifyBtn" class="btn-primary" style="width: 100%; padding: 22px; border-radius: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; background: var(--gradient-main); color: #000; box-shadow: 0 15px 35px rgba(255,140,66,0.25); transition: all 0.4s ease; border: 1px solid rgba(255,255,255,0.2);" onmouseover="this.style.transform='translateY(-5px) scale(1.02)'; this.style.boxShadow='0 25px 45px rgba(255,140,66,0.4)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 15px 35px rgba(255,140,66,0.25)'">
-                                Authenticate <i class="fas fa-check-double" style="margin-left: 10px;"></i>
-                            </button>
-                            
-                            <p style="font-size: 0.95rem; color: var(--text-muted); font-weight: 500;">
-                                Code missing? <a href="#" style="color: var(--primary-color); text-decoration: none; font-weight: 800; margin-left: 5px;">Resend</a>
-                            </p>
                         </div>
                     </div>
                 </form>

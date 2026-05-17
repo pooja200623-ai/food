@@ -14,9 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const otpValueInput = document.getElementById('otpValue');
 
     // Simple Login & OTP Flow
-    if (authForm) {
-        if (sendOtpBtn) {
-            sendOtpBtn.addEventListener('click', async () => {
+        const loginBtn = document.getElementById('loginBtn');
+        if (loginBtn) {
+            loginBtn.addEventListener('click', () => {
                 const name = nameInput.value.trim();
                 const email = emailInput.value.trim();
 
@@ -25,100 +25,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                sendOtpBtn.disabled = true;
-                sendOtpBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Securely Sending...';
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
 
-                try {
-                    const response = await fetch('api/auth.php?action=send_otp', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ name, email })
-                    });
-                    const data = await response.json();
-
-                    if (data.success) {
-                        displayEmail.textContent = email;
-                        step1.classList.remove('active');
-                        step1.style.display = 'none';
-                        step2.classList.add('active');
-                        step2.style.display = 'block';
-                        showToast(data.message, 'success');
-                    } else {
-                        if (data.dev_otp) {
-                            displayEmail.textContent = email;
-                            step1.classList.remove('active');
-                            step1.style.display = 'none';
-                            step2.classList.add('active');
-                            step2.style.display = 'block';
-                            showToast(`${data.message} (Dev OTP: ${data.dev_otp})`, 'warning');
-                        } else {
-                            showToast(data.message, 'error');
-                        }
-                        sendOtpBtn.disabled = false;
-                        sendOtpBtn.innerHTML = 'Get Verification Code <i class="fas fa-paper-plane"></i>';
-                    }
-                } catch (err) {
-                    showToast('Network error', 'error');
-                    sendOtpBtn.disabled = false;
-                    sendOtpBtn.innerHTML = 'Get Verification Code <i class="fas fa-paper-plane"></i>';
-                }
-            });
-        }
-
-        if (otpDisplay) {
-            otpDisplay.addEventListener('input', () => {
-                otpValueInput.value = otpDisplay.value;
-            });
-        }
-
-        authForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const otp = otpValueInput.value;
-            const email = emailInput.value.trim();
-
-            if (otp.length !== 4) {
-                showToast('Please enter 4-digit code', 'error');
-                return;
-            }
-
-            verifyBtn.disabled = true;
-            verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
-
-            try {
-                const response = await fetch('api/auth.php?action=verify_otp', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, otp })
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    localStorage.setItem('user_session', JSON.stringify(data.user));
+                // Simulate authentication delay
+                setTimeout(() => {
+                    localStorage.setItem('user_session', JSON.stringify({ name, email }));
                     showToast('Welcome to Crave Luxe', 'success');
                     setTimeout(() => window.location.href = 'index.html', 1000);
-                } else {
-                    showToast(data.message, 'error');
-                    verifyBtn.disabled = false;
-                    verifyBtn.innerHTML = 'Verify & Login <i class="fas fa-check-double"></i>';
-                }
-            } catch (err) {
-                showToast('Network error', 'error');
-                verifyBtn.disabled = false;
-                verifyBtn.innerHTML = 'Verify & Login <i class="fas fa-check-double"></i>';
-            }
-        });
-
-        if (backBtn) {
-            backBtn.addEventListener('click', () => {
-                step2.classList.remove('active');
-                step2.style.display = 'none';
-                step1.classList.add('active');
-                step1.style.display = 'block';
-                sendOtpBtn.disabled = false;
-                sendOtpBtn.innerHTML = 'Get Verification Code <i class="fas fa-paper-plane"></i>';
+                }, 800);
             });
         }
-    }
+
+        // Prevent form submission if enter is pressed
+        if (authForm) {
+            authForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (loginBtn && !loginBtn.disabled) {
+                    loginBtn.click();
+                }
+            });
+        }
 
     // Dashboard Logout Logic
     const logoutBtn = document.getElementById('logoutBtn');
