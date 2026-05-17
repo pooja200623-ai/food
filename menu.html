@@ -71,6 +71,68 @@
             .menu-layout { grid-template-columns: 1fr; }
             .menu-sidebar { display: none; }
         }
+        .food-row {
+            display: flex;
+            overflow-x: auto;
+            gap: 2.5rem;
+            padding-bottom: 2.5rem;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            /* Hide scrollbar for a cleaner look while keeping functionality */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .food-row::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
+        }
+        .food-row > .food-card {
+            flex: 0 0 350px;
+            scroll-snap-align: start;
+        }
+        
+        /* Optional: Add scroll buttons for better desktop experience */
+        .category-header-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .category-title {
+            font-size: 3.5rem;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            font-family: 'DM Serif Display', serif;
+            letter-spacing: -1px;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .scroll-controls {
+            display: flex;
+            gap: 15px;
+        }
+        .scroll-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .scroll-btn:hover {
+            background: var(--primary-color);
+            color: black;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body class="dashboard-body">
@@ -210,8 +272,14 @@
                             section.className = 'category-section';
                             
                             section.innerHTML = `
-                                <h2 class="category-title">${cat} <small style="font-size: 1rem; color: var(--text-muted); font-weight: 300; margin-left: 15px; font-family: 'Outfit', sans-serif; letter-spacing: 2px;">(${data.data.length} MASTERPIECES)</small></h2>
-                                <div class="food-grid">
+                                <div class="category-header-wrap">
+                                    <h2 class="category-title">${cat} <small style="font-size: 1rem; color: var(--text-muted); font-weight: 300; margin-left: 15px; font-family: 'Outfit', sans-serif; letter-spacing: 2px;">(${data.data.length} MASTERPIECES)</small></h2>
+                                    <div class="scroll-controls">
+                                        <button class="scroll-btn" onclick="document.getElementById('row-${cat}').scrollBy({left: -380, behavior: 'smooth'})"><i class="fas fa-chevron-left"></i></button>
+                                        <button class="scroll-btn" onclick="document.getElementById('row-${cat}').scrollBy({left: 380, behavior: 'smooth'})"><i class="fas fa-chevron-right"></i></button>
+                                    </div>
+                                </div>
+                                <div class="food-row" id="row-${cat}">
                                     ${data.data.map((food, i) => `
                                         <div class="food-card premium-card" style="animation-delay: ${i*0.1}s">
                                             <div class="card-img-wrapper" style="height: 300px;">
