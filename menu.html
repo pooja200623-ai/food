@@ -303,11 +303,19 @@
                                 </div>
                                 <div class="food-row" id="row-${cat}">
                                     ${data.data.map((food, i) => `
-                                        <div class="food-card premium-card" style="animation-delay: ${i*0.1}s; background-image: url('${food.image_url}');">
-                                            <div class="badge-veg" style="position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.6); color: var(--accent-color); font-weight: 800; padding: 5px 12px; border-radius: 20px; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem;">
-                                                ${food.rating} ★
+                                        <div class="food-card premium-card" style="animation-delay: ${i*0.1}s;">
+                                            <img src="${food.image_url}" alt="${food.name}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; border-radius: inherit; pointer-events: none;">
+                                            
+                                            <div style="position: absolute; top: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; z-index: 2;">
+                                                <div class="badge-veg" style="background: rgba(0,0,0,0.6); color: var(--accent-color); font-weight: 800; padding: 5px 12px; border-radius: 20px; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem;">
+                                                    ${food.rating} ★
+                                                </div>
+                                                <button onclick="viewPicture('${food.image_url}', '${food.name.replace(/'/g, "\\'")}')" style="background: rgba(0,0,0,0.6); color: white; border: 1px solid rgba(255,255,255,0.2); width: 35px; height: 35px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(5px); transition: 0.3s; display: flex; align-items: center; justify-content: center;" title="View Picture">
+                                                    <i class="fas fa-expand"></i>
+                                                </button>
                                             </div>
-                                            <div class="card-overlay">
+
+                                            <div class="card-overlay" style="position: relative; z-index: 2;">
                                                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px;">
                                                     <h3 class="food-name" style="font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: white; line-height: 1.1; text-shadow: 0 2px 10px rgba(0,0,0,0.8); max-width: 70%;">${food.name}</h3>
                                                     <span class="price-tag" style="font-size: 1.4rem; color: var(--primary-color); font-weight: 900; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">₹${food.price}</span>
@@ -438,6 +446,56 @@
                     icon.style.color = '';
                     showToast('Removed from Wishlist', 'info');
                 }
+            };
+
+            window.viewPicture = function(url, name) {
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.background = 'rgba(0,0,0,0.9)';
+                modal.style.zIndex = '9999';
+                modal.style.display = 'flex';
+                modal.style.flexDirection = 'column';
+                modal.style.alignItems = 'center';
+                modal.style.justifyContent = 'center';
+                modal.style.backdropFilter = 'blur(10px)';
+                modal.style.cursor = 'pointer';
+                modal.onclick = () => document.body.removeChild(modal);
+
+                const img = document.createElement('img');
+                img.src = url;
+                img.style.maxWidth = '90%';
+                modal.style.maxHeight = '80%';
+                img.style.borderRadius = '20px';
+                img.style.boxShadow = '0 30px 60px rgba(0,0,0,0.8)';
+                img.style.objectFit = 'contain';
+
+                const title = document.createElement('h3');
+                title.textContent = name;
+                title.style.color = 'white';
+                title.style.marginTop = '2rem';
+                title.style.fontFamily = "'DM Serif Display', serif";
+                title.style.fontSize = '2rem';
+                title.style.letterSpacing = '1px';
+
+                const closeBtn = document.createElement('button');
+                closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                closeBtn.style.position = 'absolute';
+                closeBtn.style.top = '40px';
+                closeBtn.style.right = '40px';
+                closeBtn.style.background = 'transparent';
+                closeBtn.style.color = 'white';
+                closeBtn.style.border = 'none';
+                closeBtn.style.fontSize = '2rem';
+                closeBtn.style.cursor = 'pointer';
+
+                modal.appendChild(closeBtn);
+                modal.appendChild(img);
+                modal.appendChild(title);
+                document.body.appendChild(modal);
             };
         });
     </script>
