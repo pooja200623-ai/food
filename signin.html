@@ -121,7 +121,7 @@
         <div class="auth-form-wrapper">
             <div class="auth-form-container reveal">
                 
-                <form id="authForm" autocomplete="off">
+                <form id="authForm" autocomplete="off" onsubmit="handleLogin(event)">
                     <!-- STEP 1: Entrance -->
                     <div id="step-1" class="auth-step active">
                         <div class="form-header" style="text-align: center; margin-bottom: 3.5rem;">
@@ -158,5 +158,30 @@
     <div id="toastContainer"></div>
 
     <script src="script.js"></script>
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            if (!name || !email) {
+                if (typeof showToast === 'function') {
+                    showToast('Please enter your credentials', 'error');
+                } else {
+                    alert('Please enter your credentials');
+                }
+                return;
+            }
+
+            const loginBtn = document.getElementById('loginBtn');
+            if (loginBtn) {
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+            }
+
+            localStorage.setItem('user_session', JSON.stringify({ name, email }));
+            window.location.href = 'index.html';
+        }
+    </script>
 </body>
 </html>

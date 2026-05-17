@@ -13,28 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const otpDisplay = document.getElementById('otpDisplay');
     const otpValueInput = document.getElementById('otpValue');
 
-    // Simple Login Flow
-    if (authForm) {
-        authForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = nameInput ? nameInput.value.trim() : '';
-            const email = emailInput ? emailInput.value.trim() : '';
-
-            if (!name || !email) {
-                showToast('Please enter your credentials', 'error');
-                return;
-            }
-
-            const loginBtn = document.getElementById('loginBtn');
-            if (loginBtn) {
-                loginBtn.disabled = true;
-                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
-            }
-
-            localStorage.setItem('user_session', JSON.stringify({ name, email }));
-            window.location.href = 'index.html';
-        });
-    }
+    // Login logic has been moved directly to signin.html to prevent caching issues
 
     // Dashboard Logout Logic
     const logoutBtn = document.getElementById('logoutBtn');
