@@ -13,39 +13,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const otpDisplay = document.getElementById('otpDisplay');
     const otpValueInput = document.getElementById('otpValue');
 
-    // Simple Login & OTP Flow
-        const loginBtn = document.getElementById('loginBtn');
-        if (loginBtn) {
-            loginBtn.addEventListener('click', () => {
-                const name = nameInput.value.trim();
-                const email = emailInput.value.trim();
+    // Simple Login Flow
+    if (authForm) {
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = nameInput ? nameInput.value.trim() : '';
+            const email = emailInput ? emailInput.value.trim() : '';
 
-                if (!name || !email) {
-                    showToast('Please enter your credentials', 'error');
-                    return;
-                }
+            if (!name || !email) {
+                showToast('Please enter your credentials', 'error');
+                return;
+            }
 
+            const loginBtn = document.getElementById('loginBtn');
+            if (loginBtn) {
                 loginBtn.disabled = true;
                 loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+            }
 
-                // Simulate authentication delay
-                setTimeout(() => {
-                    localStorage.setItem('user_session', JSON.stringify({ name, email }));
-                    showToast('Welcome to Crave Luxe', 'success');
-                    setTimeout(() => window.location.href = 'index.html', 1000);
-                }, 800);
-            });
-        }
-
-        // Prevent form submission if enter is pressed
-        if (authForm) {
-            authForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                if (loginBtn && !loginBtn.disabled) {
-                    loginBtn.click();
-                }
-            });
-        }
+            localStorage.setItem('user_session', JSON.stringify({ name, email }));
+            window.location.href = 'index.html';
+        });
+    }
 
     // Dashboard Logout Logic
     const logoutBtn = document.getElementById('logoutBtn');
