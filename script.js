@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Render Centralized UI Components
     renderNavbar();
     renderFooter();
+    renderScrollToTop();
 
     // Sticky Navbar Logic
     window.addEventListener('scroll', () => {
@@ -187,6 +188,68 @@ function renderFooter() {
             </div>
         </footer>
     `;
+}
+
+function renderScrollToTop() {
+    if (document.getElementById('scrollToTopBtn')) return; // Prevent duplicates
+
+    const btn = document.createElement('button');
+    btn.id = 'scrollToTopBtn';
+    btn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    btn.style.position = 'fixed';
+    btn.style.bottom = '40px';
+    btn.style.right = '40px';
+    btn.style.width = '55px';
+    btn.style.height = '55px';
+    btn.style.borderRadius = '50%';
+    btn.style.background = 'var(--gradient-main)';
+    btn.style.color = '#000';
+    btn.style.border = 'none';
+    btn.style.fontSize = '1.2rem';
+    btn.style.cursor = 'pointer';
+    btn.style.boxShadow = '0 10px 25px rgba(255,140,66,0.4)';
+    btn.style.zIndex = '3000';
+    btn.style.opacity = '0';
+    btn.style.visibility = 'hidden';
+    btn.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+    btn.style.display = 'flex';
+    btn.style.alignItems = 'center';
+    btn.style.justifyContent = 'center';
+    
+    // Hover effects
+    btn.onmouseover = () => {
+        btn.style.transform = 'translateY(-5px) scale(1.1)';
+        btn.style.boxShadow = '0 15px 35px rgba(255,140,66,0.6)';
+    };
+    btn.onmouseout = () => {
+        btn.style.transform = 'translateY(0) scale(1)';
+        btn.style.boxShadow = '0 10px 25px rgba(255,140,66,0.4)';
+    };
+
+    btn.onclick = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
+    document.body.appendChild(btn);
+
+    // Scroll listener
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+            btn.style.opacity = '1';
+            btn.style.visibility = 'visible';
+            // Avoid overriding hover transform if hovered
+            if(!btn.matches(':hover')) {
+                btn.style.transform = 'translateY(0) scale(1)';
+            }
+        } else {
+            btn.style.opacity = '0';
+            btn.style.visibility = 'hidden';
+            btn.style.transform = 'translateY(20px) scale(0.9)';
+        }
+    });
 }
 
 // --- Global Utility Functions ---
