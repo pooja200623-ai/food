@@ -73,21 +73,24 @@
         }
         .food-row {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 320px);
+            grid-auto-flow: column;
+            grid-auto-columns: 320px;
+            overflow-x: auto;
             gap: 2.5rem;
             padding-bottom: 2.5rem;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            /* Hide scrollbar for a cleaner look while keeping functionality */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
         }
-        @media (max-width: 1600px) {
-            .food-row { grid-template-columns: repeat(3, 1fr); }
-        }
-        @media (max-width: 1200px) {
-            .food-row { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 768px) {
-            .food-row { grid-template-columns: 1fr; }
+        .food-row::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
         }
         .food-row > .food-card {
             height: 320px;
+            scroll-snap-align: start;
             background-size: cover;
             background-position: center;
             position: relative;
@@ -131,6 +134,28 @@
             margin-bottom: 0;
             padding-bottom: 0;
             border-bottom: none;
+        }
+        .scroll-controls {
+            display: flex;
+            gap: 15px;
+        }
+        .scroll-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .scroll-btn:hover {
+            background: var(--primary-color);
+            color: black;
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -273,6 +298,10 @@
                             section.innerHTML = `
                                 <div class="category-header-wrap">
                                     <h2 class="category-title">${cat} <small style="font-size: 1rem; color: var(--text-muted); font-weight: 300; margin-left: 15px; font-family: 'Outfit', sans-serif; letter-spacing: 2px;">(${data.data.length} MASTERPIECES)</small></h2>
+                                    <div class="scroll-controls">
+                                        <button class="scroll-btn" onclick="document.getElementById('row-${cat}').scrollBy({left: -380, behavior: 'smooth'})"><i class="fas fa-chevron-left"></i></button>
+                                        <button class="scroll-btn" onclick="document.getElementById('row-${cat}').scrollBy({left: 380, behavior: 'smooth'})"><i class="fas fa-chevron-right"></i></button>
+                                    </div>
                                 </div>
                                 <div class="food-row" id="row-${cat}">
                                     ${data.data.map((food, i) => `
