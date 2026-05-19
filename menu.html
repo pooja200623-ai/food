@@ -9,21 +9,23 @@
     <link rel="stylesheet" href="style.css?v=13">
     <style>
         .menu-layout {
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 5rem;
-            margin-top: 5rem;
+            display: block;
+            margin-top: 2rem;
         }
-        .menu-sidebar {
+        .menu-nav-top {
             position: sticky;
-            top: 120px;
-            height: calc(100vh - 180px);
-            background: rgba(255, 255, 255, 0.02);
-            padding: 3rem;
+            top: 100px;
+            z-index: 100;
+            background: rgba(10, 10, 12, 0.9);
+            padding: 1.5rem;
             border-radius: var(--radius-xl);
             border: 1px solid rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
-            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 5rem;
         }
         .sidebar-link {
             display: flex;
@@ -68,8 +70,7 @@
             letter-spacing: -1px;
         }
         @media (max-width: 992px) {
-            .menu-layout { grid-template-columns: 1fr; }
-            .menu-sidebar { display: none; }
+            .menu-nav-top { display: none; }
         }
         .food-row {
             display: grid;
@@ -179,20 +180,15 @@
         </header>
 
         <div class="menu-layout reveal" style="animation-delay: 0.1s;">
-            <!-- Sticky Sidebar -->
-            <aside class="menu-sidebar">
-                <h3 style="margin-bottom: 3rem; color: var(--text-main); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; font-weight: 900; opacity: 0.6; display: flex; align-items: center; gap: 12px;">
-                    <i class="fas fa-compass" style="color: var(--primary-color);"></i> Navigation
-                </h3>
-                <div style="display: flex; flex-direction: column;">
-                    <a href="#Indian" class="sidebar-link active"><i class="fas fa-pepper-hot"></i> Indian Spice</a>
-                    <a href="#Chinese" class="sidebar-link"><i class="fas fa-bowl-food"></i> Imperial Wok</a>
-                    <a href="#Japanese" class="sidebar-link"><i class="fas fa-fish"></i> Zen Kitchen</a>
-                    <a href="#Korean" class="sidebar-link"><i class="fas fa-fire"></i> Seoul Soul</a>
-                    <a href="#American" class="sidebar-link"><i class="fas fa-hamburger"></i> Artisan USA</a>
-                    <a href="#Desserts" class="sidebar-link"><i class="fas fa-ice-cream"></i> Sweet Finale</a>
-                </div>
-            </aside>
+            <!-- Top Navigation -->
+            <nav class="menu-nav-top">
+                <a href="#Indian" class="sidebar-link active"><i class="fas fa-pepper-hot"></i> Indian Spice</a>
+                <a href="#Chinese" class="sidebar-link"><i class="fas fa-bowl-food"></i> Imperial Wok</a>
+                <a href="#Japanese" class="sidebar-link"><i class="fas fa-fish"></i> Zen Kitchen</a>
+                <a href="#Korean" class="sidebar-link"><i class="fas fa-fire"></i> Seoul Soul</a>
+                <a href="#American" class="sidebar-link"><i class="fas fa-hamburger"></i> Artisan USA</a>
+                <a href="#Desserts" class="sidebar-link"><i class="fas fa-ice-cream"></i> Sweet Finale</a>
+            </nav>
 
             <!-- Menu Content -->
             <div class="menu-content">
