@@ -139,7 +139,7 @@
                 </div>
                 <div style="width: 1px; height: 60px; background: rgba(255,255,255,0.1);"></div>
                 <div style="display: flex; flex-direction: column;">
-                    <span style="font-size: 3rem; font-weight: 400; font-family: 'DM Serif Display', serif; color: var(--accent-color); line-height: 1;">60+</span>
+                    <span style="font-size: 3rem; font-weight: 400; font-family: 'DM Serif Display', serif; color: var(--accent-color); line-height: 1;">70+</span>
                     <span style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-muted); font-weight: 700; margin-top: 8px;">Masterpiece Varieties</span>
                 </div>
             </div>
@@ -158,12 +158,12 @@
             <div id="categoryPills" style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
                 <button class="filter-pill active" onclick="location.href='menu.html'">The Full Menu</button>
                 <button class="filter-pill" onclick="location.href='menu.html?category=Indian'">Indian Spice</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Chinese'">Imperial Wok</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Japanese'">Zen Kitchen</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Korean'">Seoul Soul</button>
                 <button class="filter-pill" onclick="location.href='menu.html?category=American'">Artisan USA</button>
+                <button class="filter-pill" onclick="location.href='menu.html?category=Chinese'">Imperial Wok</button>
+                <button class="filter-pill" onclick="location.href='menu.html?category=Korean'">Seoul Soul</button>
+                <button class="filter-pill" onclick="location.href='menu.html?category=Japanese'">Zen Kitchen</button>
+                <button class="filter-pill" onclick="location.href='menu.html?category=Ice%20Creams'">Ice Cream Parlour</button>
                 <button class="filter-pill" onclick="location.href='menu.html?category=Desserts'">Sweet Finale</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Ice%20Creams'">Ice Creams</button>
             </div>
         </section>
 
@@ -183,7 +183,7 @@
             const session = JSON.parse(localStorage.getItem('user_session'));
             if (!session) { window.location.replace('signin.html'); return; }
 
-            const categories = ['Indian', 'Chinese', 'Japanese', 'Korean', 'American', 'Desserts', 'Ice Creams'];
+            const categories = ['Indian', 'American', 'Chinese', 'Korean', 'Japanese', 'Ice Creams', 'Desserts'];
             const showcase = document.getElementById('varietyShowcase');
 
             async function loadVarietyShowcase() {
