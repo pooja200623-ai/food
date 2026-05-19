@@ -163,6 +163,7 @@
                 <button class="filter-pill" onclick="location.href='menu.html?category=Korean'">Seoul Soul</button>
                 <button class="filter-pill" onclick="location.href='menu.html?category=American'">Artisan USA</button>
                 <button class="filter-pill" onclick="location.href='menu.html?category=Desserts'">Sweet Finale</button>
+                <button class="filter-pill" onclick="location.href='menu.html?category=Ice%20Creams'">Ice Creams</button>
             </div>
         </section>
 
@@ -182,7 +183,7 @@
             const session = JSON.parse(localStorage.getItem('user_session'));
             if (!session) { window.location.replace('signin.html'); return; }
 
-            const categories = ['Indian', 'Chinese', 'Japanese', 'Korean', 'American', 'Desserts'];
+            const categories = ['Indian', 'Chinese', 'Japanese', 'Korean', 'American', 'Desserts', 'Ice Creams'];
             const showcase = document.getElementById('varietyShowcase');
 
             async function loadVarietyShowcase() {

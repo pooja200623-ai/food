@@ -11,9 +11,9 @@ try {
         throw new PDOException("Database connection failed from config: " . $db_error_message);
     }
 
-    // Auto-seed or re-seed the foods table if it has less than the required 60 items
+    // Auto-seed or re-seed the foods table if it has less than the required 70 items
     $count = $conn->query("SELECT COUNT(*) FROM foods")->fetchColumn();
-    if ((int)$count < 60) {
+    if ((int)$count < 70) {
         $conn->exec("TRUNCATE TABLE foods");
         require_once '../food_data.php';
         $insert = $conn->prepare(

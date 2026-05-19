@@ -187,7 +187,8 @@
                 <a href="#Japanese" class="sidebar-link"><i class="fas fa-fish"></i> Zen Kitchen</a>
                 <a href="#Korean" class="sidebar-link"><i class="fas fa-fire"></i> Seoul Soul</a>
                 <a href="#American" class="sidebar-link"><i class="fas fa-hamburger"></i> Artisan USA</a>
-                <a href="#Desserts" class="sidebar-link"><i class="fas fa-ice-cream"></i> Sweet Finale</a>
+                <a href="#Desserts" class="sidebar-link"><i class="fas fa-cookie"></i> Sweet Finale</a>
+                <a href="#Ice Creams" class="sidebar-link"><i class="fas fa-ice-cream"></i> Ice Creams</a>
             </nav>
 
             <!-- Menu Content -->
@@ -276,7 +277,7 @@
             if (!session) { window.location.replace('signin.html'); return; }
 
             const menuContainer = document.getElementById('menuContainer');
-            const categories = ['Indian', 'Chinese', 'Japanese', 'Korean', 'American', 'Desserts'];
+            const categories = ['Indian', 'Chinese', 'Japanese', 'Korean', 'American', 'Desserts', 'Ice Creams'];
 
             const urlParams = new URLSearchParams(window.location.search);
             const searchQuery = urlParams.get('search');
