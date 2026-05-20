@@ -208,7 +208,10 @@
                                     </div>
                                 </div>
                                 <div class="horizontal-scroll" id="scroll-${cat}">
-                                    ${data.data.slice(0, 5).map(food => `
+                                    ${data.data.slice(0, 5).map(food => {
+                                        const wishlist = window.getWishlist ? window.getWishlist() : [];
+                                        const inWishlist = wishlist.some(item => item.name === food.name);
+                                        return `
                                         <div class="food-card scroll-card premium-card">
                                             <img src="${food.image_url}" alt="${food.name}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; border-radius: inherit; pointer-events: none;">
                                             
@@ -233,13 +236,14 @@
                                                     <button class="add-btn" onclick='addToCart(${JSON.stringify(food).replace(/'/g, "&apos;")}, this)' style="width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: white; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); flex-shrink: 0;" title="Add to Cart">
                                                         <i class="fas fa-cart-plus"></i>
                                                     </button>
-                                                    <button class="wishlist-btn" onclick='toggleWishlist(this)' style="width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: white; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); flex-shrink: 0;" title="Wishlist">
-                                                        <i class="far fa-heart"></i>
+                                                    <button class="wishlist-btn" onclick='toggleWishlist(${JSON.stringify(food).replace(/'/g, "&apos;")}, this)' style="width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: white; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); flex-shrink: 0;" title="Wishlist">
+                                                        <i class="${inWishlist ? 'fas' : 'far'} fa-heart" style="${inWishlist ? 'color: #ff4757;' : ''}"></i>
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    `).join('')}
+                                    `;
+                                    }).join('')}
                                 </div>
                             `;
                             showcase.appendChild(section);
@@ -270,21 +274,6 @@
             });
 
             // Interactive functions
-            window.toggleWishlist = function(btn) {
-                const icon = btn.querySelector('i');
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas');
-                    icon.style.color = '#ff4757';
-                    showToast('Added to Wishlist', 'success');
-                } else {
-                    icon.classList.remove('fas');
-                    icon.classList.add('far');
-                    icon.style.color = '';
-                    showToast('Removed from Wishlist', 'info');
-                }
-            };
-
             window.viewPicture = function(url, name) {
                 const modal = document.createElement('div');
                 modal.style.position = 'fixed';

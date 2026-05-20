@@ -28,6 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof getCart === 'function') {
         saveCart(getCart());
     }
+    if (typeof getWishlist === 'function') {
+        saveWishlist(getWishlist());
+    }
 
     // Render Centralized UI Components
     renderNavbar();
@@ -67,6 +70,7 @@ function renderNavbar() {
     const links = [
         { name: 'Home', href: 'index.html', icon: 'fa-home' },
         { name: 'Menu', href: 'menu.html', icon: 'fa-utensils' },
+        { name: 'Wishlist', href: 'wishlist.html', icon: 'fa-heart', id: 'wishlistLink' },
         { name: 'Cart', href: 'cart.html', icon: 'fa-shopping-cart', id: 'cartLink' },
         { name: 'Orders', href: 'orders.html', icon: 'fa-history' },
         { name: 'Profile', href: 'profile.html', icon: 'fa-user-circle' }
@@ -109,6 +113,7 @@ function renderNavbar() {
                     <i class="fas ${link.icon}" style="font-size: 1rem; opacity: 0.9;"></i>
                     ${link.name}
                     ${link.id === 'cartLink' ? `<span id="cartCount" style="background: white; color: var(--primary-color); border-radius: 50%; padding: 2px 7px; font-size: 0.75rem; font-weight: 900; min-width: 20px; text-align: center; margin-left: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">0</span>` : ''}
+                    ${link.id === 'wishlistLink' ? `<span id="wishlistCount" style="background: white; color: #ff4757; border-radius: 50%; padding: 2px 7px; font-size: 0.75rem; font-weight: 900; min-width: 20px; text-align: center; margin-left: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">0</span>` : ''}
                 </a>
             `).join('')}
         </div>
@@ -137,6 +142,10 @@ function renderNavbar() {
     const count = cart.reduce((total, item) => total + item.quantity, 0);
     const cartCount = document.getElementById('cartCount');
     if (cartCount) cartCount.textContent = count;
+
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const wishlistCount = document.getElementById('wishlistCount');
+    if (wishlistCount) wishlistCount.textContent = wishlist.length;
 }
 
 function renderFooter() {
@@ -360,4 +369,44 @@ window.removeFromCart = function(foodName) {
     saveCart(cart);
     showToast('Removed from Collection', 'info');
     if (typeof renderCart === 'function') renderCart();
+}
+
+window.getWishlist = function() {
+    return JSON.parse(localStorage.getItem('wishlist')) || [];
+}
+
+window.saveWishlist = function(wishlist) {
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    const count = wishlist.length;
+    const wishlistCount = document.getElementById('wishlistCount');
+    if (wishlistCount) wishlistCount.textContent = count;
+}
+
+window.toggleWishlist = function(food, btn) {
+    let wishlist = getWishlist();
+    const index = wishlist.findIndex(item => item.name === food.name);
+    const icon = btn.querySelector('i');
+    
+    if (index === -1) {
+        wishlist.push(food);
+        saveWishlist(wishlist);
+        if (icon) {
+            icon.classList.remove('far');
+            icon.classList.add('fas');
+            icon.style.color = '#ff4757';
+        }
+        showToast(`${food.name} Added to Wishlist`, 'success');
+    } else {
+        wishlist = wishlist.filter(item => item.name !== food.name);
+        saveWishlist(wishlist);
+        if (icon) {
+            icon.classList.remove('fas');
+            icon.classList.add('far');
+            icon.style.color = '';
+        }
+        showToast(`${food.name} Removed from Wishlist`, 'info');
+        if (typeof renderWishlist === 'function') {
+            renderWishlist();
+        }
+    }
 }

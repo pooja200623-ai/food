@@ -3,95 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crave Menu | Art of Gastronomy</title>
-    <!-- Google Fonts included via style.css -->
+    <title>Luxe Wishlist | Your Saved Masterpieces</title>
+    <!-- Fonts and style via style.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=13">
+    <link rel="stylesheet" href="style.css?v=16">
     <style>
-        .menu-layout {
-            display: block;
-            margin-top: 2rem;
-        }
-        .menu-nav-top {
-            position: sticky;
-            top: 100px;
-            z-index: 100;
-            background: rgba(10, 10, 12, 0.9);
-            padding: 1.5rem;
-            border-radius: var(--radius-xl);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 5rem;
-        }
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px 20px;
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 500;
-            border-radius: 15px;
-            transition: 0.4s;
-            margin-bottom: 8px;
-            font-size: 1.05rem;
-            letter-spacing: 0.5px;
-        }
-        .sidebar-link:hover, .sidebar-link.active {
-            background: rgba(255, 140, 66, 0.1);
-            color: var(--primary-color);
-            padding-left: 25px;
-        }
-        .sidebar-link.active {
-            background: var(--gradient-main);
-            color: #000;
-            font-weight: 800;
-            box-shadow: 0 10px 20px rgba(255, 140, 66, 0.2);
-        }
-        .category-section {
-            margin-bottom: 10rem;
-            scroll-margin-top: 120px;
-            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-        }
-        .category-title {
-            font-size: 3.5rem;
-            font-weight: 400;
-            margin-bottom: 4rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            font-family: 'DM Serif Display', serif;
-            letter-spacing: -1px;
-        }
-        @media (max-width: 992px) {
-            .menu-nav-top { display: none; }
-        }
-        .food-row {
+        .wishlist-grid {
             display: grid;
-            grid-template-rows: repeat(2, 320px);
-            grid-auto-flow: column;
-            grid-auto-columns: 320px;
-            overflow-x: auto;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2.5rem;
-            padding-bottom: 2.5rem;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            /* Hide scrollbar for a cleaner look while keeping functionality */
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            margin-top: 3rem;
+            padding-bottom: 5rem;
         }
-        .food-row::-webkit-scrollbar {
-            display: none; /* Chrome, Safari and Opera */
-        }
-        .food-row > .food-card {
+        .food-card {
             height: 320px;
-            scroll-snap-align: start;
             background-size: cover;
             background-position: center;
             position: relative;
@@ -102,6 +27,16 @@
             justify-content: flex-end;
             padding: 0;
             border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: cardFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .food-card.removing {
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+        }
+        @keyframes cardFadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .card-overlay {
             background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
@@ -114,50 +49,6 @@
             border-color: #ff4757 !important;
             transform: scale(1.1);
         }
-        
-        /* Optional: Add scroll buttons for better desktop experience */
-        .category-header-wrap {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .category-title {
-            font-size: 3.5rem;
-            font-weight: 400;
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            font-family: 'DM Serif Display', serif;
-            letter-spacing: -1px;
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-        .scroll-controls {
-            display: flex;
-            gap: 15px;
-        }
-        .scroll-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .scroll-btn:hover {
-            background: var(--primary-color);
-            color: black;
-            transform: scale(1.1);
-        }
     </style>
 </head>
 <body class="dashboard-body">
@@ -165,38 +56,36 @@
     <!-- Navbar -->
     <nav class="dash-nav"></nav>
 
-    <main class="dashboard-container" style="padding-top: 12rem; max-width: 100%; padding-left: 3rem; padding-right: 3rem;">
-        <header class="reveal" style="text-align: center; margin-bottom: 12rem;">
-            <div style="background: rgba(255, 140, 66, 0.1); color: var(--primary-color); padding: 14px 35px; border-radius: 50px; display: inline-block; font-weight: 900; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 3rem; border: 1px solid rgba(255, 140, 66, 0.2);">
-                ✨ Curated Masterpieces
+    <main class="dashboard-container reveal" style="padding-top: 15rem; padding-bottom: 12rem; min-height: 80vh;">
+        <!-- Wishlist Header -->
+        <header style="margin-bottom: 6rem; text-align: left;">
+            <div style="background: rgba(255, 71, 87, 0.1); color: #ff4757; padding: 10px 25px; border-radius: 50px; display: inline-block; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 2rem; border: 1px solid rgba(255, 71, 87, 0.2);">
+                💖 Your Sanctuary of Desires
             </div>
-            <h1 style="font-size: 7.5rem; font-weight: 400; letter-spacing: -3px; margin-bottom: 2.5rem; line-height: 0.9; font-family: 'DM Serif Display', serif;">
-                The <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Luxe Collection</span>
-            </h1>
-            <p style="color: var(--text-muted); font-size: 1.8rem; max-width: 850px; margin: 0 auto; line-height: 1.7; font-weight: 300; font-family: 'Outfit', sans-serif;">
-                An exquisite journey through 80+ handcrafted dishes, where global heritage 
-                meets contemporary culinary perfection.
-            </p>
+            <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+                <div>
+                    <h1 style="font-size: 5rem; font-weight: 400; color: white; margin-bottom: 1rem; font-family: 'DM Serif Display', serif; letter-spacing: -2px;">Your Wishlist</h1>
+                    <p style="color: var(--text-muted); font-size: 1.2rem; font-weight: 300;" id="wishlistItemCount">Reviewing your saved masterpieces...</p>
+                </div>
+                <a href="menu.html" style="text-decoration: none; display: flex; align-items: center; gap: 12px; color: var(--primary-color); font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; border: 1px solid var(--primary-color); padding: 15px 35px; border-radius: 50px; transition: 0.4s;" onmouseover="this.style.background='var(--primary-color)';this.style.color='black';this.style.boxShadow='0 10px 20px rgba(255, 140, 66, 0.2)'" onmouseout="this.style.background='transparent';this.style.color='var(--primary-color)';this.style.boxShadow='none'">
+                    <i class="fas fa-plus"></i> Add More Masterpieces
+                </a>
+            </div>
         </header>
 
-        <div class="menu-layout reveal" style="animation-delay: 0.1s;">
-            <!-- Top Navigation -->
-            <nav class="menu-nav-top">
-                <a href="#Indian" class="sidebar-link active"><i class="fas fa-pepper-hot"></i> Indian Spice</a>
-                <a href="#American" class="sidebar-link"><i class="fas fa-hamburger"></i> Artisan USA</a>
-                <a href="#Chinese" class="sidebar-link"><i class="fas fa-bowl-food"></i> Imperial Wok</a>
-                <a href="#Korean" class="sidebar-link"><i class="fas fa-fire"></i> Seoul Soul</a>
-                <a href="#Japanese" class="sidebar-link"><i class="fas fa-fish"></i> Zen Kitchen</a>
-                <a href="#Ice Creams" class="sidebar-link"><i class="fas fa-ice-cream"></i> Ice Cream Parlour</a>
-                <a href="#Desserts" class="sidebar-link"><i class="fas fa-birthday-cake"></i> Sweet Finale</a>
-            </nav>
-
-            <!-- Menu Content -->
-            <div class="menu-content">
-                <div id="menuContainer">
-                    <!-- Categories will be injected here -->
-                </div>
+        <!-- Wishlist Content -->
+        <div id="wishlistContent">
+            <div id="wishlistGrid" class="wishlist-grid">
+                <!-- Dynamically filled -->
             </div>
+        </div>
+
+        <!-- Empty Wishlist State -->
+        <div id="emptyWishlistMessage" style="display: none; background: rgba(255,255,255,0.02); padding: 10rem 4rem; border-radius: var(--radius-xl); text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+            <i class="far fa-heart" style="font-size: 6rem; color: rgba(255,71,87,0.1); margin-bottom: 3rem;"></i>
+            <h2 style="font-family: 'DM Serif Display', serif; font-size: 3.5rem; margin-bottom: 1.5rem;">Sanctuary of Desire is Empty</h2>
+            <p style="color: var(--text-muted); margin-bottom: 4.5rem; font-size: 1.4rem; font-weight: 300;">Your collections are waiting to receive culinary masterpieces.</p>
+            <a href="menu.html" class="btn-primary" style="text-decoration: none; padding: 20px 50px; border-radius: 25px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; background: var(--gradient-main); color: #000;">Discover Menu</a>
         </div>
     </main>
 
@@ -270,90 +159,35 @@
     </div>
 
     <div id="footerContainer"></div>
+    <div id="toastContainer"></div>
+
     <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const session = JSON.parse(localStorage.getItem('user_session'));
             if (!session) { window.location.replace('signin.html'); return; }
 
-            const menuContainer = document.getElementById('menuContainer');
-            const categories = ['Indian', 'American', 'Chinese', 'Korean', 'Japanese', 'Ice Creams', 'Desserts'];
+            const wishlistGrid = document.getElementById('wishlistGrid');
+            const wishlistContent = document.getElementById('wishlistContent');
+            const emptyWishlistMessage = document.getElementById('emptyWishlistMessage');
+            const countEl = document.getElementById('wishlistItemCount');
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchQuery = urlParams.get('search');
-            const targetCategory = urlParams.get('category');
-
-            async function loadFullMenu() {
-                menuContainer.innerHTML = '<div style="text-align:center; padding: 15rem; grid-column: 1/-1;"><i class="fas fa-spinner fa-spin fa-4x" style="color:var(--primary-color)"></i><p style="margin-top:2rem; font-size:1.4rem; font-weight:300; opacity:0.6; letter-spacing:3px; text-transform:uppercase;">Curating the Collection...</p></div>';
-                
-                if (searchQuery) {
-                    try {
-                        const res = await fetch(`api/foods.php`);
-                        const data = await res.json();
-                        if (data.success) {
-                            const filtered = data.data.filter(f => f.name.toLowerCase().includes(searchQuery.toLowerCase()) || f.description.toLowerCase().includes(searchQuery.toLowerCase()));
-                            menuContainer.innerHTML = '';
-                            
-                            if (filtered.length === 0) {
-                                menuContainer.innerHTML = `<div style="text-align:center; padding: 10rem;"><i class="fas fa-search fa-3x" style="color: rgba(255,255,255,0.1); margin-bottom: 2rem;"></i><h3 style="font-size: 2rem; color: white;">No Masterpieces Found</h3><p style="color: var(--text-muted); margin-top: 1rem;">We couldn't find any dish matching "${searchQuery}".</p><a href="menu.html" class="btn-primary" style="display: inline-block; margin-top: 2rem; padding: 12px 30px; border-radius: 50px; text-decoration: none;">View Full Menu</a></div>`;
-                                return;
-                            }
-                            
-                            const section = document.createElement('div');
-                            section.className = 'category-section';
-                            section.innerHTML = `
-                                <div class="category-header-wrap">
-                                    <h2 class="category-title">Search Results <small style="font-size: 1rem; color: var(--text-muted); font-weight: 300; margin-left: 15px;">for "${searchQuery}" (${filtered.length})</small></h2>
-                                </div>
-                                <div class="food-row" style="grid-template-rows: auto; grid-auto-flow: row; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); overflow: visible; scroll-snap-type: none;">
-                                    ${renderFoodCards(filtered)}
-                                </div>
-                            `;
-                            menuContainer.appendChild(section);
-                        }
-                    } catch (err) { console.error(err); }
+            // Render Wishlist Page Contents
+            window.renderWishlist = function() {
+                const wishlist = getWishlist();
+                if (wishlist.length === 0) {
+                    wishlistContent.style.display = 'none';
+                    emptyWishlistMessage.style.display = 'block';
+                    countEl.textContent = 'No saved masterpieces in your sanctuary.';
                     return;
                 }
 
-                let catsToLoad = targetCategory ? [targetCategory] : categories;
-                let isFirst = true;
+                wishlistContent.style.display = 'block';
+                emptyWishlistMessage.style.display = 'none';
+                countEl.textContent = `You have secured ${wishlist.length} gourmet masterpiece${wishlist.length > 1 ? 's' : ''} in your sanctuary.`;
 
-                for (const cat of catsToLoad) {
-                    try {
-                        const res = await fetch(`api/foods.php?action=category&category=${encodeURIComponent(cat)}`);
-                        const data = await res.json();
-                        
-                        if (data.success && data.data.length > 0) {
-                            if (isFirst) { menuContainer.innerHTML = ''; isFirst = false; }
-                            const section = document.createElement('div');
-                            section.id = cat;
-                            section.className = 'category-section';
-                            
-                            section.innerHTML = `
-                                <div class="category-header-wrap">
-                                    <h2 class="category-title">${cat} <small style="font-size: 1rem; color: var(--text-muted); font-weight: 300; margin-left: 15px; font-family: 'Outfit', sans-serif; letter-spacing: 2px;">(${data.data.length} MASTERPIECES)</small></h2>
-                                    <div class="scroll-controls">
-                                        <button class="scroll-btn" onclick="document.getElementById('row-${cat}').scrollBy({left: -380, behavior: 'smooth'})"><i class="fas fa-chevron-left"></i></button>
-                                        <button class="scroll-btn" onclick="document.getElementById('row-${cat}').scrollBy({left: 380, behavior: 'smooth'})"><i class="fas fa-chevron-right"></i></button>
-                                    </div>
-                                </div>
-                                <div class="food-row" id="row-${cat}">
-                                    ${renderFoodCards(data.data)}
-                                </div>
-                            `;
-                            menuContainer.appendChild(section);
-                        }
-                    } catch (err) { console.error(err); }
-                }
-            }
-
-            function renderFoodCards(foods) {
-                const wishlist = window.getWishlist ? window.getWishlist() : [];
-                return foods.map((food, i) => {
-                    const inWishlist = wishlist.some(item => item.name === food.name);
-                    return `
-                    <div class="food-card premium-card" style="animation-delay: ${(i%10)*0.1}s;">
-                        <img src="${food.image_url}" alt="${food.name}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; border-radius: inherit; pointer-events: none;">
+                wishlistGrid.innerHTML = wishlist.map((food, i) => `
+                    <div class="food-card premium-card" id="wishlist-card-${food.name.replace(/\s+/g, '-').replace(/'/g, '')}" style="background-image: url('${food.image_url}'); animation-delay: ${i * 0.05}s;">
                         
                         <div style="position: absolute; top: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; z-index: 2;">
                             <div class="badge-veg" style="background: rgba(0,0,0,0.6); color: var(--accent-color); font-weight: 800; padding: 5px 12px; border-radius: 20px; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem;">
@@ -376,19 +210,32 @@
                                 <button class="add-btn" onclick='addToCart(${JSON.stringify(food).replace(/'/g, "&apos;")}, this)' style="width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: white; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); flex-shrink: 0;" title="Add to Cart">
                                     <i class="fas fa-cart-plus"></i>
                                 </button>
-                                <button class="wishlist-btn" onclick='toggleWishlist(${JSON.stringify(food).replace(/'/g, "&apos;")}, this)' style="width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: white; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); flex-shrink: 0;" title="Wishlist">
-                                    <i class="${inWishlist ? 'fas' : 'far'} fa-heart" style="${inWishlist ? 'color: #ff4757;' : ''}"></i>
+                                <button class="wishlist-btn" onclick='animateRemoveWishlist(${JSON.stringify(food).replace(/'/g, "&apos;")}, this)' style="width: 42px; height: 42px; border-radius: 12px; background: #ff4757; border: 1px solid #ff4757; color: white; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); flex-shrink: 0;" title="Remove from Wishlist">
+                                    <i class="fas fa-heart"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
-                `;
-                }).join('');
-            }
+                `).join('');
+            };
 
-            loadFullMenu();
+            // Custom Smooth Animation on Remove
+            window.animateRemoveWishlist = function(food, btn) {
+                const safeName = food.name.replace(/\s+/g, '-').replace(/'/g, '');
+                const card = document.getElementById(`wishlist-card-${safeName}`);
+                if (card) {
+                    card.classList.add('removing');
+                    setTimeout(() => {
+                        window.toggleWishlist(food, btn);
+                    }, 400); // Let fade transition finish
+                } else {
+                    window.toggleWishlist(food, btn);
+                }
+            };
 
-            // Modal logic
+            renderWishlist();
+
+            // Modal Logic
             let selectedFood = null;
 
             window.updateQuickPaymentIcon = function(sel) {
@@ -409,17 +256,7 @@
 
             window.closeQuickOrder = () => {
                 document.getElementById('quickOrderModal').style.display = 'none';
-                localStorage.removeItem('quick_order_food');
             };
-
-            // Handle redirect from index
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('instant_order') === 'true') {
-                const quickFood = JSON.parse(localStorage.getItem('quick_order_food'));
-                if (quickFood) {
-                    setTimeout(() => openQuickOrder(quickFood), 500);
-                }
-            }
 
             document.getElementById('confirmOrderBtn').addEventListener('click', async () => {
                 const address = document.getElementById('quickAddress').value.trim();
@@ -462,24 +299,7 @@
                 }
             });
 
-            // Scroll spy for sidebar
-            window.addEventListener('scroll', () => {
-                let current = "";
-                categories.forEach(cat => {
-                    const section = document.getElementById(cat);
-                    if (section && window.pageYOffset >= section.offsetTop - 200) {
-                        current = cat;
-                    }
-                });
-
-                document.querySelectorAll('.sidebar-link').forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
-            });
-
+            // Picture Lightbox
             window.viewPicture = function(url, name) {
                 const modal = document.createElement('div');
                 modal.style.position = 'fixed';
