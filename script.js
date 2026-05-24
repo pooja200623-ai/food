@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+﻿document.addEventListener('DOMContentLoaded', () => {
     
     // Elements
     const step1 = document.getElementById('step-1');
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 dashNav.style.background = 'rgba(10, 10, 12, 0.9)';
                 dashNav.style.width = '85%';
                 dashNav.style.boxShadow = '0 20px 40px rgba(0,0,0,0.4)';
-                dashNav.style.borderColor = 'rgba(255, 140, 66, 0.2)';
+                dashNav.style.borderColor = 'rgba(124, 58, 237, 0.2)';
             } else {
                 dashNav.style.top = '30px';
                 dashNav.style.padding = '1rem 3rem';
@@ -105,7 +105,7 @@ function renderNavbar() {
                     align-items: center;
                     gap: 10px;
                     background: ${currentPath === link.href ? 'var(--gradient-main)' : 'transparent'};
-                    box-shadow: ${currentPath === link.href ? '0 10px 20px rgba(255, 140, 66, 0.3)' : 'none'};
+                    box-shadow: ${currentPath === link.href ? '0 10px 20px rgba(124, 58, 237, 0.35)' : 'none'};
                     text-transform: uppercase;
                     letter-spacing: 1.5px;
                 " onmouseover="if('${currentPath}' !== '${link.href}') { this.style.color='white'; this.style.background='rgba(255,255,255,0.05)'; }" 
@@ -123,7 +123,7 @@ function renderNavbar() {
                 <span style="font-weight: 800; font-size: 0.95rem; color: white; line-height: 1;">${session.name}</span>
                 <span style="font-size: 0.7rem; color: var(--accent-color); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-top: 2px;">Luxe Member</span>
             </div>
-            <div class="user-avatar" style="width: 45px; height: 45px; border-radius: 50%; background: var(--gradient-main); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem; box-shadow: 0 5px 15px rgba(255,140,66,0.3); border: 2px solid #000;">
+            <div class="user-avatar" style="width: 45px; height: 45px; border-radius: 50%; background: var(--gradient-main); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem; box-shadow: 0 5px 15px rgba(124,58,237,0.35); border: 2px solid #000;">
                 ${session.name.charAt(0).toUpperCase()}
             </div>
             <button id="logoutBtn" class="logout-btn" style="width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 50%; transition: 0.4s; color: var(--text-muted); border: none; cursor: pointer;" onmouseover="this.style.background='var(--primary-color)';this.style.color='white';this.style.transform='rotate(90deg)'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='var(--text-muted)';this.style.transform='rotate(0deg)'"><i class="fas fa-sign-out-alt"></i></button>
@@ -155,7 +155,7 @@ function renderFooter() {
     footerContainer.innerHTML = `
         <footer style="background: #000; color: white; padding: 10rem 2rem 5rem; margin-top: 15rem; font-family: 'Outfit', sans-serif; position: relative; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.03);">
             <!-- Glow Effect -->
-            <div style="position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 400px; background: radial-gradient(circle, rgba(255, 140, 66, 0.05) 0%, transparent 70%); z-index: 1;"></div>
+            <div style="position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 400px; background: radial-gradient(circle, rgba(124, 58, 237, 0.07) 0%, transparent 70%); z-index: 1;"></div>
             
             <div style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 8rem; position: relative; z-index: 2;">
                 <div class="reveal">
@@ -164,7 +164,7 @@ function renderFooter() {
                     <div style="display: flex; gap: 25px;">
                         ${['facebook-f', 'instagram', 'twitter', 'youtube'].map(icon => `
                             <a href="#" style="width: 55px; height: 55px; border-radius: 18px; background: rgba(255,255,255,0.03); color: white; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.5s; border: 1px solid rgba(255,255,255,0.05);" 
-                               onmouseover="this.style.background='var(--gradient-main)'; this.style.transform='translateY(-10px) rotate(10deg)'; this.style.boxShadow='0 15px 30px rgba(255,140,66,0.3)'; this.style.borderColor='transparent'" 
+                               onmouseover="this.style.background='var(--gradient-main)'; this.style.transform='translateY(-10px) rotate(10deg)'; this.style.boxShadow='0 15px 30px rgba(124, 58, 237,0.3)'; this.style.borderColor='transparent'" 
                                onmouseout="this.style.background='rgba(255,255,255,0.03)'; this.style.transform='translateY(0) rotate(0deg)'; this.style.boxShadow='none'; this.style.borderColor='rgba(255,255,255,0.05)'">
                                 <i class="fab fa-${icon}" style="font-size: 1.3rem;"></i>
                             </a>
@@ -186,7 +186,7 @@ function renderFooter() {
                     <p style="opacity: 0.6; margin-bottom: 3rem; font-size: 1.2rem; font-weight: 300; line-height: 1.8;">Join our private circle for early access to michelin-star seasonal drops.</p>
                     <div style="background: rgba(255,255,255,0.02); padding: 10px; border-radius: 25px; display: flex; gap: 12px; border: 1px solid rgba(255,255,255,0.06); box-shadow: inset 0 2px 15px rgba(0,0,0,0.4);">
                         <input type="email" placeholder="Email Concierge" style="background: transparent; border: none; padding: 15px 25px; color: white; flex: 1; outline: none; font-family: inherit; font-size: 1.1rem; font-weight: 400;">
-                        <button style="background: var(--gradient-main); color: #000; border: none; padding: 15px 35px; border-radius: 18px; cursor: pointer; font-weight: 900; transition: 0.5s; box-shadow: 0 10px 25px rgba(255,140,66,0.3); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 20px 40px rgba(255,140,66,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 10px 25px rgba(255,140,66,0.3)'">Join</button>
+                        <button style="background: var(--gradient-main); color: #fff; border: none; padding: 15px 35px; border-radius: 18px; cursor: pointer; font-weight: 900; transition: 0.5s; box-shadow: 0 10px 25px rgba(124,58,237,0.35); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 20px 40px rgba(124,58,237,0.5)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 10px 25px rgba(124,58,237,0.35)'">Join</button>
                     </div>
                 </div>
             </div>
@@ -216,7 +216,7 @@ function renderScrollToTop() {
     btn.style.border = 'none';
     btn.style.fontSize = '1.2rem';
     btn.style.cursor = 'pointer';
-    btn.style.boxShadow = '0 10px 25px rgba(255,140,66,0.4)';
+    btn.style.boxShadow = '0 10px 25px rgba(124,58,237,0.45)';
     btn.style.zIndex = '3000';
     btn.style.opacity = '0';
     btn.style.visibility = 'hidden';
@@ -228,11 +228,11 @@ function renderScrollToTop() {
     // Hover effects
     btn.onmouseover = () => {
         btn.style.transform = 'translateY(-5px) scale(1.1)';
-        btn.style.boxShadow = '0 15px 35px rgba(255,140,66,0.6)';
+        btn.style.boxShadow = '0 15px 35px rgba(124,58,237,0.65)';
     };
     btn.onmouseout = () => {
         btn.style.transform = 'translateY(0) scale(1)';
-        btn.style.boxShadow = '0 10px 25px rgba(255,140,66,0.4)';
+        btn.style.boxShadow = '0 10px 25px rgba(124,58,237,0.45)';
     };
 
     btn.onclick = () => {

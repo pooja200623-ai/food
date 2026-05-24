@@ -1,35 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-    --primary-color: #FF8C42;
-    --primary-dark: #E67E22;
-    --primary-light: #FFA07A;
-    --secondary-color: #2D3436;
-    --accent-color: #F9C80E;
-    --bg-color: #0a0a0c;
+    --primary-color: #7C3AED;
+    --primary-dark: #6D28D9;
+    --primary-light: #A78BFA;
+    --secondary-color: #1E1B4B;
+    --accent-color: #10B981;
+    --bg-color: #05040f;
     --text-main: #ffffff;
-    --text-muted: #a0a0a8;
-    --card-bg: #161618;
-    --input-border: #222224;
-    --input-focus: rgba(255, 140, 66, 0.25);
+    --text-muted: #9ca3af;
+    --card-bg: #0e0b1e;
+    --input-border: #1e1a35;
+    --input-focus: rgba(124, 58, 237, 0.25);
     
-    /* Luxe Gradients */
-    --gradient-main: linear-gradient(135deg, #FF8C42 0%, #F9C80E 100%);
-    --gradient-dark: linear-gradient(135deg, #E67E22 0%, #FF8C42 100%);
+    /* Midnight Aurora Gradients */
+    --gradient-main: linear-gradient(135deg, #7C3AED 0%, #10B981 100%);
+    --gradient-dark: linear-gradient(135deg, #6D28D9 0%, #7C3AED 100%);
     --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
-    --gradient-obsidian: linear-gradient(135deg, rgba(22, 22, 24, 0.9) 0%, rgba(10, 10, 12, 0.9) 100%);
-    --gradient-mesh: radial-gradient(at 0% 0%, rgba(255, 140, 66, 0.15) 0, transparent 50%), 
-                     radial-gradient(at 100% 0%, rgba(249, 200, 14, 0.12) 0, transparent 50%), 
-                     radial-gradient(at 50% 50%, rgba(255, 71, 87, 0.1) 0, transparent 50%),
-                     radial-gradient(at 0% 100%, rgba(255, 140, 66, 0.08) 0, transparent 50%),
-                     radial-gradient(at 100% 100%, rgba(249, 200, 14, 0.08) 0, transparent 50%);
+    --gradient-obsidian: linear-gradient(135deg, rgba(14, 11, 30, 0.9) 0%, rgba(5, 4, 15, 0.9) 100%);
+    --gradient-mesh: radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.18) 0, transparent 50%),
+                     radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.12) 0, transparent 50%),
+                     radial-gradient(at 50% 50%, rgba(167, 139, 250, 0.08) 0, transparent 50%),
+                     radial-gradient(at 0% 100%, rgba(124, 58, 237, 0.08) 0, transparent 50%),
+                     radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.06) 0, transparent 50%);
     
     /* Cinematic Shadows */
     --shadow-soft: 0 10px 40px rgba(0,0,0,0.5);
     --shadow-medium: 0 20px 50px rgba(0,0,0,0.7);
     --shadow-premium: 0 40px 80px rgba(0,0,0,0.8);
     --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
-    --shadow-glow: 0 0 30px rgba(255, 140, 66, 0.2);
+    --shadow-glow: 0 0 30px rgba(124, 58, 237, 0.25);
     --border-glass: 1px solid rgba(255, 255, 255, 0.12);
     
     /* Radius */
@@ -87,7 +87,7 @@
 .premium-card:hover {
     transform: translateY(-15px) scale(1.03);
     box-shadow: var(--shadow-premium);
-    border-color: rgba(255, 140, 66, 0.3);
+    border-color: rgba(124, 58, 237, 0.35);
 }
 
 h1, h2, h3, .serif {
@@ -125,13 +125,13 @@ body::before, body::after {
 }
 
 body::before {
-    background: radial-gradient(circle, rgba(162, 155, 254, 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
     top: -300px;
     left: -100px;
 }
 
 body::after {
-    background: radial-gradient(circle, rgba(255, 71, 87, 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
     bottom: -300px;
     right: -100px;
 }
@@ -159,7 +159,7 @@ body::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 71, 87, 0.8), rgba(0, 0, 0, 0.6));
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.8), rgba(0, 0, 0, 0.6));
     z-index: 1;
 }
 
@@ -279,17 +279,17 @@ body::after {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.35);
 }
 
 .btn-primary:hover {
     background: var(--primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
 }
 
 .btn-primary:disabled {
-    background: #ff99a2;
+    background: #a78bfa;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
@@ -564,7 +564,7 @@ body::after {
     background: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
-    box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
+    box-shadow: 0 4px 10px rgba(124, 58, 237, 0.35);
 }
 
 .food-grid {
@@ -689,7 +689,7 @@ body::after {
     background: var(--primary-color);
     color: white;
     transform: scale(1.1);
-    box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+    box-shadow: 0 5px 15px rgba(124, 58, 237, 0.4);
 }
 
 .skeleton {
@@ -1160,7 +1160,7 @@ body::after {
     transform: translateX(-50%);
     width: 6px;
     height: 6px;
-    background: var(--primary-color);
+    background: var(--accent-color);
     border-radius: 50%;
     box-shadow: 0 0 10px var(--primary-color);
 }
@@ -1389,7 +1389,7 @@ body::after {
 .input-group input:focus {
     border-color: var(--primary-color);
     background: white;
-    box-shadow: 0 8px 25px rgba(255, 71, 87, 0.1);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.15);
 }
 
 .input-group input:focus + i {

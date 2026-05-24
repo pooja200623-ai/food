@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,7 +19,7 @@
         .order-card:hover {
             transform: translateY(-10px);
             background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 140, 66, 0.2);
+            border-color: rgba(124, 58, 237, 0.2);
             box-shadow: 0 40px 80px rgba(0,0,0,0.6);
         }
         .status-badge {
@@ -40,7 +40,7 @@
 
     <main class="dashboard-container reveal" style="padding-top: 15rem; padding-bottom: 12rem;">
         <header style="margin-bottom: 8rem; text-align: center;">
-            <div style="background: rgba(255, 140, 66, 0.1); color: var(--primary-color); padding: 12px 35px; border-radius: 50px; display: inline-block; font-weight: 900; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 3rem; border: 1px solid rgba(255, 140, 66, 0.2);">
+            <div style="background: rgba(124, 58, 237, 0.1); color: var(--primary-color); padding: 12px 35px; border-radius: 50px; display: inline-block; font-weight: 900; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 3rem; border: 1px solid rgba(124, 58, 237, 0.2);">
                 📜 The Culinary Journey
             </div>
             <h1 style="font-size: 6rem; font-weight: 400; color: white; margin-bottom: 1.5rem; font-family: 'DM Serif Display', serif; letter-spacing: -2px;">Your <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Legacy</span></h1>
@@ -83,8 +83,8 @@
                     if (data.success && data.data.length > 0) {
                         ordersList.innerHTML = data.data.map(order => {
                             const statusStyles = {
-                                'Pending': { color: '#FF8C42', bg: 'rgba(255, 140, 66, 0.1)' },
-                                'Preparing': { color: '#F9C80E', bg: 'rgba(249, 200, 14, 0.1)' },
+                                'Pending': { color: '#7C3AED', bg: 'rgba(124, 58, 237, 0.1)' },
+                                'Preparing': { color: '#10B981', bg: 'rgba(16, 185, 129, 0.1)' },
                                 'Out for Delivery': { color: '#30E3CA', bg: 'rgba(48, 227, 202, 0.1)' },
                                 'Delivered': { color: '#2ed573', bg: 'rgba(46, 213, 115, 0.1)' },
                                 'Cancelled': { color: '#ff4757', bg: 'rgba(255, 71, 87, 0.1)' }
@@ -111,7 +111,7 @@
                                         ${order.items.map(item => `
                                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                                 <div style="display: flex; align-items: center; gap: 20px;">
-                                                    <div style="background: rgba(255,140,66,0.1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 0.9rem; font-weight: 900; color: var(--primary-color); border: 1px solid rgba(255,140,66,0.2);">${item.quantity}x</div>
+                                                    <div style="background: rgba(124, 58, 237,0.1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 0.9rem; font-weight: 900; color: var(--primary-color); border: 1px solid rgba(124, 58, 237,0.2);">${item.quantity}x</div>
                                                     <span style="font-weight: 600; color: white; font-size: 1.2rem; font-family: 'DM Serif Display', serif;">${item.food_name}</span>
                                                 </div>
                                                 <div style="font-weight: 700; color: var(--text-muted); font-size: 1.1rem;">₹${item.price * item.quantity}</div>
