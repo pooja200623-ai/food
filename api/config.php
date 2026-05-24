@@ -53,11 +53,29 @@ try {
         `city` varchar(100),
         `zip` varchar(20),
         `points` int DEFAULT 0,
-        `avatar_color` varchar(20) DEFAULT '#ff4757',
+        `avatar_color` varchar(20) DEFAULT '#d4af37',
+        `dietary_preference` varchar(50) DEFAULT 'None',
+        `favorite_cuisine` varchar(50) DEFAULT 'None',
+        `spiciness_level` varchar(50) DEFAULT 'Medium',
         `otp` varchar(10),
         `otp_expiry` datetime,
         PRIMARY KEY (`id`)
     )");
+
+    // Self-healing database migrations for users table columns
+    $userCols = $conn->query("SHOW COLUMNS FROM users")->fetchAll(PDO::FETCH_COLUMN);
+    $missingUserCols = [
+        'avatar_color' => "VARCHAR(20) DEFAULT '#d4af37' AFTER points",
+        'dietary_preference' => "VARCHAR(50) DEFAULT 'None' AFTER avatar_color",
+        'favorite_cuisine' => "VARCHAR(50) DEFAULT 'None' AFTER dietary_preference",
+        'spiciness_level' => "VARCHAR(50) DEFAULT 'Medium' AFTER favorite_cuisine"
+    ];
+
+    foreach ($missingUserCols as $col => $definition) {
+        if (!in_array($col, $userCols)) {
+            $conn->exec("ALTER TABLE users ADD COLUMN `$col` $definition");
+        }
+    }
 
     $conn->exec("CREATE TABLE IF NOT EXISTS `foods` (
         `id` int(11) NOT NULL AUTO_INCREMENT,

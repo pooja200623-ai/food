@@ -1,4 +1,103 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+window.applyGlobalTheme = function(color) {
+    const root = document.documentElement;
+    const themes = {
+        '#d4af37': {
+            '--primary-color': '#d4af37',
+            '--primary-dark': '#b08e26',
+            '--primary-light': '#e6c55c',
+            '--primary-rgb': '212, 175, 55',
+            '--accent-color': '#c5a880',
+            '--bg-color': '#090806',
+            '--card-bg': '#13110d',
+            '--input-border': '#221e16',
+            '--gradient-main': 'linear-gradient(135deg, #d4af37 0%, #aa882c 100%)',
+            '--gradient-dark': 'linear-gradient(135deg, #aa882c 0%, #d4af37 100%)',
+            '--shadow-glow': '0 0 35px rgba(212, 175, 55, 0.15)'
+        },
+        '#b76e79': {
+            '--primary-color': '#b76e79',
+            '--primary-dark': '#9e5963',
+            '--primary-light': '#cf8d97',
+            '--primary-rgb': '183, 110, 121',
+            '--accent-color': '#cf8d97',
+            '--bg-color': '#0e0a0a',
+            '--card-bg': '#171112',
+            '--input-border': '#291e20',
+            '--gradient-main': 'linear-gradient(135deg, #b76e79 0%, #8a4f58 100%)',
+            '--gradient-dark': 'linear-gradient(135deg, #8a4f58 0%, #b76e79 100%)',
+            '--shadow-glow': '0 0 35px rgba(183, 110, 121, 0.15)'
+        },
+        '#dcdde1': {
+            '--primary-color': '#dcdde1',
+            '--primary-dark': '#b2b3b8',
+            '--primary-light': '#f5f6fa',
+            '--primary-rgb': '220, 221, 225',
+            '--accent-color': '#a5a6ab',
+            '--bg-color': '#0a0b0d',
+            '--card-bg': '#121418',
+            '--input-border': '#20232a',
+            '--gradient-main': 'linear-gradient(135deg, #dcdde1 0%, #718093 100%)',
+            '--gradient-dark': 'linear-gradient(135deg, #718093 0%, #dcdde1 100%)',
+            '--shadow-glow': '0 0 35px rgba(220, 221, 225, 0.15)'
+        },
+        '#ff3838': {
+            '--primary-color': '#ff3838',
+            '--primary-dark': '#cf2323',
+            '--primary-light': '#ff6b6b',
+            '--primary-rgb': '255, 56, 56',
+            '--accent-color': '#ff4757',
+            '--bg-color': '#0c0606',
+            '--card-bg': '#150d0d',
+            '--input-border': '#261616',
+            '--gradient-main': 'linear-gradient(135deg, #ff3838 0%, #cf2323 100%)',
+            '--gradient-dark': 'linear-gradient(135deg, #cf2323 0%, #ff3838 100%)',
+            '--shadow-glow': '0 0 35px rgba(255, 56, 56, 0.15)'
+        },
+        '#2e86de': {
+            '--primary-color': '#2e86de',
+            '--primary-dark': '#1b61ab',
+            '--primary-light': '#54a0ff',
+            '--primary-rgb': '46, 134, 222',
+            '--accent-color': '#54a0ff',
+            '--bg-color': '#05080c',
+            '--card-bg': '#0d1218',
+            '--input-border': '#16202b',
+            '--gradient-main': 'linear-gradient(135deg, #2e86de 0%, #1b61ab 100%)',
+            '--gradient-dark': 'linear-gradient(135deg, #1b61ab 0%, #2e86de 100%)',
+            '--shadow-glow': '0 0 35px rgba(46, 134, 222, 0.15)'
+        },
+        '#10b981': {
+            '--primary-color': '#10b981',
+            '--primary-dark': '#068259',
+            '--primary-light': '#34d399',
+            '--primary-rgb': '16, 185, 129',
+            '--accent-color': '#34d399',
+            '--bg-color': '#050a08',
+            '--card-bg': '#0d1410',
+            '--input-border': '#16241c',
+            '--gradient-main': 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+            '--gradient-dark': 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+            '--shadow-glow': '0 0 35px rgba(16, 185, 129, 0.15)'
+        }
+    };
+    
+    const activeTheme = themes[color] || themes['#d4af37'];
+    for (const [property, value] of Object.entries(activeTheme)) {
+        root.style.setProperty(property, value);
+    }
+};
+
+// Immediate global theme check to prevent flash of wrong colors
+(function() {
+    const session = JSON.parse(localStorage.getItem('user_session'));
+    if (session && session.avatar_color) {
+        window.applyGlobalTheme(session.avatar_color);
+    } else {
+        window.applyGlobalTheme('#d4af37');
+    }
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
     
     // Elements
     const step1 = document.getElementById('step-1');
@@ -123,7 +222,7 @@ function renderNavbar() {
                 <span style="font-weight: 800; font-size: 0.95rem; color: white; line-height: 1;">${session.name}</span>
                 <span style="font-size: 0.7rem; color: var(--accent-color); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-top: 2px;">Luxe Member</span>
             </div>
-            <div class="user-avatar" style="width: 45px; height: 45px; border-radius: 50%; background: var(--gradient-main); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem; box-shadow: 0 5px 15px rgba(124,58,237,0.35); border: 2px solid #000;">
+            <div class="user-avatar" style="width: 45px; height: 45px; border-radius: 50%; background: ${session.avatar_color || 'var(--primary-color)'}; color: black; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem; box-shadow: 0 5px 15px rgba(212,175,55,0.35); border: 2px solid #000;">
                 ${session.name.charAt(0).toUpperCase()}
             </div>
             <button id="logoutBtn" class="logout-btn" style="width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 50%; transition: 0.4s; color: var(--text-muted); border: none; cursor: pointer;" onmouseover="this.style.background='var(--primary-color)';this.style.color='white';this.style.transform='rotate(90deg)'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='var(--text-muted)';this.style.transform='rotate(0deg)'"><i class="fas fa-sign-out-alt"></i></button>

@@ -62,7 +62,10 @@ try {
         'city' => "VARCHAR(100) AFTER address",
         'zip' => "VARCHAR(20) AFTER city",
         'points' => "INT DEFAULT 0 AFTER zip",
-        'avatar_color' => "VARCHAR(20) DEFAULT '#ff4757' AFTER points"
+        'avatar_color' => "VARCHAR(20) DEFAULT '#d4af37' AFTER points",
+        'dietary_preference' => "VARCHAR(50) DEFAULT 'None' AFTER avatar_color",
+        'favorite_cuisine' => "VARCHAR(50) DEFAULT 'None' AFTER dietary_preference",
+        'spiciness_level' => "VARCHAR(50) DEFAULT 'Medium' AFTER favorite_cuisine"
     ];
 
     foreach ($missingUserCols as $col => $definition) {

@@ -16,6 +16,7 @@ if ($action === 'get_profile') {
 
     try {
         $stmt = $conn->prepare("SELECT name, email, phone, address, city, zip, points, avatar_color, 
+            dietary_preference, favorite_cuisine, spiciness_level,
             (SELECT COUNT(*) FROM orders WHERE user_email = users.email) as total_orders 
             FROM users WHERE email = ?");
         $stmt->execute([$email]);
@@ -34,11 +35,6 @@ if ($action === 'get_profile') {
 
 if ($action === 'update_profile') {
     $email = isset($data['email']) ? filter_var($data['email'], FILTER_SANITIZE_EMAIL) : '';
-    $name = isset($data['name']) ? htmlspecialchars($data['name']) : '';
-    $phone = isset($data['phone']) ? htmlspecialchars($data['phone']) : '';
-    $address = isset($data['address']) ? htmlspecialchars($data['address']) : '';
-    $city = isset($data['city']) ? htmlspecialchars($data['city']) : '';
-    $zip = isset($data['zip']) ? htmlspecialchars($data['zip']) : '';
 
     if (empty($email)) {
         echo json_encode(['success' => false, 'message' => 'Email is required.']);
@@ -46,8 +42,32 @@ if ($action === 'update_profile') {
     }
 
     try {
-        $stmt = $conn->prepare("UPDATE users SET name = ?, phone = ?, address = ?, city = ?, zip = ? WHERE email = ?");
-        $success = $stmt->execute([$name, $phone, $address, $city, $zip, $email]);
+        // Dynamically compile columns to update based on request payload
+        $fields = [];
+        $params = [];
+        
+        $updatable_fields = [
+            'name', 'phone', 'address', 'city', 'zip', 
+            'avatar_color', 'dietary_preference', 'favorite_cuisine', 'spiciness_level'
+        ];
+        
+        foreach ($updatable_fields as $field) {
+            if (isset($data[$field])) {
+                $fields[] = "`$field` = ?";
+                $params[] = htmlspecialchars($data[$field]);
+            }
+        }
+        
+        if (empty($fields)) {
+            echo json_encode(['success' => false, 'message' => 'No fields to update.']);
+            exit;
+        }
+        
+        $params[] = $email;
+        $query = "UPDATE users SET " . implode(", ", $fields) . " WHERE email = ?";
+        
+        $stmt = $conn->prepare($query);
+        $success = $stmt->execute($params);
 
         if ($success) {
             echo json_encode(['success' => true, 'message' => 'Profile updated successfully!']);
