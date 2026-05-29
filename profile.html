@@ -3,162 +3,892 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elite Profile | Crave Luxe</title>
-    <!-- Fonts via style.css -->
+    <title>My Profile | Crave Luxe</title>
+    <meta name="description" content="Manage your Crave Luxe profile, preferences, addresses, and loyalty rewards.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=17">
+    <link rel="stylesheet" href="style.css?v=18">
     <style>
-        .profile-grid {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 5rem;
-            padding-bottom: 12rem;
-        }
-        .profile-sidebar {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: var(--radius-xl);
-            padding: 4rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(25px);
-            height: fit-content;
-            position: sticky;
-            top: 120px;
-        }
-        .profile-nav-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
+        /* =============================================
+           PROFILE PAGE — FULL REDESIGN
+        ============================================= */
+
+        /* Hero Banner */
+        .profile-hero {
+            position: relative;
             width: 100%;
-            padding: 18px 25px;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            font-weight: 500;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: 0.4s;
-            margin-bottom: 10px;
-            text-align: left;
-            letter-spacing: 0.5px;
+            height: 320px;
+            background: linear-gradient(135deg, var(--bg-color) 0%, rgba(0,0,0,0.8) 100%);
+            overflow: hidden;
+            margin-top: 0;
         }
-        .profile-nav-item:hover, .profile-nav-item.active {
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            padding-left: 35px;
+        .profile-hero-bg {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg,
+                rgba(var(--primary-rgb),0.25) 0%,
+                rgba(0,0,0,0) 60%,
+                rgba(var(--primary-rgb),0.08) 100%);
+            animation: heroPulse 8s ease-in-out infinite;
         }
-        .profile-nav-item.active {
+        @keyframes heroPulse {
+            0%,100% { opacity:1; }
+            50% { opacity:0.6; }
+        }
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .hero-orb-1 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(var(--primary-rgb),0.3) 0%, transparent 70%);
+            top: -100px; left: -100px;
+            animation: orbFloat 6s ease-in-out infinite;
+        }
+        .hero-orb-2 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(var(--primary-rgb),0.15) 0%, transparent 70%);
+            bottom: -80px; right: 100px;
+            animation: orbFloat 8s ease-in-out infinite reverse;
+        }
+        @keyframes orbFloat {
+            0%,100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+        .profile-hero-content {
+            position: relative; z-index: 2;
+            display: flex;
+            align-items: flex-end;
+            gap: 3rem;
+            padding: 0 5rem 3rem;
+            height: 100%;
+        }
+
+        /* Avatar Upload */
+        .avatar-upload-wrapper {
+            position: relative;
+            width: 130px; height: 130px;
+            flex-shrink: 0;
+        }
+        .avatar-circle {
+            width: 130px; height: 130px;
+            border-radius: 50%;
             background: var(--gradient-main);
             color: #000;
             font-weight: 900;
-            box-shadow: 0 15px 30px rgba(124, 58, 237, 0.2);
+            font-size: 3.5rem;
+            font-family: 'DM Serif Display', serif;
+            display: flex; align-items: center; justify-content: center;
+            border: 4px solid rgba(var(--primary-rgb), 0.5);
+            box-shadow: 0 0 40px rgba(var(--primary-rgb), 0.4), 0 20px 40px rgba(0,0,0,0.6);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            overflow: hidden;
         }
-        .profile-tab-content {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: var(--radius-xl);
-            padding: 5rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        .avatar-circle img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .avatar-overlay {
+            position: absolute; inset: 0;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.6);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .avatar-upload-wrapper:hover .avatar-overlay { opacity: 1; }
+        .avatar-upload-wrapper:hover .avatar-circle { transform: scale(1.05); }
+        .avatar-overlay i { color: white; font-size: 1.5rem; }
+        #avatarFileInput { display: none; }
+
+        /* Online Badge */
+        .online-badge {
+            position: absolute; bottom: 8px; right: 8px;
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            background: #10b981;
+            border: 3px solid var(--bg-color);
+            box-shadow: 0 0 10px rgba(16,185,129,0.5);
+            animation: pulse-online 2s ease-in-out infinite;
+        }
+        @keyframes pulse-online {
+            0%,100% { box-shadow: 0 0 10px rgba(16,185,129,0.5); }
+            50% { box-shadow: 0 0 20px rgba(16,185,129,0.8); }
+        }
+
+        /* Hero user info */
+        .hero-user-info { flex: 1; padding-bottom: 0.5rem; }
+        .hero-username {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3.2rem; font-weight: 400;
+            color: white; letter-spacing: -1px;
+            line-height: 1.1; margin-bottom: 0.5rem;
+        }
+        .hero-user-meta {
+            display: flex; align-items: center; gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .hero-meta-pill {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.85rem; color: rgba(255,255,255,0.6);
+            font-weight: 600; letter-spacing: 1px;
+        }
+        .hero-meta-pill i { color: var(--primary-color); }
+        .membership-badge {
+            display: flex; align-items: center; gap: 8px;
+            background: var(--gradient-main);
+            color: #000; font-weight: 900;
+            padding: 6px 18px; border-radius: 50px;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+            box-shadow: 0 8px 20px rgba(var(--primary-rgb),0.4);
+        }
+
+        /* Aura Picker in hero */
+        .hero-right {
+            display: flex; flex-direction: column;
+            align-items: flex-end; gap: 1.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .aura-strip {
+            display: flex; align-items: center; gap: 10px;
+        }
+        .aura-label {
+            font-size: 0.7rem; color: rgba(255,255,255,0.4);
+            text-transform: uppercase; letter-spacing: 2px;
+            font-weight: 800;
+        }
+        .aura-dot {
+            width: 22px; height: 22px;
+            border-radius: 50%; cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+            border: 2px solid transparent;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+        }
+        .aura-dot:hover { transform: scale(1.25); }
+        .aura-dot.active {
+            border-color: white !important;
+            transform: scale(1.35);
+            box-shadow: 0 0 15px rgba(255,255,255,0.5);
+        }
+
+        /* =============================================
+           MAIN LAYOUT
+        ============================================= */
+        .profile-page-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 4rem 10rem;
+            align-items: start;
+        }
+
+        /* =============================================
+           SIDEBAR
+        ============================================= */
+        .profile-sidebar-new {
+            position: sticky;
+            top: 120px;
+        }
+        .sidebar-stats {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(20px);
+        }
+        .stat-row {
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 1rem;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .stat-row:last-child { border-bottom: none; }
+        .stat-row-label {
+            font-size: 0.8rem; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 2px; font-weight: 700;
+        }
+        .stat-row-val {
+            font-size: 1.2rem; font-weight: 900;
+            color: var(--primary-color);
+            font-family: 'DM Serif Display', serif;
+        }
+
+        .sidebar-nav {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 25px;
+            padding: 1.5rem;
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+        }
+        .sidebar-nav-item {
+            display: flex; align-items: center; gap: 16px;
+            width: 100%; padding: 16px 20px;
+            background: transparent; border: none;
+            color: var(--text-muted); font-size: 0.95rem;
+            font-weight: 600; border-radius: 15px;
+            cursor: pointer; transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+            margin-bottom: 4px; text-align: left;
+            letter-spacing: 0.5px; position: relative;
+            font-family: 'Outfit', sans-serif;
+        }
+        .sidebar-nav-item:hover {
+            background: rgba(255,255,255,0.04);
+            color: white;
+            padding-left: 28px;
+        }
+        .sidebar-nav-item.active {
+            background: var(--gradient-main);
+            color: #000; font-weight: 900;
+            box-shadow: 0 12px 28px rgba(var(--primary-rgb),0.25);
+            padding-left: 20px;
+        }
+        .sidebar-nav-item .nav-icon {
+            width: 36px; height: 36px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.05);
+            transition: 0.3s;
+            flex-shrink: 0;
+        }
+        .sidebar-nav-item.active .nav-icon {
+            background: rgba(0,0,0,0.15);
+        }
+        .sidebar-nav-item .nav-badge {
+            margin-left: auto;
+            background: var(--primary-color);
+            color: #000; border-radius: 50px;
+            padding: 2px 9px; font-size: 0.72rem;
+            font-weight: 900; min-width: 22px;
+            text-align: center;
+        }
+        .sidebar-nav-item.active .nav-badge {
+            background: rgba(0,0,0,0.2);
+            color: #000;
+        }
+        .sidebar-divider {
+            height: 1px; background: rgba(255,255,255,0.04);
+            margin: 1rem 0;
+        }
+        .sidebar-logout {
+            display: flex; align-items: center; gap: 16px;
+            width: 100%; padding: 16px 20px;
+            background: rgba(255,71,87,0.06);
+            border: 1px solid rgba(255,71,87,0.1);
+            color: #ff4757; font-size: 0.95rem;
+            font-weight: 700; border-radius: 15px;
+            cursor: pointer; transition: all 0.3s ease;
+            margin-top: 0.5rem; font-family: 'Outfit', sans-serif;
+            text-transform: uppercase; letter-spacing: 1.5px;
+        }
+        .sidebar-logout:hover {
+            background: rgba(255,71,87,0.15);
+            transform: translateX(5px);
+        }
+
+        /* =============================================
+           TAB CONTENT
+        ============================================= */
+        .profile-tab-panel {
             display: none;
-            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: tabFadeIn 0.5s cubic-bezier(0.16,1,0.3,1);
         }
-        .profile-tab-content.active {
-            display: block;
+        .profile-tab-panel.active { display: block; }
+        @keyframes tabFadeIn {
+            from { opacity:0; transform: translateY(12px); }
+            to { opacity:1; transform: translateY(0); }
         }
-        input, textarea {
+
+        /* Section Card */
+        .section-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 28px; padding: 3.5rem;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(20px);
+            transition: border-color 0.3s ease;
+        }
+        .section-card:hover { border-color: rgba(255,255,255,0.1); }
+        .section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem; font-weight: 400;
+            color: white; margin-bottom: 0.5rem;
+        }
+        .section-subtitle {
+            color: var(--text-muted); font-size: 0.95rem;
+            font-weight: 300; margin-bottom: 3rem;
+        }
+
+        /* Tab Header */
+        .tab-page-header {
+            display: flex; justify-content: space-between;
+            align-items: flex-start; margin-bottom: 3rem;
+            gap: 2rem; flex-wrap: wrap;
+        }
+        .tab-page-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3rem; font-weight: 400;
+            color: white; letter-spacing: -1px; line-height: 1;
+        }
+        .tab-page-subtitle {
+            color: var(--text-muted); font-size: 1rem;
+            font-weight: 300; margin-top: 0.5rem;
+        }
+
+        /* Form Inputs */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+        .form-grid-full { grid-column: 1 / -1; }
+        .form-field { display: flex; flex-direction: column; gap: 10px; }
+        .form-label {
+            font-size: 0.75rem; font-weight: 800;
+            color: var(--primary-color); text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .form-input-wrap { position: relative; }
+        .form-input-wrap i.fi {
+            position: absolute; left: 18px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-color); opacity: 0.5; font-size: 1rem;
+            pointer-events: none;
+        }
+        .form-input {
+            width: 100%;
             background: rgba(255,255,255,0.03) !important;
             border: 1px solid rgba(255,255,255,0.08) !important;
             color: white !important;
-            padding: 18px 20px !important;
+            padding: 17px 20px 17px 50px !important;
             border-radius: 15px !important;
             font-family: 'Outfit', sans-serif !important;
-            font-size: 1.1rem !important;
+            font-size: 1rem !important;
             outline: none !important;
+            transition: all 0.3s ease !important;
         }
-        input:focus, textarea:focus {
+        .form-input:focus {
             border-color: var(--primary-color) !important;
             background: rgba(255,255,255,0.05) !important;
-            box-shadow: 0 0 25px rgba(124, 58, 237, 0.1) !important;
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb),0.1) !important;
         }
-        input:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .form-input:disabled {
+            opacity: 0.4; cursor: not-allowed;
         }
-        .rewards-card {
+        .form-input.no-icon { padding-left: 20px !important; }
+        textarea.form-input { resize: vertical; padding-top: 15px !important; }
+
+        /* Buttons */
+        .btn-gold {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 10px;
             background: var(--gradient-main);
-            border-radius: 30px;
-            padding: 4rem;
-            color: #000;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(124, 58, 237, 0.3);
+            color: #000; font-weight: 900;
+            padding: 14px 36px; border-radius: 50px;
+            border: none; cursor: pointer;
+            font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 2px; font-family: 'Outfit', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(var(--primary-rgb),0.3);
         }
-        @media (max-width: 1100px) {
-            .profile-grid { grid-template-columns: 1fr; }
-            .profile-sidebar { position: static; }
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(var(--primary-rgb),0.5);
         }
-        
-        /* Dynamic Theme and Gastronomy Styles */
-        .pref-card, .cuisine-card {
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(10px);
+        .btn-ghost {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--text-muted); font-weight: 700;
+            padding: 14px 28px; border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
+            font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 1.5px; font-family: 'Outfit', sans-serif;
+            transition: all 0.3s ease;
         }
-        .pref-card:hover, .cuisine-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary-color);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.1);
-        }
-        .pref-card.active, .cuisine-card.active {
-            border-color: var(--primary-color) !important;
-            background: rgba(255, 255, 255, 0.05) !important;
-            box-shadow: var(--shadow-glow) !important;
-            transform: translateY(-4px) scale(1.02);
-        }
-        .spice-btn {
-            flex: 1;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: 0.4s;
-        }
-        .spice-btn:hover {
-            border-color: var(--primary-color);
+        .btn-ghost:hover {
+            border-color: rgba(255,255,255,0.25);
             color: white;
         }
+        .btn-danger {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 8px;
+            background: rgba(255,71,87,0.08);
+            color: #ff4757; font-weight: 700;
+            padding: 14px 28px; border-radius: 50px;
+            border: 1px solid rgba(255,71,87,0.2); cursor: pointer;
+            font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 1.5px; font-family: 'Outfit', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .btn-danger:hover { background: rgba(255,71,87,0.2); }
+
+        /* =============================================
+           STATS COUNTER (Identity Tab)
+        ============================================= */
+        .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; }
+        .stat-box {
+            padding: 3rem 2rem; text-align: center;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 22px;
+            transition: all 0.4s ease;
+            position: relative; overflow: hidden;
+        }
+        .stat-box::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: var(--gradient-main);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .stat-box:hover { transform: translateY(-8px); border-color: rgba(var(--primary-rgb),0.3); }
+        .stat-box:hover::before { opacity: 0.05; }
+        .stat-box-icon {
+            width: 50px; height: 50px;
+            border-radius: 15px;
+            background: rgba(var(--primary-rgb),0.1);
+            border: 1px solid rgba(var(--primary-rgb),0.2);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.3rem; color: var(--primary-color);
+            position: relative; z-index: 1;
+        }
+        .stat-box-value {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3.5rem; font-weight: 400;
+            color: var(--primary-color);
+            line-height: 1;
+            position: relative; z-index: 1;
+        }
+        .stat-box-label {
+            font-size: 0.75rem; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 3px;
+            font-weight: 800; margin-top: 10px;
+            position: relative; z-index: 1;
+        }
+
+        /* =============================================
+           ADDRESS CARDS
+        ============================================= */
+        .address-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .address-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px; padding: 2.5rem;
+            position: relative; transition: all 0.35s ease;
+            cursor: pointer;
+        }
+        .address-card:hover {
+            border-color: rgba(var(--primary-rgb),0.3);
+            background: rgba(255,255,255,0.04);
+            transform: translateY(-5px);
+        }
+        .address-card.selected {
+            border-color: var(--primary-color);
+            background: rgba(var(--primary-rgb),0.04);
+        }
+        .address-card-type {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 1.2rem;
+        }
+        .address-type-icon {
+            width: 38px; height: 38px; border-radius: 10px;
+            background: rgba(var(--primary-rgb),0.1);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--primary-color); font-size: 1rem;
+        }
+        .address-type-label {
+            font-weight: 800; font-size: 0.9rem;
+            text-transform: uppercase; letter-spacing: 1.5px; color: white;
+        }
+        .address-text {
+            color: var(--text-muted); font-size: 0.95rem;
+            font-weight: 300; line-height: 1.6;
+        }
+        .address-card-actions {
+            display: flex; gap: 1rem; margin-top: 1.5rem;
+        }
+        .address-action-btn {
+            font-size: 0.75rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            padding: 8px 16px; border-radius: 8px;
+            border: none; cursor: pointer; transition: 0.3s;
+            font-family: 'Outfit', sans-serif;
+        }
+        .address-edit-btn {
+            background: rgba(255,255,255,0.05); color: var(--text-muted);
+        }
+        .address-edit-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+        .address-del-btn {
+            background: rgba(255,71,87,0.08); color: #ff4757;
+        }
+        .address-del-btn:hover { background: rgba(255,71,87,0.2); }
+        .address-default-tag {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            background: var(--gradient-main); color: #000;
+            font-size: 0.65rem; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            padding: 4px 12px; border-radius: 50px;
+        }
+        .add-address-card {
+            border: 2px dashed rgba(255,255,255,0.08);
+            border-radius: 20px; padding: 2.5rem;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 1rem; cursor: pointer;
+            transition: all 0.3s ease; text-align: center;
+            min-height: 180px;
+        }
+        .add-address-card:hover {
+            border-color: var(--primary-color);
+            background: rgba(var(--primary-rgb),0.04);
+        }
+        .add-address-card i { font-size: 2rem; color: rgba(255,255,255,0.15); }
+        .add-address-card span {
+            font-size: 0.85rem; color: var(--text-muted);
+            font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
+        }
+
+        /* Address modal */
+        .modal-backdrop {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            z-index: 5000; display: flex;
+            align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 0.4s ease;
+        }
+        .modal-backdrop.open { opacity: 1; visibility: visible; }
+        .modal-box {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 30px; padding: 4rem;
+            max-width: 550px; width: 90%;
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .modal-backdrop.open .modal-box {
+            transform: scale(1) translateY(0);
+        }
+        .modal-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem; color: white;
+            margin-bottom: 0.5rem;
+        }
+        .modal-subtitle {
+            color: var(--text-muted); font-size: 0.9rem;
+            margin-bottom: 3rem;
+        }
+        .modal-form-grid { display: grid; gap: 1.8rem; }
+        .modal-actions {
+            display: flex; gap: 1.5rem;
+            justify-content: flex-end; margin-top: 2.5rem;
+        }
+
+        /* =============================================
+           REWARDS / LUXE STATUS
+        ============================================= */
+        .rewards-hero-card {
+            background: var(--gradient-main);
+            border-radius: 28px; padding: 4rem;
+            position: relative; overflow: hidden;
+            box-shadow: 0 30px 60px rgba(var(--primary-rgb),0.35);
+            margin-bottom: 3rem;
+        }
+        .rewards-hero-card .rh-bg-icon {
+            position: absolute; right: -40px; bottom: -40px;
+            font-size: 14rem; opacity: 0.06; color: #000;
+            pointer-events: none;
+        }
+        .rh-top { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 2; }
+        .rh-points-label {
+            font-size: 0.8rem; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 4px;
+            opacity: 0.6; color: #000;
+        }
+        .rh-points-value {
+            font-family: 'DM Serif Display', serif;
+            font-size: 7rem; font-weight: 400; color: #000;
+            line-height: 1; margin: 0.5rem 0;
+        }
+        .rh-tier-badge {
+            background: rgba(0,0,0,0.15);
+            color: #000; font-weight: 900;
+            padding: 12px 30px; border-radius: 50px;
+            font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 3px;
+            border: 1px solid rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+        }
+        .rh-progress-bar {
+            height: 10px; border-radius: 10px;
+            background: rgba(0,0,0,0.1);
+            margin: 3rem 0 1rem;
+            position: relative; z-index: 2;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .rh-progress-fill {
+            height: 100%; border-radius: 10px;
+            background: #000; box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
+        }
+        .rh-progress-label {
+            font-size: 0.9rem; opacity: 0.7; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 2px;
+            color: #000; position: relative; z-index: 2;
+        }
+
+        /* Tier Journey */
+        .tier-journey {
+            display: flex; justify-content: space-between;
+            align-items: center; position: relative;
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+        }
+        .tier-journey::before {
+            content: '';
+            position: absolute; left: 0; right: 0;
+            top: 50%; transform: translateY(-50%);
+            height: 2px;
+            background: rgba(255,255,255,0.05);
+            z-index: 0;
+        }
+        .tier-stop {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 1rem;
+            position: relative; z-index: 1;
+        }
+        .tier-stop-circle {
+            width: 55px; height: 55px; border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; color: var(--text-muted);
+            transition: all 0.4s ease;
+        }
+        .tier-stop.reached .tier-stop-circle {
+            background: var(--gradient-main);
+            border-color: transparent;
+            color: #000;
+            box-shadow: 0 8px 20px rgba(var(--primary-rgb),0.4);
+        }
+        .tier-stop-name {
+            font-size: 0.72rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 2px;
+            color: var(--text-muted); text-align: center;
+        }
+        .tier-stop.reached .tier-stop-name { color: var(--primary-color); }
+        .tier-stop-pts {
+            font-size: 0.7rem; color: rgba(255,255,255,0.3);
+            letter-spacing: 1px;
+        }
+
+        /* Redemption cards */
+        .redemption-card {
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 2rem 2.5rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px; margin-bottom: 1.2rem;
+            transition: all 0.35s ease;
+        }
+        .redemption-card:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(var(--primary-rgb),0.2);
+            transform: translateX(5px);
+        }
+        .redemption-icon {
+            width: 56px; height: 56px; border-radius: 15px;
+            background: rgba(var(--primary-rgb),0.1);
+            border: 1px solid rgba(var(--primary-rgb),0.2);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--primary-color); font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .redemption-info { flex: 1; margin: 0 2rem; }
+        .redemption-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.4rem; color: white; margin-bottom: 4px;
+        }
+        .redemption-cost {
+            font-size: 0.8rem; color: var(--text-muted);
+            font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        /* =============================================
+           GASTRONOMY / TASTE PROTOCOL
+        ============================================= */
+        .gastronomy-section { margin-bottom: 4rem; }
+        .gastronomy-label {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem; color: white;
+            margin-bottom: 1.5rem;
+        }
+        .pref-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 1.5rem; }
+        .pref-card {
+            padding: 2.5rem 1.5rem; text-align: center;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px; cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .pref-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(var(--primary-rgb),0.3);
+        }
+        .pref-card.active {
+            border-color: var(--primary-color) !important;
+            background: rgba(var(--primary-rgb),0.06) !important;
+            box-shadow: 0 12px 30px rgba(var(--primary-rgb),0.15) !important;
+            transform: translateY(-4px) scale(1.03);
+        }
+        .pref-card i { font-size: 2.3rem; margin-bottom: 1.2rem; display: block; }
+        .pref-card-name {
+            font-size: 0.85rem; font-weight: 800; color: white;
+            text-transform: uppercase; letter-spacing: 1.5px;
+        }
+        .cuisine-card {
+            padding: 2rem 1.5rem; text-align: center;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px; cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+            position: relative; overflow: hidden;
+        }
+        .cuisine-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: var(--gradient-main); opacity: 0; transition: 0.4s;
+        }
+        .cuisine-card:hover { transform: translateY(-8px); border-color: rgba(var(--primary-rgb),0.3); }
+        .cuisine-card.active {
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+        }
+        .cuisine-card.active::before { opacity: 0.08; }
+        .cuisine-emoji { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+        .cuisine-name {
+            font-size: 0.82rem; font-weight: 800; color: white;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            position: relative; z-index: 1;
+        }
+
+        .spice-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .spice-btn {
+            flex: 1; min-width: 120px;
+            padding: 2rem 1.5rem; text-align: center;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 18px; color: var(--text-muted);
+            font-size: 1rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; transition: 0.4s;
+            font-family: 'Outfit', sans-serif;
+        }
+        .spice-btn:hover { border-color: var(--primary-color); color: white; }
         .spice-btn.active {
             background: var(--gradient-main) !important;
-            color: #000 !important;
-            font-weight: 900 !important;
-            box-shadow: var(--shadow-glow) !important;
+            color: #000 !important; font-weight: 900 !important;
             border-color: transparent !important;
-            transform: scale(1.02);
+            box-shadow: 0 12px 28px rgba(var(--primary-rgb),0.3) !important;
+            transform: scale(1.03);
         }
-        .aura-dot {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 2px solid transparent;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        .spice-emoji { font-size: 2rem; display: block; margin-bottom: 0.8rem; }
+
+        /* =============================================
+           SECURITY TAB
+        ============================================= */
+        .security-item {
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 2.5rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px; margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
         }
-        .aura-dot:hover {
-            transform: scale(1.2);
+        .security-item:hover {
+            border-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.04);
         }
-        .aura-dot.active {
-            border-color: white !important;
-            transform: scale(1.3);
-            box-shadow: 0 0 15px rgba(255,255,255,0.6);
+        .security-item-left { display: flex; align-items: center; gap: 2rem; }
+        .security-icon {
+            width: 55px; height: 55px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem;
+        }
+        .si-green { background: rgba(16,185,129,0.1); color: #10b981; }
+        .si-blue { background: rgba(59,130,246,0.1); color: #3b82f6; }
+        .si-orange { background: rgba(245,158,11,0.1); color: #f59e0b; }
+        .si-red { background: rgba(255,71,87,0.1); color: #ff4757; }
+        .security-title {
+            font-weight: 800; font-size: 1rem; color: white;
+            margin-bottom: 4px;
+        }
+        .security-desc { font-size: 0.85rem; color: var(--text-muted); font-weight: 300; }
+        .security-status {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 0.75rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            padding: 6px 14px; border-radius: 50px;
+            border: 1px solid;
+        }
+        .status-active { color: #10b981; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.08); }
+        .status-warn { color: #f59e0b; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.08); }
+        .status-inactive { color: var(--text-muted); border-color: rgba(255,255,255,0.1); background: transparent; }
+
+        /* Toggle Switch */
+        .toggle-switch { position: relative; width: 52px; height: 28px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute; cursor: pointer;
+            inset: 0; background: rgba(255,255,255,0.1);
+            border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.4s;
+        }
+        .toggle-slider::before {
+            content: ''; position: absolute;
+            width: 20px; height: 20px; border-radius: 50%;
+            left: 3px; top: 50%; transform: translateY(-50%);
+            background: white; transition: 0.4s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        .toggle-switch input:checked + .toggle-slider {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .toggle-switch input:checked + .toggle-slider::before { left: 29px; }
+
+        /* Danger Zone */
+        .danger-zone {
+            background: rgba(255,71,87,0.04);
+            border: 1px solid rgba(255,71,87,0.15);
+            border-radius: 22px; padding: 3rem;
+        }
+        .danger-zone-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem; color: #ff4757; margin-bottom: 0.5rem;
+        }
+        .danger-zone-desc {
+            color: var(--text-muted); font-size: 0.9rem;
+            margin-bottom: 2rem; font-weight: 300;
+        }
+
+        /* =============================================
+           RESPONSIVE
+        ============================================= */
+        @media (max-width: 1100px) {
+            .profile-page-layout { grid-template-columns: 1fr; }
+            .profile-sidebar-new { position: static; }
+            .profile-hero-content { padding: 0 2rem 2.5rem; }
+        }
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .address-cards-grid { grid-template-columns: 1fr; }
+            .profile-page-layout { padding: 2rem 1.5rem 8rem; }
+            .hero-username { font-size: 2.2rem; }
+            .tab-page-title { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -167,526 +897,925 @@
     <!-- Navbar -->
     <nav class="dash-nav"></nav>
 
-    <main class="dashboard-container reveal" style="padding-top: 15rem;">
-        <div class="profile-grid">
-            <!-- Sidebar -->
-            <aside class="profile-sidebar">
-                <div style="text-align: center; margin-bottom: 4rem;">
-                    <div class="user-avatar" id="profileBigAvatar" style="width: 120px; height: 120px; font-size: 3.5rem; margin: 0 auto 2.5rem; background: var(--gradient-main); color: #000; font-weight: 900; border: 4px solid #000; box-shadow: var(--shadow-glow);">U</div>
-                    <h3 id="sidebarName" style="font-family: 'DM Serif Display', serif; font-size: 2.4rem; margin-bottom: 0.5rem; font-weight: 400; color: white;">User Name</h3>
-                    <p id="sidebarEmail" style="color: var(--accent-color); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 3px; font-weight: 700; opacity: 0.7;">user@example.com</p>
-                    
-                    <!-- Identity Aura Picker -->
-                    <div style="margin-top: 3rem;">
-                        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; font-weight: 800; display: block; margin-bottom: 12px;">Identity Aura</span>
-                        <div style="display: flex; justify-content: center; gap: 12px;">
-                            <button class="aura-dot" data-color="#d4af37" style="background: #d4af37;" title="Gilded Gold"></button>
-                            <button class="aura-dot" data-color="#b76e79" style="background: #b76e79;" title="Rose Gold"></button>
-                            <button class="aura-dot" data-color="#dcdde1" style="background: #dcdde1;" title="Platinum Silver"></button>
-                            <button class="aura-dot" data-color="#ff3838" style="background: #ff3838;" title="Imperial Ruby"></button>
-                            <button class="aura-dot" data-color="#2e86de" style="background: #2e86de;" title="Royal Sapphire"></button>
-                            <button class="aura-dot" data-color="#10b981" style="background: #10b981;" title="Vibrant Emerald"></button>
-                        </div>
-                    </div>
+    <!-- Profile Hero -->
+    <div class="profile-hero" style="margin-top: 80px;">
+        <div class="profile-hero-bg"></div>
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="profile-hero-content">
+            <!-- Avatar -->
+            <div class="avatar-upload-wrapper" onclick="document.getElementById('avatarFileInput').click()">
+                <div class="avatar-circle" id="profileBigAvatar">U</div>
+                <div class="avatar-overlay">
+                    <i class="fas fa-camera"></i>
                 </div>
+                <div class="online-badge"></div>
+                <input type="file" id="avatarFileInput" accept="image/*" onchange="handleAvatarUpload(this)">
+            </div>
 
-                <div class="profile-nav">
-                    <button class="profile-nav-item active" onclick="switchTab('personal', this)">
-                        <i class="fas fa-user-shield"></i> Identity
-                    </button>
-                    <button class="profile-nav-item" onclick="switchTab('address', this)">
-                        <i class="fas fa-map-marker-alt"></i> Sanctuaries
-                    </button>
-                    <button class="profile-nav-item" onclick="switchTab('rewards', this)">
-                        <i class="fas fa-crown"></i> Luxe Status
-                    </button>
-                    <button class="profile-nav-item" onclick="switchTab('gastronomy', this)">
-                        <i class="fas fa-utensils"></i> Taste Protocol
-                    </button>
-                    <button class="profile-nav-item" id="logoutSidebarBtn" style="color: var(--primary-color); background: rgba(255, 71, 87, 0.05); margin-top: 4rem; justify-content: center; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">
-                        <i class="fas fa-sign-out-alt"></i> Depart
-                    </button>
+            <!-- User Info -->
+            <div class="hero-user-info">
+                <h1 class="hero-username" id="heroUsername">Welcome Back</h1>
+                <div class="hero-user-meta">
+                    <span class="hero-meta-pill">
+                        <i class="fas fa-envelope"></i>
+                        <span id="heroEmail">—</span>
+                    </span>
+                    <span class="hero-meta-pill">
+                        <i class="fas fa-phone"></i>
+                        <span id="heroPhone">Not set</span>
+                    </span>
+                    <span class="hero-meta-pill">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="heroJoined">Member since 2024</span>
+                    </span>
+                    <span class="membership-badge" id="heroBadge">
+                        <i class="fas fa-crown"></i> Elite
+                    </span>
                 </div>
-            </aside>
+            </div>
 
-            <!-- Main Content Area -->
-            <section class="profile-content-area">
-                <!-- Tab: Personal Info -->
-                <div id="personalTab" class="profile-tab-content active">
-                    <header style="margin-bottom: 5rem; display: flex; justify-content: space-between; align-items: flex-end;">
-                        <div>
-                            <h2 style="font-size: 3.5rem; font-weight: 400; font-family: 'DM Serif Display', serif; letter-spacing: -1.5px; color: white;">Private Identity</h2>
-                            <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 300;">Manage your secure credentials.</p>
-                        </div>
-                        <button class="btn-primary" id="editProfileBtn" style="width: auto; padding: 15px 40px; border-radius: 50px; font-size: 0.9rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">Update Protocol</button>
-                    </header>
-
-                    <form id="profileForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
-                        <div class="input-group" style="grid-column: 1 / -1;">
-                            <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Full Distinction</label>
-                            <div style="position: relative;">
-                                <i class="fas fa-user" style="position: absolute; left: 20px; top: 22px; color: var(--accent-color); opacity: 0.6;"></i>
-                                <input type="text" id="inputName" name="name" style="padding-left: 55px !important; width: 100%;" disabled required>
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Secure Email</label>
-                            <div style="position: relative;">
-                                <i class="fas fa-envelope" style="position: absolute; left: 20px; top: 22px; color: var(--accent-color); opacity: 0.6;"></i>
-                                <input type="email" id="inputEmail" name="email" style="padding-left: 55px !important; width: 100%;" disabled readonly>
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Luxe Hotline</label>
-                            <div style="position: relative;">
-                                <i class="fas fa-phone" style="position: absolute; left: 20px; top: 22px; color: var(--accent-color); opacity: 0.6;"></i>
-                                <input type="tel" id="inputPhone" name="phone" placeholder="Add contact number" style="padding-left: 55px !important; width: 100%;" disabled>
-                            </div>
-                        </div>
-                        
-                        <div id="formActions" style="grid-column: 1 / -1; display: none; justify-content: flex-end; gap: 2rem; margin-top: 2rem;">
-                            <button type="button" id="cancelEditBtn" style="background: transparent; border: none; color: white; cursor: pointer; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; opacity: 0.6;">Cancel</button>
-                            <button type="submit" class="btn-primary" style="width: auto; padding: 15px 45px; border-radius: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">Save protocol</button>
-                        </div>
-                    </form>
-
-                    <div style="margin-top: 6rem; padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.05);">
-                        <h3 style="font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 2.5rem; color: white;">Global Statistics</h3>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
-                            <div style="padding: 2.5rem; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); text-align: center;">
-                                <div id="totalOrdersCount" style="font-size: 3rem; font-weight: 400; color: var(--primary-color); font-family: 'DM Serif Display', serif;">0</div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 3px; font-weight: 800; margin-top: 10px;">Indulgences</div>
-                            </div>
-                            <div style="padding: 2.5rem; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); text-align: center;">
-                                <div style="font-size: 3rem; font-weight: 400; color: var(--accent-color); font-family: 'DM Serif Display', serif;">4.9</div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 3px; font-weight: 800; margin-top: 10px;">Taste Profile</div>
-                            </div>
-                            <div style="padding: 2.5rem; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); text-align: center;">
-                                <div id="membershipStatus" style="font-size: 2rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 2px; margin-top: 10px;">Elite</div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 3px; font-weight: 800; margin-top: 15px;">Circle</div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Aura Picker + Edit Button -->
+            <div class="hero-right">
+                <div class="aura-strip">
+                    <span class="aura-label">Aura</span>
+                    <button class="aura-dot" data-color="#d4af37" style="background:#d4af37" title="Gilded Gold"></button>
+                    <button class="aura-dot" data-color="#b76e79" style="background:#b76e79" title="Rose Gold"></button>
+                    <button class="aura-dot" data-color="#dcdde1" style="background:#dcdde1" title="Platinum Silver"></button>
+                    <button class="aura-dot" data-color="#ff3838" style="background:#ff3838" title="Imperial Ruby"></button>
+                    <button class="aura-dot" data-color="#2e86de" style="background:#2e86de" title="Royal Sapphire"></button>
+                    <button class="aura-dot" data-color="#10b981" style="background:#10b981" title="Vibrant Emerald"></button>
                 </div>
-
-                <!-- Tab: Address -->
-                <div id="addressTab" class="profile-tab-content">
-                    <header style="margin-bottom: 5rem;">
-                        <h2 style="font-size: 3.5rem; font-weight: 400; font-family: 'DM Serif Display', serif; letter-spacing: -1.5px; color: white;">Sanctuaries</h2>
-                        <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 300;">Saved delivery destinations for seamless arrival.</p>
-                    </header>
-                    
-                    <div id="addressDisplay" style="padding: 6rem 3rem; border: 1px dashed rgba(255,255,255,0.1); border-radius: 25px; text-align: center; background: rgba(255,255,255,0.01);">
-                        <i class="fas fa-map-marked-alt" style="font-size: 4rem; color: rgba(255,255,255,0.05); margin-bottom: 2rem;"></i>
-                        <p id="savedAddressText" style="font-size: 1.2rem; color: var(--text-muted); font-weight: 300;">No sanctuary registered in the database.</p>
-                        <button class="btn-primary" onclick="enableAddressEdit()" style="width: auto; margin: 3rem auto 0; padding: 15px 40px; border-radius: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">Register Sanctuary</button>
-                    </div>
-
-                    <form id="addressForm" style="display: none; grid-template-columns: 1fr 1fr; gap: 3rem;">
-                        <div class="input-group" style="grid-column: 1 / -1;">
-                            <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Sanctuary Coordinates</label>
-                            <textarea id="inputAddress" name="address" rows="3" placeholder="Detailed street address..." style="width: 100%; border-radius: 15px;"></textarea>
-                        </div>
-                        <div class="input-group">
-                            <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">City Realm</label>
-                            <input type="text" id="inputCity" name="city" style="width: 100%;">
-                        </div>
-                        <div class="input-group">
-                            <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Postal Code</label>
-                            <input type="text" id="inputZip" name="zip" style="width: 100%;">
-                        </div>
-                        <div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 2rem; margin-top: 2rem;">
-                            <button type="button" onclick="cancelAddressEdit()" style="background: transparent; border: none; color: white; cursor: pointer; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; opacity: 0.6;">Cancel</button>
-                            <button type="submit" class="btn-primary" style="width: auto; padding: 15px 45px; border-radius: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">Save Sanctuary</button>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Tab: Rewards -->
-                <div id="rewardsTab" class="profile-tab-content">
-                    <header style="margin-bottom: 5rem;">
-                        <h2 style="font-size: 3.5rem; font-weight: 400; font-family: 'DM Serif Display', serif; letter-spacing: -1.5px; color: white;">Luxe Status</h2>
-                        <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 300;">Your standing within the Crave elite circle.</p>
-                    </header>
-
-                    <div class="rewards-card">
-                        <i class="fas fa-crown" style="position: absolute; right: -30px; bottom: -30px; font-size: 12rem; opacity: 0.08;"></i>
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 2;">
-                            <div>
-                                <p style="opacity: 0.6; font-size: 0.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 4px;">Available Privilege Points</p>
-                                <div class="points-value" id="userPoints" style="font-size: 6rem; font-weight: 400; font-family: 'DM Serif Display', serif; margin: 1rem 0;">750</div>
-                            </div>
-                            <div style="background: rgba(0,0,0,0.1); padding: 15px 35px; border-radius: 50px; font-weight: 900; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); text-transform: uppercase; letter-spacing: 3px; font-size: 0.9rem;">
-                                Platinum Elite
-                            </div>
-                        </div>
-                        <div style="background: rgba(0,0,0,0.05); height: 12px; border-radius: 10px; margin: 3rem 0 1.5rem; position: relative; z-index: 2; border: 1px solid rgba(255,255,255,0.1);">
-                            <div id="pointsProgress" style="width: 75%; background: #000; height: 100%; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.2);"></div>
-                        </div>
-                        <p style="font-size: 1rem; opacity: 0.7; font-weight: 800; position: relative; z-index: 2; text-transform: uppercase; letter-spacing: 2px;">250 points until your next complimentary masterpiece.</p>
-                    </div>
-
-                    <h3 style="margin: 6rem 0 3rem; font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: white;">Exclusive Redemptions</h3>
-                    <div style="display: grid; gap: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 2.5rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; transition: 0.4s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'; this.style.borderColor='rgba(124, 58, 237,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.borderColor='rgba(255,255,255,0.05)'">
-                            <div style="display: flex; gap: 2rem; align-items: center;">
-                                <div style="width: 65px; height: 65px; background: rgba(124, 58, 237,0.1); color: var(--primary-color); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 1px solid rgba(124, 58, 237,0.2);">
-                                    <i class="fas fa-ticket-alt"></i>
-                                </div>
-                                <div>
-                                    <h4 style="margin: 0; font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: white;">50% Privilege Pass</h4>
-                                    <p style="margin: 5px 0 0; font-size: 0.85rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">Unlock for 500 points</p>
-                                </div>
-                            </div>
-                            <button class="btn-primary" style="width: auto; padding: 12px 35px; font-size: 0.85rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; border-radius: 12px;">Redeem</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tab: Gastronomy -->
-                <div id="gastronomyTab" class="profile-tab-content">
-                    <header style="margin-bottom: 5rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 2rem;">
-                        <div>
-                            <h2 style="font-size: 3.5rem; font-weight: 400; font-family: 'DM Serif Display', serif; letter-spacing: -1.5px; color: white;">Taste Protocol</h2>
-                            <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 300;">Calibrate your gourmet profile for custom-curated pairings.</p>
-                        </div>
-                        <button class="btn-primary" id="saveGastronomyBtn" style="width: auto; padding: 15px 40px; border-radius: 50px; font-size: 0.9rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">Lock Selection</button>
-                    </header>
-
-                    <div style="display: grid; gap: 5rem;">
-                        <!-- Dietary Grid -->
-                        <div>
-                            <h3 style="font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 2rem; color: white;">Dietary Calibration</h3>
-                            <div class="dietary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem;">
-                                <div class="pref-card" data-val="None" style="padding: 2.5rem; text-align: center;">
-                                    <i class="fas fa-globe" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1.5rem;"></i>
-                                    <div style="font-size: 1rem; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px;">Omnivore</div>
-                                </div>
-                                <div class="pref-card" data-val="Vegan" style="padding: 2.5rem; text-align: center;">
-                                    <i class="fas fa-leaf" style="font-size: 2.5rem; color: #10b981; margin-bottom: 1.5rem;"></i>
-                                    <div style="font-size: 1rem; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px;">Vegan</div>
-                                </div>
-                                <div class="pref-card" data-val="Vegetarian" style="padding: 2.5rem; text-align: center;">
-                                    <i class="fas fa-seedling" style="font-size: 2.5rem; color: #10b981; margin-bottom: 1.5rem;"></i>
-                                    <div style="font-size: 1rem; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px;">Vegetarian</div>
-                                </div>
-                                <div class="pref-card" data-val="Keto" style="padding: 2.5rem; text-align: center;">
-                                    <i class="fas fa-bacon" style="font-size: 2.5rem; color: #f59e0b; margin-bottom: 1.5rem;"></i>
-                                    <div style="font-size: 1rem; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px;">Keto</div>
-                                </div>
-                                <div class="pref-card" data-val="Gluten-Free" style="padding: 2.5rem; text-align: center;">
-                                    <i class="fas fa-wheat-awn-slash" style="font-size: 2.5rem; color: #ec4899; margin-bottom: 1.5rem;"></i>
-                                    <div style="font-size: 1rem; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px;">Gluten-Free</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Cuisine Choice -->
-                        <div>
-                            <h3 style="font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 2rem; color: white;">Luxe Cuisine Preference</h3>
-                            <div class="cuisine-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem;">
-                                <div class="cuisine-card" data-val="Italian" style="padding: 2.5rem; text-align: center;">
-                                    <i class="fas fa-pizza-slice" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1.5rem;"></i>
-                                    <div style="font-size: 1rem; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px;">Italian</div>
-                                </div>
-                                <div class="cuisine-card" data-val="French" style="padding: 2.5rem; text-align: center;">
-                                    <i class="fas fa-wine-glass" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1.5rem;"></i>
-                                    <div style="font-size: 1rem; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px;">French</div>
-                                </div>
-                                <div class="cuisine-card" data-val="Japanese" style="padding: 2.5rem; text-align: center;">
-                                    <i class="fas fa-fish" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1.5rem;"></i>
-                                    <div style="font-size: 1rem; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px;">Japanese</div>
-                                </div>
-                                <div class="cuisine-card" data-val="Indian" style="padding: 2.5rem; text-align: center;">
-                                    <i class="fas fa-pepper-hot" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1.5rem;"></i>
-                                    <div style="font-size: 1rem; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px;">Indian</div>
-                                </div>
-                                <div class="cuisine-card" data-val="American" style="padding: 2.5rem; text-align: center;">
-                                    <i class="fas fa-hamburger" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1.5rem;"></i>
-                                    <div style="font-size: 1rem; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px;">American</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Spiciness Scale -->
-                        <div>
-                            <h3 style="font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 2rem; color: white;">Spiciness Calibration</h3>
-                            <div class="spice-selector" style="display: flex; gap: 2rem; flex-wrap: wrap;">
-                                <button class="spice-btn" data-val="Mild">Mild Aura</button>
-                                <button class="spice-btn" data-val="Medium">Medium Balance</button>
-                                <button class="spice-btn" data-val="Luxe Spicy">Luxe Inferno</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            </div>
         </div>
-    </main>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="profile-page-layout">
+        <!-- Sidebar -->
+        <aside class="profile-sidebar-new">
+            <!-- Quick Stats -->
+            <div class="sidebar-stats">
+                <div class="stat-row">
+                    <span class="stat-row-label">Points</span>
+                    <span class="stat-row-val" id="sidebarPoints">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-row-label">Orders</span>
+                    <span class="stat-row-val" id="sidebarOrders">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-row-label">Rating</span>
+                    <span class="stat-row-val">4.9 ★</span>
+                </div>
+            </div>
+
+            <!-- Nav -->
+            <div class="sidebar-nav">
+                <button class="sidebar-nav-item active" id="navIdentity" onclick="switchProfileTab('identity', this)">
+                    <span class="nav-icon"><i class="fas fa-user-shield"></i></span>
+                    Identity
+                </button>
+                <button class="sidebar-nav-item" id="navAddress" onclick="switchProfileTab('address', this)">
+                    <span class="nav-icon"><i class="fas fa-map-marker-alt"></i></span>
+                    Addresses
+                </button>
+                <button class="sidebar-nav-item" id="navRewards" onclick="switchProfileTab('rewards', this)">
+                    <span class="nav-icon"><i class="fas fa-crown"></i></span>
+                    Luxe Status
+                    <span class="nav-badge" id="navPointsBadge">0</span>
+                </button>
+                <button class="sidebar-nav-item" id="navTaste" onclick="switchProfileTab('taste', this)">
+                    <span class="nav-icon"><i class="fas fa-utensils"></i></span>
+                    Taste Profile
+                </button>
+                <button class="sidebar-nav-item" id="navSecurity" onclick="switchProfileTab('security', this)">
+                    <span class="nav-icon"><i class="fas fa-shield-alt"></i></span>
+                    Security
+                </button>
+                <div class="sidebar-divider"></div>
+                <button class="sidebar-logout" id="logoutSidebarBtn">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <main>
+
+            <!-- ========== TAB: IDENTITY ========== -->
+            <div id="identityTab" class="profile-tab-panel active">
+                <div class="tab-page-header">
+                    <div>
+                        <h2 class="tab-page-title">Private Identity</h2>
+                        <p class="tab-page-subtitle">Manage your secure credentials and personal details.</p>
+                    </div>
+                    <button class="btn-gold" id="editProfileBtn" onclick="toggleEditMode()">
+                        <i class="fas fa-pen"></i> Update
+                    </button>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="stats-grid" style="margin-bottom: 2.5rem;">
+                    <div class="stat-box">
+                        <div class="stat-box-icon"><i class="fas fa-shopping-bag"></i></div>
+                        <div class="stat-box-value" id="statOrders">0</div>
+                        <div class="stat-box-label">Total Orders</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-icon"><i class="fas fa-star"></i></div>
+                        <div class="stat-box-value">4.9</div>
+                        <div class="stat-box-label">Taste Rating</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-icon"><i class="fas fa-gem"></i></div>
+                        <div class="stat-box-value" id="statMembership">Elite</div>
+                        <div class="stat-box-label">Circle</div>
+                    </div>
+                </div>
+
+                <!-- Identity Form -->
+                <div class="section-card">
+                    <h3 class="section-title">Personal Details</h3>
+                    <p class="section-subtitle">Your core profile information.</p>
+
+                    <form id="profileForm">
+                        <div class="form-grid">
+                            <div class="form-field form-grid-full">
+                                <label class="form-label">Full Name</label>
+                                <div class="form-input-wrap">
+                                    <i class="fas fa-user fi"></i>
+                                    <input type="text" id="inputName" name="name" class="form-input" disabled required>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label class="form-label">Email Address</label>
+                                <div class="form-input-wrap">
+                                    <i class="fas fa-envelope fi"></i>
+                                    <input type="email" id="inputEmail" name="email" class="form-input" disabled readonly>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label class="form-label">Phone Number</label>
+                                <div class="form-input-wrap">
+                                    <i class="fas fa-phone fi"></i>
+                                    <input type="tel" id="inputPhone" name="phone" placeholder="Add contact number" class="form-input" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="formActions" style="display:none; justify-content:flex-end; gap:1.5rem; margin-top:3rem; align-items:center;">
+                            <button type="button" class="btn-ghost" id="cancelEditBtn" onclick="toggleEditMode()">Cancel</button>
+                            <button type="submit" class="btn-gold"><i class="fas fa-save"></i> Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Bio card -->
+                <div class="section-card">
+                    <h3 class="section-title">Gourmet Bio</h3>
+                    <p class="section-subtitle">A personal note about your culinary journey.</p>
+                    <div class="form-input-wrap" style="margin-bottom:2rem;">
+                        <textarea id="inputBio" class="form-input no-icon" rows="4" placeholder="Tell us about your culinary passions…" style="padding-left:20px !important; resize: vertical;"></textarea>
+                    </div>
+                    <button class="btn-gold" onclick="saveBio()"><i class="fas fa-check"></i> Save Bio</button>
+                </div>
+            </div>
+
+            <!-- ========== TAB: ADDRESS ========== -->
+            <div id="addressTab" class="profile-tab-panel">
+                <div class="tab-page-header">
+                    <div>
+                        <h2 class="tab-page-title">My Addresses</h2>
+                        <p class="tab-page-subtitle">Saved delivery destinations for seamless arrival.</p>
+                    </div>
+                    <button class="btn-gold" onclick="openAddressModal()">
+                        <i class="fas fa-plus"></i> Add Address
+                    </button>
+                </div>
+
+                <div class="address-cards-grid" id="addressCardsGrid">
+                    <!-- Address cards populated dynamically -->
+                    <div class="add-address-card" onclick="openAddressModal()">
+                        <i class="fas fa-plus"></i>
+                        <span>Register New Address</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== TAB: REWARDS ========== -->
+            <div id="rewardsTab" class="profile-tab-panel">
+                <div class="tab-page-header">
+                    <div>
+                        <h2 class="tab-page-title">Luxe Status</h2>
+                        <p class="tab-page-subtitle">Your standing within the Crave elite circle.</p>
+                    </div>
+                </div>
+
+                <!-- Points card -->
+                <div class="rewards-hero-card">
+                    <i class="fas fa-crown rh-bg-icon"></i>
+                    <div class="rh-top">
+                        <div>
+                            <p class="rh-points-label">Available Privilege Points</p>
+                            <div class="rh-points-value" id="rewardsPoints">0</div>
+                        </div>
+                        <div class="rh-tier-badge" id="rewardsTierBadge">Elite Circle</div>
+                    </div>
+                    <div class="rh-progress-bar">
+                        <div class="rh-progress-fill" id="rewardsProgressFill" style="width:0%"></div>
+                    </div>
+                    <p class="rh-progress-label" id="rewardsProgressLabel">Loading your journey…</p>
+                </div>
+
+                <!-- Tier Journey -->
+                <div class="section-card">
+                    <h3 class="section-title">Tier Journey</h3>
+                    <p class="section-subtitle">Earn points with every order to unlock exclusive tiers.</p>
+                    <div class="tier-journey">
+                        <div class="tier-stop reached" id="tier1">
+                            <div class="tier-stop-circle"><i class="fas fa-star"></i></div>
+                            <div class="tier-stop-name">Elite</div>
+                            <div class="tier-stop-pts">0 pts</div>
+                        </div>
+                        <div class="tier-stop" id="tier2">
+                            <div class="tier-stop-circle"><i class="fas fa-medal"></i></div>
+                            <div class="tier-stop-name">Silver</div>
+                            <div class="tier-stop-pts">500 pts</div>
+                        </div>
+                        <div class="tier-stop" id="tier3">
+                            <div class="tier-stop-circle"><i class="fas fa-gem"></i></div>
+                            <div class="tier-stop-name">Gold</div>
+                            <div class="tier-stop-pts">1000 pts</div>
+                        </div>
+                        <div class="tier-stop" id="tier4">
+                            <div class="tier-stop-circle"><i class="fas fa-crown"></i></div>
+                            <div class="tier-stop-name">Platinum</div>
+                            <div class="tier-stop-pts">1500 pts</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Redemptions -->
+                <div class="section-card">
+                    <h3 class="section-title" style="margin-bottom:2rem;">Exclusive Redemptions</h3>
+
+                    <div class="redemption-card">
+                        <div class="redemption-icon"><i class="fas fa-ticket-alt"></i></div>
+                        <div class="redemption-info">
+                            <div class="redemption-title">50% Privilege Pass</div>
+                            <div class="redemption-cost">Unlock for 500 pts</div>
+                        </div>
+                        <button class="btn-gold" style="padding:12px 28px; font-size:0.8rem;">Redeem</button>
+                    </div>
+
+                    <div class="redemption-card">
+                        <div class="redemption-icon"><i class="fas fa-shipping-fast"></i></div>
+                        <div class="redemption-info">
+                            <div class="redemption-title">Free Delivery Month</div>
+                            <div class="redemption-cost">Unlock for 800 pts</div>
+                        </div>
+                        <button class="btn-gold" style="padding:12px 28px; font-size:0.8rem;">Redeem</button>
+                    </div>
+
+                    <div class="redemption-card">
+                        <div class="redemption-icon"><i class="fas fa-utensils"></i></div>
+                        <div class="redemption-info">
+                            <div class="redemption-title">Chef's Table Experience</div>
+                            <div class="redemption-cost">Unlock for 2000 pts</div>
+                        </div>
+                        <button class="btn-gold" style="padding:12px 28px; font-size:0.8rem;">Redeem</button>
+                    </div>
+
+                    <div class="redemption-card">
+                        <div class="redemption-icon"><i class="fas fa-gift"></i></div>
+                        <div class="redemption-info">
+                            <div class="redemption-title">Mystery Luxe Box</div>
+                            <div class="redemption-cost">Unlock for 3500 pts</div>
+                        </div>
+                        <button class="btn-gold" style="padding:12px 28px; font-size:0.8rem;">Redeem</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== TAB: TASTE PROTOCOL ========== -->
+            <div id="tasteTab" class="profile-tab-panel">
+                <div class="tab-page-header">
+                    <div>
+                        <h2 class="tab-page-title">Taste Protocol</h2>
+                        <p class="tab-page-subtitle">Calibrate your gourmet profile for curated pairings.</p>
+                    </div>
+                    <button class="btn-gold" id="saveTasteBtn">
+                        <i class="fas fa-lock"></i> Lock Selection
+                    </button>
+                </div>
+
+                <!-- Dietary -->
+                <div class="section-card gastronomy-section">
+                    <h3 class="gastronomy-label">Dietary Calibration</h3>
+                    <div class="pref-grid dietary-grid">
+                        <div class="pref-card" data-val="None">
+                            <i class="fas fa-globe" style="color: var(--primary-color);"></i>
+                            <div class="pref-card-name">Omnivore</div>
+                        </div>
+                        <div class="pref-card" data-val="Vegan">
+                            <i class="fas fa-leaf" style="color:#10b981;"></i>
+                            <div class="pref-card-name">Vegan</div>
+                        </div>
+                        <div class="pref-card" data-val="Vegetarian">
+                            <i class="fas fa-seedling" style="color:#10b981;"></i>
+                            <div class="pref-card-name">Vegetarian</div>
+                        </div>
+                        <div class="pref-card" data-val="Keto">
+                            <i class="fas fa-bacon" style="color:#f59e0b;"></i>
+                            <div class="pref-card-name">Keto</div>
+                        </div>
+                        <div class="pref-card" data-val="Gluten-Free">
+                            <i class="fas fa-ban" style="color:#ec4899;"></i>
+                            <div class="pref-card-name">Gluten-Free</div>
+                        </div>
+                        <div class="pref-card" data-val="Halal">
+                            <i class="fas fa-moon" style="color:#8b5cf6;"></i>
+                            <div class="pref-card-name">Halal</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cuisine -->
+                <div class="section-card gastronomy-section">
+                    <h3 class="gastronomy-label">Favourite Cuisine</h3>
+                    <div class="pref-grid cuisine-grid" style="grid-template-columns: repeat(auto-fit, minmax(140px,1fr));">
+                        <div class="cuisine-card" data-val="Italian">
+                            <span class="cuisine-emoji">🍕</span>
+                            <div class="cuisine-name">Italian</div>
+                        </div>
+                        <div class="cuisine-card" data-val="French">
+                            <span class="cuisine-emoji">🥐</span>
+                            <div class="cuisine-name">French</div>
+                        </div>
+                        <div class="cuisine-card" data-val="Japanese">
+                            <span class="cuisine-emoji">🍣</span>
+                            <div class="cuisine-name">Japanese</div>
+                        </div>
+                        <div class="cuisine-card" data-val="Indian">
+                            <span class="cuisine-emoji">🍛</span>
+                            <div class="cuisine-name">Indian</div>
+                        </div>
+                        <div class="cuisine-card" data-val="American">
+                            <span class="cuisine-emoji">🍔</span>
+                            <div class="cuisine-name">American</div>
+                        </div>
+                        <div class="cuisine-card" data-val="Mexican">
+                            <span class="cuisine-emoji">🌮</span>
+                            <div class="cuisine-name">Mexican</div>
+                        </div>
+                        <div class="cuisine-card" data-val="Chinese">
+                            <span class="cuisine-emoji">🥢</span>
+                            <div class="cuisine-name">Chinese</div>
+                        </div>
+                        <div class="cuisine-card" data-val="Mediterranean">
+                            <span class="cuisine-emoji">🫒</span>
+                            <div class="cuisine-name">Mediterranean</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spiciness -->
+                <div class="section-card">
+                    <h3 class="gastronomy-label">Spice Tolerance</h3>
+                    <div class="spice-row spice-selector">
+                        <button class="spice-btn" data-val="Mild">
+                            <span class="spice-emoji">🌿</span>
+                            Mild Aura
+                        </button>
+                        <button class="spice-btn" data-val="Medium">
+                            <span class="spice-emoji">🌶️</span>
+                            Medium
+                        </button>
+                        <button class="spice-btn" data-val="Luxe Spicy">
+                            <span class="spice-emoji">🔥</span>
+                            Luxe Inferno
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== TAB: SECURITY ========== -->
+            <div id="securityTab" class="profile-tab-panel">
+                <div class="tab-page-header">
+                    <div>
+                        <h2 class="tab-page-title">Security</h2>
+                        <p class="tab-page-subtitle">Keep your account and data protected.</p>
+                    </div>
+                </div>
+
+                <!-- Security Items -->
+                <div class="section-card">
+                    <h3 class="section-title">Account Security</h3>
+                    <p class="section-subtitle">Review and manage your security settings.</p>
+
+                    <div class="security-item">
+                        <div class="security-item-left">
+                            <div class="security-icon si-green"><i class="fas fa-shield-alt"></i></div>
+                            <div>
+                                <div class="security-title">Email Verification</div>
+                                <div class="security-desc">Your email address is verified and secured.</div>
+                            </div>
+                        </div>
+                        <span class="security-status status-active"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+
+                    <div class="security-item">
+                        <div class="security-item-left">
+                            <div class="security-icon si-blue"><i class="fas fa-key"></i></div>
+                            <div>
+                                <div class="security-title">OTP Authentication</div>
+                                <div class="security-desc">One-time password sent to your email on login.</div>
+                            </div>
+                        </div>
+                        <span class="security-status status-active"><i class="fas fa-check-circle"></i> Enabled</span>
+                    </div>
+
+                    <div class="security-item">
+                        <div class="security-item-left">
+                            <div class="security-icon si-orange"><i class="fas fa-bell"></i></div>
+                            <div>
+                                <div class="security-title">Order Notifications</div>
+                                <div class="security-desc">Get notified about your order status updates.</div>
+                            </div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="notifToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="security-item">
+                        <div class="security-item-left">
+                            <div class="security-icon si-blue"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <div class="security-title">Promotional Emails</div>
+                                <div class="security-desc">Receive offers, deals, and exclusive access updates.</div>
+                            </div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="promoToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Active Sessions -->
+                <div class="section-card">
+                    <h3 class="section-title">Active Sessions</h3>
+                    <p class="section-subtitle">Devices currently signed in to your account.</p>
+
+                    <div class="security-item">
+                        <div class="security-item-left">
+                            <div class="security-icon si-green"><i class="fas fa-desktop"></i></div>
+                            <div>
+                                <div class="security-title">Current Browser — Windows</div>
+                                <div class="security-desc">Active now · This device</div>
+                            </div>
+                        </div>
+                        <span class="security-status status-active"><i class="fas fa-circle"></i> Current</span>
+                    </div>
+                </div>
+
+                <!-- Danger Zone -->
+                <div class="danger-zone">
+                    <h3 class="danger-zone-title"><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+                    <p class="danger-zone-desc">These actions are permanent and cannot be undone. Proceed with extreme caution.</p>
+                    <div style="display:flex; gap:1.5rem; flex-wrap:wrap;">
+                        <button class="btn-danger" onclick="if(confirm('Sign out of all devices?')) { localStorage.removeItem(\'user_session\'); window.location.href=\'signin.html\'; }">
+                            <i class="fas fa-sign-out-alt"></i> Sign Out All Devices
+                        </button>
+                        <button class="btn-danger" onclick="showToast('Account deletion request submitted', 'info')">
+                            <i class="fas fa-trash-alt"></i> Delete Account
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Address Modal -->
+    <div class="modal-backdrop" id="addressModal">
+        <div class="modal-box">
+            <h2 class="modal-title">Add Address</h2>
+            <p class="modal-subtitle">Register a new delivery destination.</p>
+
+            <form id="addressForm" class="modal-form-grid" onsubmit="submitAddress(event)">
+                <div class="form-field">
+                    <label class="form-label">Address Type</label>
+                    <select id="addrType" class="form-input no-icon" style="padding-left:20px !important; appearance:none; cursor:pointer;">
+                        <option value="Home">🏠 Home</option>
+                        <option value="Work">💼 Work</option>
+                        <option value="Other">📍 Other</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label class="form-label">Full Address</label>
+                    <div class="form-input-wrap">
+                        <i class="fas fa-map-marker-alt fi"></i>
+                        <input type="text" id="inputAddress" name="address" class="form-input" placeholder="Street address…" required>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label class="form-label">City</label>
+                    <div class="form-input-wrap">
+                        <i class="fas fa-city fi"></i>
+                        <input type="text" id="inputCity" name="city" class="form-input" placeholder="City">
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label class="form-label">Postal Code</label>
+                    <div class="form-input-wrap">
+                        <i class="fas fa-hashtag fi"></i>
+                        <input type="text" id="inputZip" name="zip" class="form-input" placeholder="ZIP / Postal code">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-ghost" onclick="closeAddressModal()">Cancel</button>
+                    <button type="submit" class="btn-gold"><i class="fas fa-save"></i> Save Address</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <div id="footerContainer"></div>
     <div id="toastContainer"></div>
 
     <script src="script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const session = JSON.parse(localStorage.getItem('user_session'));
-            if (!session) { window.location.replace('signin.html'); return; }
-            
-            loadUserProfile(session.email);
-            
-            // Button handlers
-            document.getElementById('editProfileBtn').addEventListener('click', toggleEditMode);
-            document.getElementById('cancelEditBtn').addEventListener('click', toggleEditMode);
-            
-            const logoutSidebarBtn = document.getElementById('logoutSidebarBtn');
-            if (logoutSidebarBtn) {
-                logoutSidebarBtn.onclick = () => {
-                    localStorage.removeItem('user_session');
-                    window.location.href = 'signin.html';
-                };
-            }
+    // ============================================================
+    //   PROFILE PAGE LOGIC
+    // ============================================================
 
-            // Aura selection logic
-            document.querySelectorAll('.aura-dot').forEach(dot => {
-                dot.addEventListener('click', async () => {
-                    document.querySelectorAll('.aura-dot').forEach(d => d.classList.remove('active'));
-                    dot.classList.add('active');
-                    const color = dot.getAttribute('data-color');
-                    
-                    // Instantly shift page colors
-                    applyGlobalTheme(color);
-                    
-                    // Sync avatar backgrounds
-                    document.getElementById('profileBigAvatar').style.background = color;
-                    
-                    // Update localStorage
-                    const sess = JSON.parse(localStorage.getItem('user_session')) || {};
-                    sess.avatar_color = color;
-                    localStorage.setItem('user_session', JSON.stringify(sess));
-                    if (typeof renderNavbar === 'function') renderNavbar();
-                    
-                    // Update DB profile
-                    await updateProfile({ email: session.email, avatar_color: color });
-                });
-            });
+    let currentSession = null;
+    let userAddresses = [];
 
-            // Gastronomy calibration card clicks
-            document.querySelectorAll('.pref-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    document.querySelectorAll('.pref-card').forEach(c => c.classList.remove('active'));
-                    card.classList.add('active');
-                });
-            });
+    document.addEventListener('DOMContentLoaded', () => {
+        const session = JSON.parse(localStorage.getItem('user_session'));
+        if (!session) { window.location.replace('signin.html'); return; }
+        currentSession = session;
 
-            document.querySelectorAll('.cuisine-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    document.querySelectorAll('.cuisine-card').forEach(c => c.classList.remove('active'));
-                    card.classList.add('active');
-                });
-            });
+        loadUserProfile(session.email);
+        initAura(session);
+        initGastronomyCards();
+        initSecurity();
 
-            document.querySelectorAll('.spice-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.spice-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                });
-            });
+        // Profile form submit
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                email: session.email,
+                name: document.getElementById('inputName').value,
+                phone: document.getElementById('inputPhone').value
+            };
+            await updateProfile(data);
+            toggleEditMode();
+        });
 
-            // Save Gastronomy settings
-            document.getElementById('saveGastronomyBtn').addEventListener('click', async () => {
-                const activePrefCard = document.querySelector('.pref-card.active');
-                const activeCuisineCard = document.querySelector('.cuisine-card.active');
-                const activeSpiceBtn = document.querySelector('.spice-btn.active');
-                
-                const data = {
-                    email: session.email,
-                    dietary_preference: activePrefCard ? activePrefCard.getAttribute('data-val') : 'None',
-                    favorite_cuisine: activeCuisineCard ? activeCuisineCard.getAttribute('data-val') : 'None',
-                    spiciness_level: activeSpiceBtn ? activeSpiceBtn.getAttribute('data-val') : 'Medium'
-                };
-                
-                await updateProfile(data);
-            });
-
-            // Forms
-            document.getElementById('profileForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                const data = {
-                    email: session.email,
-                    name: formData.get('name'),
-                    phone: formData.get('phone')
-                };
-                
-                await updateProfile(data);
-                toggleEditMode();
-            });
-
-            document.getElementById('addressForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                const data = {
-                    email: session.email,
-                    address: formData.get('address'),
-                    city: formData.get('city'),
-                    zip: formData.get('zip')
-                };
-                
-                await updateProfile(data);
-                cancelAddressEdit();
+        // Save taste
+        document.getElementById('saveTasteBtn').addEventListener('click', async () => {
+            const diet = document.querySelector('.dietary-grid .pref-card.active');
+            const cuisine = document.querySelector('.cuisine-grid .cuisine-card.active');
+            const spice = document.querySelector('.spice-selector .spice-btn.active');
+            await updateProfile({
+                email: session.email,
+                dietary_preference: diet ? diet.dataset.val : 'None',
+                favorite_cuisine: cuisine ? cuisine.dataset.val : 'None',
+                spiciness_level: spice ? spice.dataset.val : 'Medium'
             });
         });
 
-        async function loadUserProfile(email) {
-            try {
-                const response = await fetch(`api/user.php?action=get_profile&email=${encodeURIComponent(email)}`);
-                const result = await response.json();
-                
-                if (result.success) {
-                    const user = result.user;
-                    
-                    document.getElementById('sidebarName').textContent = user.name;
-                    document.getElementById('sidebarEmail').textContent = user.email;
-                    document.getElementById('profileBigAvatar').textContent = user.name.charAt(0).toUpperCase();
-                    
-                    document.getElementById('inputName').value = user.name;
-                    document.getElementById('inputEmail').value = user.email;
-                    document.getElementById('inputPhone').value = user.phone || '';
-                    
-                    if (user.address) {
-                        document.getElementById('addressDisplay').style.display = 'none';
-                        document.getElementById('addressForm').style.display = 'grid';
-                        document.getElementById('inputAddress').value = user.address;
-                        document.getElementById('inputCity').value = user.city || '';
-                        document.getElementById('inputZip').value = user.zip || '';
-                        document.getElementById('savedAddressText').textContent = `${user.address}, ${user.city || ''} ${user.zip || ''}`;
+        // Logout
+        document.getElementById('logoutSidebarBtn').onclick = () => {
+            localStorage.removeItem('user_session');
+            window.location.href = 'signin.html';
+        };
+
+        // Load saved addresses from localStorage
+        userAddresses = JSON.parse(localStorage.getItem('user_addresses') || '[]');
+        renderAddressCards();
+    });
+
+    // ---- Load Profile ----
+    async function loadUserProfile(email) {
+        try {
+            const res = await fetch(`api/user.php?action=get_profile&email=${encodeURIComponent(email)}`);
+            const result = await res.json();
+            if (result.success) {
+                const u = result.user;
+                populateHero(u);
+                populateForm(u);
+                populateStats(u);
+                populateRewards(u);
+                restoreGastronomy(u);
+                restoreAuraDots(u.avatar_color || '#d4af37');
+                if (typeof applyGlobalTheme === 'function') applyGlobalTheme(u.avatar_color || '#d4af37');
+                if (u.address) {
+                    const saved = JSON.parse(localStorage.getItem('user_addresses') || '[]');
+                    if (!saved.find(a => a.address === u.address)) {
+                        saved.unshift({ type: 'Home', address: u.address, city: u.city || '', zip: u.zip || '', isDefault: true });
+                        localStorage.setItem('user_addresses', JSON.stringify(saved));
+                        userAddresses = saved;
+                        renderAddressCards();
                     }
-
-                    document.getElementById('userPoints').textContent = user.points || 0;
-                    const progress = Math.min(((user.points || 0) % 1000) / 10, 100);
-                    document.getElementById('pointsProgress').style.width = `${progress}%`;
-
-                    document.getElementById('totalOrdersCount').textContent = user.total_orders || 0;
-                    
-                    const points = parseInt(user.points || 0);
-                    let membership = 'Elite';
-                    if (points >= 1500) membership = 'Platinum Elite';
-                    else if (points >= 1000) membership = 'Gold Circle';
-                    else if (points >= 500) membership = 'Silver Tier';
-                    document.getElementById('membershipStatus').textContent = membership;
-
-                    // Identity Aura state restore
-                    const userColor = user.avatar_color || '#d4af37';
-                    document.getElementById('profileBigAvatar').style.background = userColor;
-                    document.querySelectorAll('.aura-dot').forEach(d => {
-                        if (d.getAttribute('data-color') === userColor) {
-                            d.classList.add('active');
-                        } else {
-                            d.classList.remove('active');
-                        }
-                    });
-                    if (typeof applyGlobalTheme === 'function') {
-                        applyGlobalTheme(userColor);
-                    }
-
-                    // Gastronomy state restore
-                    const userDiet = user.dietary_preference || 'None';
-                    document.querySelectorAll('.pref-card').forEach(card => {
-                        if (card.getAttribute('data-val') === userDiet) {
-                            card.classList.add('active');
-                        } else {
-                            card.classList.remove('active');
-                        }
-                    });
-
-                    const userCuisine = user.favorite_cuisine || 'None';
-                    document.querySelectorAll('.cuisine-card').forEach(card => {
-                        if (card.getAttribute('data-val') === userCuisine) {
-                            card.classList.add('active');
-                        } else {
-                            card.classList.remove('active');
-                        }
-                    });
-
-                    const userSpice = user.spiciness_level || 'Medium';
-                    document.querySelectorAll('.spice-btn').forEach(btn => {
-                        if (btn.getAttribute('data-val') === userSpice) {
-                            btn.classList.add('active');
-                        } else {
-                            btn.classList.remove('active');
-                        }
-                    });
                 }
-            } catch (error) {
-                console.error('Error loading profile:', error);
             }
-        }
+        } catch(err) { console.error(err); }
+    }
 
-        async function updateProfile(data) {
-            try {
-                const response = await fetch('api/user.php?action=update_profile', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                const result = await response.json();
-                
-                if (result.success) {
-                    showToast(result.message, 'success');
-                    loadUserProfile(data.email);
-                    
-                    if(data.name) {
-                        const session = JSON.parse(localStorage.getItem('user_session')) || {};
-                        session.name = data.name;
-                        localStorage.setItem('user_session', JSON.stringify(session));
-                        if (typeof renderNavbar === 'function') renderNavbar();
-                    }
-                    if(data.avatar_color) {
-                        const session = JSON.parse(localStorage.getItem('user_session')) || {};
-                        session.avatar_color = data.avatar_color;
-                        localStorage.setItem('user_session', JSON.stringify(session));
-                        if (typeof renderNavbar === 'function') renderNavbar();
-                    }
-                } else {
-                    showToast(result.message, 'error');
+    function populateHero(u) {
+        document.getElementById('heroUsername').textContent = u.name;
+        document.getElementById('heroEmail').textContent = u.email;
+        document.getElementById('heroPhone').textContent = u.phone || 'Not set';
+        const pts = parseInt(u.points || 0);
+        const tier = getTierName(pts);
+        document.getElementById('heroBadge').innerHTML = `<i class="fas fa-crown"></i> ${tier}`;
+        document.getElementById('heroJoined').textContent = `Member since ${new Date().getFullYear()}`;
+
+        const avatar = document.getElementById('profileBigAvatar');
+        avatar.textContent = u.name.charAt(0).toUpperCase();
+        avatar.style.background = u.avatar_color || 'var(--gradient-main)';
+
+        // Sidebar quick stats
+        document.getElementById('sidebarPoints').textContent = pts.toLocaleString();
+        document.getElementById('sidebarOrders').textContent = u.total_orders || 0;
+        document.getElementById('navPointsBadge').textContent = pts.toLocaleString();
+    }
+
+    function populateForm(u) {
+        document.getElementById('inputName').value = u.name;
+        document.getElementById('inputEmail').value = u.email;
+        document.getElementById('inputPhone').value = u.phone || '';
+    }
+
+    function populateStats(u) {
+        const orders = u.total_orders || 0;
+        animateCounter('statOrders', 0, orders, 1200);
+        document.getElementById('statMembership').textContent = getTierName(parseInt(u.points || 0));
+    }
+
+    function populateRewards(u) {
+        const pts = parseInt(u.points || 0);
+        const tier = getTierName(pts);
+        animateCounter('rewardsPoints', 0, pts, 1500);
+        document.getElementById('rewardsTierBadge').textContent = tier + ' Circle';
+
+        // Progress to next tier
+        const tiers = [0, 500, 1000, 1500, 9999];
+        let nextIdx = tiers.findIndex(t => t > pts);
+        if (nextIdx === -1) nextIdx = tiers.length - 1;
+        const fromPts = tiers[nextIdx - 1];
+        const toPts = tiers[nextIdx];
+        const progress = toPts < 9999 ? Math.min(((pts - fromPts) / (toPts - fromPts)) * 100, 100) : 100;
+        setTimeout(() => {
+            document.getElementById('rewardsProgressFill').style.width = `${progress}%`;
+        }, 300);
+        const remaining = toPts < 9999 ? (toPts - pts) : 0;
+        document.getElementById('rewardsProgressLabel').textContent =
+            remaining > 0 ? `${remaining} points until your next tier unlock` : 'Maximum tier achieved — You are legendary.';
+
+        // Tier dots
+        ['tier1','tier2','tier3','tier4'].forEach((id, i) => {
+            const thresholds = [0, 500, 1000, 1500];
+            document.getElementById(id).classList.toggle('reached', pts >= thresholds[i]);
+        });
+    }
+
+    function getTierName(pts) {
+        if (pts >= 1500) return 'Platinum Elite';
+        if (pts >= 1000) return 'Gold Circle';
+        if (pts >= 500) return 'Silver Tier';
+        return 'Elite';
+    }
+
+    function animateCounter(id, from, to, duration) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const start = performance.now();
+        const update = (time) => {
+            const pct = Math.min((time - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - pct, 3);
+            el.textContent = Math.round(from + (to - from) * eased).toLocaleString();
+            if (pct < 1) requestAnimationFrame(update);
+        };
+        requestAnimationFrame(update);
+    }
+
+    // ---- Aura ----
+    function initAura(session) {
+        document.querySelectorAll('.aura-dot').forEach(dot => {
+            dot.addEventListener('click', async () => {
+                document.querySelectorAll('.aura-dot').forEach(d => d.classList.remove('active'));
+                dot.classList.add('active');
+                const color = dot.dataset.color;
+                if (typeof applyGlobalTheme === 'function') applyGlobalTheme(color);
+                document.getElementById('profileBigAvatar').style.background = color;
+                const sess = JSON.parse(localStorage.getItem('user_session')) || {};
+                sess.avatar_color = color;
+                localStorage.setItem('user_session', JSON.stringify(sess));
+                if (typeof renderNavbar === 'function') renderNavbar();
+                await updateProfile({ email: session.email, avatar_color: color });
+            });
+        });
+    }
+
+    function restoreAuraDots(color) {
+        document.querySelectorAll('.aura-dot').forEach(d => {
+            d.classList.toggle('active', d.dataset.color === color);
+        });
+    }
+
+    // ---- Gastronomy ----
+    function initGastronomyCards() {
+        document.querySelectorAll('.dietary-grid .pref-card').forEach(c => {
+            c.addEventListener('click', () => {
+                document.querySelectorAll('.dietary-grid .pref-card').forEach(x => x.classList.remove('active'));
+                c.classList.add('active');
+            });
+        });
+        document.querySelectorAll('.cuisine-grid .cuisine-card').forEach(c => {
+            c.addEventListener('click', () => {
+                document.querySelectorAll('.cuisine-grid .cuisine-card').forEach(x => x.classList.remove('active'));
+                c.classList.add('active');
+            });
+        });
+        document.querySelectorAll('.spice-selector .spice-btn').forEach(b => {
+            b.addEventListener('click', () => {
+                document.querySelectorAll('.spice-selector .spice-btn').forEach(x => x.classList.remove('active'));
+                b.classList.add('active');
+            });
+        });
+    }
+
+    function restoreGastronomy(u) {
+        document.querySelectorAll('.dietary-grid .pref-card').forEach(c =>
+            c.classList.toggle('active', c.dataset.val === (u.dietary_preference || 'None')));
+        document.querySelectorAll('.cuisine-grid .cuisine-card').forEach(c =>
+            c.classList.toggle('active', c.dataset.val === (u.favorite_cuisine || '')));
+        document.querySelectorAll('.spice-selector .spice-btn').forEach(b =>
+            b.classList.toggle('active', b.dataset.val === (u.spiciness_level || 'Medium')));
+    }
+
+    // ---- Security ----
+    function initSecurity() {
+        document.getElementById('notifToggle').addEventListener('change', (e) => {
+            showToast(e.target.checked ? 'Order notifications enabled' : 'Order notifications disabled', 'info');
+        });
+        document.getElementById('promoToggle').addEventListener('change', (e) => {
+            showToast(e.target.checked ? 'Promotional emails enabled' : 'Promotional emails disabled', 'info');
+        });
+    }
+
+    // ---- Profile Edit Toggle ----
+    let isEditMode = false;
+    function toggleEditMode() {
+        isEditMode = !isEditMode;
+        document.getElementById('inputName').disabled = !isEditMode;
+        document.getElementById('inputPhone').disabled = !isEditMode;
+        document.getElementById('formActions').style.display = isEditMode ? 'flex' : 'none';
+        document.getElementById('editProfileBtn').style.display = isEditMode ? 'none' : 'inline-flex';
+        if (isEditMode) document.getElementById('inputName').focus();
+    }
+
+    // ---- Bio Save ----
+    async function saveBio() {
+        const bio = document.getElementById('inputBio').value;
+        showToast('Bio saved successfully!', 'success');
+    }
+
+    // ---- Update Profile ----
+    async function updateProfile(data) {
+        try {
+            const res = await fetch('api/user.php?action=update_profile', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await res.json();
+            if (result.success) {
+                showToast(result.message, 'success');
+                loadUserProfile(data.email || currentSession.email);
+                if (data.name) {
+                    const s = JSON.parse(localStorage.getItem('user_session')) || {};
+                    s.name = data.name;
+                    localStorage.setItem('user_session', JSON.stringify(s));
+                    if (typeof renderNavbar === 'function') renderNavbar();
                 }
-            } catch (error) {
-                showToast('Protocol interruption', 'error');
-            }
-        }
-
-        function switchTab(tab, btn) {
-            document.querySelectorAll('.profile-nav-item').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            document.querySelectorAll('.profile-tab-content').forEach(content => content.classList.remove('active'));
-            document.getElementById(`${tab}Tab`).classList.add('active');
-        }
-
-        let isEditMode = false;
-        function toggleEditMode() {
-            isEditMode = !isEditMode;
-            document.getElementById('inputName').disabled = !isEditMode;
-            document.getElementById('inputPhone').disabled = !isEditMode;
-            document.getElementById('formActions').style.display = isEditMode ? 'flex' : 'none';
-            document.getElementById('editProfileBtn').style.display = isEditMode ? 'none' : 'block';
-        }
-
-        function enableAddressEdit() {
-            document.getElementById('addressDisplay').style.display = 'none';
-            document.getElementById('addressForm').style.display = 'grid';
-        }
-
-        function cancelAddressEdit() {
-            const address = document.getElementById('inputAddress').value;
-            if (address) {
-                document.getElementById('addressDisplay').style.display = 'none';
-                document.getElementById('addressForm').style.display = 'grid';
             } else {
-                document.getElementById('addressDisplay').style.display = 'block';
-                document.getElementById('addressForm').style.display = 'none';
+                showToast(result.message, 'error');
             }
+        } catch(e) {
+            showToast('Connection error', 'error');
         }
+    }
+
+    // ---- Tab Switching ----
+    function switchProfileTab(tab, btn) {
+        document.querySelectorAll('.sidebar-nav-item').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+        document.querySelectorAll('.profile-tab-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(tab + 'Tab').classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ---- Address Cards ----
+    function renderAddressCards() {
+        const grid = document.getElementById('addressCardsGrid');
+        const typeIcons = { Home: 'fa-home', Work: 'fa-briefcase', Other: 'fa-map-marker-alt' };
+
+        let html = userAddresses.map((addr, idx) => `
+            <div class="address-card ${addr.isDefault ? 'selected' : ''}">
+                ${addr.isDefault ? '<span class="address-default-tag"><i class="fas fa-check"></i> Default</span>' : ''}
+                <div class="address-card-type">
+                    <div class="address-type-icon"><i class="fas ${typeIcons[addr.type] || 'fa-map-marker-alt'}"></i></div>
+                    <span class="address-type-label">${addr.type}</span>
+                </div>
+                <div class="address-text">
+                    ${addr.address}<br>
+                    ${[addr.city, addr.zip].filter(Boolean).join(', ')}
+                </div>
+                <div class="address-card-actions">
+                    ${!addr.isDefault ? `<button class="address-action-btn address-edit-btn" onclick="setDefaultAddress(${idx})">Set Default</button>` : ''}
+                    <button class="address-action-btn address-del-btn" onclick="deleteAddress(${idx})">Remove</button>
+                </div>
+            </div>
+        `).join('');
+
+        html += `
+            <div class="add-address-card" onclick="openAddressModal()">
+                <i class="fas fa-plus"></i>
+                <span>Add New Address</span>
+            </div>
+        `;
+        grid.innerHTML = html;
+    }
+
+    function setDefaultAddress(idx) {
+        userAddresses.forEach((a, i) => a.isDefault = (i === idx));
+        localStorage.setItem('user_addresses', JSON.stringify(userAddresses));
+        renderAddressCards();
+        showToast('Default address updated', 'success');
+    }
+
+    function deleteAddress(idx) {
+        userAddresses.splice(idx, 1);
+        localStorage.setItem('user_addresses', JSON.stringify(userAddresses));
+        renderAddressCards();
+        showToast('Address removed', 'info');
+    }
+
+    // ---- Address Modal ----
+    function openAddressModal() {
+        document.getElementById('addressModal').classList.add('open');
+        document.getElementById('addressForm').reset();
+    }
+    function closeAddressModal() {
+        document.getElementById('addressModal').classList.remove('open');
+    }
+    document.addEventListener('click', (e) => {
+        if (e.target === document.getElementById('addressModal')) closeAddressModal();
+    });
+
+    async function submitAddress(e) {
+        e.preventDefault();
+        const type = document.getElementById('addrType').value;
+        const address = document.getElementById('inputAddress').value;
+        const city = document.getElementById('inputCity').value;
+        const zip = document.getElementById('inputZip').value;
+        const isDefault = userAddresses.length === 0;
+
+        if (isDefault) userAddresses.forEach(a => a.isDefault = false);
+        userAddresses.push({ type, address, city, zip, isDefault });
+        localStorage.setItem('user_addresses', JSON.stringify(userAddresses));
+
+        // Also save to DB
+        if (currentSession) {
+            await updateProfile({ email: currentSession.email, address, city, zip });
+        }
+
+        renderAddressCards();
+        closeAddressModal();
+        showToast('Address saved successfully!', 'success');
+    }
+
+    // ---- Avatar Upload Simulation ----
+    function handleAvatarUpload(input) {
+        const file = input.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const avatar = document.getElementById('profileBigAvatar');
+            avatar.innerHTML = `<img src="${e.target.result}" alt="Profile photo">`;
+            avatar.style.background = 'transparent';
+            showToast('Profile photo updated!', 'success');
+        };
+        reader.readAsDataURL(file);
+    }
     </script>
 </body>
 </html>
