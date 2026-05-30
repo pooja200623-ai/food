@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -283,40 +283,71 @@
                 const address = document.getElementById('deliveryAddress').value.trim();
                 const payment = document.getElementById('paymentMethod').value;
 
-                if (cart.length === 0) return;
-                if (!address) { showToast('The Sanctuary Address is required', 'error'); return; }
+                if (cart.length === 0) {
+                    showToast('Your cart is empty!', 'error');
+                    return;
+                }
+                if (!address) {
+                    showToast('Please enter your delivery address', 'error');
+                    document.getElementById('deliveryAddress').focus();
+                    return;
+                }
 
                 placeOrderBtn.disabled = true;
-                placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Finalizing Protocol...';
+                placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Placing Order...';
+
+                const totalPrice = Math.round(
+                    cart.reduce((t, i) => t + (i.price * i.quantity), 0) - currentDiscount
+                );
+
+                const payload = {
+                    email:          session.email,
+                    cart:           cart,
+                    address:        address,
+                    payment_method: payment,
+                    total_price:    totalPrice
+                };
 
                 try {
                     const response = await fetch('api/orders.php?action=place_order', {
-                        method: 'POST',
+                        method:  'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            email: session.email,
-                            cart: cart,
-                            address: address,
-                            payment_method: payment,
-                            coupon_code: document.getElementById('couponCode').value.trim() || null,
-                            discount_amount: currentDiscount,
-                            total_price: Math.round(cart.reduce((t, i) => t + (i.price * i.quantity), 0) - currentDiscount)
-                        })
+                        body:    JSON.stringify(payload)
                     });
 
+                    if (!response.ok) {
+                        throw new Error(`Server error: ${response.status}`);
+                    }
+
                     const data = await response.json();
+
                     if (data.success) {
-                        showToast('Indulgence Secured', 'success');
+                        // Clear cart first
                         localStorage.removeItem('cart');
-                        setTimeout(() => window.location.href = 'orders.html', 1500);
+                        saveCart([]);  // update count in navbar
+
+                        // Show success state on button
+                        placeOrderBtn.innerHTML = '<i class="fas fa-check-circle"></i> Order Placed!';
+                        placeOrderBtn.style.background = 'linear-gradient(135deg, #2ed573, #17a850)';
+
+                        showToast('🎉 Order placed successfully!', 'success');
+
+                        // Redirect to orders page
+                        setTimeout(() => {
+                            window.location.href = 'orders.html';
+                        }, 1800);
+
                     } else {
-                        showToast(data.message || 'Protocol Failed', 'error');
+                        showToast(data.message || 'Failed to place order. Try again.', 'error');
                         placeOrderBtn.disabled = false;
                         placeOrderBtn.innerHTML = 'Confirm Order <i class="fas fa-arrow-right" style="margin-left: 15px;"></i>';
                     }
+
                 } catch (error) {
-                    showToast('Connection interrupted', 'error');
+                    console.error('Order placement error:', error);
+                    showToast('Connection failed. Is XAMPP running?', 'error');
                     placeOrderBtn.disabled = false;
+                    placeOrderBtn.innerHTML = 'Confirm Order <i class="fas fa-arrow-right" style="margin-left: 15px;"></i>';
                 }
             });
         });

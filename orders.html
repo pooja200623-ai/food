@@ -1,35 +1,474 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Legacy | Crave Orders</title>
-    <!-- Fonts via style.css -->
+    <title>My Orders | Crave Luxe</title>
+    <meta name="description" content="Track and review all your Crave Luxe food orders in one place.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=16">
+    <link rel="stylesheet" href="style.css?v=17">
     <style>
+        /* ===== ORDER PAGE STYLES ===== */
+        .orders-page-wrapper {
+            min-height: 100vh;
+            padding-top: 14rem;
+            padding-bottom: 10rem;
+        }
+
+        /* ===== ORDER CARD ===== */
         .order-card {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: var(--radius-xl);
+            background: rgba(255,255,255,0.02);
+            border-radius: 28px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            margin-bottom: 3.5rem;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-bottom: 3rem;
+            animation: cardSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         .order-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(124, 58, 237, 0.2);
-            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.08);
         }
+        @keyframes cardSlideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== ORDER CARD HEADER ===== */
+        .order-card-header {
+            background: rgba(255,255,255,0.015);
+            padding: 2.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* ===== STATUS BADGE ===== */
         .status-badge {
-            padding: 8px 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 22px;
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            border: 1px solid transparent;
+            position: relative;
+        }
+        .status-badge .pulse-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulseDot 1.5s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.6); }
+        }
+
+        /* ===== ORDER TIMELINE ===== */
+        .order-timeline {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            padding: 2rem 3rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            overflow-x: auto;
+        }
+        .timeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            min-width: 80px;
+            position: relative;
+        }
+        .timeline-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 18px;
+            left: calc(50% + 18px);
+            right: calc(-50% + 18px);
+            height: 2px;
+            background: rgba(255,255,255,0.06);
+            z-index: 0;
+        }
+        .timeline-step.done:not(:last-child)::after,
+        .timeline-step.active:not(:last-child)::after {
+            background: linear-gradient(90deg, var(--primary-color), rgba(255,255,255,0.06));
+        }
+        .timeline-icon {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+            border: 2px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.25);
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s;
+        }
+        .timeline-step.done .timeline-icon {
+            background: rgba(46, 213, 115, 0.15);
+            border-color: #2ed573;
+            color: #2ed573;
+        }
+        .timeline-step.active .timeline-icon {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(212,175,55,0.3);
+            animation: activePulse 2s ease-in-out infinite;
+        }
+        @keyframes activePulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(212,175,55,0.3); }
+            50% { box-shadow: 0 0 35px rgba(212,175,55,0.6); }
+        }
+        .timeline-label {
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.25);
+            margin-top: 10px;
+            text-align: center;
+        }
+        .timeline-step.done .timeline-label,
+        .timeline-step.active .timeline-label {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* ===== ORDER ITEMS LIST ===== */
+        .order-items-list {
+            padding: 2.5rem 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .order-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.4rem 1.8rem;
+            background: rgba(255,255,255,0.015);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: 0.3s;
+        }
+        .order-item-row:hover {
+            background: rgba(255,255,255,0.03);
+            border-color: rgba(212,175,55,0.1);
+        }
+
+        /* ===== ORDER FOOTER ===== */
+        .order-card-footer {
+            padding: 2rem 3rem;
+            background: rgba(0,0,0,0.15);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+        .order-info-block {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+        .order-info-icon {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.2);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        /* ===== ORDER ACTIONS ===== */
+        .order-actions {
+            padding: 2rem 3rem;
+            display: flex;
+            gap: 15px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+        .order-btn {
+            flex: 1;
+            padding: 16px 20px;
+            border-radius: 18px;
+            font-size: 0.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            font-family: 'Outfit', sans-serif;
+        }
+        .order-btn-secondary {
+            background: rgba(255,255,255,0.03);
+            color: rgba(255,255,255,0.7);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .order-btn-secondary:hover {
+            background: rgba(255,255,255,0.07);
+            color: white;
+            transform: translateY(-3px);
+        }
+        .order-btn-primary {
+            background: var(--gradient-main);
+            color: #000;
+            box-shadow: 0 10px 25px rgba(212,175,55,0.25);
+        }
+        .order-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(212,175,55,0.4);
+        }
+
+        /* ===== SUMMARY TOTALS BAR ===== */
+        .order-total-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.8rem 3rem;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.01);
+        }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 6rem;
+            animation: cardSlideIn 0.5s ease both;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.4s;
+        }
+        .stat-card:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(212,175,55,0.2);
+            transform: translateY(-5px);
+        }
+        .stat-value {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.8rem;
+            font-weight: 400;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            font-size: 0.72rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 2px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255,255,255,0.35);
+        }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-orders {
+            display: none;
+            text-align: center;
+            padding: 10rem 4rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 32px;
+            border: 1px solid rgba(255,255,255,0.05);
+            animation: cardSlideIn 0.5s ease both;
+        }
+        .empty-orders-icon {
+            font-size: 7rem;
+            color: rgba(255,255,255,0.04);
+            margin-bottom: 3rem;
+            display: block;
+        }
+
+        /* ===== LOADING STATE ===== */
+        .loading-state {
+            text-align: center;
+            padding: 10rem;
+        }
+        .loading-spinner {
+            width: 60px; height: 60px;
+            border: 3px solid rgba(255,255,255,0.05);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 3rem;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== ERROR STATE ===== */
+        .error-state {
+            display: none;
+            text-align: center;
+            padding: 8rem 4rem;
+            background: rgba(255,71,87,0.05);
+            border-radius: 32px;
+            border: 1px solid rgba(255,71,87,0.1);
+        }
+
+        /* ===== MODAL ===== */
+        .order-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 9000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            animation: fadeIn 0.3s ease;
+        }
+        .order-modal-overlay.visible {
+            display: flex;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .order-modal {
+            background: #161618;
+            border-radius: 32px;
+            border: 1px solid rgba(255,255,255,0.08);
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.1) transparent;
+        }
+        @keyframes modalSlideUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.96); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-header {
+            padding: 3rem 3.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            position: sticky;
+            top: 0;
+            background: #161618;
+            z-index: 1;
+        }
+        .modal-close-btn {
+            width: 40px; height: 40px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
+            flex-shrink: 0;
+        }
+        .modal-close-btn:hover {
+            background: rgba(255,71,87,0.15);
+            color: #ff4757;
+            border-color: rgba(255,71,87,0.3);
+        }
+
+        /* ===== SUCCESS OVERLAY ===== */
+        .success-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 3rem;
+        }
+        .success-overlay.visible {
+            display: flex;
+            animation: fadeIn 0.4s ease;
+        }
+        .success-checkmark {
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            background: rgba(46, 213, 115, 0.1);
+            border: 2px solid #2ed573;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem;
+            color: #2ed573;
+            margin-bottom: 3rem;
+            animation: checkPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+        }
+        @keyframes checkPop {
+            from { transform: scale(0); }
+            to   { transform: scale(1); }
+        }
+
+        /* ===== FILTER TABS ===== */
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+        .filter-tab {
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.02);
+            color: rgba(255,255,255,0.45);
+            font-family: 'Outfit', sans-serif;
+        }
+        .filter-tab:hover {
+            color: white;
+            border-color: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05);
+        }
+        .filter-tab.active {
+            background: var(--gradient-main);
+            color: #000;
+            border-color: transparent;
+            box-shadow: 0 8px 20px rgba(212,175,55,0.25);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .order-card-footer { grid-template-columns: 1fr; }
+            .order-actions { flex-direction: column; }
+            .order-card-header { padding: 1.8rem 2rem; }
+            .order-items-list { padding: 2rem; }
+            .order-card-footer { padding: 1.8rem 2rem; }
+            .order-total-bar { padding: 1.5rem 2rem; }
+            .order-actions { padding: 1.8rem 2rem; }
+            .order-timeline { padding: 1.5rem 2rem; }
         }
     </style>
 </head>
@@ -38,116 +477,600 @@
     <!-- Navbar -->
     <nav class="dash-nav"></nav>
 
-    <main class="dashboard-container reveal" style="padding-top: 15rem; padding-bottom: 12rem;">
-        <header style="margin-bottom: 8rem; text-align: center;">
-            <div style="background: rgba(124, 58, 237, 0.1); color: var(--primary-color); padding: 12px 35px; border-radius: 50px; display: inline-block; font-weight: 900; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 3rem; border: 1px solid rgba(124, 58, 237, 0.2);">
-                📜 The Culinary Journey
+    <main class="dashboard-container orders-page-wrapper">
+
+        <!-- Page Header -->
+        <header style="margin-bottom: 5rem; text-align: center;">
+            <div style="background: rgba(212,175,55,0.08); color: var(--primary-color); padding: 10px 30px; border-radius: 50px; display: inline-block; font-weight: 900; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 2.5rem; border: 1px solid rgba(212,175,55,0.15);">
+                📜 Order History
             </div>
-            <h1 style="font-size: 6rem; font-weight: 400; color: white; margin-bottom: 1.5rem; font-family: 'DM Serif Display', serif; letter-spacing: -2px;">Your <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Legacy</span></h1>
-            <p style="color: var(--text-muted); font-size: 1.5rem; font-weight: 300; max-width: 600px; margin: 0 auto;">A chronicle of your exquisite encounters with Crave Luxe.</p>
+            <h1 style="font-size: 5rem; font-weight: 400; color: white; margin-bottom: 1.5rem; font-family: 'DM Serif Display', serif; letter-spacing: -2px;">
+                My <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Orders</span>
+            </h1>
+            <p style="color: var(--text-muted); font-size: 1.3rem; font-weight: 300; max-width: 500px; margin: 0 auto;">
+                All your gourmet experiences, beautifully tracked.
+            </p>
         </header>
-        
-        <div id="ordersList" style="display: flex; flex-direction: column;">
-            <!-- Loading state -->
-            <div style="text-align: center; padding: 10rem;">
-                <i class="fas fa-spinner fa-spin" style="font-size: 3.5rem; color: var(--primary-color); opacity: 0.6;"></i>
-                <p style="margin-top: 2rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; font-weight: 700;">Recalling your history...</p>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar" id="statsBar" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-value" id="statTotal">0</div>
+                <div class="stat-label">Total Orders</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statSpend">₹0</div>
+                <div class="stat-label">Total Spent</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statDelivered">0</div>
+                <div class="stat-label">Delivered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statActive">0</div>
+                <div class="stat-label">Active Orders</div>
             </div>
         </div>
 
-        <div id="emptyOrdersMessage" style="display: none; background: rgba(255,255,255,0.02); padding: 10rem 4rem; border-radius: var(--radius-xl); text-align: center; border: 1px solid rgba(255,255,255,0.05);">
-            <i class="fas fa-box-open" style="font-size: 6rem; color: rgba(255,255,255,0.05); margin-bottom: 3rem;"></i>
-            <h2 style="font-family: 'DM Serif Display', serif; font-size: 3.5rem; margin-bottom: 1.5rem;">The Scroll is Empty</h2>
-            <p style="color: var(--text-muted); margin-bottom: 4.5rem; font-size: 1.4rem; font-weight: 300;">Your first gourmet experience is just a choice away.</p>
-            <a href="index.html" class="btn-primary" style="text-decoration: none; padding: 20px 50px; border-radius: 25px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; background: var(--gradient-main); color: #000;">Indulge Now</a>
+        <!-- Filter Tabs -->
+        <div class="filter-tabs" id="filterTabs" style="display: none;">
+            <button class="filter-tab active" data-filter="all" onclick="filterOrders('all', this)">All Orders</button>
+            <button class="filter-tab" data-filter="Pending" onclick="filterOrders('Pending', this)">Pending</button>
+            <button class="filter-tab" data-filter="Preparing" onclick="filterOrders('Preparing', this)">Preparing</button>
+            <button class="filter-tab" data-filter="Out for Delivery" onclick="filterOrders('Out for Delivery', this)">Out for Delivery</button>
+            <button class="filter-tab" data-filter="Delivered" onclick="filterOrders('Delivered', this)">Delivered</button>
+            <button class="filter-tab" data-filter="Cancelled" onclick="filterOrders('Cancelled', this)">Cancelled</button>
         </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p style="color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem;">Loading your orders...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="error-state">
+            <i class="fas fa-exclamation-triangle" style="font-size: 4rem; color: #ff4757; margin-bottom: 2rem; display: block; opacity: 0.6;"></i>
+            <h3 style="font-family: 'DM Serif Display', serif; font-size: 2.5rem; margin-bottom: 1.5rem;">Could Not Load Orders</h3>
+            <p style="color: var(--text-muted); margin-bottom: 3rem;" id="errorMsg">Please make sure your server is running.</p>
+            <button onclick="fetchOrders()" class="order-btn order-btn-primary" style="margin: 0 auto; max-width: 250px; display: flex;">
+                <i class="fas fa-redo"></i> Try Again
+            </button>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-orders" id="emptyState">
+            <i class="fas fa-shopping-basket empty-orders-icon"></i>
+            <h2 style="font-family: 'DM Serif Display', serif; font-size: 3.5rem; margin-bottom: 1.5rem;">No Orders Yet</h2>
+            <p style="color: var(--text-muted); margin-bottom: 4rem; font-size: 1.3rem; font-weight: 300;">Your first gourmet experience is just a few clicks away.</p>
+            <a href="menu.html" style="text-decoration: none; display: inline-flex; align-items: center; gap: 12px; padding: 20px 50px; border-radius: 25px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; background: var(--gradient-main); color: #000; font-family: 'Outfit', sans-serif; font-size: 0.85rem; box-shadow: 0 15px 35px rgba(212,175,55,0.3); transition: 0.4s;" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 25px 50px rgba(212,175,55,0.45)'" onmouseout="this.style.transform='';this.style.boxShadow='0 15px 35px rgba(212,175,55,0.3)'">
+                <i class="fas fa-utensils"></i> Explore Menu
+            </a>
+        </div>
+
+        <!-- Orders List -->
+        <div id="ordersList" style="display: none;"></div>
+
     </main>
+
+    <!-- Order Detail Modal -->
+    <div class="order-modal-overlay" id="orderModal" onclick="closeModal(event)">
+        <div class="order-modal" id="orderModalContent">
+            <div class="modal-header">
+                <div>
+                    <div style="font-size: 0.72rem; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; color: var(--primary-color); margin-bottom: 8px;">Order Details</div>
+                    <h2 style="font-family: 'DM Serif Display', serif; font-size: 2.5rem; font-weight: 400;" id="modalOrderTitle">Order #-</h2>
+                </div>
+                <button class="modal-close-btn" onclick="closeOrderModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="modalBody" style="padding: 3rem 3.5rem;"></div>
+        </div>
+    </div>
+
+    <!-- Re-Order Confirmation Modal -->
+    <div class="order-modal-overlay" id="reorderModal" onclick="closeReorderModal(event)">
+        <div class="order-modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <div>
+                    <div style="font-size: 0.72rem; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; color: var(--primary-color); margin-bottom: 8px;">Re-Order</div>
+                    <h2 style="font-family: 'DM Serif Display', serif; font-size: 2.2rem; font-weight: 400;">Add to Cart?</h2>
+                </div>
+                <button class="modal-close-btn" onclick="closeReorderModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div style="padding: 3rem 3.5rem;">
+                <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 3rem; line-height: 1.7;" id="reorderMessage">
+                    This will add all items from your previous order to your cart. Your current cart will be cleared.
+                </p>
+                <div id="reorderItemsList" style="margin-bottom: 3rem; display: flex; flex-direction: column; gap: 10px;"></div>
+                <div style="display: flex; gap: 15px;">
+                    <button class="order-btn order-btn-secondary" onclick="closeReorderModal()" style="flex: 1;">Cancel</button>
+                    <button class="order-btn order-btn-primary" onclick="confirmReorder()" id="confirmReorderBtn" style="flex: 2;">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="footerContainer"></div>
     <div id="toastContainer"></div>
 
     <script src="script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const session = JSON.parse(localStorage.getItem('user_session'));
-            if (!session) { window.location.replace('signin.html'); return; }
+    document.addEventListener('DOMContentLoaded', () => {
+        // Auth check
+        const session = JSON.parse(localStorage.getItem('user_session'));
+        if (!session || !session.email) {
+            window.location.replace('signin.html');
+            return;
+        }
 
-            const ordersList = document.getElementById('ordersList');
-            const emptyOrdersMessage = document.getElementById('emptyOrdersMessage');
+        // Expose for global use
+        window._session = session;
+        window._allOrders = [];
+        window._reorderData = null;
 
-            async function fetchOrders() {
-                try {
-                    const response = await fetch(`api/orders.php?action=get_orders&email=${encodeURIComponent(session.email)}`);
-                    const data = await response.json();
+        fetchOrders();
+    });
 
-                    if (data.success && data.data.length > 0) {
-                        ordersList.innerHTML = data.data.map(order => {
-                            const statusStyles = {
-                                'Pending': { color: '#7C3AED', bg: 'rgba(124, 58, 237, 0.1)' },
-                                'Preparing': { color: '#10B981', bg: 'rgba(16, 185, 129, 0.1)' },
-                                'Out for Delivery': { color: '#30E3CA', bg: 'rgba(48, 227, 202, 0.1)' },
-                                'Delivered': { color: '#2ed573', bg: 'rgba(46, 213, 115, 0.1)' },
-                                'Cancelled': { color: '#ff4757', bg: 'rgba(255, 71, 87, 0.1)' }
-                            };
-                            const status = statusStyles[order.order_status] || { color: '#fff', bg: 'rgba(255,255,255,0.1)' };
-                            
-                            return `
-                            <div class="order-card">
-                                <div style="background: rgba(255,255,255,0.01); padding: 2.5rem 3.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                    <div>
-                                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 8px;">
-                                            <span style="color: var(--text-muted); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Protocol ID</span>
-                                            <span style="font-weight: 800; color: white; font-size: 1.4rem; font-family: 'DM Serif Display', serif;">#${order.id}</span>
-                                        </div>
-                                        <div style="color: var(--text-muted); font-size: 1rem; font-weight: 300;"><i class="far fa-calendar-alt"></i> ${new Date(order.created_at).toLocaleString()}</div>
-                                    </div>
-                                    <div style="text-align: right;">
-                                        <span class="status-badge" style="background: ${status.bg}; color: ${status.color}; border-color: ${status.color}33;">${order.order_status}</span>
-                                        <div style="font-weight: 400; margin-top: 15px; font-size: 2.2rem; color: white; font-family: 'DM Serif Display', serif;">₹${order.total_price}</div>
-                                    </div>
-                                </div>
-                                <div style="padding: 3.5rem;">
-                                    <div style="display: flex; flex-direction: column; gap: 1.8rem; margin-bottom: 3.5rem;">
-                                        ${order.items.map(item => `
-                                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                                <div style="display: flex; align-items: center; gap: 20px;">
-                                                    <div style="background: rgba(124, 58, 237,0.1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 0.9rem; font-weight: 900; color: var(--primary-color); border: 1px solid rgba(124, 58, 237,0.2);">${item.quantity}x</div>
-                                                    <span style="font-weight: 600; color: white; font-size: 1.2rem; font-family: 'DM Serif Display', serif;">${item.food_name}</span>
-                                                </div>
-                                                <div style="font-weight: 700; color: var(--text-muted); font-size: 1.1rem;">₹${item.price * item.quantity}</div>
-                                            </div>
-                                        `).join('')}
-                                    </div>
+    // ======= STATUS CONFIG =======
+    const STATUS_CONFIG = {
+        'Pending': {
+            color: '#f59e0b',
+            bg: 'rgba(245,158,11,0.1)',
+            icon: 'fa-clock',
+            steps: [true, false, false, false]  // which timeline steps are done/active
+        },
+        'Preparing': {
+            color: '#8b5cf6',
+            bg: 'rgba(139,92,246,0.1)',
+            icon: 'fa-fire-alt',
+            steps: [true, true, false, false]
+        },
+        'Out for Delivery': {
+            color: '#06b6d4',
+            bg: 'rgba(6,182,212,0.1)',
+            icon: 'fa-motorcycle',
+            steps: [true, true, true, false]
+        },
+        'Delivered': {
+            color: '#2ed573',
+            bg: 'rgba(46,213,115,0.1)',
+            icon: 'fa-check-circle',
+            steps: [true, true, true, true]
+        },
+        'Cancelled': {
+            color: '#ff4757',
+            bg: 'rgba(255,71,87,0.1)',
+            icon: 'fa-times-circle',
+            steps: [false, false, false, false]
+        }
+    };
 
-                                    <div style="padding: 2.5rem; background: rgba(255,255,255,0.02); border-radius: 25px; font-size: 1.1rem; border: 1px solid rgba(255,255,255,0.05); display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
-                                        <div style="display: flex; gap: 18px; color: white;">
-                                            <i class="fas fa-map-marker-alt" style="color: var(--primary-color); font-size: 1.2rem; margin-top: 5px;"></i> 
-                                            <div><strong style="display: block; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 8px;">The Sanctuary</strong> ${order.delivery_address}</div>
-                                        </div>
-                                        <div style="display: flex; gap: 18px; color: white;">
-                                            <i class="fas fa-credit-card" style="color: var(--primary-color); font-size: 1.2rem; margin-top: 5px;"></i> 
-                                            <div><strong style="display: block; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 8px;">Protocol</strong> ${order.payment_method.toUpperCase()}</div>
-                                        </div>
-                                    </div>
+    const TIMELINE_STEPS = [
+        { label: 'Order Placed', icon: 'fa-receipt' },
+        { label: 'Preparing',    icon: 'fa-fire-alt' },
+        { label: 'On the Way',   icon: 'fa-motorcycle' },
+        { label: 'Delivered',    icon: 'fa-home' }
+    ];
 
-                                    <div style="margin-top: 3.5rem; display: flex; gap: 20px;">
-                                        <button class="btn-primary" style="flex: 1; padding: 20px; font-size: 0.9rem; background: rgba(255,255,255,0.03); color: white; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;" onclick="showToast('Protocol tracking initializing...', 'info')"><i class="fas fa-route" style="margin-right: 10px;"></i> Live Map</button>
-                                        <button class="btn-primary" style="flex: 1; padding: 20px; font-size: 0.9rem; border-radius: 20px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; background: var(--gradient-main); color: #000;" onclick="location.href='menu.html'"><i class="fas fa-redo" style="margin-right: 10px;"></i> Re-Indulge</button>
-                                    </div>
-                                </div>
-                            </div>
-                        `}).join('');
-                    } else {
-                        ordersList.style.display = 'none';
-                        emptyOrdersMessage.style.display = 'block';
-                    }
-                } catch (error) {
-                    ordersList.innerHTML = `<div style="text-align: center; padding: 10rem; color: var(--primary-color); font-weight: 700; letter-spacing: 2px;">PROTOCOL ERROR: FAILED TO RETRIEVE HISTORY</div>`;
-                }
+    const PAYMENT_LABELS = {
+        'cod':    '💵 Cash on Delivery',
+        'card':   '💳 Card',
+        'upi':    '📱 UPI',
+        'wallet': '👛 Wallet'
+    };
+
+    // ======= FETCH ORDERS =======
+    async function fetchOrders() {
+        const session = window._session;
+        showState('loading');
+
+        try {
+            const resp = await fetch(`api/orders.php?action=get_orders&email=${encodeURIComponent(session.email)}`);
+
+            if (!resp.ok) {
+                throw new Error(`Server error: ${resp.status} ${resp.statusText}`);
             }
 
-            fetchOrders();
-        });
+            const data = await resp.json();
+
+            if (data.success) {
+                window._allOrders = data.data || [];
+                renderOrderStats(window._allOrders);
+                renderOrders(window._allOrders);
+            } else {
+                showState('error', data.message || 'Failed to load orders.');
+            }
+
+        } catch (err) {
+            console.error('Order fetch error:', err);
+            showState('error', err.message || 'Cannot connect to server. Is XAMPP running?');
+        }
+    }
+
+    // ======= STATE MANAGER =======
+    function showState(state, msg = '') {
+        document.getElementById('loadingState').style.display = state === 'loading' ? 'block' : 'none';
+        document.getElementById('errorState').style.display   = state === 'error'   ? 'block' : 'none';
+        document.getElementById('emptyState').style.display   = state === 'empty'   ? 'block' : 'none';
+        document.getElementById('ordersList').style.display   = state === 'orders'  ? 'block' : 'none';
+        document.getElementById('statsBar').style.display     = state === 'orders'  ? 'grid'  : 'none';
+        document.getElementById('filterTabs').style.display   = state === 'orders'  ? 'flex'  : 'none';
+
+        if (state === 'error') {
+            document.getElementById('errorMsg').textContent = msg;
+        }
+    }
+
+    // ======= RENDER STATS =======
+    function renderOrderStats(orders) {
+        const total     = orders.length;
+        const delivered = orders.filter(o => o.order_status === 'Delivered').length;
+        const active    = orders.filter(o => ['Pending','Preparing','Out for Delivery'].includes(o.order_status)).length;
+        const spend     = orders.reduce((sum, o) => sum + parseFloat(o.total_price || 0), 0);
+
+        document.getElementById('statTotal').textContent     = total;
+        document.getElementById('statSpend').textContent     = '₹' + Math.round(spend).toLocaleString('en-IN');
+        document.getElementById('statDelivered').textContent = delivered;
+        document.getElementById('statActive').textContent    = active;
+    }
+
+    // ======= FILTER ORDERS =======
+    window.filterOrders = function(filter, btn) {
+        // Update active tab
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filtered = filter === 'all'
+            ? window._allOrders
+            : window._allOrders.filter(o => o.order_status === filter);
+
+        renderOrders(filtered, false);
+    };
+
+    // ======= RENDER ORDERS =======
+    function renderOrders(orders, updateStats = true) {
+        if (orders.length === 0 && window._allOrders.length === 0) {
+            showState('empty');
+            return;
+        }
+
+        showState('orders');
+
+        if (orders.length === 0) {
+            document.getElementById('ordersList').innerHTML = `
+                <div style="text-align:center; padding: 6rem 3rem; background: rgba(255,255,255,0.015); border-radius: 24px; border: 1px solid rgba(255,255,255,0.05);">
+                    <i class="fas fa-filter" style="font-size: 3rem; color: rgba(255,255,255,0.1); margin-bottom: 2rem; display: block;"></i>
+                    <p style="color: var(--text-muted); font-size: 1.1rem;">No orders match this filter.</p>
+                </div>`;
+            return;
+        }
+
+        const html = orders.map((order, index) => buildOrderCard(order, index)).join('');
+        document.getElementById('ordersList').innerHTML = html;
+    }
+
+    // ======= BUILD ORDER CARD =======
+    function buildOrderCard(order, index) {
+        const status  = STATUS_CONFIG[order.order_status] || STATUS_CONFIG['Pending'];
+        const steps   = status.steps;
+        const items   = order.items || [];
+        const date    = new Date(order.created_at);
+        const dateStr = date.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+        const timeStr = date.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+        const payment = PAYMENT_LABELS[order.payment_method] || order.payment_method;
+        const isCancelled = order.order_status === 'Cancelled';
+
+        // Timeline HTML
+        const timelineHTML = isCancelled
+            ? `<div class="order-timeline" style="justify-content: center; border-bottom: 1px solid rgba(255,71,87,0.1);">
+                   <span style="color: #ff4757; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">
+                       <i class="fas fa-times-circle" style="margin-right: 8px;"></i>Order Cancelled
+                   </span>
+               </div>`
+            : `<div class="order-timeline">
+                   ${TIMELINE_STEPS.map((step, i) => {
+                       const isDone   = i < steps.filter(Boolean).length - 1 || (steps.every(Boolean) && i === 3);
+                       const isActive = i === steps.filter(Boolean).length - 1 && !steps.every(Boolean);
+                       const cls = isDone ? 'done' : (isActive ? 'active' : '');
+                       return `<div class="timeline-step ${cls}">
+                                   <div class="timeline-icon"><i class="fas ${step.icon}"></i></div>
+                                   <div class="timeline-label">${step.label}</div>
+                               </div>`;
+                   }).join('')}
+               </div>`;
+
+        // Items HTML (show first 3, then +more)
+        const visibleItems = items.slice(0, 3);
+        const moreCount    = items.length - 3;
+
+        const itemsHTML = visibleItems.map(item => `
+            <div class="order-item-row">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <div style="background: rgba(212,175,55,0.1); width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 900; color: var(--primary-color); border: 1px solid rgba(212,175,55,0.2); flex-shrink: 0;">
+                        ${item.quantity}×
+                    </div>
+                    <span style="font-weight: 600; color: rgba(255,255,255,0.9); font-size: 1.05rem;">${escapeHtml(item.food_name)}</span>
+                </div>
+                <span style="font-weight: 700; color: var(--text-muted); font-size: 1rem; white-space: nowrap;">
+                    ₹${(parseFloat(item.price) * parseInt(item.quantity)).toLocaleString('en-IN')}
+                </span>
+            </div>
+        `).join('');
+
+        const moreHTML = moreCount > 0
+            ? `<div style="text-align: center; padding: 1rem; color: var(--text-muted); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; cursor: pointer;" onclick="openOrderModal(${order.id})">
+                   +${moreCount} more item${moreCount > 1 ? 's' : ''} — View All
+               </div>`
+            : '';
+
+        // Cancelled-specific action
+        const actionBtns = isCancelled
+            ? `<button class="order-btn order-btn-primary" onclick="startReorder(${order.id})">
+                   <i class="fas fa-redo"></i> Re-Order
+               </button>`
+            : `<button class="order-btn order-btn-secondary" onclick="openOrderModal(${order.id})">
+                   <i class="fas fa-file-alt"></i> View Details
+               </button>
+               <button class="order-btn order-btn-primary" onclick="startReorder(${order.id})">
+                   <i class="fas fa-redo"></i> Re-Order
+               </button>`;
+
+        return `
+        <div class="order-card" style="animation-delay: ${index * 0.08}s;" id="order-card-${order.id}">
+            <!-- Header -->
+            <div class="order-card-header">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 6px;">
+                        <span style="color: rgba(255,255,255,0.35); font-size: 0.72rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">Order ID</span>
+                        <span style="font-weight: 900; color: white; font-size: 1.3rem; font-family: 'DM Serif Display', serif;">#${order.id}</span>
+                    </div>
+                    <div style="color: rgba(255,255,255,0.35); font-size: 0.9rem; font-weight: 500;">
+                        <i class="far fa-calendar-alt" style="margin-right: 6px;"></i>${dateStr} &nbsp;·&nbsp; <i class="far fa-clock" style="margin-right: 6px;"></i>${timeStr}
+                    </div>
+                </div>
+                <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 12px;">
+                    <span class="status-badge" style="background: ${status.bg}; color: ${status.color}; border-color: ${status.color}33;">
+                        <span class="pulse-dot" ${!['Pending','Preparing','Out for Delivery'].includes(order.order_status) ? 'style="animation: none;"' : ''}></span>
+                        <i class="fas ${status.icon}"></i>
+                        ${order.order_status}
+                    </span>
+                    <div style="font-size: 2rem; font-weight: 400; color: white; font-family: 'DM Serif Display', serif;">₹${parseFloat(order.total_price).toLocaleString('en-IN')}</div>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            ${timelineHTML}
+
+            <!-- Items -->
+            <div class="order-items-list">
+                ${itemsHTML}
+                ${moreHTML}
+            </div>
+
+            <!-- Total Bar -->
+            <div class="order-total-bar">
+                <div style="display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.45); font-size: 0.9rem;">
+                    <i class="fas fa-receipt"></i>
+                    <span>${items.length} item${items.length !== 1 ? 's' : ''}</span>
+                    <span style="opacity: 0.4;">·</span>
+                    <span>${payment}</span>
+                </div>
+                <div style="font-weight: 900; color: white; font-size: 1.3rem; font-family: 'DM Serif Display', serif;">
+                    Total: <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">₹${parseFloat(order.total_price).toLocaleString('en-IN')}</span>
+                </div>
+            </div>
+
+            <!-- Delivery Info -->
+            <div class="order-card-footer">
+                <div class="order-info-block">
+                    <div class="order-info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div>
+                        <div style="font-size: 0.68rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2.5px; color: rgba(255,255,255,0.3); margin-bottom: 6px;">Delivery Address</div>
+                        <div style="color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.5;">${escapeHtml(order.delivery_address || '—')}</div>
+                    </div>
+                </div>
+                <div class="order-info-block">
+                    <div class="order-info-icon"><i class="fas fa-credit-card"></i></div>
+                    <div>
+                        <div style="font-size: 0.68rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2.5px; color: rgba(255,255,255,0.3); margin-bottom: 6px;">Payment Method</div>
+                        <div style="color: rgba(255,255,255,0.8); font-size: 0.95rem;">${payment}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="order-actions">
+                ${actionBtns}
+            </div>
+        </div>`;
+    }
+
+    // ======= OPEN ORDER MODAL =======
+    window.openOrderModal = function(orderId) {
+        const order = window._allOrders.find(o => parseInt(o.id) === parseInt(orderId));
+        if (!order) return;
+
+        const status  = STATUS_CONFIG[order.order_status] || STATUS_CONFIG['Pending'];
+        const items   = order.items || [];
+        const date    = new Date(order.created_at);
+        const payment = PAYMENT_LABELS[order.payment_method] || order.payment_method;
+
+        document.getElementById('modalOrderTitle').textContent = `Order #${order.id}`;
+
+        const subtotal = items.reduce((s, i) => s + (parseFloat(i.price) * parseInt(i.quantity)), 0);
+
+        document.getElementById('modalBody').innerHTML = `
+            <!-- Status -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 3rem; padding: 2rem; background: ${status.bg}; border-radius: 20px; border: 1px solid ${status.color}33;">
+                <div style="font-weight: 700; font-size: 1.1rem; color: ${status.color}; display: flex; align-items: center; gap: 12px;">
+                    <i class="fas ${status.icon}" style="font-size: 1.4rem;"></i>
+                    ${order.order_status}
+                </div>
+                <div style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">${date.toLocaleString('en-IN')}</div>
+            </div>
+
+            <!-- Items -->
+            <h3 style="font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; color: rgba(255,255,255,0.3); margin-bottom: 1.5rem;">Items Ordered</h3>
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 3rem;">
+                ${items.map(item => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 1.8rem; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid rgba(255,255,255,0.04);">
+                        <div style="display: flex; align-items: center; gap: 14px;">
+                            <div style="background: rgba(212,175,55,0.1); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 900; color: var(--primary-color); border: 1px solid rgba(212,175,55,0.2);">${item.quantity}×</div>
+                            <span style="font-weight: 600; color: rgba(255,255,255,0.9);">${escapeHtml(item.food_name)}</span>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 700; color: white;">₹${(parseFloat(item.price) * parseInt(item.quantity)).toLocaleString('en-IN')}</div>
+                            <div style="font-size: 0.78rem; color: rgba(255,255,255,0.35);">₹${parseFloat(item.price).toLocaleString('en-IN')} each</div>
+                        </div>
+                    </div>`).join('')}
+            </div>
+
+            <!-- Totals -->
+            <div style="background: rgba(255,255,255,0.02); border-radius: 20px; padding: 2rem; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 3rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; color: rgba(255,255,255,0.5); font-size: 1rem;">
+                    <span>Subtotal</span><span>₹${subtotal.toLocaleString('en-IN')}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; color: rgba(255,255,255,0.5); font-size: 1rem;">
+                    <span>Delivery</span><span style="color: #2ed573; font-weight: 700;">FREE</span>
+                </div>
+                ${parseFloat(order.total_price) < subtotal ? `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; color: #2ed573; font-size: 1rem; font-weight: 700;">
+                    <span>Discount</span><span>-₹${(subtotal - parseFloat(order.total_price)).toLocaleString('en-IN')}</span>
+                </div>` : ''}
+                <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; font-size: 1.4rem; font-family: 'DM Serif Display', serif;">
+                    <span>Total</span>
+                    <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 400;">₹${parseFloat(order.total_price).toLocaleString('en-IN')}</span>
+                </div>
+            </div>
+
+            <!-- Delivery info -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 3rem;">
+                <div style="padding: 1.8rem; background: rgba(255,255,255,0.02); border-radius: 18px; border: 1px solid rgba(255,255,255,0.04);">
+                    <div style="font-size: 0.68rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.3); margin-bottom: 10px;"><i class="fas fa-map-marker-alt" style="margin-right: 6px; color: var(--primary-color);"></i>Address</div>
+                    <div style="color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.5;">${escapeHtml(order.delivery_address || '—')}</div>
+                </div>
+                <div style="padding: 1.8rem; background: rgba(255,255,255,0.02); border-radius: 18px; border: 1px solid rgba(255,255,255,0.04);">
+                    <div style="font-size: 0.68rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.3); margin-bottom: 10px;"><i class="fas fa-credit-card" style="margin-right: 6px; color: var(--primary-color);"></i>Payment</div>
+                    <div style="color: rgba(255,255,255,0.8); font-size: 0.95rem;">${payment}</div>
+                </div>
+            </div>
+
+            <!-- Re-order button -->
+            <button onclick="closeOrderModal(); startReorder(${order.id});" class="order-btn order-btn-primary" style="width: 100%; margin: 0;">
+                <i class="fas fa-redo"></i> Re-Order These Items
+            </button>
+        `;
+
+        document.getElementById('orderModal').classList.add('visible');
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeOrderModal = function() {
+        document.getElementById('orderModal').classList.remove('visible');
+        document.body.style.overflow = '';
+    };
+
+    window.closeModal = function(e) {
+        if (e.target === document.getElementById('orderModal')) closeOrderModal();
+    };
+
+    // ======= RE-ORDER =======
+    window.startReorder = function(orderId) {
+        const order = window._allOrders.find(o => parseInt(o.id) === parseInt(orderId));
+        if (!order || !order.items || order.items.length === 0) {
+            showToast('No items to re-order.', 'error');
+            return;
+        }
+
+        window._reorderData = order;
+
+        // Populate reorder modal
+        document.getElementById('reorderItemsList').innerHTML = order.items.map(item => `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.4rem; background: rgba(255,255,255,0.02); border-radius: 14px; border: 1px solid rgba(255,255,255,0.04);">
+                <span style="color: rgba(255,255,255,0.8); font-size: 0.95rem;">${item.quantity}× ${escapeHtml(item.food_name)}</span>
+                <span style="color: var(--text-muted); font-size: 0.9rem;">₹${(parseFloat(item.price) * parseInt(item.quantity)).toLocaleString('en-IN')}</span>
+            </div>`).join('');
+
+        document.getElementById('reorderModal').classList.add('visible');
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.confirmReorder = function() {
+        const order = window._reorderData;
+        if (!order) return;
+
+        const btn = document.getElementById('confirmReorderBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
+
+        // Build cart items from order items
+        const cartItems = order.items.map(item => ({
+            name:      item.food_name,
+            price:     parseFloat(item.price),
+            quantity:  parseInt(item.quantity),
+            category:  item.category || 'Food',
+            image_url: item.image_url || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=80'
+        }));
+
+        // Save to cart
+        saveCart(cartItems);
+
+        setTimeout(() => {
+            closeReorderModal();
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
+            showToast('Items added to your cart!', 'success');
+            setTimeout(() => window.location.href = 'cart.html', 1200);
+        }, 600);
+    };
+
+    window.closeReorderModal = function(e) {
+        if (e && e.target !== document.getElementById('reorderModal')) return;
+        document.getElementById('reorderModal').classList.remove('visible');
+        document.body.style.overflow = '';
+        window._reorderData = null;
+    };
+
+    // Override to also work as direct call
+    const _originalClose = window.closeReorderModal;
+    window.closeReorderModal = function(e) {
+        if (e && e.target !== document.getElementById('reorderModal')) return;
+        document.getElementById('reorderModal').classList.remove('visible');
+        document.body.style.overflow = '';
+        window._reorderData = null;
+    };
+
+    // Close reorder modal button directly
+    document.getElementById('reorderModal').querySelectorAll('[onclick="closeReorderModal()"]').forEach(btn => {
+        btn.onclick = () => {
+            document.getElementById('reorderModal').classList.remove('visible');
+            document.body.style.overflow = '';
+            window._reorderData = null;
+        };
+    });
+
+    // ======= UTILS =======
+    function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
+    }
+
+    // ESC key close modals
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            closeOrderModal();
+            document.getElementById('reorderModal').classList.remove('visible');
+            document.body.style.overflow = '';
+        }
+    });
     </script>
 </body>
 </html>
