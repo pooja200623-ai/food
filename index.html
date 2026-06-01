@@ -4,93 +4,698 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crave Luxe | Elevate Your Palate</title>
-    <!-- Google Fonts included via style.css -->
+    <meta name="description" content="Experience the pinnacle of culinary artistry. Over 80+ handcrafted delicacies curated by master chefs, delivered to your door.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=12">
+    <link rel="stylesheet" href="style.css?v=20">
     <style>
-        .category-showcase {
-            margin-bottom: 10rem;
-            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .category-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 3.5rem;
-            padding: 0 1rem;
-        }
-        .category-header h2 {
-            font-size: 3.5rem;
-            font-weight: 400;
-            letter-spacing: -2px;
-            font-family: 'DM Serif Display', serif;
-        }
-        .horizontal-scroll {
-            display: flex;
-            gap: 3rem;
-            overflow-x: auto;
-            padding: 2rem 1rem 4rem;
-            scroll-behavior: smooth;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .horizontal-scroll::-webkit-scrollbar {
-            display: none;
-        }
-        .scroll-card {
-            min-width: 360px;
-            height: 360px;
-            flex-shrink: 0;
+        /* ================================================
+           HOME PAGE — COMPLETE REDESIGN
+        ================================================ */
+
+        /* ── HERO ── */
+        .home-hero {
             position: relative;
-            border-radius: var(--radius-xl);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 0;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .card-overlay {
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
-            padding: 3rem 1.5rem 1.5rem;
-            width: 100%;
-        }
-        .view-all-btn {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 800;
+            height: 100vh;
+            min-height: 700px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            transition: 0.4s;
-            padding: 12px 28px;
-            border-radius: 50px;
-            background: rgba(var(--primary-rgb), 0.08);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border: 1px solid rgba(var(--primary-rgb), 0.1);
+            overflow: hidden;
+            background: #000;
         }
-        .view-all-btn:hover {
-            background: var(--gradient-main);
-            color: black;
-            gap: 18px;
-            box-shadow: 0 10px 20px rgba(var(--primary-rgb), 0.3);
+        .hero-bg-img {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.45;
+            filter: contrast(1.1) saturate(0.9);
+            transform: scale(1.05);
+            animation: heroZoom 18s ease-in-out infinite alternate;
         }
-        
-        /* Luxe Hero specific styles */
-        .luxe-hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to right, #0a0a0c 35%, transparent 100%);
+        @keyframes heroZoom {
+            from { transform: scale(1.05); }
+            to   { transform: scale(1.12); }
+        }
+        .hero-left-grad {
+            position: absolute; inset: 0;
+            background: linear-gradient(105deg, #000 20%, rgba(0,0,0,0.55) 65%, transparent 100%);
             z-index: 2;
+        }
+        .hero-bottom-grad {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 220px;
+            background: linear-gradient(to top, var(--bg-color), transparent);
+            z-index: 3;
+        }
+        /* Animated orbs */
+        .hero-orb {
+            position: absolute; border-radius: 50%;
+            filter: blur(100px); pointer-events: none; z-index: 2;
+        }
+        .hero-orb-a {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(var(--primary-rgb),.18) 0%, transparent 70%);
+            top: -100px; left: -100px;
+            animation: orbFloat 10s ease-in-out infinite;
+        }
+        .hero-orb-b {
+            width: 380px; height: 380px;
+            background: radial-gradient(circle, rgba(var(--primary-rgb),.1) 0%, transparent 70%);
+            bottom: 50px; right: 10%;
+            animation: orbFloat 14s ease-in-out infinite reverse;
+        }
+        @keyframes orbFloat {
+            0%,100% { transform: translateY(0) scale(1); }
+            50%      { transform: translateY(-30px) scale(1.06); }
+        }
+
+        .hero-inner {
+            position: relative; z-index: 10;
+            max-width: 1400px; margin: 0 auto;
+            width: 100%; padding: 0 5rem;
+            padding-top: 100px;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: rgba(var(--primary-rgb),.12);
+            color: var(--primary-color);
+            border: 1px solid rgba(var(--primary-rgb),.3);
+            padding: 12px 30px; border-radius: 50px;
+            font-weight: 900; font-size: 0.78rem;
+            text-transform: uppercase; letter-spacing: 4px;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(10px);
+            animation: fadeDown .7s ease both;
+        }
+        @keyframes fadeDown {
+            from { opacity:0; transform:translateY(-18px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+        .hero-h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(4.5rem, 9vw, 9.5rem);
+            font-weight: 400; line-height: .88;
+            letter-spacing: -4px;
+            color: #fff; margin-bottom: 3rem;
+            text-shadow: 0 20px 60px rgba(0,0,0,.6);
+            animation: fadeDown .8s ease .05s both;
+        }
+        .hero-h1 .grad-text {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-sub {
+            font-size: 1.25rem; font-weight: 300;
+            color: rgba(255,255,255,.65);
+            max-width: 560px; line-height: 1.8;
+            margin-bottom: 3.5rem;
+            animation: fadeDown .8s ease .1s both;
+        }
+
+        /* Search bar */
+        .hero-search {
+            display: flex; align-items: center;
+            max-width: 680px;
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 30px; padding: 8px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 30px 80px rgba(0,0,0,.5);
+            animation: fadeDown .8s ease .15s both;
+            transition: border-color .3s;
+        }
+        .hero-search:focus-within {
+            border-color: rgba(var(--primary-rgb),.5);
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb),.1), 0 30px 80px rgba(0,0,0,.5);
+        }
+        .hero-search-icon {
+            padding: 0 1.5rem; color: var(--primary-color);
+            font-size: 1.2rem; flex-shrink: 0;
+        }
+        .hero-search input {
+            flex: 1; background: transparent; border: none;
+            color: #fff; font-size: 1.1rem; font-weight: 400;
+            font-family: 'Outfit', sans-serif; outline: none;
+            padding: 14px 0;
+        }
+        .hero-search input::placeholder { color: rgba(255,255,255,.35); }
+        .hero-search-btn {
+            background: var(--gradient-main); color: #000;
+            border: none; border-radius: 22px;
+            padding: 16px 40px; font-weight: 900;
+            font-size: .85rem; text-transform: uppercase;
+            letter-spacing: 2px; cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            transition: all .35s cubic-bezier(.16,1,.3,1);
+            white-space: nowrap;
+            box-shadow: 0 10px 28px rgba(var(--primary-rgb),.35);
+        }
+        .hero-search-btn:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 18px 40px rgba(var(--primary-rgb),.55);
+        }
+
+        /* Hero micro-stats */
+        .hero-stats {
+            display: flex; gap: 60px; align-items: center;
+            margin-top: 4.5rem;
+            animation: fadeDown .8s ease .2s both;
+        }
+        .hero-stat-sep {
+            width: 1px; height: 50px;
+            background: rgba(255,255,255,.1);
+        }
+        .hero-stat-val {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.8rem; color: var(--accent-color);
+            line-height: 1;
+        }
+        .hero-stat-lbl {
+            font-size: .72rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 3px;
+            color: rgba(255,255,255,.4); margin-top: 6px;
+        }
+
+        /* ── SECTION SHELL ── */
+        .home-section {
+            max-width: 1400px; margin: 0 auto;
+            padding: 0 4rem;
+        }
+        .section-eyebrow {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: rgba(var(--primary-rgb),.08);
+            color: var(--primary-color);
+            border: 1px solid rgba(var(--primary-rgb),.18);
+            padding: 10px 28px; border-radius: 50px;
+            font-size: .72rem; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 4px;
+            margin-bottom: 2rem;
+        }
+        .section-h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            font-weight: 400; letter-spacing: -2px;
+            color: #fff; line-height: 1;
+            margin-bottom: 1.2rem;
+        }
+        .section-h2 .grad {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-desc {
+            color: var(--text-muted); font-weight: 300;
+            font-size: 1.1rem; line-height: 1.8;
+            max-width: 500px;
+        }
+
+        /* ── CATEGORY GRID ── */
+        .cat-section {
+            padding: 8rem 0;
+            position: relative;
+        }
+        .cat-header {
+            display: flex; justify-content: space-between;
+            align-items: flex-end; margin-bottom: 4rem;
+        }
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        .cat-card {
+            position: relative; border-radius: 28px;
+            overflow: hidden; cursor: pointer;
+            aspect-ratio: 4/5;
+            border: 1px solid rgba(255,255,255,.06);
+            transition: all .5s cubic-bezier(.16,1,.3,1);
+            text-decoration: none;
+        }
+        .cat-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(var(--primary-rgb),.3);
+            box-shadow: 0 40px 70px rgba(0,0,0,.6);
+        }
+        .cat-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform .7s cubic-bezier(.16,1,.3,1);
+        }
+        .cat-card:hover img { transform: scale(1.08); }
+        .cat-card-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top,
+                rgba(0,0,0,.95) 0%,
+                rgba(0,0,0,.5) 50%,
+                transparent 100%);
+            transition: opacity .4s;
+        }
+        .cat-card:hover .cat-card-overlay {
+            background: linear-gradient(to top,
+                rgba(0,0,0,.98) 0%,
+                rgba(0,0,0,.6) 50%,
+                rgba(var(--primary-rgb),.1) 100%);
+        }
+        .cat-card-body {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 2rem 1.8rem;
+        }
+        .cat-card-flag {
+            display: inline-block;
+            background: rgba(var(--primary-rgb),.15);
+            border: 1px solid rgba(var(--primary-rgb),.3);
+            color: var(--primary-color);
+            font-size: .65rem; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 2.5px;
+            padding: 5px 14px; border-radius: 50px;
+            margin-bottom: 10px;
+        }
+        .cat-card-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.9rem; color: #fff;
+            line-height: 1.1; margin-bottom: 8px;
+        }
+        .cat-card-count {
+            font-size: .78rem; color: rgba(255,255,255,.45);
+            font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; display: flex;
+            align-items: center; gap: 8px;
+        }
+        .cat-card-count::before {
+            content: '';
+            width: 18px; height: 2px;
+            background: var(--primary-color);
+        }
+        .cat-card-arrow {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(255,255,255,.07);
+            border: 1px solid rgba(255,255,255,.12);
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(255,255,255,.6);
+            font-size: .85rem;
+            transition: all .4s cubic-bezier(.16,1,.3,1);
+        }
+        .cat-card:hover .cat-card-arrow {
+            background: var(--gradient-main);
+            color: #000; border-color: transparent;
+            transform: rotate(45deg) scale(1.1);
+        }
+
+        /* ── MARQUEE STRIP ── */
+        .marquee-section {
+            padding: 5rem 0;
+            overflow: hidden;
+            border-top: 1px solid rgba(255,255,255,.04);
+            border-bottom: 1px solid rgba(255,255,255,.04);
+            background: rgba(255,255,255,.01);
+        }
+        .marquee-track {
+            display: flex; gap: 5rem;
+            width: max-content;
+            animation: marqueeScroll 28s linear infinite;
+        }
+        .marquee-section:hover .marquee-track { animation-play-state: paused; }
+        @keyframes marqueeScroll {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+        .marquee-item {
+            display: flex; align-items: center; gap: 1.5rem;
+            white-space: nowrap;
+            font-size: .78rem; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 4px;
+            color: rgba(255,255,255,.2);
+        }
+        .marquee-item .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--primary-color); opacity: .6;
+        }
+
+        /* ── FOOD SHOWCASE ── */
+        .showcase-section { padding: 8rem 0 4rem; }
+        .showcase-header {
+            display: flex; justify-content: space-between;
+            align-items: flex-end; margin-bottom: 4rem;
+            flex-wrap: wrap; gap: 2rem;
+        }
+        .view-all-link {
+            display: inline-flex; align-items: center; gap: 12px;
+            color: var(--primary-color); text-decoration: none;
+            font-weight: 800; font-size: .82rem;
+            text-transform: uppercase; letter-spacing: 2px;
+            padding: 14px 30px; border-radius: 50px;
+            border: 1px solid rgba(var(--primary-rgb),.2);
+            background: rgba(var(--primary-rgb),.06);
+            transition: all .35s cubic-bezier(.16,1,.3,1);
+        }
+        .view-all-link:hover {
+            background: var(--gradient-main); color: #000;
+            gap: 20px;
+            box-shadow: 0 12px 28px rgba(var(--primary-rgb),.35);
+        }
+        .scroll-row {
+            display: flex; gap: 2.5rem;
+            overflow-x: auto; padding: 1rem 0 3rem;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none; scrollbar-width: none;
+        }
+        .scroll-row::-webkit-scrollbar { display: none; }
+        .scroll-nav {
+            display: flex; gap: 12px;
+        }
+        .scroll-nav-btn {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.1);
+            color: rgba(255,255,255,.6); cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: .9rem; transition: all .3s;
+        }
+        .scroll-nav-btn:hover {
+            background: var(--gradient-main); color: #000;
+            border-color: transparent;
+            box-shadow: 0 8px 20px rgba(var(--primary-rgb),.3);
+        }
+
+        /* Food card */
+        .fc {
+            min-width: 320px; height: 380px;
+            position: relative; border-radius: 26px;
+            overflow: hidden; flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,.06);
+            cursor: pointer;
+            transition: all .5s cubic-bezier(.16,1,.3,1);
+        }
+        .fc:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(var(--primary-rgb),.25);
+            box-shadow: 0 40px 70px rgba(0,0,0,.6);
+        }
+        .fc img {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; z-index: 0;
+            transition: transform .7s cubic-bezier(.16,1,.3,1);
+        }
+        .fc:hover img { transform: scale(1.08); }
+        .fc-overlay {
+            position: absolute; inset: 0; z-index: 1;
+            background: linear-gradient(to top,
+                rgba(0,0,0,.95) 0%,
+                rgba(0,0,0,.55) 55%,
+                transparent 100%);
+        }
+        .fc-top {
+            position: absolute; top: 15px; left: 15px; right: 15px;
+            display: flex; justify-content: space-between; z-index: 2;
+        }
+        .fc-rating {
+            background: rgba(0,0,0,.65); backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,.1);
+            color: var(--accent-color); font-weight: 900;
+            padding: 5px 13px; border-radius: 20px; font-size: .8rem;
+        }
+        .fc-wish {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: rgba(0,0,0,.65); backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,.15);
+            color: rgba(255,255,255,.7); cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: .85rem; transition: all .3s;
+        }
+        .fc-wish:hover { background: rgba(255,71,87,.2); color: #ff4757; }
+        .fc-body {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 1.8rem 1.6rem; z-index: 2;
+        }
+        .fc-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.6rem; color: #fff; line-height: 1.1;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 10px rgba(0,0,0,.8);
+        }
+        .fc-meta {
+            display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 16px;
+        }
+        .fc-price {
+            font-size: 1.35rem; font-weight: 900;
+            color: var(--primary-color);
+        }
+        .fc-cat {
+            font-size: .68rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 2px;
+            color: rgba(255,255,255,.4);
+        }
+        .fc-actions {
+            display: flex; gap: 10px;
+        }
+        .fc-btn-order {
+            flex: 1; padding: 12px;
+            background: var(--gradient-main); color: #000;
+            border: none; border-radius: 14px;
+            font-weight: 900; font-size: .8rem;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            cursor: pointer; font-family: 'Outfit', sans-serif;
+            transition: all .3s;
+            box-shadow: 0 8px 18px rgba(var(--primary-rgb),.3);
+        }
+        .fc-btn-order:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(var(--primary-rgb),.5);
+        }
+        .fc-btn-icon {
+            width: 42px; height: 42px; border-radius: 14px;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            color: #fff; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: .9rem; transition: all .3s;
+            flex-shrink: 0;
+        }
+        .fc-btn-icon:hover {
+            background: rgba(255,255,255,.22); color: #fff;
+        }
+
+        /* ── WHY CHOOSE US ── */
+        .why-section { padding: 8rem 0 6rem; }
+        .why-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem; align-items: center;
+            margin-top: 5rem;
+        }
+        .why-visual {
+            position: relative; border-radius: 36px;
+            overflow: hidden; aspect-ratio: 4/5;
+        }
+        .why-visual img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .why-visual-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(var(--primary-rgb),.15) 0%, transparent 60%);
+        }
+        .why-badge-float {
+            position: absolute; bottom: 2rem; left: 2rem; right: 2rem;
+            background: rgba(0,0,0,.85); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 22px; padding: 2rem;
+            display: flex; gap: 2rem; align-items: center;
+        }
+        .why-badge-icon {
+            width: 56px; height: 56px; border-radius: 16px;
+            background: var(--gradient-main);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; color: #000; flex-shrink: 0;
+        }
+        .why-badge-text-label {
+            font-size: .65rem; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 3px;
+            color: rgba(255,255,255,.4); margin-bottom: 4px;
+        }
+        .why-badge-text-val {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.4rem; color: #fff;
+        }
+        .why-features {
+            display: flex; flex-direction: column; gap: 2rem;
+            margin-top: 3.5rem;
+        }
+        .why-feature {
+            display: flex; gap: 2rem; align-items: flex-start;
+            padding: 2.2rem;
+            background: rgba(255,255,255,.02);
+            border: 1px solid rgba(255,255,255,.05);
+            border-radius: 22px;
+            transition: all .4s cubic-bezier(.16,1,.3,1);
+        }
+        .why-feature:hover {
+            border-color: rgba(var(--primary-rgb),.2);
+            background: rgba(var(--primary-rgb),.03);
+            transform: translateX(8px);
+        }
+        .why-feature-icon {
+            width: 52px; height: 52px; border-radius: 16px;
+            background: rgba(var(--primary-rgb),.1);
+            border: 1px solid rgba(var(--primary-rgb),.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; color: var(--primary-color);
+            flex-shrink: 0;
+        }
+        .why-feature-title {
+            font-weight: 800; font-size: 1.05rem;
+            color: #fff; margin-bottom: 6px;
+        }
+        .why-feature-desc {
+            font-size: .9rem; color: var(--text-muted);
+            line-height: 1.7; font-weight: 300;
+        }
+
+        /* ── STATS STRIP ── */
+        .stats-strip {
+            padding: 7rem 0;
+            background: rgba(255,255,255,.01);
+            border-top: 1px solid rgba(255,255,255,.04);
+            border-bottom: 1px solid rgba(255,255,255,.04);
+        }
+        .stats-inner {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+        .stat-item {
+            text-align: center; padding: 2.5rem 2rem;
+            position: relative;
+        }
+        .stat-item:not(:last-child)::after {
+            content: '';
+            position: absolute; right: 0; top: 20%; bottom: 20%;
+            width: 1px; background: rgba(255,255,255,.05);
+        }
+        .stat-item-icon {
+            width: 52px; height: 52px; border-radius: 16px;
+            background: rgba(var(--primary-rgb),.08);
+            border: 1px solid rgba(var(--primary-rgb),.15);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: var(--primary-color);
+            margin: 0 auto 1.5rem;
+        }
+        .stat-item-val {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3.5rem; font-weight: 400;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1; margin-bottom: .6rem;
+        }
+        .stat-item-lbl {
+            font-size: .72rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 3px;
+            color: rgba(255,255,255,.3);
+        }
+
+        /* ── CTA BANNER ── */
+        .cta-section { padding: 8rem 0 10rem; }
+        .cta-card {
+            background: var(--gradient-main);
+            border-radius: 40px; padding: 6rem;
+            position: relative; overflow: hidden;
+            text-align: center;
+            box-shadow: 0 40px 80px rgba(var(--primary-rgb),.35);
+        }
+        .cta-card-bg {
+            position: absolute; right: -60px; bottom: -60px;
+            font-size: 18rem; opacity: .06; color: #000;
+            pointer-events: none; line-height: 1;
+        }
+        .cta-card-orb {
+            position: absolute; border-radius: 50%;
+            background: rgba(255,255,255,.12);
+            filter: blur(40px);
+        }
+        .cta-card-orb-a {
+            width: 300px; height: 300px;
+            top: -80px; left: -80px;
+        }
+        .cta-card-orb-b {
+            width: 200px; height: 200px;
+            bottom: -40px; right: 20%;
+        }
+        .cta-eyebrow {
+            font-size: .75rem; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 5px;
+            color: rgba(0,0,0,.5); margin-bottom: 1.5rem;
+        }
+        .cta-h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(3rem, 5vw, 5.5rem);
+            font-weight: 400; letter-spacing: -2px;
+            color: #000; margin-bottom: 1.5rem; line-height: 1;
+            position: relative; z-index: 1;
+        }
+        .cta-p {
+            font-size: 1.15rem; color: rgba(0,0,0,.65);
+            font-weight: 400; margin-bottom: 3.5rem;
+            position: relative; z-index: 1;
+        }
+        .cta-btns {
+            display: flex; gap: 1.5rem;
+            justify-content: center; flex-wrap: wrap;
+            position: relative; z-index: 1;
+        }
+        .cta-btn-primary {
+            background: #000; color: var(--primary-color);
+            padding: 18px 50px; border-radius: 50px;
+            border: none; cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900; font-size: .9rem;
+            text-transform: uppercase; letter-spacing: 2.5px;
+            text-decoration: none; display: inline-flex;
+            align-items: center; gap: 12px;
+            transition: all .35s cubic-bezier(.16,1,.3,1);
+            box-shadow: 0 15px 35px rgba(0,0,0,.3);
+        }
+        .cta-btn-primary:hover {
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 25px 50px rgba(0,0,0,.45);
+        }
+        .cta-btn-ghost {
+            background: transparent; color: rgba(0,0,0,.7);
+            padding: 18px 50px; border-radius: 50px;
+            border: 2px solid rgba(0,0,0,.25); cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800; font-size: .9rem;
+            text-transform: uppercase; letter-spacing: 2.5px;
+            text-decoration: none; display: inline-flex;
+            align-items: center; gap: 12px;
+            transition: all .35s;
+        }
+        .cta-btn-ghost:hover {
+            background: rgba(0,0,0,.1); color: #000;
+            transform: translateY(-4px);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1100px) {
+            .cat-grid { grid-template-columns: repeat(2, 1fr); }
+            .why-grid { grid-template-columns: 1fr; }
+            .why-visual { aspect-ratio: 16/9; }
+            .stats-inner { grid-template-columns: repeat(2, 1fr); }
+            .stat-item:nth-child(2)::after { display: none; }
+        }
+        @media (max-width: 768px) {
+            .hero-inner { padding: 0 2rem; padding-top: 100px; }
+            .hero-stats { gap: 30px; }
+            .home-section { padding: 0 1.5rem; }
+            .cat-grid { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+            .cta-card { padding: 4rem 2rem; border-radius: 28px; }
+            .stats-inner { grid-template-columns: repeat(2, 1fr); }
+            .stat-item::after { display: none; }
+        }
+        @media (max-width: 480px) {
+            .cat-grid { grid-template-columns: 1fr; }
+            .hero-h1 { font-size: 3.8rem; letter-spacing: -2px; }
         }
     </style>
 </head>
@@ -99,232 +704,455 @@
     <!-- Navbar -->
     <nav class="dash-nav"></nav>
 
-    <!-- Cinematic Luxe Hero -->
-    <header class="main-hero Luxe-Hero" style="height: 100vh; position: relative; overflow: hidden; display: flex; align-items: center; background: #000;">
-        <!-- Background Cinematic Image -->
-        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
-            <div class="luxe-hero-overlay" style="background: linear-gradient(to right, #0a0a0c 15%, transparent 100%);"></div>
-            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.6; filter: contrast(1.1) brightness(0.8);" alt="Gourmet Dish">
-        </div>
+    <!-- ═══════════════════════════════════════
+         HERO
+    ════════════════════════════════════════ -->
+    <header class="home-hero">
+        <img class="hero-bg-img"
+             src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop"
+             alt="Gourmet cuisine">
+        <div class="hero-left-grad"></div>
+        <div class="hero-bottom-grad"></div>
+        <div class="hero-orb hero-orb-a"></div>
+        <div class="hero-orb hero-orb-b"></div>
 
-        <div class="hero-content reveal" style="max-width: 1400px; margin: 0 auto; width: 100%; padding: 0 5rem; position: relative; z-index: 10;">
-            <div style="display: inline-block; background: rgba(var(--primary-rgb), 0.15); color: var(--primary-color); padding: 14px 35px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 3rem; border: 1px solid rgba(var(--primary-rgb), 0.3); backdrop-filter: blur(10px);">
-                ✨ The Elite Gastronomy Experience
+        <div class="hero-inner">
+            <div class="hero-badge">
+                <i class="fas fa-star"></i> The Elite Gastronomy Experience
             </div>
-            
-            <h1 style="font-size: 9rem; font-weight: 400; line-height: 0.8; margin-bottom: 3.5rem; letter-spacing: -4px; font-family: 'DM Serif Display', serif; text-shadow: 0 20px 60px rgba(0,0,0,0.5);">
-                A Symphony <br>
-                of <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Sublime</span> Flavors.
+
+            <h1 class="hero-h1">
+                A Symphony<br>
+                of <span class="grad-text">Sublime</span><br>
+                Flavours.
             </h1>
-            
-            <p style="font-size: 1.7rem; margin-bottom: 5rem; opacity: 0.8; font-weight: 300; max-width: 650px; line-height: 1.7; color: var(--text-muted); font-family: 'Outfit', sans-serif;">
-                Experience the pinnacle of culinary artistry. Over 80+ handcrafted delicacies, 
-                curated by master chefs and delivered to your sanctuary.
+
+            <p class="hero-sub">
+                Over 80+ handcrafted delicacies, curated by master chefs
+                and delivered straight to your sanctuary.
             </p>
 
-            <div class="search-bar glass-card" style="width: 100%; max-width: 700px; padding: 0.8rem; border-radius: 30px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; box-shadow: 0 30px 80px rgba(0,0,0,0.6); backdrop-filter: blur(25px);">
-                <div style="flex: 1; display: flex; align-items: center; padding-left: 2rem;">
-                    <i class="fas fa-search" style="font-size: 1.3rem; color: var(--primary-color); opacity: 0.9;"></i>
-                    <input type="text" id="searchInput" placeholder="Search for your next obsession..." style="background: transparent; border: none; padding: 20px 25px; font-size: 1.2rem; color: white; width: 100%; outline: none; font-weight: 500; font-family: 'Outfit', sans-serif;">
+            <div class="hero-search" id="heroSearchBar">
+                <div class="hero-search-icon">
+                    <i class="fas fa-search"></i>
                 </div>
-                <button id="heroSearchBtn" class="btn-primary" style="padding: 22px 55px; border-radius: 25px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; font-size: 0.95rem; background: var(--gradient-main); color: #000; box-shadow: 0 15px 35px rgba(var(--primary-rgb), 0.4); transition: 0.4s; cursor: pointer;" onmouseover="this.style.transform='scale(1.05) translateY(-3px)'" onmouseout="this.style.transform='scale(1) translateY(0)'">
-                    Discover <i class="fas fa-arrow-right" style="margin-left: 12px;"></i>
+                <input type="text" id="searchInput"
+                       placeholder="Search your next obsession…">
+                <button class="hero-search-btn" id="heroSearchBtn">
+                    Discover <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
 
-            <div style="margin-top: 6rem; display: flex; gap: 80px; align-items: center;">
-                <div style="display: flex; flex-direction: column;">
-                    <span style="font-size: 3rem; font-weight: 400; font-family: 'DM Serif Display', serif; color: var(--accent-color); line-height: 1;">4.9 ★</span>
-                    <span style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-muted); font-weight: 700; margin-top: 8px;">Elite Preference</span>
+            <div class="hero-stats">
+                <div>
+                    <div class="hero-stat-val" id="heroStatsOrders">2k+</div>
+                    <div class="hero-stat-lbl">Orders Fulfilled</div>
                 </div>
-                <div style="width: 1px; height: 60px; background: rgba(255,255,255,0.1);"></div>
-                <div style="display: flex; flex-direction: column;">
-                    <span style="font-size: 3rem; font-weight: 400; font-family: 'DM Serif Display', serif; color: var(--accent-color); line-height: 1;">70+</span>
-                    <span style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-muted); font-weight: 700; margin-top: 8px;">Masterpiece Varieties</span>
+                <div class="hero-stat-sep"></div>
+                <div>
+                    <div class="hero-stat-val">4.9 ★</div>
+                    <div class="hero-stat-lbl">Elite Preference</div>
+                </div>
+                <div class="hero-stat-sep"></div>
+                <div>
+                    <div class="hero-stat-val">80+</div>
+                    <div class="hero-stat-lbl">Masterpiece Dishes</div>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="dashboard-container" style="padding-top: 10rem;">
-        
-        <!-- Quick Variety Access -->
-        <section class="reveal" style="margin-bottom: 10rem; animation-delay: 0.2s;">
-            <div style="text-align: center; margin-bottom: 5rem;">
-                <span style="background: rgba(var(--primary-rgb), 0.1); color: var(--primary-color); padding: 12px 35px; border-radius: 50px; font-weight: 900; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 4px; border: 1px solid rgba(var(--primary-rgb), 0.2);">
-                    <i class="fas fa-fire-alt" style="margin-right: 12px;"></i> Haute Categories
-                </span>
-            </div>
-            <div id="categoryPills" style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-                <button class="filter-pill active" onclick="location.href='menu.html'">The Full Menu</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Indian'">Indian</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=American'">American</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Chinese'">Chinese</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Korean'">Korean</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Japanese'">Japanese</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Ice%20Creams'">Ice Cream</button>
-                <button class="filter-pill" onclick="location.href='menu.html?category=Desserts'">Dessert</button>
+    <!-- ═══════════════════════════════════════
+         MARQUEE
+    ════════════════════════════════════════ -->
+    <div class="marquee-section">
+        <div class="marquee-track" id="marqueeTrack">
+            <!-- duplicated for seamless loop -->
+        </div>
+    </div>
+
+    <main>
+
+        <!-- ═══════════════════════════════════════
+             CUISINE CATEGORIES
+        ════════════════════════════════════════ -->
+        <section class="cat-section">
+            <div class="home-section">
+                <div class="cat-header">
+                    <div>
+                        <div class="section-eyebrow">
+                            <i class="fas fa-fire-alt"></i> Haute Categories
+                        </div>
+                        <h2 class="section-h2">
+                            Explore Every<br>
+                            <span class="grad">Culinary World</span>
+                        </h2>
+                    </div>
+                    <p class="section-desc">
+                        Seven distinct cuisine universes, each with its own story,
+                        tradition, and unforgettable flavour.
+                    </p>
+                </div>
+
+                <div class="cat-grid" id="catGrid">
+                    <!-- Populated by JS -->
+                </div>
             </div>
         </section>
 
-        <!-- Category Showcases -->
-        <div id="varietyShowcase">
-            <!-- Dynamically Loaded Sections -->
+        <!-- ═══════════════════════════════════════
+             FOOD SHOWCASE — per category
+        ════════════════════════════════════════ -->
+        <section class="showcase-section">
+            <div class="home-section">
+                <div id="varietyShowcase">
+                    <div style="text-align:center;padding:8rem 0;">
+                        <div style="width:56px;height:56px;border:3px solid rgba(255,255,255,.06);border-top-color:var(--primary-color);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 2rem;"></div>
+                        <p style="color:var(--text-muted);font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:4px;">Curating Excellence…</p>
+                    </div>
+                    <style>@keyframes spin{to{transform:rotate(360deg);}}</style>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             STATS STRIP
+        ════════════════════════════════════════ -->
+        <div class="stats-strip">
+            <div class="home-section">
+                <div class="stats-inner">
+                    <div class="stat-item">
+                        <div class="stat-item-icon"><i class="fas fa-shopping-bag"></i></div>
+                        <div class="stat-item-val" data-count="2000">0</div>
+                        <div class="stat-item-lbl">Orders Delivered</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-icon"><i class="fas fa-utensils"></i></div>
+                        <div class="stat-item-val" data-count="80">0</div>
+                        <div class="stat-item-lbl">Signature Dishes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-icon"><i class="fas fa-star"></i></div>
+                        <div class="stat-item-val" data-count="4.9">0</div>
+                        <div class="stat-item-lbl">Average Rating</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-item-val" data-count="30">0</div>
+                        <div class="stat-item-lbl">Min Delivery Time</div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- ═══════════════════════════════════════
+             WHY CHOOSE US
+        ════════════════════════════════════════ -->
+        <section class="why-section">
+            <div class="home-section">
+                <div style="text-align:center;margin-bottom:1rem;">
+                    <div class="section-eyebrow" style="display:inline-flex;">
+                        <i class="fas fa-gem"></i> The Crave Difference
+                    </div>
+                </div>
+                <h2 class="section-h2" style="text-align:center;margin-bottom:.5rem;">
+                    Why <span class="grad">Connoisseurs</span> Choose Us
+                </h2>
+                <p class="section-desc" style="text-align:center;margin:0 auto;">
+                    We don't just deliver food. We curate an experience,
+                    every single time.
+                </p>
+
+                <div class="why-grid">
+                    <!-- Visual side -->
+                    <div class="why-visual reveal">
+                        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1974&auto=format&fit=crop"
+                             alt="Chef cooking">
+                        <div class="why-visual-overlay"></div>
+                        <div class="why-badge-float">
+                            <div class="why-badge-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div>
+                                <div class="why-badge-text-label">Active Members</div>
+                                <div class="why-badge-text-val">Luxe Circle</div>
+                            </div>
+                            <div style="margin-left:auto;text-align:right;">
+                                <div class="why-badge-text-label">Rating</div>
+                                <div class="why-badge-text-val" style="color:var(--primary-color);">4.9 ★</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Features side -->
+                    <div>
+                        <div class="why-features">
+                            <div class="why-feature reveal">
+                                <div class="why-feature-icon"><i class="fas fa-bolt"></i></div>
+                                <div>
+                                    <div class="why-feature-title">Lightning-Fast Delivery</div>
+                                    <div class="why-feature-desc">From our kitchen to your door in under 30 minutes. We treat every order with the urgency it deserves.</div>
+                                </div>
+                            </div>
+                            <div class="why-feature reveal" style="animation-delay:.1s;">
+                                <div class="why-feature-icon"><i class="fas fa-award"></i></div>
+                                <div>
+                                    <div class="why-feature-title">Master-Crafted Recipes</div>
+                                    <div class="why-feature-desc">Each dish is the result of years of culinary mastery, using only the finest, freshest ingredients sourced daily.</div>
+                                </div>
+                            </div>
+                            <div class="why-feature reveal" style="animation-delay:.2s;">
+                                <div class="why-feature-icon"><i class="fas fa-lock"></i></div>
+                                <div>
+                                    <div class="why-feature-title">Secure & Seamless</div>
+                                    <div class="why-feature-desc">Premium end-to-end ordering with real-time tracking, OTP-secured login, and instant order confirmations.</div>
+                                </div>
+                            </div>
+                            <div class="why-feature reveal" style="animation-delay:.3s;">
+                                <div class="why-feature-icon"><i class="fas fa-crown"></i></div>
+                                <div>
+                                    <div class="why-feature-title">Exclusive Luxe Rewards</div>
+                                    <div class="why-feature-desc">Earn privilege points on every order and unlock tiers — from Elite to Platinum — for exclusive perks.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             CTA BANNER
+        ════════════════════════════════════════ -->
+        <section class="cta-section">
+            <div class="home-section">
+                <div class="cta-card">
+                    <div class="cta-card-orb cta-card-orb-a"></div>
+                    <div class="cta-card-orb cta-card-orb-b"></div>
+                    <i class="fas fa-utensils cta-card-bg"></i>
+                    <div class="cta-eyebrow">Ready to Indulge?</div>
+                    <h2 class="cta-h2">Your Next Obsession<br>Is One Click Away</h2>
+                    <p class="cta-p">Browse 80+ handcrafted dishes. Add to cart. Receive in style.</p>
+                    <div class="cta-btns">
+                        <a href="menu.html" class="cta-btn-primary">
+                            <i class="fas fa-utensils"></i> Explore the Menu
+                        </a>
+                        <a href="offers.html" class="cta-btn-ghost">
+                            <i class="fas fa-tag"></i> View Offers
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     </main>
 
     <div id="footerContainer"></div>
-
+    <div id="toastContainer"></div>
 
     <script src="script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const session = JSON.parse(localStorage.getItem('user_session'));
-            if (!session) { window.location.replace('signin.html'); return; }
+    document.addEventListener('DOMContentLoaded', () => {
 
-            const categories = ['Indian', 'American', 'Chinese', 'Korean', 'Japanese', 'Ice Creams', 'Desserts'];
-            const showcase = document.getElementById('varietyShowcase');
+        // Auth guard
+        const session = JSON.parse(localStorage.getItem('user_session'));
+        if (!session) { window.location.replace('signin.html'); return; }
 
-            async function loadVarietyShowcase() {
-                showcase.innerHTML = '<div style="text-align:center; padding: 10rem;"><i class="fas fa-spinner fa-spin fa-3x" style="color:var(--primary-color)"></i><p style="margin-top:20px; font-weight:500; opacity:0.6; letter-spacing:2px; text-transform:uppercase;">Curating Excellence...</p></div>';
-                for (const cat of categories) {
-                    try {
-                        const res = await fetch(`api/foods.php?action=category&category=${encodeURIComponent(cat)}`);
-                        const data = await res.json();
-                        
-                        if (data.success && data.data.length > 0) {
-                            if (showcase.querySelector('.fa-spinner')) showcase.innerHTML = '';
-                            const section = document.createElement('section');
-                            section.className = 'category-showcase';
-                            
-                            section.innerHTML = `
-                                <div class="category-header">
-                                    <h2>${cat} <span style="background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Selection</span></h2>
-                                    <div style="display: flex; gap: 15px; align-items: center;">
-                                        <button onclick="document.getElementById('scroll-${cat}').scrollBy({left: -380, behavior: 'smooth'})" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.background='var(--primary-color)';this.style.color='#000';" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='white';"><i class="fas fa-chevron-left"></i></button>
-                                        <button onclick="document.getElementById('scroll-${cat}').scrollBy({left: 380, behavior: 'smooth'})" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.background='var(--primary-color)';this.style.color='#000';" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='white';"><i class="fas fa-chevron-right"></i></button>
-                                        <a href="menu.html?category=${cat}" class="view-all-btn" style="margin-left: 10px;">Discover All <i class="fas fa-chevron-right"></i></a>
-                                    </div>
-                                </div>
-                                <div class="horizontal-scroll" id="scroll-${cat}">
-                                    ${data.data.slice(0, 5).map(food => {
-                                        const wishlist = window.getWishlist ? window.getWishlist() : [];
-                                        const inWishlist = wishlist.some(item => item.name === food.name);
-                                        return `
-                                        <div class="food-card scroll-card premium-card">
-                                            <img src="${food.image_url}" alt="${food.name}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; border-radius: inherit; pointer-events: none;">
-                                            
-                                            <div style="position: absolute; top: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; z-index: 2;">
-                                                <div class="badge-veg" style="background: rgba(0,0,0,0.6); color: var(--accent-color); font-weight: 800; padding: 5px 12px; border-radius: 20px; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem;">
-                                                    ${food.rating} ★
-                                                </div>
-                                                <button onclick="viewPicture('${food.image_url}', '${food.name.replace(/'/g, "\\'")}')" style="background: rgba(0,0,0,0.6); color: white; border: 1px solid rgba(255,255,255,0.2); width: 35px; height: 35px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(5px); transition: 0.3s; display: flex; align-items: center; justify-content: center;" title="View Picture">
-                                                    <i class="fas fa-expand"></i>
-                                                </button>
-                                            </div>
+        // ── Search ──
+        const searchInput = document.getElementById('searchInput');
+        const heroSearchBtn = document.getElementById('heroSearchBtn');
+        function executeSearch() {
+            const q = searchInput.value.trim();
+            if (q) window.location.href = `menu.html?search=${encodeURIComponent(q)}`;
+        }
+        heroSearchBtn.addEventListener('click', executeSearch);
+        searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') executeSearch(); });
 
-                                            <div class="card-overlay" style="position: relative; z-index: 2; padding: 2rem 1.2rem 1.2rem;">
-                                                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
-                                                    <h3 class="food-name" style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: white; line-height: 1.1; text-shadow: 0 2px 10px rgba(0,0,0,0.8); max-width: 70%; margin: 0;">${food.name}</h3>
-                                                    <span class="price-tag" style="font-size: 1.3rem; color: var(--primary-color); font-weight: 900; text-shadow: 0 2px 10px rgba(0,0,0,0.8); margin: 0;">₹${food.price}</span>
-                                                </div>
-                                                <div style="display: flex; gap: 8px; justify-content: space-between; align-items: center;">
-                                                    <button class="btn-primary" onclick='orderNowFromData(${JSON.stringify(food).replace(/'/g, "&apos;")})' style="flex: 1; background: var(--gradient-main); color: black; border: none; padding: 12px; border-radius: 12px; font-weight: 900; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 5px 15px rgba(var(--primary-rgb),0.3); cursor: pointer; transition: 0.3s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-                                                        Order Now
-                                                    </button>
-                                                    <button class="add-btn" onclick='addToCart(${JSON.stringify(food).replace(/'/g, "&apos;")}, this)' style="width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: white; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); flex-shrink: 0;" title="Add to Cart">
-                                                        <i class="fas fa-cart-plus"></i>
-                                                    </button>
-                                                    <button class="wishlist-btn" onclick='toggleWishlist(${JSON.stringify(food).replace(/'/g, "&apos;")}, this)' style="width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: white; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); flex-shrink: 0;" title="Wishlist">
-                                                        <i class="${inWishlist ? 'fas' : 'far'} fa-heart" style="${inWishlist ? 'color: #ff4757;' : ''}"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    `;
-                                    }).join('')}
-                                </div>
-                            `;
-                            showcase.appendChild(section);
-                        }
-                    } catch (err) { console.error(err); }
-                }
-            }
-
-            loadVarietyShowcase();
-
-            window.orderNowFromData = (food) => {
-                localStorage.setItem('quick_order_food', JSON.stringify(food));
-                window.location.href = 'menu.html?instant_order=true';
-            };
-
-            // Search logic
-            const searchInput = document.getElementById('searchInput');
-            const heroSearchBtn = document.getElementById('heroSearchBtn');
-
-            function executeSearch() {
-                const q = searchInput.value.trim();
-                if (q) window.location.href = `menu.html?search=${encodeURIComponent(q)}`;
-            }
-
-            if (heroSearchBtn) heroSearchBtn.addEventListener('click', executeSearch);
-            if (searchInput) searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') executeSearch();
-            });
-
-            // Interactive functions
-            window.viewPicture = function(url, name) {
-                const modal = document.createElement('div');
-                modal.style.position = 'fixed';
-                modal.style.top = '0';
-                modal.style.left = '0';
-                modal.style.width = '100%';
-                modal.style.height = '100%';
-                modal.style.background = 'rgba(0,0,0,0.9)';
-                modal.style.zIndex = '9999';
-                modal.style.display = 'flex';
-                modal.style.flexDirection = 'column';
-                modal.style.alignItems = 'center';
-                modal.style.justifyContent = 'center';
-                modal.style.backdropFilter = 'blur(10px)';
-                modal.style.cursor = 'pointer';
-                modal.style.animation = 'fadeIn 0.3s ease';
-                modal.onclick = () => document.body.removeChild(modal);
-
-                const img = document.createElement('img');
-                img.src = url;
-                img.style.maxWidth = '90%';
-                modal.style.maxHeight = '80%';
-                img.style.borderRadius = '20px';
-                img.style.boxShadow = '0 30px 60px rgba(0,0,0,0.8)';
-                img.style.objectFit = 'contain';
-
-                const title = document.createElement('h3');
-                title.textContent = name;
-                title.style.color = 'white';
-                title.style.marginTop = '2rem';
-                title.style.fontFamily = "'DM Serif Display', serif";
-                title.style.fontSize = '2rem';
-                title.style.letterSpacing = '1px';
-
-                const closeBtn = document.createElement('button');
-                closeBtn.innerHTML = '<i class="fas fa-times"></i>';
-                closeBtn.style.position = 'absolute';
-                closeBtn.style.top = '40px';
-                closeBtn.style.right = '40px';
-                closeBtn.style.background = 'transparent';
-                closeBtn.style.color = 'white';
-                closeBtn.style.border = 'none';
-                closeBtn.style.fontSize = '2rem';
-                closeBtn.style.cursor = 'pointer';
-
-                modal.appendChild(closeBtn);
-                modal.appendChild(img);
-                modal.appendChild(title);
-                document.body.appendChild(modal);
-            };
+        // ── Marquee ──
+        const marqueeItems = [
+            '🍕 Italian', '🍛 Indian', '🍣 Japanese',
+            '🍔 American', '🥢 Chinese', '🌮 Mexican',
+            '🍦 Desserts', '🍦 Ice Cream', '⭐ 4.9 Rated',
+            '🚀 30 Min Delivery', '👑 Luxe Rewards'
+        ];
+        const track = document.getElementById('marqueeTrack');
+        // duplicate for seamless loop
+        [...marqueeItems, ...marqueeItems].forEach(txt => {
+            const el = document.createElement('span');
+            el.className = 'marquee-item';
+            el.innerHTML = `<span class="dot"></span>${txt}`;
+            track.appendChild(el);
         });
+
+        // ── Category Grid ──
+        const cats = [
+            { name: 'Indian',     emoji: '🍛', img: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=800&auto=format&fit=crop', count: '18 Dishes' },
+            { name: 'American',   emoji: '🍔', img: 'https://images.unsplash.com/photo-1550317138-10000687a72b?q=80&w=800&auto=format&fit=crop', count: '14 Dishes' },
+            { name: 'Japanese',   emoji: '🍣', img: 'https://images.unsplash.com/photo-1617196034183-421b4040ed20?q=80&w=800&auto=format&fit=crop', count: '12 Dishes' },
+            { name: 'Chinese',    emoji: '🥢', img: 'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?q=80&w=800&auto=format&fit=crop', count: '10 Dishes' },
+            { name: 'Korean',     emoji: '🥘', img: 'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?q=80&w=800&auto=format&fit=crop', count: '8 Dishes' },
+            { name: 'Ice Creams', emoji: '🍦', img: 'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?q=80&w=800&auto=format&fit=crop', count: '10 Dishes' },
+            { name: 'Desserts',   emoji: '🎂', img: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=800&auto=format&fit=crop', count: '10 Dishes' },
+        ];
+
+        const catGrid = document.getElementById('catGrid');
+        cats.forEach((c, i) => {
+            const el = document.createElement('a');
+            el.href = `menu.html?category=${encodeURIComponent(c.name)}`;
+            el.className = 'cat-card reveal';
+            el.style.animationDelay = `${i * 0.07}s`;
+            el.innerHTML = `
+                <img src="${c.img}" alt="${c.name}" loading="lazy">
+                <div class="cat-card-overlay"></div>
+                <div class="cat-card-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="cat-card-body">
+                    <span class="cat-card-flag">${c.emoji} Cuisine</span>
+                    <div class="cat-card-name">${c.name}</div>
+                    <div class="cat-card-count">${c.count}</div>
+                </div>
+            `;
+            catGrid.appendChild(el);
+        });
+
+        // ── Animated Stats ──
+        function animateStat(el) {
+            const target = parseFloat(el.dataset.count);
+            const isDecimal = target % 1 !== 0;
+            const duration = 1600;
+            const start = performance.now();
+            const suffix = el.closest('.stat-item').querySelector('.stat-item-lbl').textContent.includes('Min') ? 'min' : (target >= 1000 ? '+' : (isDecimal ? '' : '+'));
+            function update(now) {
+                const pct = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - pct, 3);
+                const val = from + (target - from) * eased;
+                el.textContent = isDecimal ? val.toFixed(1) : Math.round(val) + suffix;
+                if (pct < 1) requestAnimationFrame(update);
+            }
+            const from = 0;
+            requestAnimationFrame(update);
+        }
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.querySelectorAll('.stat-item-val').forEach(animateStat);
+                    statsObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        const statsStrip = document.querySelector('.stats-strip');
+        if (statsStrip) statsObserver.observe(statsStrip);
+
+        // ── Reveal on scroll ──
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.style.opacity = '1';
+                    e.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(28px)';
+            el.style.transition = 'opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1)';
+            revealObserver.observe(el);
+        });
+
+        // ── Food Showcase ──
+        const categories = ['Indian', 'American', 'Chinese', 'Korean', 'Japanese', 'Ice Creams', 'Desserts'];
+        const showcase = document.getElementById('varietyShowcase');
+
+        window.orderNowFromData = (food) => {
+            localStorage.setItem('quick_order_food', JSON.stringify(food));
+            window.location.href = 'menu.html?instant_order=true';
+        };
+
+        async function loadShowcase() {
+            showcase.innerHTML = '';
+            for (const cat of categories) {
+                try {
+                    const res  = await fetch(`api/foods.php?action=category&category=${encodeURIComponent(cat)}`);
+                    const data = await res.json();
+                    if (!data.success || !data.data.length) continue;
+
+                    const sec = document.createElement('section');
+                    sec.style.cssText = 'margin-bottom:8rem;';
+
+                    const scrollId = `scroll-${cat.replace(/\s+/g, '-')}`;
+                    sec.innerHTML = `
+                        <div class="showcase-header">
+                            <div>
+                                <div class="section-eyebrow" style="margin-bottom:1rem;">
+                                    <i class="fas fa-utensils"></i> ${cat}
+                                </div>
+                                <h2 class="section-h2">
+                                    ${cat} <span class="grad">Selection</span>
+                                </h2>
+                            </div>
+                            <div style="display:flex;align-items:center;gap:1.5rem;">
+                                <div class="scroll-nav">
+                                    <button class="scroll-nav-btn" onclick="document.getElementById('${scrollId}').scrollBy({left:-360,behavior:'smooth'})">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button class="scroll-nav-btn" onclick="document.getElementById('${scrollId}').scrollBy({left:360,behavior:'smooth'})">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <a href="menu.html?category=${encodeURIComponent(cat)}" class="view-all-link">
+                                    Discover All <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="scroll-row" id="${scrollId}">
+                            ${data.data.slice(0, 6).map(food => {
+                                const wish = window.getWishlist ? window.getWishlist() : [];
+                                const inWish = wish.some(i => i.name === food.name);
+                                const fd = JSON.stringify(food).replace(/'/g, '&apos;');
+                                return `
+                                <div class="fc">
+                                    <img src="${food.image_url}" alt="${food.name}" loading="lazy">
+                                    <div class="fc-overlay"></div>
+                                    <div class="fc-top">
+                                        <span class="fc-rating">${food.rating} ★</span>
+                                        <button class="fc-wish" onclick='toggleWishlist(${fd}, this)' title="Wishlist">
+                                            <i class="${inWish ? 'fas' : 'far'} fa-heart" style="${inWish ? 'color:#ff4757;' : ''}"></i>
+                                        </button>
+                                    </div>
+                                    <div class="fc-body">
+                                        <div class="fc-name">${food.name}</div>
+                                        <div class="fc-meta">
+                                            <span class="fc-price">₹${food.price}</span>
+                                            <span class="fc-cat">${food.category || cat}</span>
+                                        </div>
+                                        <div class="fc-actions">
+                                            <button class="fc-btn-order" onclick='orderNowFromData(${fd})'>
+                                                Order Now
+                                            </button>
+                                            <button class="fc-btn-icon" onclick='addToCart(${fd}, this)' title="Add to Cart">
+                                                <i class="fas fa-cart-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            }).join('')}
+                        </div>
+                    `;
+                    showcase.appendChild(sec);
+                } catch (err) { console.error(err); }
+            }
+
+            if (!showcase.children.length) {
+                showcase.innerHTML = `
+                    <div style="text-align:center;padding:8rem 0;color:var(--text-muted);">
+                        <i class="fas fa-satellite-dish" style="font-size:4rem;opacity:.15;margin-bottom:2rem;display:block;"></i>
+                        <p style="font-size:.9rem;font-weight:800;text-transform:uppercase;letter-spacing:4px;">Menu loading — make sure XAMPP is running.</p>
+                    </div>`;
+            }
+        }
+
+        loadShowcase();
+    });
     </script>
 </body>
 </html>
