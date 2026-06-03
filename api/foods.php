@@ -12,8 +12,17 @@ try {
     }
 
     // Auto-seed or re-seed the foods table if it has less than the required 70 items
+    // Version 2: force re-seed if images haven't been updated yet
     $count = $conn->query("SELECT COUNT(*) FROM foods")->fetchColumn();
-    if ((int)$count < 70) {
+    $needsReseed = (int)$count < 70;
+    if (!$needsReseed) {
+        // Check if images use the new unique URLs (look for the new vanilla ice cream URL)
+        $sampleCheck = $conn->query("SELECT image_url FROM foods WHERE name='Vanilla Gold Scoop' LIMIT 1")->fetchColumn();
+        if ($sampleCheck && strpos($sampleCheck, 'photo-1560008581') === false) {
+            $needsReseed = true;
+        }
+    }
+    if ($needsReseed) {
         $conn->exec("TRUNCATE TABLE foods");
         require_once '../food_data.php';
         $insert = $conn->prepare(

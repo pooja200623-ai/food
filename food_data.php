@@ -1,87 +1,290 @@
 <?php
 $global_foods = [
-    // Indian (10 items)
-    ['name'=>'Chicken Biryani', 'category'=>'Indian', 'price'=>320, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1589187151032-573a91317445?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'30-40 min', 'description'=>'Aromatic basmati rice cooked with tender chicken and authentic spices.'],
-    ['name'=>'Paneer Butter Masala', 'category'=>'Indian', 'price'=>280, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1601050638917-3d843703d987?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-35 min', 'description'=>'Cottage cheese cubes cooked in a rich, creamy tomato gravy.'],
-    ['name'=>'Tandoori Chicken', 'category'=>'Indian', 'price'=>350, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1603894584714-74780708892d?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'30-40 min', 'description'=>'Classic Indian dish of chicken marinated in yogurt and spices.'],
-    ['name'=>'Mutton Rogan Josh', 'category'=>'Indian', 'price'=>450, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1585932231552-29995856a441?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'40-50 min', 'description'=>'Aromatic lamb dish of Persian origin, staple of Kashmiri cuisine.'],
-    ['name'=>'Dal Makhani', 'category'=>'Indian', 'price'=>220, 'rating'=>4.6, 'image_url'=>'https://images.unsplash.com/photo-1589112106528-dacd82e18b8c?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-30 min', 'description'=>'Slow cooked black lentils with butter and cream.'],
-    ['name'=>'Masala Dosa', 'category'=>'Indian', 'price'=>150, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1601050638911-3d843703d987?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-25 min', 'description'=>'Thin pancake originating from South India, made from a fermented batter.'],
-    ['name'=>'Chole Bhature', 'category'=>'Indian', 'price'=>180, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1601050638917-3d843703d987?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-30 min', 'description'=>'Spicy chickpea curry served with fried bread.'],
-    ['name'=>'Palak Paneer', 'category'=>'Indian', 'price'=>260, 'rating'=>4.5, 'image_url'=>'https://images.unsplash.com/photo-1601050638917-3d843703d987?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-35 min', 'description'=>'Paneer in a thick paste made from puréed spinach.'],
-    ['name'=>'Samosa Chaat', 'category'=>'Indian', 'price'=>120, 'rating'=>4.6, 'image_url'=>'https://images.unsplash.com/photo-1601050638911-3d843703d987?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Crushed samosas topped with yogurt, chutneys, and spices.'],
-    ['name'=>'Butter Chicken', 'category'=>'Indian', 'price'=>340, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1601050638911-3d843703d987?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'30-40 min', 'description'=>'Tender chicken pieces in a mild, sweet, and creamy tomato sauce.'],
+    // ─── INDIAN (10 items) ────────────────────────────────────────────────────
+    ['name'=>'Chicken Biryani',       'category'=>'Indian', 'price'=>320, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1589187151032-573a91317445?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'30-40 min', 'description'=>'Aromatic basmati rice cooked with tender chicken and authentic spices.'],
 
-    // American (10 items)
-    ['name'=>'Classic Cheeseburger', 'category'=>'American', 'price'=>199, 'rating'=>4.6, 'image_url'=>'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-25 min', 'description'=>'Juicy beef patty with melted cheddar, lettuce, and tomato.'],
-    ['name'=>'BBQ Pork Ribs', 'category'=>'American', 'price'=>549, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'35-40 min', 'description'=>'Slow-cooked ribs glazed with smoky barbecue sauce.'],
-    ['name'=>'Mac and Cheese', 'category'=>'American', 'price'=>250, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1631130362583-e94e753f719d?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-30 min', 'description'=>'Creamy, cheesy baked macaroni pasta comfort food.'],
-    ['name'=>'Buffalo Wings', 'category'=>'American', 'price'=>280, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-35 min', 'description'=>'Spicy, deep-fried chicken wings served with blue cheese dip.'],
-    ['name'=>'Philly Cheesesteak', 'category'=>'American', 'price'=>350, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-30 min', 'description'=>'Thinly sliced pieces of beefsteak and melted cheese in a hoagie roll.'],
-    ['name'=>'Hot Dog', 'category'=>'American', 'price'=>150, 'rating'=>4.5, 'image_url'=>'https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Classic grilled hot dog served in a soft bun.'],
-    ['name'=>'Steakhouse Burger', 'category'=>'American', 'price'=>320, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-35 min', 'description'=>'Thick beef patty topped with bacon, onion rings, and BBQ sauce.'],
-    ['name'=>'Chicken Tenders', 'category'=>'American', 'price'=>220, 'rating'=>4.6, 'image_url'=>'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-25 min', 'description'=>'Crispy fried breaded chicken strips with dipping sauce.'],
-    ['name'=>'New York Strip', 'category'=>'American', 'price'=>850, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'35-45 min', 'description'=>'Premium cut steak grilled to your preference.'],
-    ['name'=>'Clam Chowder', 'category'=>'American', 'price'=>290, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-25 min', 'description'=>'Rich and creamy seafood soup.'],
+    ['name'=>'Paneer Butter Masala',  'category'=>'Indian', 'price'=>280, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1601050638917-3d843703d987?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-35 min', 'description'=>'Cottage cheese cubes cooked in a rich, creamy tomato gravy.'],
 
-    // Chinese (10 items)
-    ['name'=>'Steamed Momos', 'category'=>'Chinese', 'price'=>149, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-25 min', 'description'=>'Delicate dumplings filled with minced chicken and herbs.'],
-    ['name'=>'Hakka Noodles', 'category'=>'Chinese', 'price'=>199, 'rating'=>4.5, 'image_url'=>'https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-25 min', 'description'=>'Wok-tossed noodles with shredded vegetables and soy sauce.'],
-    ['name'=>'Chicken Fried Rice', 'category'=>'Chinese', 'price'=>220, 'rating'=>4.6, 'image_url'=>'https://images.unsplash.com/photo-1512058560550-42749359a767?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-25 min', 'description'=>'Classic fried rice mixed with egg, tender chicken, and veggies.'],
-    ['name'=>'Kung Pao Chicken', 'category'=>'Chinese', 'price'=>280, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'30-35 min', 'description'=>'Spicy, stir-fried Chinese dish made with cubes of chicken, peanuts.'],
-    ['name'=>'Sweet and Sour Pork', 'category'=>'Chinese', 'price'=>310, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'30-35 min', 'description'=>'Classic Chinese dish featuring crispy pork in a tangy sauce.'],
-    ['name'=>'Spring Rolls', 'category'=>'Chinese', 'price'=>160, 'rating'=>4.5, 'image_url'=>'https://images.unsplash.com/photo-1534422298391-e4f8c170db0f?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Crispy fried rolls filled with fresh julienned vegetables.'],
-    ['name'=>'Dim Sum Platter', 'category'=>'Chinese', 'price'=>350, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-35 min', 'description'=>'Assortment of premium steamed buns and dumplings.'],
-    ['name'=>'Manchurian Dry', 'category'=>'Chinese', 'price'=>210, 'rating'=>4.6, 'image_url'=>'https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-30 min', 'description'=>'Crispy vegetable balls tossed in a dark, spicy soy sauce.'],
-    ['name'=>'Schezwan Fried Rice', 'category'=>'Chinese', 'price'=>240, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1526318896980-cf78c088247c?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-25 min', 'description'=>'Fiery and spicy fried rice with Schezwan peppers and vegetables.'],
-    ['name'=>'Mapo Tofu', 'category'=>'Chinese', 'price'=>260, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-30 min', 'description'=>'Soft tofu set in a spicy, oily, and bright red sauce.'],
+    ['name'=>'Tandoori Chicken',      'category'=>'Indian', 'price'=>350, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1603894584714-74780708892d?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'30-40 min', 'description'=>'Classic Indian dish of chicken marinated in yogurt and spices, grilled in clay oven.'],
 
-    // Korean (10 items)
-    ['name'=>'Bibimbap Bowl', 'category'=>'Korean', 'price'=>420, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-30 min', 'description'=>'Warm rice topped with sauteed vegetables, chili paste, and egg.'],
-    ['name'=>'Korean Fried Chicken', 'category'=>'Korean', 'price'=>399, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1623341214825-9f4f963727da?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'30-35 min', 'description'=>'Double-fried chicken coated in a sweet and spicy sticky sauce.'],
-    ['name'=>'Tteokbokki', 'category'=>'Korean', 'price'=>350, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1583182332473-b31ba08929c8?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-30 min', 'description'=>'Simmered rice cakes in a fiery gochujang chili sauce.'],
-    ['name'=>'Kimchi Fried Rice', 'category'=>'Korean', 'price'=>280, 'rating'=>4.6, 'image_url'=>'https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-25 min', 'description'=>'Classic fried rice made with pungent, spicy fermented cabbage.'],
-    ['name'=>'Bulgogi Beef', 'category'=>'Korean', 'price'=>450, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1553163147-622ab57b51f0?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'30-40 min', 'description'=>'Thinly sliced marinated beef grilled to perfection.'],
-    ['name'=>'Japchae', 'category'=>'Korean', 'price'=>320, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1512058560550-42749359a767?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-35 min', 'description'=>'Sweet and savory stir-fried glass noodles and vegetables.'],
-    ['name'=>'Korean Corn Dog', 'category'=>'Korean', 'price'=>180, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Crispy battered hot dog coated in french fry chunks and sugar.'],
-    ['name'=>'Samgyeopsal', 'category'=>'Korean', 'price'=>500, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1541014741259-df529411b96a?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'35-45 min', 'description'=>'Thick, fatty slices of pork belly meat ready to grill.'],
-    ['name'=>'Sundubu Jjigae', 'category'=>'Korean', 'price'=>340, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-30 min', 'description'=>'Soft tofu stew with vegetables, seafood and spicy broth.'],
-    ['name'=>'Gimbap Rolls', 'category'=>'Korean', 'price'=>220, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Seaweed rice rolls filled with pickled vegetables and egg.'],
+    ['name'=>'Mutton Rogan Josh',     'category'=>'Indian', 'price'=>450, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'40-50 min', 'description'=>'Aromatic lamb dish of Persian origin, staple of Kashmiri cuisine.'],
 
-    // Japanese (10 items)
-    ['name'=>'Spicy Sushi Roll', 'category'=>'Japanese', 'price'=>399, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'40-45 min', 'description'=>'Fresh tuna mixed with spicy mayo, wrapped in seaweed.'],
-    ['name'=>'Tonkotsu Ramen', 'category'=>'Japanese', 'price'=>450, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'30-40 min', 'description'=>'Rich pork broth noodles topped with sliced pork belly and soft egg.'],
-    ['name'=>'Chicken Teriyaki', 'category'=>'Japanese', 'price'=>380, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-35 min', 'description'=>'Grilled chicken glazed in a sweet soy teriyaki sauce.'],
-    ['name'=>'Tempura Udon', 'category'=>'Japanese', 'price'=>320, 'rating'=>4.6, 'image_url'=>'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-35 min', 'description'=>'Thick wheat noodles in mild broth with crispy shrimp tempura.'],
-    ['name'=>'Takoyaki', 'category'=>'Japanese', 'price'=>250, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-25 min', 'description'=>'Ball-shaped Japanese snack filled with minced octopus.'],
-    ['name'=>'Sashimi Platter', 'category'=>'Japanese', 'price'=>550, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1558985250-27a406d64cb3?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'30-40 min', 'description'=>'Assortment of the freshest raw fish thinly sliced.'],
-    ['name'=>'Miso Soup', 'category'=>'Japanese', 'price'=>120, 'rating'=>4.5, 'image_url'=>'https://images.unsplash.com/photo-1617196034183-421b4917c92d?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Traditional Japanese soup with tofu and seaweed.'],
-    ['name'=>'Katsu Curry', 'category'=>'Japanese', 'price'=>420, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1591814468924-cafb5d1232e1?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'30-40 min', 'description'=>'Breaded, deep-fried pork cutlet served with thick Japanese curry.'],
-    ['name'=>'Unagi Don', 'category'=>'Japanese', 'price'=>650, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1562607311-4963e690066c?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-30 min', 'description'=>'Grilled eel glazed with sweet sauce over a bed of steamed rice.'],
-    ['name'=>'Shrimp Gyoza', 'category'=>'Japanese', 'price'=>280, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1582450871972-ab5ca641643d?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-25 min', 'description'=>'Delicate pan-fried dumplings filled with minced shrimp.'],
+    ['name'=>'Dal Makhani',           'category'=>'Indian', 'price'=>220, 'rating'=>4.6,
+     'image_url'=>'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-30 min', 'description'=>'Slow cooked black lentils simmered overnight with butter and cream.'],
 
-    // Ice Creams (10 items)
-    ['name'=>'Vanilla Gold Scoop', 'category'=>'Ice Creams', 'price'=>120, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'10-15 min', 'description'=>'Rich Madagascar vanilla bean ice cream served with gold flakes.'],
-    ['name'=>'Chocolate Fudge Lava Scoop', 'category'=>'Ice Creams', 'price'=>140, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'10-15 min', 'description'=>'Dark Belgian chocolate ice cream swirled with rich hot fudge.'],
-    ['name'=>'Strawberry Velvet Bliss', 'category'=>'Ice Creams', 'price'=>130, 'rating'=>4.6, 'image_url'=>'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'10-15 min', 'description'=>'Creamy strawberry ice cream with real bits of sweet field strawberries.'],
-    ['name'=>'Mango Alphonso Dream', 'category'=>'Ice Creams', 'price'=>150, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1535141123063-3bb6cdc5f57b?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'10-15 min', 'description'=>'Luscious, creamy ice cream made from premium Alphonso mango pulp.'],
-    ['name'=>'Pistachio Emerald Paradise', 'category'=>'Ice Creams', 'price'=>180, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'10-15 min', 'description'=>'Slow-churned roasted Sicilian pistachio ice cream.'],
-    ['name'=>'Caramel Macchiato Crunch', 'category'=>'Ice Creams', 'price'=>160, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'10-15 min', 'description'=>'Espresso-infused ice cream swirled with golden caramel and crunchies.'],
-    ['name'=>'Butterscotch Royal Crunch', 'category'=>'Ice Creams', 'price'=>170, 'rating'=>4.6, 'image_url'=>'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'10-15 min', 'description'=>'Rich butterscotch ice cream packed with buttery praline pecans.'],
-    ['name'=>'Black Forest Sundae Scoop', 'category'=>'Ice Creams', 'price'=>210, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Chocolate ice cream combined with dark cherries and whipped cream.'],
-    ['name'=>'Matcha Zen Forest Scoop', 'category'=>'Ice Creams', 'price'=>190, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'10-15 min', 'description'=>'Premium Japanese Uji matcha green tea ice cream.'],
-    ['name'=>'Cookie Dough Dream', 'category'=>'Ice Creams', 'price'=>200, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'10-15 min', 'description'=>'Creamy vanilla ice cream loaded with chunks of chocolate chip cookie dough.'],
+    ['name'=>'Masala Dosa',           'category'=>'Indian', 'price'=>150, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1630383249896-424e482df921?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Crispy South Indian crepe filled with spiced potato masala, served with chutneys.'],
 
-    // Desserts (10 items)
-    ['name'=>'Chocolate Lava Cake', 'category'=>'Desserts', 'price'=>149, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Rich chocolate cake with a molten chocolate center.'],
-    ['name'=>'Strawberry Cheesecake', 'category'=>'Desserts', 'price'=>179, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Classic New York style cheesecake with strawberry compote.'],
-    ['name'=>'Tiramisu', 'category'=>'Desserts', 'price'=>220, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Coffee-flavored Italian dessert with mascarpone cheese.'],
-    ['name'=>'Belgian Waffle Royale', 'category'=>'Desserts', 'price'=>190, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1527515545081-5db817172677?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-25 min', 'description'=>'Warm, fluffy waffle drizzled with maple syrup and fresh berries.'],
-    ['name'=>'Fudgy Brownie Supreme', 'category'=>'Desserts', 'price'=>180, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Fudgy chocolate brownie drizzled with rich chocolate ganache.'],
-    ['name'=>'Red Velvet Cupcake', 'category'=>'Desserts', 'price'=>110, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1527515545081-5db817172677?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Moist red velvet cake topped with rich cream cheese frosting.'],
-    ['name'=>'Apple Tatin Pie', 'category'=>'Desserts', 'price'=>240, 'rating'=>4.8, 'image_url'=>'https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'25-30 min', 'description'=>'Classic double-crust pie filled with cinnamon-spiced apples.'],
-    ['name'=>'Crème Brûlée Noir', 'category'=>'Desserts', 'price'=>280, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1516685018646-549198525c1b?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Rich custard base topped with a texturally contrasting layer of hardened caramelized sugar.'],
-    ['name'=>'Blueberry Glazed Tart', 'category'=>'Desserts', 'price'=>260, 'rating'=>4.7, 'image_url'=>'https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'20-25 min', 'description'=>'Buttery pastry shell filled with vanilla custard and fresh glazed blueberries.'],
-    ['name'=>'Luxe Macaron Collection', 'category'=>'Desserts', 'price'=>350, 'rating'=>4.9, 'image_url'=>'https://images.unsplash.com/photo-1569864358642-9d16197022c9?auto=format&fit=crop&w=800&q=80', 'delivery_time'=>'15-20 min', 'description'=>'Assortment of delicate French almond meringue cookies.'],
+    ['name'=>'Chole Bhature',         'category'=>'Indian', 'price'=>180, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-30 min', 'description'=>'Spicy chickpea curry served with soft, deep-fried puffed bread.'],
+
+    ['name'=>'Palak Paneer',          'category'=>'Indian', 'price'=>260, 'rating'=>4.5,
+     'image_url'=>'https://images.unsplash.com/photo-1618449840665-9ed506d73a34?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-35 min', 'description'=>'Paneer in a thick, velvety paste made from puréed spinach and aromatic spices.'],
+
+    ['name'=>'Samosa Chaat',          'category'=>'Indian', 'price'=>120, 'rating'=>4.6,
+     'image_url'=>'https://images.unsplash.com/photo-1601050636213-b1f9e9b3af71?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Crushed golden samosas topped with yogurt, tamarind chutney, and spices.'],
+
+    ['name'=>'Butter Chicken',        'category'=>'Indian', 'price'=>340, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1603894584714-74780708892d?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'30-40 min', 'description'=>'Tender chicken pieces slow-cooked in a mild, sweet, and creamy tomato sauce.'],
+
+    // ─── AMERICAN (10 items) ──────────────────────────────────────────────────
+    ['name'=>'Classic Cheeseburger',  'category'=>'American', 'price'=>199, 'rating'=>4.6,
+     'image_url'=>'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Juicy beef patty with melted cheddar, crisp lettuce, and fresh tomato.'],
+
+    ['name'=>'BBQ Pork Ribs',         'category'=>'American', 'price'=>549, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'35-40 min', 'description'=>'Fall-off-the-bone slow-smoked ribs glazed with signature barbecue sauce.'],
+
+    ['name'=>'Mac and Cheese',        'category'=>'American', 'price'=>250, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1543352634-99a5d50ae78e?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-30 min', 'description'=>'Ultra-creamy baked macaroni smothered in four-cheese blend, golden crust on top.'],
+
+    ['name'=>'Buffalo Wings',         'category'=>'American', 'price'=>280, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1608039829572-78524f79c4c7?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-35 min', 'description'=>'Crispy deep-fried chicken wings tossed in fiery buffalo sauce with blue cheese dip.'],
+
+    ['name'=>'Philly Cheesesteak',    'category'=>'American', 'price'=>350, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-30 min', 'description'=>'Thinly sliced ribeye steak and melted provolone cheese in a toasted hoagie roll.'],
+
+    ['name'=>'Hot Dog',               'category'=>'American', 'price'=>150, 'rating'=>4.5,
+     'image_url'=>'https://images.unsplash.com/photo-1612392062798-6b3e3e3ec0c4?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Grilled all-beef frankfurter in a soft bun with mustard and relish.'],
+
+    ['name'=>'Steakhouse Burger',     'category'=>'American', 'price'=>320, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-35 min', 'description'=>'Double smash patty loaded with bacon, caramelized onions, and smoky BBQ sauce.'],
+
+    ['name'=>'Chicken Tenders',       'category'=>'American', 'price'=>220, 'rating'=>4.6,
+     'image_url'=>'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Crispy golden-fried chicken strips served with honey mustard dipping sauce.'],
+
+    ['name'=>'New York Strip Steak',  'category'=>'American', 'price'=>850, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'35-45 min', 'description'=>'Premium dry-aged cut grilled to perfection with herb butter and roasted vegetables.'],
+
+    ['name'=>'Clam Chowder',          'category'=>'American', 'price'=>290, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Classic New England creamy seafood soup served in a sourdough bread bowl.'],
+
+    // ─── CHINESE (10 items) ───────────────────────────────────────────────────
+    ['name'=>'Steamed Momos',         'category'=>'Chinese', 'price'=>149, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Delicate steamed dumplings filled with spiced minced chicken and aromatic herbs.'],
+
+    ['name'=>'Hakka Noodles',         'category'=>'Chinese', 'price'=>199, 'rating'=>4.5,
+     'image_url'=>'https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Wok-tossed noodles with shredded colourful vegetables and seasoned soy sauce.'],
+
+    ['name'=>'Chicken Fried Rice',    'category'=>'Chinese', 'price'=>220, 'rating'=>4.6,
+     'image_url'=>'https://images.unsplash.com/photo-1512058560550-42749359a767?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Classic wok-fired rice tossed with egg, tender chicken strips, and garden vegetables.'],
+
+    ['name'=>'Kung Pao Chicken',      'category'=>'Chinese', 'price'=>280, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'30-35 min', 'description'=>'Spicy stir-fried chicken with peanuts, dried chilies, and Sichuan peppercorns.'],
+
+    ['name'=>'Sweet and Sour Pork',   'category'=>'Chinese', 'price'=>310, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'30-35 min', 'description'=>'Crispy pork pieces glazed in a vibrant sweet and sour pineapple-pepper sauce.'],
+
+    ['name'=>'Spring Rolls',          'category'=>'Chinese', 'price'=>160, 'rating'=>4.5,
+     'image_url'=>'https://images.unsplash.com/photo-1534422298391-e4f8c170db0f?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Golden-fried rolls packed with fresh julienned vegetables and glass noodles.'],
+
+    ['name'=>'Dim Sum Platter',       'category'=>'Chinese', 'price'=>350, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-35 min', 'description'=>'Chef\'s assortment of premium steamed buns, siu mai, and har gow dumplings.'],
+
+    ['name'=>'Manchurian Dry',        'category'=>'Chinese', 'price'=>210, 'rating'=>4.6,
+     'image_url'=>'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-30 min', 'description'=>'Crispy vegetable balls tossed in a dark, glossy spicy soy-ginger sauce.'],
+
+    ['name'=>'Schezwan Fried Rice',   'category'=>'Chinese', 'price'=>240, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1526318896980-cf78c088247c?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Fiery Schezwan fried rice loaded with peppers, vegetables, and bold spices.'],
+
+    ['name'=>'Mapo Tofu',             'category'=>'Chinese', 'price'=>260, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-30 min', 'description'=>'Silken tofu in a numbing, spicy Sichuan bean-paste sauce with minced pork.'],
+
+    // ─── KOREAN (10 items) ────────────────────────────────────────────────────
+    ['name'=>'Bibimbap Bowl',         'category'=>'Korean', 'price'=>420, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1553163147-622ab57b51f0?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-30 min', 'description'=>'Steamed rice topped with colourful sautéed vegetables, gochujang, and a soft egg.'],
+
+    ['name'=>'Korean Fried Chicken',  'category'=>'Korean', 'price'=>399, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'30-35 min', 'description'=>'Ultra-crispy double-fried chicken glazed in sweet, spicy, sticky yangnyeom sauce.'],
+
+    ['name'=>'Tteokbokki',            'category'=>'Korean', 'price'=>350, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1583182332473-b31ba08929c8?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-30 min', 'description'=>'Chewy rice cakes and fish cakes simmered in a fiery gochujang chili paste sauce.'],
+
+    ['name'=>'Kimchi Fried Rice',     'category'=>'Korean', 'price'=>280, 'rating'=>4.6,
+     'image_url'=>'https://images.unsplash.com/photo-1637073850010-aa3c3eb4de67?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Wok-fried rice with tangy kimchi, topped with a fried egg and sesame oil.'],
+
+    ['name'=>'Bulgogi Beef',          'category'=>'Korean', 'price'=>450, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'30-40 min', 'description'=>'Thinly sliced marinated beef char-grilled over open flame with Asian pear glaze.'],
+
+    ['name'=>'Japchae',               'category'=>'Korean', 'price'=>320, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-35 min', 'description'=>'Silky sweet potato glass noodles stir-fried with colourful vegetables and beef.'],
+
+    ['name'=>'Korean Corn Dog',       'category'=>'Korean', 'price'=>180, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1614234149834-a15b50bc1af4?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Mozzarella-stuffed hot dog coated in crispy panko batter, rolled in sugar.'],
+
+    ['name'=>'Samgyeopsal',           'category'=>'Korean', 'price'=>500, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1617196034183-421b4917c92d?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'35-45 min', 'description'=>'Thick-sliced premium pork belly grilled tableside, wrapped in sesame leaves.'],
+
+    ['name'=>'Sundubu Jjigae',        'category'=>'Korean', 'price'=>340, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1609501676725-7186f017a4b7?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-30 min', 'description'=>'Bubbling silken tofu stew with clams, vegetables, and a raw egg cracked in.'],
+
+    ['name'=>'Gimbap Rolls',          'category'=>'Korean', 'price'=>220, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Sesame-scented seaweed rice rolls filled with egg, spinach, and pickled radish.'],
+
+    // ─── JAPANESE (10 items) ──────────────────────────────────────────────────
+    ['name'=>'Spicy Tuna Sushi Roll', 'category'=>'Japanese', 'price'=>399, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'40-45 min', 'description'=>'Fresh tuna mixed with spicy sriracha mayo, rolled in nori with cucumber.'],
+
+    ['name'=>'Tonkotsu Ramen',        'category'=>'Japanese', 'price'=>450, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'30-40 min', 'description'=>'12-hour pork bone broth with thin noodles, chashu pork, and marinated soft egg.'],
+
+    ['name'=>'Chicken Teriyaki',      'category'=>'Japanese', 'price'=>380, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-35 min', 'description'=>'Grilled chicken glazed in a classic mirin-soy teriyaki sauce, served with rice.'],
+
+    ['name'=>'Tempura Udon',          'category'=>'Japanese', 'price'=>320, 'rating'=>4.6,
+     'image_url'=>'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-35 min', 'description'=>'Thick wheat noodles in delicate dashi broth topped with crispy shrimp tempura.'],
+
+    ['name'=>'Takoyaki',              'category'=>'Japanese', 'price'=>250, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Fluffy ball-shaped dumplings stuffed with octopus, drizzled with takoyaki sauce.'],
+
+    ['name'=>'Sashimi Platter',       'category'=>'Japanese', 'price'=>550, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1558985250-27a406d64cb3?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'30-40 min', 'description'=>'Chef\'s selection of the day\'s freshest salmon, tuna, and yellowtail sashimi.'],
+
+    ['name'=>'Miso Soup',             'category'=>'Japanese', 'price'=>120, 'rating'=>4.5,
+     'image_url'=>'https://images.unsplash.com/photo-1617196034183-421b4917c92d?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Warming dashi-based broth with silken tofu, wakame seaweed, and green onion.'],
+
+    ['name'=>'Katsu Curry',           'category'=>'Japanese', 'price'=>420, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1591814468924-cafb5d1232e1?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'30-40 min', 'description'=>'Panko-breaded pork cutlet served over steamed rice with rich Japanese curry sauce.'],
+
+    ['name'=>'Unagi Don',             'category'=>'Japanese', 'price'=>650, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1562607311-4963e690066c?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-30 min', 'description'=>'Lacquered grilled freshwater eel glazed with sweet tare sauce over fluffy rice.'],
+
+    ['name'=>'Shrimp Gyoza',          'category'=>'Japanese', 'price'=>280, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1582450871972-ab5ca641643d?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Pan-fried dumplings with a crispy bottom, filled with minced shrimp and cabbage.'],
+
+    // ─── ICE CREAMS (10 items) ────────────────────────────────────────────────
+    ['name'=>'Vanilla Gold Scoop',    'category'=>'Ice Creams', 'price'=>120, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1560008581-09826d1de69e?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'10-15 min', 'description'=>'Rich Madagascar vanilla bean ice cream hand-churned and served with gold flakes.'],
+
+    ['name'=>'Chocolate Fudge Lava',  'category'=>'Ice Creams', 'price'=>140, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'10-15 min', 'description'=>'Dark Belgian chocolate ice cream swirled with rivers of warm hot fudge sauce.'],
+
+    ['name'=>'Strawberry Velvet Bliss','category'=>'Ice Creams', 'price'=>130, 'rating'=>4.6,
+     'image_url'=>'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'10-15 min', 'description'=>'Creamy pink ice cream studded with whole, real sweet field strawberries.'],
+
+    ['name'=>'Mango Alphonso Dream',  'category'=>'Ice Creams', 'price'=>150, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1535141123063-3bb6cdc5f57b?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'10-15 min', 'description'=>'Luscious sorbet-like ice cream made from 100% premium Ratnagiri Alphonso mango pulp.'],
+
+    ['name'=>'Pistachio Emerald Paradise','category'=>'Ice Creams', 'price'=>180, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'10-15 min', 'description'=>'Slow-churned roasted Sicilian pistachio ice cream with whole pistachio pieces.'],
+
+    ['name'=>'Caramel Macchiato Crunch','category'=>'Ice Creams', 'price'=>160, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'10-15 min', 'description'=>'Espresso-infused ice cream swirled with golden caramel and crunchy toffee bits.'],
+
+    ['name'=>'Butterscotch Royal Crunch','category'=>'Ice Creams', 'price'=>170, 'rating'=>4.6,
+     'image_url'=>'https://images.unsplash.com/photo-1488900128323-21503983a07e?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'10-15 min', 'description'=>'Rich butterscotch ice cream packed with buttery praline pecan brittle.'],
+
+    ['name'=>'Black Forest Sundae',   'category'=>'Ice Creams', 'price'=>210, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Dark chocolate ice cream layered with brandied cherries and whipped cream.'],
+
+    ['name'=>'Matcha Zen Forest',     'category'=>'Ice Creams', 'price'=>190, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1541544537156-7627a7a4aa1c?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'10-15 min', 'description'=>'Velvety Uji ceremonial matcha green tea ice cream with sweet red bean paste.'],
+
+    ['name'=>'Cookie Dough Dream',    'category'=>'Ice Creams', 'price'=>200, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1571506165871-ee72a35bc9d4?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'10-15 min', 'description'=>'Creamy vanilla base loaded with generous chunks of edible chocolate chip cookie dough.'],
+
+    // ─── DESSERTS (10 items) ──────────────────────────────────────────────────
+    ['name'=>'Chocolate Lava Cake',   'category'=>'Desserts', 'price'=>149, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Warm rich chocolate cake with a flowing molten centre, served with vanilla gelato.'],
+
+    ['name'=>'Strawberry Cheesecake', 'category'=>'Desserts', 'price'=>179, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Classic New York style cheesecake with a silky filling and fresh strawberry compote.'],
+
+    ['name'=>'Tiramisu',              'category'=>'Desserts', 'price'=>220, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Classic Italian espresso-soaked ladyfingers layered with light mascarpone cream.'],
+
+    ['name'=>'Belgian Waffle Royale', 'category'=>'Desserts', 'price'=>190, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1522840795635-0ddd4bb3e15e?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Warm crispy-edged waffle drizzled with maple syrup, fresh berries, and whipped cream.'],
+
+    ['name'=>'Fudgy Brownie Supreme', 'category'=>'Desserts', 'price'=>180, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Dense, gooey chocolate brownie drizzled with rich dark chocolate ganache and sea salt.'],
+
+    ['name'=>'Red Velvet Cupcake',    'category'=>'Desserts', 'price'=>110, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Moist red velvet sponge topped with a generous swirl of tangy cream cheese frosting.'],
+
+    ['name'=>'Apple Tatin Pie',       'category'=>'Desserts', 'price'=>240, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-30 min', 'description'=>'Rustic caramelized upside-down apple tart with a buttery, flaky pastry crust.'],
+
+    ['name'=>'Crème Brûlée Noir',     'category'=>'Desserts', 'price'=>280, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1517244683847-7456b63c5969?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Silky vanilla custard topped with a perfectly caramelised burnt-sugar crust.'],
+
+    ['name'=>'Blueberry Glazed Tart', 'category'=>'Desserts', 'price'=>260, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Buttery pastry shell with silky vanilla custard and fresh glazed blueberries.'],
+
+    ['name'=>'Luxe Macaron Collection','category'=>'Desserts', 'price'=>350, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1569864358642-9d16197022c9?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Box of twelve delicate French almond meringue cookies in seasonal flavours.'],
 ];
 ?>
