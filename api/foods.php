@@ -11,10 +11,10 @@ try {
         throw new PDOException("Database connection failed from config: " . $db_error_message);
     }
 
-    // Auto-seed or re-seed the foods table if it has less than the required 70 items
-    // Version 2: force re-seed if images haven't been updated yet
+    // Auto-seed or re-seed the foods table if it has less than the required items from food_data.php
+    require_once __DIR__ . '/../food_data.php';
     $count = $conn->query("SELECT COUNT(*) FROM foods")->fetchColumn();
-    $needsReseed = (int)$count < 70;
+    $needsReseed = (int)$count < count($global_foods);
     if (!$needsReseed) {
         // Check if images use the new unique URLs (look for the new vanilla ice cream URL)
         $sampleCheck = $conn->query("SELECT image_url FROM foods WHERE name='Vanilla Gold Scoop' LIMIT 1")->fetchColumn();
@@ -24,7 +24,6 @@ try {
     }
     if ($needsReseed) {
         $conn->exec("TRUNCATE TABLE foods");
-        require_once '../food_data.php';
         $insert = $conn->prepare(
             "INSERT INTO foods (name, description, price, rating, category, image_url, delivery_time)
              VALUES (:name, :description, :price, :rating, :category, :image_url, :delivery_time)"
@@ -56,7 +55,7 @@ try {
 
 } catch (PDOException $e) {
     // Fallback to static data when DB is not available
-    require_once '../food_data.php';
+    require_once __DIR__ . '/../food_data.php';
 
     $fallbackFoods = [];
     foreach ($global_foods as $index => $food) {

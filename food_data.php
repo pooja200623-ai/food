@@ -1,6 +1,6 @@
 <?php
 $global_foods = [
-    // ─── INDIAN (10 items) ────────────────────────────────────────────────────
+    // ─── INDIAN (12 items) ────────────────────────────────────────────────────
     ['name'=>'Chicken Biryani',       'category'=>'Indian', 'price'=>320, 'rating'=>4.9,
      'image_url'=>'https://images.unsplash.com/photo-1589187151032-573a91317445?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'30-40 min', 'description'=>'Aromatic basmati rice cooked with tender chicken and authentic spices.'],
@@ -41,7 +41,15 @@ $global_foods = [
      'image_url'=>'https://images.unsplash.com/photo-1603894584714-74780708892d?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'30-40 min', 'description'=>'Tender chicken pieces slow-cooked in a mild, sweet, and creamy tomato sauce.'],
 
-    // ─── AMERICAN (10 items) ──────────────────────────────────────────────────
+    ['name'=>'Chicken Tikka Masala',  'category'=>'Indian', 'price'=>340, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'30-35 min', 'description'=>'Succulent chicken chunks grilled to perfection and simmered in a spiced, creamy tomato sauce.'],
+
+    ['name'=>'Vegetable Biryani',     'category'=>'Indian', 'price'=>260, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-30 min', 'description'=>'Fragrant basmati rice layered with fresh garden vegetables, saffron, and exotic spices.'],
+
+    // ─── AMERICAN (12 items) ──────────────────────────────────────────────────
     ['name'=>'Classic Cheeseburger',  'category'=>'American', 'price'=>199, 'rating'=>4.6,
      'image_url'=>'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'20-25 min', 'description'=>'Juicy beef patty with melted cheddar, crisp lettuce, and fresh tomato.'],
@@ -82,7 +90,15 @@ $global_foods = [
      'image_url'=>'https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'20-25 min', 'description'=>'Classic New England creamy seafood soup served in a sourdough bread bowl.'],
 
-    // ─── CHINESE (10 items) ───────────────────────────────────────────────────
+    ['name'=>'Pulled Pork Sandwich',  'category'=>'American', 'price'=>299, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Tender, slow-smoked pulled pork tossed in tangy BBQ sauce, served in a toasted brioche bun.'],
+
+    ['name'=>'Buttermilk Pancakes',   'category'=>'American', 'price'=>180, 'rating'=>4.6,
+     'image_url'=>'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'A stack of light, fluffy buttermilk pancakes served with rich butter and premium maple syrup.'],
+
+    // ─── CHINESE (12 items) ───────────────────────────────────────────────────
     ['name'=>'Steamed Momos',         'category'=>'Chinese', 'price'=>149, 'rating'=>4.7,
      'image_url'=>'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'20-25 min', 'description'=>'Delicate steamed dumplings filled with spiced minced chicken and aromatic herbs.'],
@@ -123,7 +139,15 @@ $global_foods = [
      'image_url'=>'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'25-30 min', 'description'=>'Silken tofu in a numbing, spicy Sichuan bean-paste sauce with minced pork.'],
 
-    // ─── KOREAN (10 items) ────────────────────────────────────────────────────
+    ['name'=>"General Tso's Chicken", 'category'=>'Chinese', 'price'=>299, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-30 min', 'description'=>'Crispy chicken pieces tossed in a sweet, savory, and slightly spicy glaze, garnished with sesame seeds.'],
+
+    ['name'=>'Hot and Sour Soup',     'category'=>'Chinese', 'price'=>150, 'rating'=>4.5,
+     'image_url'=>'https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'A classic, warming Sichuan soup with tofu, mushrooms, bamboo shoots, and a perfect balance of spice and tang.'],
+
+    // ─── KOREAN (12 items) ────────────────────────────────────────────────────
     ['name'=>'Bibimbap Bowl',         'category'=>'Korean', 'price'=>420, 'rating'=>4.8,
      'image_url'=>'https://images.unsplash.com/photo-1553163147-622ab57b51f0?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'25-30 min', 'description'=>'Steamed rice topped with colourful sautéed vegetables, gochujang, and a soft egg.'],
@@ -164,7 +188,15 @@ $global_foods = [
      'image_url'=>'https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'15-20 min', 'description'=>'Sesame-scented seaweed rice rolls filled with egg, spinach, and pickled radish.'],
 
-    // ─── JAPANESE (10 items) ──────────────────────────────────────────────────
+    ['name'=>'Kimchi Jjigae',         'category'=>'Korean', 'price'=>360, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1583182332473-b31ba08929c8?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-30 min', 'description'=>'A boiling hot, comforting stew made with fermented kimchi, tofu, pork belly, and green onions.'],
+
+    ['name'=>'Haemul Pajeon',         'category'=>'Korean', 'price'=>320, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1553163147-622ab57b51f0?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Crispy, savory Korean pancake loaded with fresh scallions, squid, shrimp, and served with a soy dipping sauce.'],
+
+    // ─── JAPANESE (12 items) ──────────────────────────────────────────────────
     ['name'=>'Spicy Tuna Sushi Roll', 'category'=>'Japanese', 'price'=>399, 'rating'=>4.8,
      'image_url'=>'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'40-45 min', 'description'=>'Fresh tuna mixed with spicy sriracha mayo, rolled in nori with cucumber.'],
@@ -205,7 +237,15 @@ $global_foods = [
      'image_url'=>'https://images.unsplash.com/photo-1582450871972-ab5ca641643d?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'20-25 min', 'description'=>'Pan-fried dumplings with a crispy bottom, filled with minced shrimp and cabbage.'],
 
-    // ─── ICE CREAMS (10 items) ────────────────────────────────────────────────
+    ['name'=>'Salmon Nigiri',         'category'=>'Japanese', 'price'=>420, 'rating'=>4.9,
+     'image_url'=>'https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'25-30 min', 'description'=>'Premium slices of fresh, melt-in-your-mouth raw salmon hand-pressed over seasoned sushi rice.'],
+
+    ['name'=>'Beef Gyudon',           'category'=>'Japanese', 'price'=>390, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'20-25 min', 'description'=>'Thinly sliced beef and sweet onions simmered in a savory dashi, soy sauce, and mirin broth over hot rice.'],
+
+    // ─── ICE CREAMS (12 items) ────────────────────────────────────────────────
     ['name'=>'Vanilla Gold Scoop',    'category'=>'Ice Creams', 'price'=>120, 'rating'=>4.7,
      'image_url'=>'https://images.unsplash.com/photo-1560008581-09826d1de69e?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'10-15 min', 'description'=>'Rich Madagascar vanilla bean ice cream hand-churned and served with gold flakes.'],
@@ -246,7 +286,15 @@ $global_foods = [
      'image_url'=>'https://images.unsplash.com/photo-1571506165871-ee72a35bc9d4?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'10-15 min', 'description'=>'Creamy vanilla base loaded with generous chunks of edible chocolate chip cookie dough.'],
 
-    // ─── DESSERTS (10 items) ──────────────────────────────────────────────────
+    ['name'=>'Mint Chocolate Chip',   'category'=>'Ice Creams', 'price'=>130, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'10-15 min', 'description'=>'Cool, refreshing organic mint ice cream loaded with shards of premium bittersweet chocolate.'],
+
+    ['name'=>'Rocky Road',            'category'=>'Ice Creams', 'price'=>140, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'10-15 min', 'description'=>'Rich, velvety chocolate ice cream folded with soft mini marshmallows and crunchy roasted almonds.'],
+
+    // ─── DESSERTS (12 items) ──────────────────────────────────────────────────
     ['name'=>'Chocolate Lava Cake',   'category'=>'Desserts', 'price'=>149, 'rating'=>4.9,
      'image_url'=>'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'15-20 min', 'description'=>'Warm rich chocolate cake with a flowing molten centre, served with vanilla gelato.'],
@@ -286,5 +334,13 @@ $global_foods = [
     ['name'=>'Luxe Macaron Collection','category'=>'Desserts', 'price'=>350, 'rating'=>4.9,
      'image_url'=>'https://images.unsplash.com/photo-1569864358642-9d16197022c9?auto=format&fit=crop&w=800&q=80',
      'delivery_time'=>'15-20 min', 'description'=>'Box of twelve delicate French almond meringue cookies in seasonal flavours.'],
+
+    ['name'=>'Vanilla Panna Cotta',   'category'=>'Desserts', 'price'=>180, 'rating'=>4.8,
+     'image_url'=>'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Silky, delicate Italian cooked cream dessert infused with real vanilla bean, topped with a fresh raspberry coulis.'],
+
+    ['name'=>'Churros con Chocolate', 'category'=>'Desserts', 'price'=>160, 'rating'=>4.7,
+     'image_url'=>'https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=800&q=80',
+     'delivery_time'=>'15-20 min', 'description'=>'Crispy, golden-fried Spanish dough pastries dusted in cinnamon sugar, served with a warm, thick dark chocolate dip.'],
 ];
 ?>
