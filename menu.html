@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css?v=13">
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         .menu-layout {
             display: block;
             margin-top: 2rem;
@@ -315,7 +318,7 @@
                     return;
                 }
 
-                let catsToLoad = targetCategory ? [targetCategory] : categories;
+                let catsToLoad = categories;
                 let isFirst = true;
 
                 for (const cat of catsToLoad) {
@@ -344,6 +347,15 @@
                             menuContainer.appendChild(section);
                         }
                     } catch (err) { console.error(err); }
+                }
+
+                if (targetCategory) {
+                    setTimeout(() => {
+                        const targetEl = document.getElementById(targetCategory);
+                        if (targetEl) {
+                            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }, 500);
                 }
             }
 
@@ -385,6 +397,17 @@
                 `;
                 }).join('');
             }
+
+            // Intercept category clicks when in search mode
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    if (searchQuery) {
+                        const targetCat = link.getAttribute('href').substring(1);
+                        window.location.href = `menu.html?category=${encodeURIComponent(targetCat)}`;
+                        e.preventDefault();
+                    }
+                });
+            });
 
             loadFullMenu();
 
