@@ -63,6 +63,16 @@
             bottom: 50px; right: 10%;
             animation: orbFloat 14s ease-in-out infinite reverse;
         }
+        .bg-blob-c {
+            position: fixed;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            filter: blur(140px); pointer-events: none; z-index: -1;
+            opacity: 0.12;
+            background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%);
+            top: 25%; right: 20%;
+            animation: orbFloat 18s ease-in-out infinite;
+        }
         @keyframes orbFloat {
             0%,100% { transform: translateY(0) scale(1); }
             50%      { transform: translateY(-30px) scale(1.06); }
@@ -85,6 +95,20 @@
             margin-bottom: 2.5rem;
             backdrop-filter: blur(10px);
             animation: fadeDown .7s ease both;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-badge::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+            animation: badgeShine 4.5s infinite linear;
+        }
+        @keyframes badgeShine {
+            0% { left: -100%; }
+            15%, 100% { left: 100%; }
         }
         @keyframes fadeDown {
             from { opacity:0; transform:translateY(-18px); }
@@ -99,10 +123,18 @@
             text-shadow: 0 20px 60px rgba(0,0,0,.6);
             animation: fadeDown .8s ease .05s both;
         }
+        @keyframes textShine {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         .hero-h1 .grad-text {
-            background: var(--gradient-main);
+            background: linear-gradient(90deg, #d4af37, #f5f6fa, #c5a880, #d4af37);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: textShine 6s linear infinite;
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.15);
         }
         .hero-sub {
             font-size: 1.25rem; font-weight: 300;
@@ -116,17 +148,19 @@
         .hero-search {
             display: flex; align-items: center;
             max-width: 680px;
-            background: rgba(255,255,255,.05);
-            border: 1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,.03);
+            border: 1px solid rgba(255,255,255,.08);
             border-radius: 30px; padding: 8px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 30px 80px rgba(0,0,0,.5);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 30px 80px rgba(0,0,0,.6);
             animation: fadeDown .8s ease .15s both;
-            transition: border-color .3s;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .hero-search:focus-within {
             border-color: rgba(var(--primary-rgb),.5);
-            box-shadow: 0 0 0 3px rgba(var(--primary-rgb),.1), 0 30px 80px rgba(0,0,0,.5);
+            box-shadow: 0 0 40px rgba(var(--primary-rgb),.2), 0 30px 80px rgba(0,0,0,.6);
+            transform: scale(1.02);
         }
         .hero-search-icon {
             padding: 0 1.5rem; color: var(--primary-color);
@@ -227,14 +261,15 @@
             position: relative; border-radius: 28px;
             overflow: hidden; cursor: pointer;
             aspect-ratio: 4/5;
-            border: 1px solid rgba(255,255,255,.06);
-            transition: all .5s cubic-bezier(.16,1,.3,1);
+            border: 1px solid rgba(255,255,255,.05);
+            transition: all .6s cubic-bezier(.16,1,.3,1);
             text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         .cat-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            border-color: rgba(var(--primary-rgb),.3);
-            box-shadow: 0 40px 70px rgba(0,0,0,.6);
+            transform: translateY(-15px) scale(1.02);
+            border-color: rgba(var(--primary-rgb),.4);
+            box-shadow: 0 40px 70px rgba(0,0,0,.8), 0 0 30px rgba(var(--primary-rgb), 0.15);
         }
         .cat-card img {
             width: 100%; height: 100%;
@@ -383,14 +418,15 @@
             min-width: 320px; height: 380px;
             position: relative; border-radius: 26px;
             overflow: hidden; flex-shrink: 0;
-            border: 1px solid rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.05);
             cursor: pointer;
-            transition: all .5s cubic-bezier(.16,1,.3,1);
+            transition: all .6s cubic-bezier(.16,1,.3,1);
+            background: #121214;
         }
         .fc:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: rgba(var(--primary-rgb),.25);
-            box-shadow: 0 40px 70px rgba(0,0,0,.6);
+            transform: translateY(-15px) scale(1.02);
+            border-color: rgba(var(--primary-rgb),.4);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(var(--primary-rgb), 0.15);
         }
         .fc img {
             position: absolute; inset: 0;
@@ -526,15 +562,18 @@
         .why-feature {
             display: flex; gap: 2rem; align-items: flex-start;
             padding: 2.2rem;
-            background: rgba(255,255,255,.02);
-            border: 1px solid rgba(255,255,255,.05);
+            background: rgba(255,255,255,.01);
+            border: 1px solid rgba(255,255,255,.04);
             border-radius: 22px;
-            transition: all .4s cubic-bezier(.16,1,.3,1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            transition: all .5s cubic-bezier(.16,1,.3,1);
         }
         .why-feature:hover {
-            border-color: rgba(var(--primary-rgb),.2);
-            background: rgba(var(--primary-rgb),.03);
-            transform: translateX(8px);
+            border-color: rgba(var(--primary-rgb),.35);
+            background: rgba(var(--primary-rgb),.04);
+            transform: translateX(10px) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 20px rgba(var(--primary-rgb), 0.08);
         }
         .why-feature-icon {
             width: 52px; height: 52px; border-radius: 16px;
@@ -567,6 +606,10 @@
         .stat-item {
             text-align: center; padding: 2.5rem 2rem;
             position: relative;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .stat-item:hover {
+            transform: translateY(-10px);
         }
         .stat-item:not(:last-child)::after {
             content: '';
@@ -715,6 +758,7 @@
         <div class="hero-bottom-grad"></div>
         <div class="hero-orb hero-orb-a"></div>
         <div class="hero-orb hero-orb-b"></div>
+        <div class="hero-orb bg-blob-c"></div>
 
         <div class="hero-inner">
             <div class="hero-badge">
